@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ctrlplusb/react-universally.git"
+    "url": "git+https://github.com/sebastian-software/react-universally.git"
   },
   "keywords": [
     "react",
@@ -21,15 +21,16 @@
     "express",
     "webpack"
   ],
-  "author": "Sean Matheson <sean@ctrlplusb.com>",
+  "author": "Sebastian Software <s.werner@sebastian-software.de>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ctrlplusb/react-universally/issues"
+    "url": "https://github.com/sebastian-software/react-universally/issues"
   },
   "homepage": "https://github.com/ctrlplusb/react-universally#readme",
   "engines": {
     "node": ">= 6",
   },
+  "homepage": "https://github.com/sebastian-software/react-universally#readme",
   "dependencies": {
     "compression": "1.6.2",
     "express": "4.14.0",
