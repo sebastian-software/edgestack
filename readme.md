@@ -34,17 +34,16 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 
   - Server side rendering.
   - Extreme live development - hot reloading of client/server source as well as your _webpack configuration_, with high level of error tolerance.
-  - `express` server with a basic security configuration.
-  - `react` as the view.
-  - `react-router` as the router, along with a dynamic routing configuration (i.e. you get code splitting based on your routes).
-  - CSS Support with CSS modules and full PostCSS chain for advanced transformations e.g. autoprefixer
+  - Express server with a basic security configuration.
+  - ReactJS as the view layer.
+  - React Router as the router.
+  - CSS Support with CSS modules and additional flexible full PostCSS chain for advanced transformations e.g. autoprefixer
   - Full ES2015 support, using `babel` to transpile where needed.
   - Bundling of both client and server using `webpack` v2.
-  - Client bundle is split by routes.
-  - Tree-shaking, supported by `webpack`.
+  - Client bundle is automatically split by routes and uses tree-shaking (newly supported by `webpack` v2).
   - A development and optimized production configuration.
   - Easy environment configuration via `dotenv` files.
-  - ESLint v3 integrated.
+  - ESLint v3 integrated with sensible default configuration.
 
 
 ## Overview
