@@ -266,6 +266,7 @@ function webpackConfigFactory({ target, mode })
               // We are running a node 6 server which has support for almost
               // all of the ES2015 syntax, therefore we only transpile JSX.
               presets: [ "react" ],
+              compact: "auto"
             }),
 
             ifClient({
