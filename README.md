@@ -12,14 +12,15 @@ An ultra low dependency node v6 universal react boilerplate with an amazing dev 
  - [Overview](https://github.com/sebastian-software/react-universally#overview)
  - [Project Structure](https://github.com/sebastian-software/react-universally#project-structure)
  - [Server Runtime Dependencies](https://github.com/sebastian-software/react-universally#server-runtime-dependencies)
- - [Deploy your very own Server Side Rendering React App in 5 easy steps](https://github.com/sebastian-software/react-universally#deploy-your-very-own-server-side-rendering-react-app-in-5-easy-steps)
- - [npm script commands](https://github.com/sebastian-software/react-universally#npm-script-commands)
+ - [NPM Commands](https://github.com/sebastian-software/react-universally#npm-script-commands)
  - [References](https://github.com/sebastian-software/react-universally#references)
 
 
 ## About
 
 This boilerplate contains an absolutely minimal set of dependencies in order to get you up and running with a universal react project as quickly as possible. It provides you with a great development experience that includes hot reloading of everything.
+
+
 
 ## Features
 
@@ -36,6 +37,8 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
   - 🎛 A development and optimized production configuration.
   - 🔧 Easy environment configuration via `dotenv` files.
   - 👼 Airbnb's eslint configuration.
+
+
 
 ## Overview
 
@@ -59,6 +62,8 @@ All the source code is written in ES2015, and I have explicitly kept it to the t
 
 The application configuration is supported by the `dotenv` module and it requires you to create a `.env` file in the project root (you can use the `.env_example` as a base).  The `.env` file has been explicitly ignored from git as it will typically contain environment sensitive/specific information.  In the usual case your continuous deployment tool of choice should configure the specific `.env` file that is needed for a target environment.
 
+
+
 ## Project Structure
 
 ```
@@ -79,6 +84,8 @@ The application configuration is supported by the `dotenv` module and it require
 |- webpackConfigFactory.js  // Webpack configuration builder
 ```
 
+
+
 ## Server Runtime Dependencies
 
 Even though we are using webpack to support our universal application we keep the webpack runtime out of our production runtime environment.  Everything is prebundled in prep for production execution.  Therefore we only have the following runtime dependencies:
@@ -95,7 +102,7 @@ Even though we are using webpack to support our universal application we keep th
   - `source-map-support` - Adds source map support to node.js (for stack traces).
 
 
-## npm script commands
+## NPM Commands
 
 ### `npm run development`
 
@@ -127,6 +134,8 @@ Warning: [react-router] You cannot change <Router routes>;
 ```
 
 Fret not! This is a known issue when using React Hot Loader 3 alongside React Router.  It is being looked in to.  Everything still works, unfortunately you just get a few warnings alongside your changes.  They are harmless though, promise. :)
+
+
 
 ## References
 
