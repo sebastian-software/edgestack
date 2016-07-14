@@ -7,6 +7,9 @@
     "clean": "rimraf build",
     "dev": "node ./devServer",
     "build": "npm run clean && webpack --env.mode production --config webpack.client.config.js && webpack --env.mode production --config webpack.server.config.js",
+    "release": "release-it --github.release --npm.publish --non-interactive",
+    "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
+    "release:major": "release-it --github.release --npm.publish --non-interactive --increment major",
     "start": "node build/server/main.js",
     "test": "npm run build"
   },
