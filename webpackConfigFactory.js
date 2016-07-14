@@ -8,12 +8,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // @see https://github.com/motdotla/dotenv
 const dotenv = require('dotenv');
-dotenv.config(process.env.NOW
-  // This is to support deployment to the "now" host.  See the README for more info.
-  ? { path: './.envnow', silent: true }
-  // Standard .env loading.
-  : { silent: true }
-);
+dotenv.config({ silent: true });
 
 // :: [Any] -> [Any]
 function removeEmpty(x) {
