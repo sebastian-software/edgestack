@@ -21,7 +21,8 @@ function ifElse(condition) {
 }
 
 // :: ...Object -> Object
-function merge() {
+function merge()
+{
   const funcArgs = Array.prototype.slice.call(arguments) // eslint-disable-line prefer-rest-params
 
   return Object.assign.apply(
@@ -30,14 +31,17 @@ function merge() {
   )
 }
 
-function webpackConfigFactory({ target, mode }) {
-  if (!target || !~[ "client", "server" ].findIndex((valid) => target === valid)) {
+function webpackConfigFactory({ target, mode })
+{
+  if (!target || !~[ "client", "server" ].findIndex((valid) => target === valid))
+  {
     throw new Error(
       'You must provide a "target" (client|server) to the webpackConfigFactory.'
     )
   }
 
-  if (!mode || !~[ "development", "production" ].findIndex((valid) => mode === valid)) {
+  if (!mode || !~[ "development", "production" ].findIndex((valid) => mode === valid))
+  {
     throw new Error(
       'You must provide a "mode" (development|production) to the webpackConfigFactory.'
     )
@@ -73,7 +77,8 @@ function webpackConfigFactory({ target, mode }) {
     // cache: !(isDev && isServer),
 
     // Anything listed in externals will not be included in our bundle.
-    externals: removeEmpty([
+    externals: removeEmpty(
+    [
       // We don't want our node_modules to be bundled with our server package,
       // prefering them to be resolved via native node module system.  Therefore
       // we use the `webpack-node-externals` library to help us generate an
@@ -107,16 +112,16 @@ function webpackConfigFactory({ target, mode }) {
 
     // Define our entry chunks for our bundle.
     entry: merge(
-      {
-        main: removeEmpty([
-          ifDevClient("react-hot-loader/patch"),
-          ifDevClient(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
-          path.resolve(__dirname, `./src/${target}/index.js`),
-        ]),
-      }
-    ),
+    {
+      main: removeEmpty([
+        ifDevClient("react-hot-loader/patch"),
+        ifDevClient(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
+        path.resolve(__dirname, `./src/${target}/index.js`),
+      ]),
+    }),
 
-    output: {
+    output:
+    {
       // The dir in which our bundle should be output.
       path: path.resolve(__dirname, `./build/${target}`),
 
@@ -135,12 +140,12 @@ function webpackConfigFactory({ target, mode }) {
         // name for our hot reloading client bundle server.
         "[name].js"
       ),
+
       chunkFilename: "[name]-[chunkhash].js",
 
       // This is the web path under which our webpack bundled output should
       // be considered as being served from.
       publicPath: ifDev(
-
         // As we run a seperate server for our client and server bundles we
         // need to use an absolute http path for our assets public path.
         `http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/assets/`,
@@ -186,7 +191,8 @@ function webpackConfigFactory({ target, mode }) {
       // our webpack bundle.  A necessisty for our server rendering process
       // as we need to interogate these files in order to know what JS/CSS
       // we need to inject into our HTML.
-      new AssetsPlugin({
+      new AssetsPlugin(
+      {
         filename: "assets.json",
         path: path.resolve(__dirname, `./build/${target}`),
       }),
@@ -215,9 +221,8 @@ function webpackConfigFactory({ target, mode }) {
         })
       ),
 
+      // JS Minification.
       ifProdClient(
-
-        // JS Minification.
         new webpack.optimize.UglifyJsPlugin({
           compress: {
             screw_ie8: true,
@@ -226,19 +231,17 @@ function webpackConfigFactory({ target, mode }) {
         })
       ),
 
+      // This is actually only useful when our deps are installed via npm2.
+      // In npm2 its possible to get duplicates of dependencies bundled
+      // given the nested module structure. npm3 is flat, so this doesn't
+      // occur.
       ifProd(
-
-        // This is actually only useful when our deps are installed via npm2.
-        // In npm2 its possible to get duplicates of dependencies bundled
-        // given the nested module structure. npm3 is flat, so this doesn't
-        // occur.
         new webpack.optimize.DedupePlugin()
       ),
 
+      // This is a production client so we will extract our CSS into
+      // CSS files.
       ifProdClient(
-
-        // This is a production client so we will extract our CSS into
-        // CSS files.
         new ExtractTextPlugin("[name]-[chunkhash].css", { allChunks: true })
       ),
     ]),
@@ -258,11 +261,13 @@ function webpackConfigFactory({ target, mode }) {
                 },
               },
             },
+
             ifServer({
               // We are running a node 6 server which has support for almost
               // all of the ES2015 syntax, therefore we only transpile JSX.
               presets: [ "react" ],
             }),
+
             ifClient({
               // For our clients code we will need to transpile our JS into
               // ES5 code for wider browser/device compatability.
@@ -311,7 +316,10 @@ function webpackConfigFactory({ target, mode }) {
           ifDevClient({
             loaders: [
               "style-loader",
-              { loader: "css-loader", query: { sourceMap: true } },
+              {
+                loader: "css-loader",
+                query: { sourceMap: true }
+              },
             ],
           })
         ),
