@@ -1,8 +1,16 @@
-# React, Universally
+# React, Universally+<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status][ci-img]][ci] [![Dependencies][deps-img]][deps]
 
-<img width='150' src='https://raw.githubusercontent.com/sebastian-software/assets/master/logos/react-universally.png' />
+[sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
+[sponsor]: https://www.sebastian-software.de
+[ci-img]: https://travis-ci.org/sebastian-software/react-universally.svg?branch=master
+[ci]: https://travis-ci.org/sebastian-software/react-universally
+[deps]: https://david-dm.org/sebastian-software/react-universally
+[deps-img]: https://david-dm.org/sebastian-software/react-universally.svg
+[npm]: https://www.npmjs.com/package/react-universally
+[npm-downloads-img]: https://img.shields.io/npm/dm/react-universally.svg
+[npm-version-img]: https://img.shields.io/npm/v/react-universally.svg
 
-An ultra low dependency node v6 universal react boilerplate with an amazing dev experience.
+An low dependency NodeJS V6 universal react boilerplate with an amazing dev experience.
 
 
 ## TOC
