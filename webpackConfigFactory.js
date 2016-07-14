@@ -1,66 +1,66 @@
 /* eslint-disable no-console */
 
-const path = require('path');
-const webpack = require('webpack');
-const AssetsPlugin = require('assets-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require("path")
+const webpack = require("webpack")
+const AssetsPlugin = require("assets-webpack-plugin")
+const nodeExternals = require("webpack-node-externals")
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 // @see https://github.com/motdotla/dotenv
-const dotenv = require('dotenv');
-dotenv.config({ silent: true });
+const dotenv = require("dotenv")
+dotenv.config({ silent: true })
 
 // :: [Any] -> [Any]
 function removeEmpty(x) {
-  return x.filter(y => !!y);
+  return x.filter((y) => !!y)
 }
 
 // :: bool -> (Any, Any) -> Any
 function ifElse(condition) {
-  return (then, or) => (condition ? then : or);
+  return (then, or) => (condition ? then : or)
 }
 
 // :: ...Object -> Object
 function merge() {
-  const funcArgs = Array.prototype.slice.call(arguments); // eslint-disable-line prefer-rest-params
+  const funcArgs = Array.prototype.slice.call(arguments) // eslint-disable-line prefer-rest-params
 
   return Object.assign.apply(
     null,
-    removeEmpty([{}].concat(funcArgs))
-  );
+    removeEmpty([ {} ].concat(funcArgs))
+  )
 }
 
 function webpackConfigFactory({ target, mode }) {
-  if (!target || !~['client', 'server'].findIndex(valid => target === valid)) {
+  if (!target || !~[ "client", "server" ].findIndex((valid) => target === valid)) {
     throw new Error(
       'You must provide a "target" (client|server) to the webpackConfigFactory.'
-    );
+    )
   }
 
-  if (!mode || !~['development', 'production'].findIndex(valid => mode === valid)) {
+  if (!mode || !~[ "development", "production" ].findIndex((valid) => mode === valid)) {
     throw new Error(
       'You must provide a "mode" (development|production) to the webpackConfigFactory.'
-    );
+    )
   }
 
-  console.log(`==> ℹ️  Creating webpack "${target}" config in "${mode}" mode`);
+  console.log(`==> ℹ️  Creating webpack "${target}" config in "${mode}" mode`)
 
-  const isDev = mode === 'development';
-  const isProd = mode === 'production';
-  const isClient = target === 'client';
-  const isServer = target === 'server';
+  const isDev = mode === "development"
+  const isProd = mode === "production"
+  const isClient = target === "client"
+  const isServer = target === "server"
 
-  const ifDev = ifElse(isDev);
-  const ifProd = ifElse(isProd);
-  const ifClient = ifElse(isClient);
-  const ifServer = ifElse(isServer);
-  const ifDevClient = ifElse(isDev && isClient);
-  const ifDevServer = ifElse(isDev && isServer);
-  const ifProdClient = ifElse(isProd && isClient);
+  const ifDev = ifElse(isDev)
+  const ifProd = ifElse(isProd)
+  const ifClient = ifElse(isClient)
+  const ifServer = ifElse(isServer)
+  const ifDevClient = ifElse(isDev && isClient)
+  const ifDevServer = ifElse(isDev && isServer)
+  const ifProdClient = ifElse(isProd && isClient)
 
   return {
     // We need to state that we are targetting "node" for our server bundle.
-    target: ifServer('node', 'web'),
+    target: ifServer("node", "web"),
 
     // We have to set this to be able to use these items when executing a
     // server bundle.  Otherwise strangeness happens, like __dirname resolving
@@ -84,11 +84,12 @@ function webpackConfigFactory({ target, mode }) {
         // bundle process.  We want 'normalize.css' to be processed by our css
         // loader configuration.  Therefore we lie to the 'webpack-node-externals'
         // and say it's a binary which will make this library ignore the entry.
-        binaryDirs: ['normalize.css'],
+        binaryDirs: [ "normalize.css" ],
       })),
     ]),
 
     devtool: ifElse(isServer || isDev)(
+
       // We want to be able to get nice stack traces when running our server
       // bundle.  To fully support this we'll also need to configure the
       // `node-source-map-support` module to execute at the start of the server
@@ -96,18 +97,19 @@ function webpackConfigFactory({ target, mode }) {
       // source maps.
       // We also want to be able to link to the source in chrome dev tools
       // whilst we are in development mode. :)
-      'source-map',
+      "source-map",
+
       // When in production client mode we don't want any source maps to
       // decrease our payload sizes.
       // This form has almost no cost.
-      'hidden-source-map'
+      "hidden-source-map"
     ),
 
     // Define our entry chunks for our bundle.
     entry: merge(
       {
         main: removeEmpty([
-          ifDevClient('react-hot-loader/patch'),
+          ifDevClient("react-hot-loader/patch"),
           ifDevClient(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
           path.resolve(__dirname, `./src/${target}/index.js`),
         ]),
@@ -117,36 +119,43 @@ function webpackConfigFactory({ target, mode }) {
     output: {
       // The dir in which our bundle should be output.
       path: path.resolve(__dirname, `./build/${target}`),
+
       // The filename format for our bundle's entries.
       filename: ifProdClient(
+
         // We include a hash for client caching purposes.  Including a unique
         // has for every build will ensure browsers always fetch our newest
         // bundle.
-        '[name]-[hash].js',
+        "[name]-[hash].js",
+
         // We want a determinable file name when running our server bundles,
         // as we need to be able to target our server start file from our
         // npm scripts.  We don't care about caching on the server anyway.
         // We also want our client development builds to have a determinable
         // name for our hot reloading client bundle server.
-        '[name].js'
+        "[name].js"
       ),
-      chunkFilename: '[name]-[chunkhash].js',
+      chunkFilename: "[name]-[chunkhash].js",
+
       // This is the web path under which our webpack bundled output should
       // be considered as being served from.
       publicPath: ifDev(
+
         // As we run a seperate server for our client and server bundles we
         // need to use an absolute http path for our assets public path.
         `http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/assets/`,
+
         // Otherwise we expect our bundled output to be served from this path.
-        '/assets/'
+        "/assets/"
       ),
+
       // When in server mode we will output our bundle as a commonjs2 module.
-      libraryTarget: ifServer('commonjs2', 'var'),
+      libraryTarget: ifServer("commonjs2", "var"),
     },
 
     resolve: {
       // These extensions are tried when resolving a file.
-      extensions: ['.js', '.json'],
+      extensions: [ ".js", ".json" ],
     },
 
     plugins: removeEmpty([
@@ -158,10 +167,11 @@ function webpackConfigFactory({ target, mode }) {
       // If the value is an object all keys are removeEmpty the same way.
       // If you prefix typeof to the key, it’s only removeEmpty for typeof calls.
       new webpack.DefinePlugin({
-        'process.env': {
+        "process.env": {
           // NOTE: The NODE_ENV key is especially important for production
           // builds as React relies on process.env.NODE_ENV for optimizations.
           NODE_ENV: JSON.stringify(mode),
+
           // All the below items match the config items in our .env file. Go
           // to the .env_example for a description of each key.
           SERVER_PORT: JSON.stringify(process.env.SERVER_PORT),
@@ -177,7 +187,7 @@ function webpackConfigFactory({ target, mode }) {
       // as we need to interogate these files in order to know what JS/CSS
       // we need to inject into our HTML.
       new AssetsPlugin({
-        filename: 'assets.json',
+        filename: "assets.json",
         path: path.resolve(__dirname, `./build/${target}`),
       }),
 
@@ -198,6 +208,7 @@ function webpackConfigFactory({ target, mode }) {
           // Indicates to our loaders that they should minify their output
           // if they have the capability to do so.
           minimize: true,
+
           // Indicates to our loaders that they should enter into debug mode
           // should they support it.
           debug: false,
@@ -205,6 +216,7 @@ function webpackConfigFactory({ target, mode }) {
       ),
 
       ifProdClient(
+
         // JS Minification.
         new webpack.optimize.UglifyJsPlugin({
           compress: {
@@ -215,6 +227,7 @@ function webpackConfigFactory({ target, mode }) {
       ),
 
       ifProd(
+
         // This is actually only useful when our deps are installed via npm2.
         // In npm2 its possible to get duplicates of dependencies bundled
         // given the nested module structure. npm3 is flat, so this doesn't
@@ -223,9 +236,10 @@ function webpackConfigFactory({ target, mode }) {
       ),
 
       ifProdClient(
+
         // This is a production client so we will extract our CSS into
         // CSS files.
-        new ExtractTextPlugin('[name]-[chunkhash].css', { allChunks: true })
+        new ExtractTextPlugin("[name]-[chunkhash].css", { allChunks: true })
       ),
     ]),
 
@@ -234,30 +248,31 @@ function webpackConfigFactory({ target, mode }) {
         // Javascript
         {
           test: /\.js$/,
-          loader: 'babel-loader',
-          exclude: [/node_modules/, path.resolve(__dirname, './build')],
+          loader: "babel-loader",
+          exclude: [ /node_modules/, path.resolve(__dirname, "./build") ],
           query: merge(
             {
               env: {
                 development: {
-                  plugins: ['react-hot-loader/babel'],
+                  plugins: [ "react-hot-loader/babel" ],
                 },
               },
             },
             ifServer({
               // We are running a node 6 server which has support for almost
               // all of the ES2015 syntax, therefore we only transpile JSX.
-              presets: ['react'],
+              presets: [ "react" ],
             }),
             ifClient({
               // For our clients code we will need to transpile our JS into
               // ES5 code for wider browser/device compatability.
               presets: [
                 // JSX
-                'react',
+                "react",
+
                 // Webpack 2 includes support for es2015 imports, therefore we used this
                 // modified preset.
-                'es2015-webpack',
+                "es2015-webpack",
               ],
               compact: "auto"
             })
@@ -267,18 +282,19 @@ function webpackConfigFactory({ target, mode }) {
         // JSON
         {
           test: /\.json$/,
-          loader: 'json-loader',
+          loader: "json-loader",
         },
 
         // CSS
         merge(
           { test: /\.css$/ },
+
           // When targetting the server we fake out the style loader as the
           // server can't handle the styles and doesn't care about them either..
           ifServer({
             loaders: [
-              'fake-style-loader',
-              'css-loader',
+              "fake-style-loader",
+              "css-loader",
             ],
           }),
 
@@ -286,7 +302,7 @@ function webpackConfigFactory({ target, mode }) {
           // will extract our CSS into CSS files.  The plugin needs to be
           // registered within the plugins section too.
           ifProdClient({
-            loader: ExtractTextPlugin.extract('style-loader', 'css-loader'),
+            loader: ExtractTextPlugin.extract("style-loader", "css-loader"),
           }),
 
           // For a development client we will use a straight style & css loader
@@ -294,14 +310,14 @@ function webpackConfigFactory({ target, mode }) {
           // experience.
           ifDevClient({
             loaders: [
-              'style-loader',
-              { loader: 'css-loader', query: { sourceMap: true } },
+              "style-loader",
+              { loader: "css-loader", query: { sourceMap: true } },
             ],
           })
         ),
       ],
     },
-  };
+  }
 }
 
-module.exports = webpackConfigFactory;
+module.exports = webpackConfigFactory
