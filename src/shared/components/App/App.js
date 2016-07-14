@@ -5,8 +5,8 @@ import Link from 'react-router/lib/Link';
 
 function App({ children }) {
   return (
-    <div style={{ padding: '10px' }}>
-      <div style={{ textAlign: 'center' }}>
+    <main>
+      <div>
         <h1>Advanced Boilerplate</h1>
         <strong>A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience.</strong>
       </div>
@@ -15,16 +15,16 @@ function App({ children }) {
           <li><Link to="/">Home</Link></li>
           <li><Link to="/about">About</Link></li>
         </ul>
-
       </div>
       <div>
         {children}
       </div>
-    </div>
+    </main>
   );
 }
+
 App.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node
 };
 
 export default App;
