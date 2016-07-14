@@ -35,17 +35,17 @@ function createTemplate(assets = {}) {
   return function pageTemplate(content = {}) {
     const { title, meta = {}, initialState = {}, reactRootElement } = content
 
-    return `<!DOCTYPE html>
+    return `
+    <!DOCTYPE html>
     <html lang="en">
       <head>
-        <meta charSet="utf-8" />
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta httpEquiv="Content-Language" content="en" />
+        <meta charset="utf-8" >
+        <meta httpequiv="X-UA-Compatible" content="IE=edge" >
+        <meta httpequiv="Content-Language" content="en" >
 
         <title>${title}</title>
 
         ${metaTags(meta)}
-
         ${cssLinks}
       </head>
       <body>
