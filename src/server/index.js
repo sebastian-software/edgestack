@@ -1,5 +1,5 @@
 // This grants us source map support, which is handy as our webpack bundling
-// for the server will include source maps.  Therefore we will have nice stack
+// for the server will include source maps. Therefore we will have nice stack
 // traces again for our server.
 import "source-map-support/register"
 
@@ -51,12 +51,6 @@ app.get("*", universalReactAppMiddleware)
 
 // Create an http listener for our express app.
 const listener = app.listen(parseInt(process.env.SERVER_PORT, 10))
-
-/*
-if (process.env.NODE_ENV === "development") {
-  console.log(`==> 💚  HTTP Listener is running on port ${process.env.SERVER_PORT}`) // eslint-disable-line no-console,max-len
-}
-*/
 
 // We export the listener as it will be handy for our development hot reloader.
 export default listener

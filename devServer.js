@@ -19,7 +19,7 @@ function createNotification(options = {}) {
     open: options.open,
   })
 
-  console.log(`==> ${title} -> ${options.message}`)
+  console.log(`${title}: ${options.message}`)
 }
 
 class ListenerManager {
@@ -86,7 +86,7 @@ class HotServer {
     } catch (err) {
       createNotification({
         title: "server",
-        message: "😵  Bundle invalid, check console for error",
+        message: "Error: Bundle invalid, check console for error",
       })
       console.log(err)
     }
@@ -122,7 +122,7 @@ class HotClient {
 
     createNotification({
       title: "client",
-      message: "✅  Running",
+      message: "Success: Running",
     })
   }
 
@@ -158,7 +158,7 @@ class HotServers {
     } catch (err) {
       createNotification({
         title: "webpack",
-        message: "😵  Webpack config invalid, check console for error",
+        message: "Error: Webpack config invalid, check console for error",
       })
       console.log(err)
       return
@@ -188,13 +188,13 @@ class HotServers {
       if (stats.hasErrors()) {
         createNotification({
           title: "client",
-          message: "😵  Build failed, check console for error",
+          message: "Error: Build failed, check console for error",
         })
         console.log(stats.toString())
       } else {
         createNotification({
           title: "client",
-          message: "✅  Built",
+          message: "Success: Built",
         })
       }
     })
@@ -225,7 +225,7 @@ class HotServers {
       if (stats.hasErrors()) {
         createNotification({
           title: "server",
-          message: "😵  Build failed, check console for error",
+          message: "Error: Build failed, check console for error",
         })
         console.log(stats.toString())
         return
@@ -233,7 +233,7 @@ class HotServers {
 
       createNotification({
         title: "server",
-        message: "✅  Built",
+        message: "Success: Built",
       })
 
       // Make sure our newly built server bundles aren't in the module cache.
