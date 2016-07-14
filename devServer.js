@@ -8,18 +8,15 @@ const express = require("express")
 const createWebpackMiddleware = require("webpack-dev-middleware")
 const createWebpackHotMiddleware = require("webpack-hot-middleware")
 
-function createNotification(options = {}) {
-  const title = !!options.title
-    ? `🔥  ${options.title.toUpperCase()}`
-    : undefined
-
+function createNotification(options = {})
+{
   notifier.notify({
-    title,
+    title : options.title,
     message: options.message,
     open: options.open,
   })
 
-  console.log(`${title}: ${options.message}`)
+  console.log(`${options.title}: ${options.message}`)
 }
 
 class ListenerManager {
@@ -71,7 +68,8 @@ class HotServer {
       compiler.options.output.path, `${Object.keys(compiler.options.entry)[0]}.js`
     )
 
-    try {
+    try
+    {
       // The server bundle  will automatically start the web server just by
       // requiring it. It returns the http listener too.
       this.listenerManager = new ListenerManager(require(compiledOutputPath).default)
@@ -79,16 +77,17 @@ class HotServer {
       const url = `http://localhost:${process.env.SERVER_PORT}`
 
       createNotification({
-        title: "server",
-        message: `🌎  Running on ${url}`,
+        title: "Server",
+        message: `Running on ${url}`,
         open: url,
       })
-    } catch (err) {
+    }
+    catch (err)
+    {
       createNotification({
-        title: "server",
+        title: "Server",
         message: "Error: Bundle invalid, check console for error",
       })
-      console.log(err)
     }
   }
 
@@ -121,7 +120,7 @@ class HotClient {
     this.listenerManager = new ListenerManager(listener)
 
     createNotification({
-      title: "client",
+      title: "Client",
       message: "Success: Running",
     })
   }
@@ -149,18 +148,22 @@ class HotServers {
     this.serverCompiler = null
   }
 
-  start() {
-    try {
+  start()
+  {
+    try
+    {
       const clientConfig = require("./webpack.client.config")({ mode: "development" })
       this.clientCompiler = webpack(clientConfig)
       const serverConfig = require("./webpack.server.config")({ mode: "development" })
       this.serverCompiler = webpack(serverConfig)
-    } catch (err) {
+    }
+    catch (err)
+    {
       createNotification({
-        title: "webpack",
+        title: "Webpack",
         message: "Error: Webpack config invalid, check console for error",
       })
-      console.log(err)
+
       return
     }
 
@@ -168,7 +171,8 @@ class HotServers {
     this._configureHotServer()
   }
 
-  restart() {
+  restart()
+  {
     const clearWebpackConfigsCache = () => {
       Object.keys(require.cache).forEach((modulePath) => {
         if (~modulePath.indexOf("webpack")) {
@@ -183,17 +187,23 @@ class HotServers {
     ]).then(clearWebpackConfigsCache).then(this.start, (err) => console.log(err))
   }
 
-  _configureHotClient() {
-    this.clientCompiler.plugin("done", (stats) => {
-      if (stats.hasErrors()) {
-        createNotification({
-          title: "client",
+  _configureHotClient()
+  {
+    this.clientCompiler.plugin("done", (stats) =>
+    {
+      if (stats.hasErrors())
+      {
+        createNotification(
+        {
+          title: "Client",
           message: "Error: Build failed, check console for error",
         })
         console.log(stats.toString())
-      } else {
+      }
+      else
+      {
         createNotification({
-          title: "client",
+          title: "Client",
           message: "Success: Built",
         })
       }
@@ -202,8 +212,10 @@ class HotServers {
     this.clientBundle = new HotClient(this.clientCompiler)
   }
 
-  _configureHotServer() {
-    const compileHotServer = () => {
+  _configureHotServer()
+  {
+    const compileHotServer = () =>
+    {
       const runCompiler = () => this.serverCompiler.run(() => undefined)
 
       // Shut down any existing running server if necessary before starting the
@@ -221,18 +233,21 @@ class HotServers {
       }
     })
 
-    this.serverCompiler.plugin("done", (stats) => {
-      if (stats.hasErrors()) {
+    this.serverCompiler.plugin("done", (stats) =>
+    {
+      if (stats.hasErrors())
+      {
         createNotification({
-          title: "server",
+          title: "Server",
           message: "Error: Build failed, check console for error",
         })
-        console.log(stats.toString())
+
+        console.error(stats.toString())
         return
       }
 
       createNotification({
-        title: "server",
+        title: "Server",
         message: "Success: Built",
       })
 
