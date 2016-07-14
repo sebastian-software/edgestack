@@ -310,11 +310,12 @@ function webpackConfigFactory({ target, mode })
           // For a production client build we use the ExtractTextPlugin which
           // will extract our CSS into CSS files.  The plugin needs to be
           // registered within the plugins section too.
-          ifProdClient({
-            loader: ExtractTextPlugin.extract("style-loader", {
-              loader: "css-loader",
-              query: { sourceMap: true, modules: true }
-            }),
+          ifProdClient(
+          {
+            // First: the loader(s) that should be used when the css is not extracted
+            // Second: the loader(s) that should be used for converting the resource to a css exporting module
+            // Unfortunately it seems like it does not support the new query syntax of webpack v2
+            loader: ExtractTextPlugin.extract("style-loader", "css-loader?modules&sourceMap"),
           }),
 
           // For a development client we will use a straight style & css loader
