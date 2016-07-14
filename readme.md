@@ -142,3 +142,11 @@ Fret not! This is a known issue when using React Hot Loader 3 alongside React Ro
   - __Webpack 2__ - https://gist.github.com/sokra/27b24881210b56bbaff7
   - __React Hot Loader v3__ - https://github.com/gaearon/react-hot-boilerplate/pull/61
   - __dotenv__ - https://github.com/bkeepers/dotenv
+
+
+
+## Copyright
+
+<img src="https://raw.githubusercontent.com/sebastian-software/s15e-javascript/master/assets/sebastiansoftware.png" alt="Sebastian Software GmbH Logo" width="250" height="200"/>
+
+Copyright 2016<br/>[Sebastian Software GmbH](http://www.sebastian-software.de)
