@@ -2,26 +2,26 @@
 
 [sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
 [sponsor]: https://www.sebastian-software.de
-[ci-img]: https://travis-ci.org/sebastian-software/react-universally.svg?branch=master
-[ci]: https://travis-ci.org/sebastian-software/react-universally
-[deps]: https://david-dm.org/sebastian-software/react-universally
-[deps-img]: https://david-dm.org/sebastian-software/react-universally.svg
-[npm]: https://www.npmjs.com/package/react-universally
-[npm-downloads-img]: https://img.shields.io/npm/dm/react-universally.svg
-[npm-version-img]: https://img.shields.io/npm/v/react-universally.svg
+[ci-img]: https://travis-ci.org/sebastian-software/advanced-boilerplate.svg?branch=master
+[ci]: https://travis-ci.org/sebastian-software/advanced-boilerplate
+[deps]: https://david-dm.org/sebastian-software/advanced-boilerplate
+[deps-img]: https://david-dm.org/sebastian-software/advanced-boilerplate.svg
+[npm]: https://www.npmjs.com/package/advanced-boilerplate
+[npm-downloads-img]: https://img.shields.io/npm/dm/advanced-boilerplate.svg
+[npm-version-img]: https://img.shields.io/npm/v/advanced-boilerplate.svg
 
 An low dependency NodeJS V6 universal react boilerplate with an amazing dev experience.
 
 
 ## TOC
 
- - [About](https://github.com/sebastian-software/react-universally#about)
- - [Features](https://github.com/sebastian-software/react-universally#features)
- - [Overview](https://github.com/sebastian-software/react-universally#overview)
- - [Project Structure](https://github.com/sebastian-software/react-universally#project-structure)
- - [Server Runtime Dependencies](https://github.com/sebastian-software/react-universally#server-runtime-dependencies)
- - [NPM Commands](https://github.com/sebastian-software/react-universally#npm-script-commands)
- - [References](https://github.com/sebastian-software/react-universally#references)
+ - [About](https://github.com/sebastian-software/advanced-boilerplate#about)
+ - [Features](https://github.com/sebastian-software/advanced-boilerplate#features)
+ - [Overview](https://github.com/sebastian-software/advanced-boilerplate#overview)
+ - [Project Structure](https://github.com/sebastian-software/advanced-boilerplate#project-structure)
+ - [Server Runtime Dependencies](https://github.com/sebastian-software/advanced-boilerplate#server-runtime-dependencies)
+ - [NPM Commands](https://github.com/sebastian-software/advanced-boilerplate#npm-script-commands)
+ - [References](https://github.com/sebastian-software/advanced-boilerplate#references)
 
 
 ## About
@@ -51,7 +51,7 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 
 Data persistence, test frameworks, and all the other bells and whistles have been explicitly excluded from this boilerplate. It's up to you to decide what technologies you would like to add to your own implementation based upon your own needs, this boilerplate simply serves as a clean base upon which to do so.
 
-> If you would like to reference a more opinionated boilerplate, then have a look at [React, Univerally (Opinionated)](https://github.com/sebastian-software/react-universally-opinionated). However, I must warn you that implementation is highly structured to meet my own development requirements. I would recommend that you simply fish ideas from it and implement them in your own codebase.
+> If you would like to reference a more opinionated boilerplate, then have a look at [React, Univerally (Opinionated)](https://github.com/sebastian-software/advanced-boilerplate-opinionated). However, I must warn you that implementation is highly structured to meet my own development requirements. I would recommend that you simply fish ideas from it and implement them in your own codebase.
 
 This boilerplate uses Webpack 2 to produce bundles for both the client and the
 server code. You will notice two Webpack configuration files that allow you to target the respective environments:
