@@ -92,39 +92,8 @@ Even though we are using webpack to support our universal application we keep th
   - `serialize-javascript` - A superset of JSON that includes regular expressions and functions.
   - `source-map-support` - Adds source map support to node.js (for stack traces).
 
-## Deploy your very own Server Side Rendering React App in 5 easy steps ##
 
-__Step 1: Clone the repository.__
-
-    git clone https://github.com/ctrlplusb/react-universally
-
-__Step 2: `cd` into the cloned directory__
-
-    cd react-universally
-
-__Step 3: Set up your env configuration file__
-
-The application depends on environment settings which are exposed to the application via a `.env` file.  You will have to create one of these using the example version (`.env_example`).  You could simply copy the example:
-
-    cp .env_example .env
-    
-I would recommend that you review the options within the `.env` file.
-
-__Step 4: Install the awesome "now" CLI__
-
-    npm install -g now
-    
-These guys are amazing hosts.  [Check them out.](https://zeit.co/now#)
-
-__Step 5: Deploy to "now"__
-
-    cp .env .envnow && now  && rm -r .envnow
-    
-The above command will create a temporary file to expose your `.env` file to the `now` host.  It will then deploy to `now` and subsequently delete the temp env file.
-
-That's it.  Your clipboard will contain the address of the deployed app. Open your browser, paste, go.  
-
-## npm script commands##
+## npm script commands
 
 ### `npm run development`
 
