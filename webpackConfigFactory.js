@@ -299,7 +299,10 @@ function webpackConfigFactory({ target, mode })
           ifServer({
             loaders: [
               "fake-style-loader",
-              "css-loader",
+              {
+                loader: "css-loader",
+                query: { sourceMap: true, modules: true }
+              }
             ],
           }),
 
@@ -307,7 +310,10 @@ function webpackConfigFactory({ target, mode })
           // will extract our CSS into CSS files.  The plugin needs to be
           // registered within the plugins section too.
           ifProdClient({
-            loader: ExtractTextPlugin.extract("style-loader", "css-loader"),
+            loader: ExtractTextPlugin.extract("style-loader", {
+              loader: "css-loader",
+              query: { sourceMap: true, modules: true }
+            }),
           }),
 
           // For a development client we will use a straight style & css loader
@@ -318,7 +324,7 @@ function webpackConfigFactory({ target, mode })
               "style-loader",
               {
                 loader: "css-loader",
-                query: { sourceMap: true }
+                query: { sourceMap: true, modules: true }
               },
             ],
           })
