@@ -114,7 +114,7 @@ Builds the client and server bundles, with the output being production optimized
 
 ### `npm run start`
 
-Executes the server.  It expects you to have already built the bundles either via the `npm run build` command or manually.
+Executes the server. It expects you to have already built the bundles either via the `npm run build` command or manually.
 
 ### `npm run clean`
 
