@@ -121,7 +121,7 @@ class HotClient {
 
     createNotification({
       title: "Client",
-      message: "Success: Running",
+      message: "Running",
     })
   }
 
@@ -204,7 +204,7 @@ class HotServers {
       {
         createNotification({
           title: "Client",
-          message: "Success: Built",
+          message: "Built",
         })
       }
     })
@@ -248,7 +248,7 @@ class HotServers {
 
       createNotification({
         title: "Server",
-        message: "Success: Built",
+        message: "Built",
       })
 
       // Make sure our newly built server bundles aren't in the module cache.
