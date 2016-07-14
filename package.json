@@ -1,7 +1,7 @@
 {
   "name": "react-universally",
   "version": "0.0.1",
-  "description": "An ultra low dependency node v6 universal react boilerplate.",
+  "description": "React Universally with PostCSS",
   "main": "build/server/main.js",
   "scripts": {
     "clean": "rimraf build",
@@ -28,7 +28,6 @@
   "bugs": {
     "url": "https://github.com/sebastian-software/react-universally/issues"
   },
-  "homepage": "https://github.com/ctrlplusb/react-universally#readme",
   "engines": {
     "node": ">= 6",
   },
