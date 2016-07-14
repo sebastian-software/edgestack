@@ -1,0 +1,10 @@
+extends:
+  ./node_modules/s15e-javascript/.eslintrc.yml
+
+env:
+  browser: true
+  es6: true
+  node: true
+
+ecmaFeatures:
+  defaultParams: true
