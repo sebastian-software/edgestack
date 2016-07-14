@@ -44,8 +44,7 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
   - Tree-shaking, supported by `webpack`.
   - A development and optimized production configuration.
   - Easy environment configuration via `dotenv` files.
-  - Airbnb's eslint configuration.
-
+  - ESLint v3 integrated.
 
 
 ## Overview
