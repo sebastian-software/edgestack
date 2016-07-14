@@ -1,4 +1,4 @@
-# React, Universally+<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status][ci-img]][ci] [![Dependencies][deps-img]][deps]
+# Advanced Boilerplate<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status][ci-img]][ci] [![Dependencies][deps-img]][deps]
 
 [sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
 [sponsor]: https://www.sebastian-software.de
@@ -10,7 +10,7 @@
 [npm-downloads-img]: https://img.shields.io/npm/dm/advanced-boilerplate.svg
 [npm-version-img]: https://img.shields.io/npm/v/advanced-boilerplate.svg
 
-An low dependency NodeJS V6 universal react boilerplate with an amazing dev experience.
+A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience.
 
 
 ## TOC
