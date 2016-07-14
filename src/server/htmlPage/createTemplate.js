@@ -1,4 +1,4 @@
-import serialize from 'serialize-javascript';
+import serialize from "serialize-javascript";
 
 // :: [String] -> [String]
 function cssImports(css) {
@@ -6,7 +6,7 @@ function cssImports(css) {
     .map(cssPath =>
       `<link href="${cssPath}" media="screen, projection" rel="stylesheet" type="text/css" />`
     )
-    .join('\n');
+    .join("\n");
 }
 
 // :: [String] -> [String]
@@ -15,7 +15,7 @@ function javascriptImports(javascript) {
     .map(scriptPath =>
       `<script type="text/javascript" src="${scriptPath}"></script>`
     )
-    .join('\n');
+    .join("\n");
 }
 
 // :: Object -> [String]
@@ -36,11 +36,11 @@ function createTemplate(assets = {}) {
     const { title, meta = {}, initialState = {}, reactRootElement } = content;
 
     return `<!DOCTYPE html>
-    <html lang='en'>
+    <html lang="en">
       <head>
-        <meta charSet='utf-8' />
-        <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
-        <meta httpEquiv='Content-Language' content='en' />
+        <meta charSet="utf-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta httpEquiv="Content-Language" content="en" />
 
         <title>${title}</title>
 
@@ -49,9 +49,9 @@ function createTemplate(assets = {}) {
         ${cssLinks}
       </head>
       <body>
-        <div id='app'>${reactRootElement}</div>
+        <div id="app">${reactRootElement}</div>
 
-        <script type='text/javascript'>
+        <script type="text/javascript">
           window.APP_STATE=${serialize(initialState)};
         </script>
 
