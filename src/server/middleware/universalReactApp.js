@@ -3,7 +3,7 @@ import RouterContext from "react-router/lib/RouterContext"
 import createMemoryHistory from "react-router/lib/createMemoryHistory"
 import match from "react-router/lib/match"
 import render from "../htmlPage/render"
-import routes from "../../shared/routes"
+import routes from "../../routes"
 
 /**
  * An express middleware that is capabable of doing React server side rendering.
