@@ -17,7 +17,7 @@
 
 ## About
 
-This boilerplate contains an absolutely minimal set of dependencies in order to get you up and running with a universal react project as quickly as possible. It provides you with a great development experience that includes hot reloading of everything. 
+This boilerplate contains an absolutely minimal set of dependencies in order to get you up and running with a universal react project as quickly as possible. It provides you with a great development experience that includes hot reloading of everything.
 
 ## Features
 
@@ -30,7 +30,7 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
   - 🚀 Full ES2015 support, using `babel` to transpile where needed.
   - 📦 Bundling of both client and server using `webpack` v2.
   - ✂️ Client bundle is split by routes.
-  - 🍃 Tree-shaking, supported by `webpack`.  
+  - 🍃 Tree-shaking, supported by `webpack`.
   - 🎛 A development and optimized production configuration.
   - 🔧 Easy environment configuration via `dotenv` files.
   - 👼 Airbnb's eslint configuration.
@@ -55,7 +55,7 @@ Given that we are bundling our server code I have included the `source-map-suppo
 
 All the source code is written in ES2015, and I have explicitly kept it to the true specification (bar JSX syntax).  As we are following this approach it is unnecessary for us to transpile our source code for the server into ES5, as `node` v6 has native support for almost all of the ES2015 syntax.  Our client (browser) bundle is however transpiled to ES5 code for maximum browser/device support.
 
-The application configuration is supported by the `dotenv` module and it requires you to create a `.env` file in the project root (you can use the `.env_example` as a base).  The `.env` file has been explicitly ignored from git as it will typically contain environment sensitive/specific information.  In the usual case your continuous deployment tool of choice should configure the specific `.env` file that is needed for a target environment. 
+The application configuration is supported by the `dotenv` module and it requires you to create a `.env` file in the project root (you can use the `.env_example` as a base).  The `.env` file has been explicitly ignored from git as it will typically contain environment sensitive/specific information.  In the usual case your continuous deployment tool of choice should configure the specific `.env` file that is needed for a target environment.
 
 ## Project Structure
 
@@ -64,17 +64,17 @@ The application configuration is supported by the `dotenv` module and it require
 |- build // The target output dir for our build commands.
 |  |- client // The built client module.
 |  |- server // The built server module
-| 
+|
 |- src  // All the source code
 |  |- server // The server specific source
 |  |- client // The client specific source
 |  |- shared // The shared code between the client/server
 |
-|- .env_example // An example from which to create your own .env file.  
+|- .env_example // An example from which to create your own .env file.
 |- devServer.js // Creates a hot reloading development environment
 |- webpack.client.config.js // Client target webpack configuration
 |- webpack.server.config.js // Server target webpack configuration
-|- webpackConfigFactory.js  // Webpack configuration builder 
+|- webpackConfigFactory.js  // Webpack configuration builder
 ```
 
 ## Server Runtime Dependencies
@@ -142,7 +142,9 @@ Executes the server.  It expects you to have already built the bundles either vi
 
 Deletes any build output that would have originated from the other commands.
 
-## Troubleshooting ##
+
+
+## Troubleshooting
 
 ___Q:___ __I see `react-router` warnings during hot reloading.__
 
@@ -151,11 +153,11 @@ For example:
 ```
 Warning: [react-router] You cannot change <Router history>;
 Warning: [react-router] You cannot change <Router routes>;
-``` 
+```
 
 Fret not! This is a known issue when using React Hot Loader 3 alongside React Router.  It is being looked in to.  Everything still works, unfortunately you just get a few warnings alongside your changes.  They are harmless though, promise. :)
 
-## References ##
+## References
 
   - __Webpack 2__ - https://gist.github.com/sokra/27b24881210b56bbaff7
   - __React Hot Loader v3__ - https://github.com/gaearon/react-hot-boilerplate/pull/61
