@@ -1,7 +1,7 @@
 import React from "react"
 import Route from "react-router/lib/Route"
 import IndexRoute from "react-router/lib/IndexRoute"
-import App from "../components/App"
+import App from "./components/App"
 
 function handleError(err) {
   // TODO: Error handling, do we return an Error component here?
@@ -10,13 +10,13 @@ function handleError(err) {
 }
 
 function resolveIndexComponent(nextState, cb) {
-  System.import("../components/Home")
+  System.import("./components/Home")
     .then((module) => cb(null, module.default))
     .catch(handleError)
 }
 
 function resolveAboutComponent(nextState, cb) {
-  System.import("../components/About")
+  System.import("./components/About")
     .then((module) => cb(null, module.default))
     .catch(handleError)
 }
