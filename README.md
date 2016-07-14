@@ -7,14 +7,15 @@ An ultra low dependency node v6 universal react boilerplate with an amazing dev 
 
 ## TOC
 
- - [About](https://github.com/ctrlplusb/react-universally#about)
- - [Features](https://github.com/ctrlplusb/react-universally#features)
- - [Overview](https://github.com/ctrlplusb/react-universally#overview)
- - [Project Structure](https://github.com/ctrlplusb/react-universally#project-structure)
- - [Server Runtime Dependencies](https://github.com/ctrlplusb/react-universally#server-runtime-dependencies)
- - [Deploy your very own Server Side Rendering React App in 5 easy steps](https://github.com/ctrlplusb/react-universally#deploy-your-very-own-server-side-rendering-react-app-in-5-easy-steps)
- - [npm script commands](https://github.com/ctrlplusb/react-universally#npm-script-commands)
- - [References](https://github.com/ctrlplusb/react-universally#references)
+ - [About](https://github.com/sebastian-software/react-universally#about)
+ - [Features](https://github.com/sebastian-software/react-universally#features)
+ - [Overview](https://github.com/sebastian-software/react-universally#overview)
+ - [Project Structure](https://github.com/sebastian-software/react-universally#project-structure)
+ - [Server Runtime Dependencies](https://github.com/sebastian-software/react-universally#server-runtime-dependencies)
+ - [Deploy your very own Server Side Rendering React App in 5 easy steps](https://github.com/sebastian-software/react-universally#deploy-your-very-own-server-side-rendering-react-app-in-5-easy-steps)
+ - [npm script commands](https://github.com/sebastian-software/react-universally#npm-script-commands)
+ - [References](https://github.com/sebastian-software/react-universally#references)
+
 
 ## About
 
@@ -40,7 +41,7 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 
 Redux/MobX, data persistence, test frameworks, and all the other bells and whistles have been explicitly excluded from this boilerplate.  It's up to you to decide what technologies you would like to add to your own implementation based upon your own needs, this boilerplate simply serves as a clean base upon which to do so.
 
-> If you would like to reference a more opinionated boilerplate, then have a look at [React, Univerally (Opinionated)](https://github.com/ctrlplusb/react-universally-opinionated). However, I must warn you that implementation is highly structured to meet my own development requirements.  I would recommend that you simply fish ideas from it and implement them in your own codebase.
+> If you would like to reference a more opinionated boilerplate, then have a look at [React, Univerally (Opinionated)](https://github.com/sebastian-software/react-universally-opinionated). However, I must warn you that implementation is highly structured to meet my own development requirements.  I would recommend that you simply fish ideas from it and implement them in your own codebase.
 
 This boilerplate uses Webpack 2 to produce bundles for both the client and the
 server code.  You will notice two Webpack configuration files that allow you to target the respective environments:
