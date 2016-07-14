@@ -31,6 +31,7 @@ app.use(helmet.contentSecurityPolicy({
   mediaSrc: [ "'none'" ],
   frameSrc: [ "'none'" ],
 }))
+
 app.use(helmet.xssFilter())
 app.use(helmet.frameguard("deny"))
 app.use(helmet.ieNoOpen())

@@ -47,7 +47,7 @@ function webpackConfigFactory({ target, mode })
     )
   }
 
-  console.log(`==> ℹ️  Creating webpack "${target}" config in "${mode}" mode`)
+  console.log(`Creating webpack "${target}" config in "${mode}" mode...`)
 
   const isDev = mode === "development"
   const isProd = mode === "production"
