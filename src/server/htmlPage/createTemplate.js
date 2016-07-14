@@ -51,10 +51,7 @@ function createTemplate(assets = {}) {
       <body>
         <div id="app">${reactRootElement}</div>
 
-        <script type="text/javascript">
-          window.APP_STATE=${serialize(initialState)};
-        </script>
-
+        <script type="text/javascript">APP_STATE=${serialize(initialState)};</script>
         <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
         ${javascriptScripts}
       </body>
