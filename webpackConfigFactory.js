@@ -160,7 +160,7 @@ function webpackConfigFactory({ target, mode })
 
     resolve: {
       // These extensions are tried when resolving a file.
-      extensions: [ ".js", ".json" ],
+      extensions: [ ".js", ".jsx", ".json" ],
     },
 
     plugins: removeEmpty([
