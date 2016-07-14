@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react"
 import Styles from "./AboutStyles.css"
 
 function About() {
@@ -8,7 +8,7 @@ function About() {
         Produced with ❤️ by <a href="https://github.com/sebastiansoft">Sebastian Software</a>
       </p>
     </article>
-  );
+  )
 }
 
-export default About;
+export default About

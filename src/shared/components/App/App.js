@@ -1,7 +1,7 @@
-import 'normalize.css/normalize.css';
+import "normalize.css/normalize.css"
 
-import React, { PropTypes } from 'react';
-import Link from 'react-router/lib/Link';
+import React, { PropTypes } from "react"
+import Link from "react-router/lib/Link"
 
 function App({ children }) {
   return (
@@ -20,11 +20,11 @@ function App({ children }) {
         {children}
       </div>
     </main>
-  );
+  )
 }
 
 App.propTypes = {
   children: PropTypes.node
-};
+}
 
-export default App;
+export default App

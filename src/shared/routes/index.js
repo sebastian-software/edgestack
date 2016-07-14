@@ -1,24 +1,24 @@
-import React from 'react';
-import Route from 'react-router/lib/Route';
-import IndexRoute from 'react-router/lib/IndexRoute';
-import App from '../components/App';
+import React from "react"
+import Route from "react-router/lib/Route"
+import IndexRoute from "react-router/lib/IndexRoute"
+import App from "../components/App"
 
 function handleError(err) {
   // TODO: Error handling, do we return an Error component here?
-  console.log('==> Error occurred loading dynamic route'); // eslint-disable-line no-console
-  console.log(err); // eslint-disable-line no-console
+  console.log("==> Error occurred loading dynamic route") // eslint-disable-line no-console
+  console.log(err) // eslint-disable-line no-console
 }
 
 function resolveIndexComponent(nextState, cb) {
-  System.import('../components/Home')
-    .then(module => cb(null, module.default))
-    .catch(handleError);
+  System.import("../components/Home")
+    .then((module) => cb(null, module.default))
+    .catch(handleError)
 }
 
 function resolveAboutComponent(nextState, cb) {
-  System.import('../components/About')
-    .then(module => cb(null, module.default))
-    .catch(handleError);
+  System.import("../components/About")
+    .then((module) => cb(null, module.default))
+    .catch(handleError)
 }
 
 /**
@@ -35,6 +35,6 @@ const routes = (
     <IndexRoute getComponent={resolveIndexComponent} />
     <Route path="about" getComponent={resolveAboutComponent} />
   </Route>
-);
+)
 
-export default routes;
+export default routes
