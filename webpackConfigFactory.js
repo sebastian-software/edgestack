@@ -66,6 +66,8 @@ function webpackConfigFactory({ target, mode })
     // We need to state that we are targetting "node" for our server bundle.
     target: ifServer("node", "web"),
 
+    stats: 'errors-only',
+
     // We have to set this to be able to use these items when executing a
     // server bundle.  Otherwise strangeness happens, like __dirname resolving
     // to '/'.  There is no effect on our client bundle.
