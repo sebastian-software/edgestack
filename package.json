@@ -27,6 +27,9 @@
     "url": "https://github.com/ctrlplusb/react-universally/issues"
   },
   "homepage": "https://github.com/ctrlplusb/react-universally#readme",
+  "engines": {
+    "node": ">= 6",
+  },
   "dependencies": {
     "compression": "1.6.2",
     "express": "4.14.0",
