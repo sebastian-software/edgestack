@@ -29,7 +29,7 @@
     "url": "https://github.com/sebastian-software/react-universally/issues"
   },
   "engines": {
-    "node": ">= 6",
+    "node": ">= 6"
   },
   "homepage": "https://github.com/sebastian-software/react-universally#readme",
   "dependencies": {
