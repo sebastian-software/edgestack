@@ -8,8 +8,8 @@ function App({ children }) {
   return (
     <div style={{ padding: '10px' }}>
       <div style={{ textAlign: 'center' }}>
-        <h1>React, Universally</h1>
-        <strong>A mildly opinionated ultra low dependency universal react boilerplate.</strong>
+        <h1>Advanced Boilerplate</h1>
+        <strong>A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience.</strong>
       </div>
       <div>
         <ul>
