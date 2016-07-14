@@ -7,7 +7,8 @@
     "clean": "rimraf build",
     "development": "node ./devServer",
     "build": "npm run clean && webpack --env.mode production --config webpack.client.config.js && webpack --env.mode production --config webpack.server.config.js",
-    "start": "node build/server/main.js"
+    "start": "node build/server/main.js",
+    "test": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
     "express": "4.14.0",
     "helmet": "2.1.1",
     "hpp": "0.2.1",
+    "postcss": "^5.1.0",
     "react": "15.2.1",
     "react-dom": "15.2.1",
     "react-router": "2.5.2",
