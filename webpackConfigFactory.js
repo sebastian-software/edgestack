@@ -297,14 +297,18 @@ function webpackConfigFactory({ target, mode })
 
           // When targetting the server we fake out the style loader as the
           // server can't handle the styles and doesn't care about them either..
-          ifServer({
-            loaders: [
-              "fake-style-loader",
+          ifServer(
+          {
+            loaders:
+            [
+              {
+                loader: "fake-style-loader"
+              },
               {
                 loader: "css-loader",
                 query: { sourceMap: true, modules: true }
               }
-            ],
+            ]
           }),
 
           // For a production client build we use the ExtractTextPlugin which
@@ -315,7 +319,7 @@ function webpackConfigFactory({ target, mode })
             // First: the loader(s) that should be used when the css is not extracted
             // Second: the loader(s) that should be used for converting the resource to a css exporting module
             // Unfortunately it seems like it does not support the new query syntax of webpack v2
-            loader: ExtractTextPlugin.extract("style-loader", "css-loader?modules&sourceMap"),
+            loader: ExtractTextPlugin.extract("style-loader", "css-loader?modules&sourceMap")
           }),
 
           // For a development client we will use a straight style & css loader
@@ -325,16 +329,18 @@ function webpackConfigFactory({ target, mode })
           {
             loaders:
             [
-              "style-loader",
+              {
+                loader: "style-loader"
+              },
               {
                 loader: "css-loader",
                 query: { sourceMap: true, modules: true }
-              },
-            ],
+              }
+            ]
           })
-        ),
-      ],
-    },
+        )
+      ]
+    }
   }
 }
 
