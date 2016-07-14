@@ -108,7 +108,7 @@ Even though we are using webpack to support our universal application we keep th
 
 ## NPM Commands
 
-### `npm run development`
+### `npm run dev`
 
 Starts a development server for both the client and server bundles. We use `react-hot-loader` v3 to power the hot reloading of the client bundle, whilst a filesystem watch is implemented to reload the server bundle when any changes have occurred.
 
