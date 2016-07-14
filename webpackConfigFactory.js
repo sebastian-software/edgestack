@@ -321,8 +321,10 @@ function webpackConfigFactory({ target, mode })
           // For a development client we will use a straight style & css loader
           // along with source maps.  This combo gives us a better development
           // experience.
-          ifDevClient({
-            loaders: [
+          ifDevClient(
+          {
+            loaders:
+            [
               "style-loader",
               {
                 loader: "css-loader",
