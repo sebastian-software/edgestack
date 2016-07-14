@@ -61,6 +61,7 @@ function webpackConfigFactory({ target, mode }) {
   return {
     // We need to state that we are targetting "node" for our server bundle.
     target: ifServer('node', 'web'),
+
     // We have to set this to be able to use these items when executing a
     // server bundle.  Otherwise strangeness happens, like __dirname resolving
     // to '/'.  There is no effect on our client bundle.
@@ -68,7 +69,9 @@ function webpackConfigFactory({ target, mode }) {
       __dirname: true,
       __filename: true,
     },
+
     // cache: !(isDev && isServer),
+
     // Anything listed in externals will not be included in our bundle.
     externals: removeEmpty([
       // We don't want our node_modules to be bundled with our server package,
@@ -84,6 +87,7 @@ function webpackConfigFactory({ target, mode }) {
         binaryDirs: ['normalize.css'],
       })),
     ]),
+
     devtool: ifElse(isServer || isDev)(
       // We want to be able to get nice stack traces when running our server
       // bundle.  To fully support this we'll also need to configure the
@@ -98,6 +102,7 @@ function webpackConfigFactory({ target, mode }) {
       // This form has almost no cost.
       'hidden-source-map'
     ),
+
     // Define our entry chunks for our bundle.
     entry: merge(
       {
@@ -108,6 +113,7 @@ function webpackConfigFactory({ target, mode }) {
         ]),
       }
     ),
+
     output: {
       // The dir in which our bundle should be output.
       path: path.resolve(__dirname, `./build/${target}`),
@@ -137,10 +143,12 @@ function webpackConfigFactory({ target, mode }) {
       // When in server mode we will output our bundle as a commonjs2 module.
       libraryTarget: ifServer('commonjs2', 'var'),
     },
+
     resolve: {
       // These extensions are tried when resolving a file.
       extensions: ['.js', '.json'],
     },
+
     plugins: removeEmpty([
       // Each key passed into DefinePlugin is an identifier.
       // The values for each key will be inlined into the code replacing any
@@ -220,6 +228,7 @@ function webpackConfigFactory({ target, mode }) {
         new ExtractTextPlugin('[name]-[chunkhash].css', { allChunks: true })
       ),
     ]),
+
     module: {
       loaders: [
         // Javascript
@@ -250,6 +259,7 @@ function webpackConfigFactory({ target, mode }) {
                 // modified preset.
                 'es2015-webpack',
               ],
+              compact: "auto"
             })
           ),
         },
@@ -271,12 +281,14 @@ function webpackConfigFactory({ target, mode }) {
               'css-loader',
             ],
           }),
+
           // For a production client build we use the ExtractTextPlugin which
           // will extract our CSS into CSS files.  The plugin needs to be
           // registered within the plugins section too.
           ifProdClient({
             loader: ExtractTextPlugin.extract('style-loader', 'css-loader'),
           }),
+
           // For a development client we will use a straight style & css loader
           // along with source maps.  This combo gives us a better development
           // experience.
