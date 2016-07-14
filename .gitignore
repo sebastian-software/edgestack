@@ -4,6 +4,7 @@
 # Build output folders
 build/
 public/
+dist/
 
 # Webpack build output of the js client
 backend/assets/client/
@@ -30,3 +31,7 @@ node_modules
 
 # Debug log from npm
 npm-debug.log
+
+# Cache file from ESLint
+.eslintcache
+
