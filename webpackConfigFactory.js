@@ -246,8 +246,10 @@ function webpackConfigFactory({ target, mode })
       ),
     ]),
 
-    module: {
-      loaders: [
+    module:
+    {
+      loaders:
+      [
         // Javascript
         {
           test: /\.js$/,
@@ -255,24 +257,30 @@ function webpackConfigFactory({ target, mode })
           exclude: [ /node_modules/, path.resolve(__dirname, "./build") ],
           query: merge(
             {
-              env: {
+              env:
+              {
                 development: {
                   plugins: [ "react-hot-loader/babel" ],
-                },
-              },
+                }
+              }
             },
 
-            ifServer({
+            ifServer(
+            {
               // We are running a node 6 server which has support for almost
               // all of the ES2015 syntax, therefore we only transpile JSX.
               presets: [ "react" ],
+
+              // Do not keep formatting (slower). Source maps are enough for inspection.
               compact: "auto"
             }),
 
-            ifClient({
+            ifClient(
+            {
               // For our clients code we will need to transpile our JS into
               // ES5 code for wider browser/device compatability.
-              presets: [
+              presets:
+              [
                 // JSX
                 "react",
 
@@ -280,20 +288,24 @@ function webpackConfigFactory({ target, mode })
                 // modified preset.
                 "es2015-webpack",
               ],
+
+              // Do not keep formatting (slower). Source maps are enough for inspection.
               compact: "auto"
             })
-          ),
+          )
         },
 
         // JSON
         {
           test: /\.json$/,
-          loader: "json-loader",
+          loader: "json-loader"
         },
 
         // CSS
         merge(
-          { test: /\.css$/ },
+          {
+            test: /\.css$/
+          },
 
           // When targetting the server we fake out the style loader as the
           // server can't handle the styles and doesn't care about them either..
