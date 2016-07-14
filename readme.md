@@ -51,23 +51,23 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 
 Data persistence, test frameworks, and all the other bells and whistles have been explicitly excluded from this boilerplate. It's up to you to decide what technologies you would like to add to your own implementation based upon your own needs, this boilerplate simply serves as a clean base upon which to do so.
 
-> If you would like to reference a more opinionated boilerplate, then have a look at [React, Univerally (Opinionated)](https://github.com/sebastian-software/react-universally-opinionated). However, I must warn you that implementation is highly structured to meet my own development requirements.  I would recommend that you simply fish ideas from it and implement them in your own codebase.
+> If you would like to reference a more opinionated boilerplate, then have a look at [React, Univerally (Opinionated)](https://github.com/sebastian-software/react-universally-opinionated). However, I must warn you that implementation is highly structured to meet my own development requirements. I would recommend that you simply fish ideas from it and implement them in your own codebase.
 
 This boilerplate uses Webpack 2 to produce bundles for both the client and the
-server code.  You will notice two Webpack configuration files that allow you to target the respective environments:
+server code. You will notice two Webpack configuration files that allow you to target the respective environments:
 
    - `webpack.client.config.js`
    - `webpack.server.config.js`
 
-Both of these then call into the `webpackConfigFactory.js` in order to generate their respective webpack configurations.  I've tried to keep the webpack configuration as centralized and well documented as possible as it can be a confusing topic at times.
+Both of these then call into the `webpackConfigFactory.js` in order to generate their respective webpack configurations. I've tried to keep the webpack configuration as centralized and well documented as possible as it can be a confusing topic at times.
 
-My reasoning for using webpack to bundle both the client and the server is to bring greater interop and extensibility to the table.  This will for instance allowing server bundles to handle React components that introduce things like CSS or Images (as and when you add the respective loaders).
+My reasoning for using webpack to bundle both the client and the server is to bring greater interop and extensibility to the table. This will for instance allowing server bundles to handle React components that introduce things like CSS or Images (as and when you add the respective loaders).
 
 Given that we are bundling our server code I have included the `source-map-support` module to ensure that we get nice stack traces when executing our code via node.
 
-All the source code is written in ES2015, and I have explicitly kept it to the true specification (bar JSX syntax).  As we are following this approach it is unnecessary for us to transpile our source code for the server into ES5, as `node` v6 has native support for almost all of the ES2015 syntax.  Our client (browser) bundle is however transpiled to ES5 code for maximum browser/device support.
+All the source code is written in ES2015, and I have explicitly kept it to the true specification (bar JSX syntax). As we are following this approach it is unnecessary for us to transpile our source code for the server into ES5, as `node` v6 has native support for almost all of the ES2015 syntax. Our client (browser) bundle is however transpiled to ES5 code for maximum browser/device support.
 
-The application configuration is supported by the `dotenv` module and it requires you to create a `.env` file in the project root (you can use the `.env_example` as a base).  The `.env` file has been explicitly ignored from git as it will typically contain environment sensitive/specific information.  In the usual case your continuous deployment tool of choice should configure the specific `.env` file that is needed for a target environment.
+The application configuration is supported by the `dotenv` module and it requires you to create a `.env` file in the project root (you can use the `.env_example` as a base). The `.env` file has been explicitly ignored from git as it will typically contain environment sensitive/specific information. In the usual case your continuous deployment tool of choice should configure the specific `.env` file that is needed for a target environment.
 
 
 
@@ -95,7 +95,7 @@ The application configuration is supported by the `dotenv` module and it require
 
 ## Server Runtime Dependencies
 
-Even though we are using webpack to support our universal application we keep the webpack runtime out of our production runtime environment.  Everything is prebundled in prep for production execution.  Therefore we only have the following runtime dependencies:
+Even though we are using webpack to support our universal application we keep the webpack runtime out of our production runtime environment. Everything is prebundled in prep for production execution. Therefore we only have the following runtime dependencies:
 
   - `node` v6
   - `compression` - Gzip compression support for express server responses.
@@ -113,7 +113,7 @@ Even though we are using webpack to support our universal application we keep th
 
 ### `npm run development`
 
-Starts a development server for both the client and server bundles.  We use `react-hot-loader` v3 to power the hot reloading of the client bundle, whilst a filesystem watch is implemented to reload the server bundle when any changes have occurred.
+Starts a development server for both the client and server bundles. We use `react-hot-loader` v3 to power the hot reloading of the client bundle, whilst a filesystem watch is implemented to reload the server bundle when any changes have occurred.
 
 ### `npm run build`
 
@@ -140,7 +140,7 @@ Warning: [react-router] You cannot change <Router history>;
 Warning: [react-router] You cannot change <Router routes>;
 ```
 
-Fret not! This is a known issue when using React Hot Loader 3 alongside React Router.  It is being looked in to.  Everything still works, unfortunately you just get a few warnings alongside your changes.  They are harmless though, promise. :)
+Fret not! This is a known issue when using React Hot Loader 3 alongside React Router. It is being looked in to. Everything still works, unfortunately you just get a few warnings alongside your changes. They are harmless though, promise. :)
 
 
 
