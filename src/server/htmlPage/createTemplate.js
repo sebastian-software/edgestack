@@ -4,7 +4,7 @@ import serialize from "serialize-javascript"
 function cssImports(css) {
   return css
     .map((cssPath) =>
-      `<link href="${cssPath}" media="screen, projection" rel="stylesheet" type="text/css" />`
+      `<link href="${cssPath}" rel="stylesheet"/>`
     )
     .join("\n")
 }
@@ -13,7 +13,7 @@ function cssImports(css) {
 function javascriptImports(javascript) {
   return javascript
     .map((scriptPath) =>
-      `<script type="text/javascript" src="${scriptPath}"></script>`
+      `<script src="${scriptPath}"></script>`
     )
     .join("\n")
 }
