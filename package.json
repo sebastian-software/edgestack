@@ -19,7 +19,9 @@
     "universal",
     "javascript",
     "express",
-    "webpack"
+    "webpack",
+    "postcss",
+    "cssmodules"
   ],
   "author": "Sebastian Software <s.werner@sebastian-software.de>",
   "license": "MIT",
