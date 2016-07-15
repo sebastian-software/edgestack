@@ -4,7 +4,7 @@
   "description": "React Universally with PostCSS",
   "main": "build/server/main.js",
   "scripts": {
-    "dev": "npm run start:dev",
+    "dev": "npm run dev:start",
     "dev:start": "node ./devServer",
     "prod": "npm run prod:build && npm run prod:start",
     "prod:build": "npm run prod:clean && npm run prod:build:client && npm run prod:build:server",
