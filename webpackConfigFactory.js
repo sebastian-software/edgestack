@@ -112,22 +112,16 @@ function webpackConfigFactory({ target, mode })
       })),
     ]),
 
-    devtool: ifElse(isServer || isDev)(
-
-      // We want to be able to get nice stack traces when running our server
-      // bundle.  To fully support this we'll also need to configure the
-      // `node-source-map-support` module to execute at the start of the server
-      // bundle.  This module will allow the node to make use of the
-      // source maps.
-      // We also want to be able to link to the source in chrome dev tools
-      // whilst we are in development mode. :)
-      "source-map",
-
-      // When in production client mode we don't want any source maps to
-      // decrease our payload sizes.
-      // This form has almost no cost.
-      "hidden-source-map"
-    ),
+    // See also: https://webpack.github.io/docs/configuration.html#devtool
+    //
+    // We want to be able to get nice stack traces when running our server
+    // bundle.  To fully support this we'll also need to configure the
+    // `node-source-map-support` module to execute at the start of the server
+    // bundle.  This module will allow the node to make use of the
+    // source maps.
+    //
+    // We also want to be able to link to the source in Chrome dev tools
+    devtool: "source-map",
 
     // Define our entry chunks for our bundle.
     entry: merge(
