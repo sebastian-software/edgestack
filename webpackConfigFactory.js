@@ -267,7 +267,7 @@ function webpackConfigFactory({ target, mode })
 
     postcss: function () {
       return [
-        $css.devtools,
+        $css.devtools({silent: true}),
 
         // Discard comments in your CSS files with PostCSS.
         // https://github.com/ben-eb/postcss-discard-comments
