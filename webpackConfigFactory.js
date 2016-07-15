@@ -19,6 +19,9 @@ const autoprefixerSettings =
 
 $css.autoprefixer = autoprefixer
 
+// Load Lost Grid and register with plugin loader
+const lost = require("lost")
+$css.lost = lost
 
 // @see https://github.com/motdotla/dotenv
 const dotenv = require("dotenv")
@@ -301,27 +304,26 @@ function webpackConfigFactory({ target, mode })
 
         // Support for CSS Media Queries Level 4: https://drafts.csswg.org/mediaqueries/#mq-range-context
         $css.mediaMinmax,
-
+  */
         $css.nested,
         $css.pseudoClassAnyLink,
         $css.selectorMatches,
         $css.lost,
-        $css.responsiveType,
         $css.pseudoelements,
-*/
+
         $css.autoprefixer(autoprefixerSettings),
 
-        /*$css.csso({
+        $css.svgo,
+
+        /*
+        $css.csso({
           sourceMap: true,
           restructure: false
         }),*/
 
-/*
-        $css.svgo,
         $css.reporter({
           clearMessages: true
         })
-       */
       ]
     },
 

@@ -3,4 +3,10 @@ $textColor: orange;
 .intro{
   color: $textColor;
   display: flex;
+
+  a:hover{
+    background: blue;
+    color: white;
+  }
 }
+

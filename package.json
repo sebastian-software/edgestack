@@ -72,6 +72,7 @@
     "fake-style-loader": "^1.0.1",
     "json-loader": "^0.5.4",
     "load-plugins": "^2.1.0",
+    "lost": "^7.0.3",
     "node-notifier": "^4.6.0",
     "normalize.css": "^4.2.0",
     "path": "^0.12.7",
