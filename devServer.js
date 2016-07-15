@@ -163,6 +163,7 @@ class HotServers {
         title: "Webpack",
         message: "Error: Webpack config invalid, check console for error",
       })
+      console.error(err)
 
       return
     }
