@@ -1,6 +1,7 @@
 import React from "react"
-import Button from "./Button"
 import Markdown from "react-markdown"
+
+import Button from "./Button"
 import Styles from "./About.css"
 
 const content = `
