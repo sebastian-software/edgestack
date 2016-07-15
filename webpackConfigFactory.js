@@ -448,7 +448,8 @@ function webpackConfigFactory({ target, mode })
             // First: the loader(s) that should be used when the css is not extracted
             // Second: the loader(s) that should be used for converting the resource to a css exporting module
             // Note: Unfortunately it seems like it does not support the new query syntax of webpack v2
-            loader: ExtractTextPlugin.extract("style-loader", "css-loader?modules&sourceMap!postcss-loader")
+            // See also: https://github.com/webpack/extract-text-webpack-plugin/issues/196
+            loader: ExtractTextPlugin.extract("style-loader", "css-loader?modules&sourceMap&minimize=false&localIdentName=[local]-[hash:base62:6]!postcss-loader")
           }),
 
           // For a development client we will use a straight style & css loader
