@@ -171,7 +171,11 @@ function webpackConfigFactory({ target, mode })
       libraryTarget: ifServer("commonjs2", "var"),
     },
 
-    resolve: {
+    resolve:
+    {
+      // Enable new jsnext:main field for requiring files
+      mainFields: [ "jsnext:main", "main" ],
+
       // These extensions are tried when resolving a file.
       extensions: [ ".js", ".jsx", ".json" ],
     },
