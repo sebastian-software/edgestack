@@ -284,13 +284,28 @@ function webpackConfigFactory({ target, mode })
         // https://github.com/andyjansson/postcss-sassy-mixins
         $css.sassyMixins,
 
-        // Lost Grid System
+        // PostCSS fractional grid system built with calc(). Supports masonry, vertical, and waffle grids.
+        // https://github.com/peterramsing/lost
         $css.lost,
 
+        // PostCSS plugin to insert 3D hack before will-change property
+        // https://github.com/postcss/postcss-will-change
         $css.willChange,
+
+        // PostCSS plugin to reduce calc()
+        // Note: Important to keep this after mixin/variable processing
+        // https://github.com/postcss/postcss-calc
         $css.calc,
+
+        // PostCSS plugin to fix up CSS gradients with transparency for older browsers
+        // https://github.com/gilmoreorless/postcss-gradient-transparency-fix
         $css.gradientTransparencyFix,
+
+        // PostCSS plugin to replace easing names from http://easings.net to `cubic-bezier()`.
+        // https://github.com/postcss/postcss-easings
         $css.easings,
+
+
         $css.colorFunction,
         $css.colorHexAlpha,
         $css.flexbugsFixes,
