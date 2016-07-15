@@ -3,6 +3,16 @@ import Button from "./Button"
 import Markdown from "react-markdown"
 import Styles from "./About.css"
 
+const content = `
+# Hello from Markdown
+
+This is a paragraph rendered using Markdown.
+
+* First Argument
+* Second Argument
+* Third Argument
+`
+
 function About() {
   return (
     <article>
@@ -10,7 +20,7 @@ function About() {
         Produced with ❤️ by <a href="https://github.com/sebastiansoft">Sebastian Software</a>
         <Button onClick={() => alert("clicked")}>Click me</Button>
       </p>
-      <Markdown source="# Hello from Markdown"></Markdown>
+      <Markdown source={content}></Markdown>
     </article>
   )
 }
