@@ -267,60 +267,51 @@ function webpackConfigFactory({ target, mode })
 
     postcss: function () {
       return [
+        // Remove all comments... we don't need them further down the line
+        // which improves performance (reduces number of AST nodes)
         $css.discardComments({
           removeAll: true
         }),
 
+        // PostCSS plugin for Sass-like variables, conditionals, and iteratives
+        // Supports local variables + @for/@each inspired by Sass
+        // https://github.com/jonathantneal/postcss-advanced-variables
         $css.advancedVariables({
           variables: {}
         }),
+
+        // PostCSS plugin for sass-like mixins
+        // https://github.com/andyjansson/postcss-sassy-mixins
         $css.sassyMixins,
+
+        // Lost Grid System
+        $css.lost,
+
         $css.willChange,
-
-
-        // TODO
-        // $css.fontSystem.default(),
-        /*
-        $css.layoutSelector.default({
-          layout: "landscape"
-        }),
-        */
-
-        /*
-        $css.assets({
-          relative: "src/"
-        }),
-        */
-
-/*
         $css.calc,
         $css.gradientTransparencyFix,
         $css.easings,
         $css.colorFunction,
         $css.colorHexAlpha,
         $css.flexbugsFixes,
-        $css.clearfix,
         $css.zindex,
 
         // Support for CSS Media Queries Level 4: https://drafts.csswg.org/mediaqueries/#mq-range-context
         $css.mediaMinmax,
-  */
+
         $css.nested,
         $css.pseudoClassAnyLink,
         $css.selectorMatches,
-        $css.lost,
+
         $css.pseudoelements,
 
+        // Adds prefixes + fixes specific browser issues
         $css.autoprefixer(autoprefixerSettings),
 
+        // Compresses inline SVG
         $css.svgo,
 
-        /*
-        $css.csso({
-          sourceMap: true,
-          restructure: false
-        }),*/
-
+        // Log PostCSS messages to the console
         $css.reporter({
           clearMessages: true
         })
