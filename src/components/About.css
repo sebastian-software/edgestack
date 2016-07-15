@@ -1,4 +1,6 @@
+$textColor: orange;
+
 .intro{
-  color: red;
+  color: $textColor;
   display: flex;
 }
