@@ -1,0 +1,45 @@
+.root{
+  box-sizing: border-box;
+  font-weight: bold;
+  line-height: 1.1em;
+  border-radius: 2px;
+  margin-bottom: 12px;
+  cursor: pointer;
+
+  &::-moz-focus-inner {
+    border: 0
+  }
+
+  &:focus {
+    outline: none
+  }
+}
+
+.block{
+  display: block;
+  width: 100%;
+}
+
+.lg{
+  font-size: 18px;
+  padding: 18px 18px 18px 18px;
+  min-height: 74px;
+}
+
+.md{
+  font-size: 16px;
+  padding: 12px 18px 12px 18px;
+  min-height: 50px;
+}
+
+.sm{
+  font-size: 16px;
+  padding: 6px 12px 6px 12px;
+  min-height: 38px;
+}
+
+.xs{
+  font-size: 14px;
+  padding: 3px 9px 3px 9px;
+  min-height: 26px;
+}
