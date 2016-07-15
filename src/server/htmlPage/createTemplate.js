@@ -36,7 +36,7 @@ function createTemplate(assets = {}) {
     const { title, meta = {}, initialState = {}, reactRootElement } = content
 
     return `
-    <!DOCTYPE html>
+    <!doctype html>
     <html lang="en">
       <head>
         <meta charset="utf-8" >
@@ -51,7 +51,7 @@ function createTemplate(assets = {}) {
       <body>
         <div id="app">${reactRootElement}</div>
 
-        <script type="text/javascript">APP_STATE=${serialize(initialState)};</script>
+        <script>APP_STATE=${serialize(initialState)};</script>
         <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
         ${javascriptScripts}
       </body>

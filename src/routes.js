@@ -5,7 +5,7 @@ import App from "./components/App"
 
 function handleError(err) {
   // TODO: Error handling, do we return an Error component here?
-  console.log("==> Error occurred loading dynamic route") // eslint-disable-line no-console
+  console.log("Error occurred loading dynamic route") // eslint-disable-line no-console
   console.log(err) // eslint-disable-line no-console
 }
 
