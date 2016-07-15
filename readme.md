@@ -44,6 +44,7 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
   - A development and optimized production configuration.
   - Easy environment configuration via `dotenv` files.
   - ESLint v3 integrated with sensible default configuration.
+  - Markdown rendering for Components.
 
 
 ## Overview
