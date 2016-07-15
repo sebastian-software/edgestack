@@ -94,7 +94,6 @@
     "postcss-reporter": "^1.4.1",
     "postcss-sassy-mixins": "^2.0.0",
     "postcss-selector-matches": "^2.0.1",
-    "postcss-svgo": "^2.1.4",
     "postcss-will-change": "^1.1.0",
     "postcss-zindex": "^2.1.1",
     "react-hot-loader": "^3.0.0-beta.2",

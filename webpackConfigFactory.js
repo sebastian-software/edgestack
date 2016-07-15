@@ -267,6 +267,10 @@ function webpackConfigFactory({ target, mode })
 
     postcss: function () {
       return [
+        $css.devtools,
+
+        // Discard comments in your CSS files with PostCSS.
+        // https://github.com/ben-eb/postcss-discard-comments
         // Remove all comments... we don't need them further down the line
         // which improves performance (reduces number of AST nodes)
         $css.discardComments({
@@ -280,51 +284,72 @@ function webpackConfigFactory({ target, mode })
           variables: {}
         }),
 
-        // PostCSS plugin for sass-like mixins
+        // Sass-like mixins
         // https://github.com/andyjansson/postcss-sassy-mixins
         $css.sassyMixins,
 
-        // PostCSS fractional grid system built with calc(). Supports masonry, vertical, and waffle grids.
+        // Fractional grid system built with calc(). Supports masonry, vertical, and waffle grids.
         // https://github.com/peterramsing/lost
         $css.lost,
 
-        // PostCSS plugin to insert 3D hack before will-change property
+        // Insert 3D hack before will-change property
         // https://github.com/postcss/postcss-will-change
         $css.willChange,
 
-        // PostCSS plugin to reduce calc()
+        // Reduce calc()
         // Note: Important to keep this after mixin/variable processing
         // https://github.com/postcss/postcss-calc
         $css.calc,
 
-        // PostCSS plugin to fix up CSS gradients with transparency for older browsers
+        // Fix up CSS gradients with transparency for older browsers
         // https://github.com/gilmoreorless/postcss-gradient-transparency-fix
         $css.gradientTransparencyFix,
 
-        // PostCSS plugin to replace easing names from http://easings.net to `cubic-bezier()`.
+        // Replace easing names from http://easings.net to `cubic-bezier()`.
         // https://github.com/postcss/postcss-easings
         $css.easings,
 
-
+        // Transform W3C CSS color function to more compatible CSS
+        // https://github.com/postcss/postcss-color-function
         $css.colorFunction,
+
+        // Transform RGBA hexadecimal notations (#RRGGBBAA or #RGBA) to more compatible CSS (rgba())
+        // https://github.com/postcss/postcss-color-hex-alpha
         $css.colorHexAlpha,
+
+        // Tries to fix all of flexbug's issues
+        // https://github.com/luisrudge/postcss-flexbugs-fixes
         $css.flexbugsFixes,
+
+        // Reduce z-index values with PostCSS.
+        // https://github.com/ben-eb/postcss-zindex
         $css.zindex,
 
+        // Writing simple and graceful Media Queries!
         // Support for CSS Media Queries Level 4: https://drafts.csswg.org/mediaqueries/#mq-range-context
+        // https://github.com/postcss/postcss-media-minmax
         $css.mediaMinmax,
 
+        // Unwrap nested rules like how Sass does it.
+        // https://github.com/postcss/postcss-nested
         $css.nested,
+
+        // Use the proposed :any-link pseudo-class in CSS
+        // https://github.com/jonathantneal/postcss-pseudo-class-any-link
         $css.pseudoClassAnyLink,
+
+        // Transform :matches() W3C CSS pseudo class to more compatible CSS (simpler selectors)
+        // https://github.com/postcss/postcss-selector-matches
         $css.selectorMatches,
 
+        // Add single and double colon peudo selectors
+        // Normalizes e.g. `::before` to `:before` for wider browser support
+        // https://github.com/axa-ch/postcss-pseudoelements
         $css.pseudoelements,
 
-        // Adds prefixes + fixes specific browser issues
+        // Parse CSS and add vendor prefixes to rules by Can I Use
+        // https://github.com/postcss/autoprefixer
         $css.autoprefixer(autoprefixerSettings),
-
-        // Compresses inline SVG
-        $css.svgo,
 
         // Log PostCSS messages to the console
         $css.reporter({
