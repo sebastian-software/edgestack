@@ -426,7 +426,13 @@ function webpackConfigFactory({ target, mode })
               },
               {
                 loader: "css-loader",
-                query: { sourceMap: true, modules: true }
+                query:
+                {
+                  sourceMap: true,
+                  modules: true,
+                  localIdentName: "[local]-[hash:base62:6]",
+                  minimize: false
+                }
               },
               {
                 loader: "postcss-loader"
@@ -457,7 +463,13 @@ function webpackConfigFactory({ target, mode })
               },
               {
                 loader: "css-loader",
-                query: { sourceMap: true, modules: true }
+                query:
+                {
+                  sourceMap: true,
+                  modules: true,
+                  localIdentName: "[local]-[hash:base62:6]",
+                  minimize: false
+                }
               },
               {
                 loader: "postcss-loader"
