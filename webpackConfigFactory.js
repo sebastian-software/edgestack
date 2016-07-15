@@ -366,7 +366,7 @@ function webpackConfigFactory({ target, mode })
       [
         // Javascript
         {
-          test: /\.js$/,
+          test: /\.jsx?$/,
           loader: "babel-loader",
           exclude: [ /node_modules/, path.resolve(__dirname, "./build") ],
           query: merge(
