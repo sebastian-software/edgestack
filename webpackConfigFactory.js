@@ -2,6 +2,7 @@
 
 const path = require("path")
 const webpack = require("webpack")
+const autoprefixer = require("autoprefixer")
 const AssetsPlugin = require("assets-webpack-plugin")
 const nodeExternals = require("webpack-node-externals")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
@@ -248,6 +249,11 @@ function webpackConfigFactory({ target, mode })
       ),
     ]),
 
+
+    postcss: function () {
+      return [autoprefixer];
+    },
+
     module:
     {
       loaders:
@@ -321,6 +327,9 @@ function webpackConfigFactory({ target, mode })
               {
                 loader: "css-loader",
                 query: { sourceMap: true, modules: true }
+              },
+              {
+                loader: "postcss-loader"
               }
             ]
           }),
@@ -332,8 +341,8 @@ function webpackConfigFactory({ target, mode })
           {
             // First: the loader(s) that should be used when the css is not extracted
             // Second: the loader(s) that should be used for converting the resource to a css exporting module
-            // Unfortunately it seems like it does not support the new query syntax of webpack v2
-            loader: ExtractTextPlugin.extract("style-loader", "css-loader?modules&sourceMap")
+            // Note: Unfortunately it seems like it does not support the new query syntax of webpack v2
+            loader: ExtractTextPlugin.extract("style-loader", "css-loader?modules&sourceMap!postcss-loader")
           }),
 
           // For a development client we will use a straight style & css loader
@@ -349,6 +358,9 @@ function webpackConfigFactory({ target, mode })
               {
                 loader: "css-loader",
                 query: { sourceMap: true, modules: true }
+              },
+              {
+                loader: "postcss-loader"
               }
             ]
           })
