@@ -6,22 +6,34 @@ const AssetsPlugin = require("assets-webpack-plugin")
 const nodeExternals = require("webpack-node-externals")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
-const loadPlugins = require("load-plugins")
-const $css = loadPlugins("postcss-*")
+const $css = {
+  discardComments: require("postcss-discard-comments"),
+  advancedVariables: require("postcss-advanced-variables"),
+  sassyMixins: require("postcss-sassy-mixins"),
+  lost: require("lost"),
+  willChange: require("postcss-will-change"),
+  calc: require("postcss-calc"),
+  gradientTransparencyFix: require("postcss-gradient-transparency-fix"),
+  easings: require("postcss-easings"),
+  colorFunction: require("postcss-color-function"),
+  colorHexAlpha: require("postcss-color-hex-alpha"),
+  flexbugsFixes: require("postcss-flexbugs-fixes"),
+  zindex: require("postcss-zindex"),
+  mediaMinmax: require("postcss-media-minmax"),
+  nested: require("postcss-nested"),
+  pseudoClassAnyLink: require("postcss-pseudo-class-any-link"),
+  selectorMatches: require("postcss-selector-matches"),
+  pseudoelements: require("postcss-pseudoelements"),
+  autoprefixer: require("autoprefixer"),
+  reporter: require("postcss-reporter")
+}
 
-const autoprefixer = require("autoprefixer")
 const autoprefixerSettings =
 {
   browsers: [ "> 2% in DE", "IE 10", "IE 11", "last 3 Chrome versions", "last 3 Firefox versions" ],
   cascade: false,
   flexbox: "no-2009"
 }
-
-$css.autoprefixer = autoprefixer
-
-// Load Lost Grid and register with plugin loader
-const lost = require("lost")
-$css.lost = lost
 
 // @see https://github.com/motdotla/dotenv
 const dotenv = require("dotenv")
@@ -268,9 +280,11 @@ function webpackConfigFactory({ target, mode })
 
     postcss: function () {
       return [
+        /*
         $css.devtools({
           silent: true
         }),
+        */
 
         // Discard comments in your CSS files with PostCSS.
         // https://github.com/ben-eb/postcss-discard-comments
