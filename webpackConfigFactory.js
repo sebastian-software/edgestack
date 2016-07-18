@@ -259,7 +259,10 @@ function webpackConfigFactory({ target, mode })
       // This is a production client so we will extract our CSS into
       // CSS files.
       ifProdClient(
-        new ExtractTextPlugin("[name]-[chunkhash].css", { allChunks: true })
+        new ExtractTextPlugin({
+          filename: "[name]-[chunkhash].css",
+          allChunks: true
+        })
       ),
     ]),
 
@@ -453,7 +456,10 @@ function webpackConfigFactory({ target, mode })
             // Second: the loader(s) that should be used for converting the resource to a css exporting module
             // Note: Unfortunately it seems like it does not support the new query syntax of webpack v2
             // See also: https://github.com/webpack/extract-text-webpack-plugin/issues/196
-            loader: ExtractTextPlugin.extract("style-loader", "css-loader?modules&sourceMap&minimize=false&localIdentName=[local]-[hash:base62:6]!postcss-loader")
+            loader: ExtractTextPlugin.extract({
+              notExtractLoader: "style-loader",
+              loader: "css-loader?modules&sourceMap&minimize=false&localIdentName=[local]-[hash:base62:6]!postcss-loader"
+            })
           }),
 
           // For a development client we will use a straight style & css loader
