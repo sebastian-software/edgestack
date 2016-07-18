@@ -27,10 +27,10 @@ function metaTags(meta) {
 
 // :: Assets -> Content -> String
 function createTemplate(assets = {}) {
-  const { css = [], javascript = [] } = assets
+  const { css = [], js = [] } = assets
 
   const cssLinks = cssImports(css)
-  const javascriptScripts = javascriptImports(javascript)
+  const jsScripts = jsImports(js)
 
   return function pageTemplate(content = {}) {
     const { title, meta = {}, initialState = {}, reactRootElement } = content
