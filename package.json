@@ -1,6 +1,6 @@
 {
   "name": "advanced-boilerplate",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "React Universally with PostCSS",
   "main": "build/server/main.js",
   "scripts": {
