@@ -73,7 +73,7 @@
     "eslint-plugin-import": "^1.11.0",
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^5.2.2",
-    "extract-text-webpack-plugin": "^2.0.0-beta.1",
+    "extract-text-webpack-plugin": "^2.0.0-beta.2",
     "fake-style-loader": "^1.0.1",
     "json-loader": "^0.5.4",
     "load-plugins": "^2.1.0",
