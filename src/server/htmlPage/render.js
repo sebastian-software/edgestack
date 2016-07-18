@@ -6,19 +6,19 @@ import ClientBundleAssets from "../../../build/client/assets.json"
 
 // This takes the assets.json file that was output by webpack for our client
 // bundle and converts it into an object that contains all the paths to our
-// javascript and css files.  Doing this is required as for production
+// js and css files.  Doing this is required as for production
 // configurations we add a hash to our filenames, therefore we won't know the
 // paths of the output by webpack unless we read them from the assets.json file.
 const chunks = Object.keys(ClientBundleAssets).map((key) => ClientBundleAssets[key])
 const assets = chunks.reduce((acc, chunk) => {
   if (chunk.js) {
-    acc.javascript.push(chunk.js)
+    acc.js.push(chunk.js)
   }
   if (chunk.css) {
     acc.css.push(chunk.css)
   }
   return acc
-}, { javascript: [], css: [] })
+}, { js: [], css: [] })
 
 // We prepare a template using the asset data.
 const template = createTemplate(assets)
