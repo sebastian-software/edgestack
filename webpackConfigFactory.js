@@ -129,7 +129,7 @@ function webpackConfigFactory({ target, mode })
       main: removeEmpty([
         ifDevClient("react-hot-loader/patch"),
         ifDevClient(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
-        path.resolve(__dirname, `./src/${target}/index.js`),
+        `./src/${target}/index.js`,
       ]),
     }),
 
