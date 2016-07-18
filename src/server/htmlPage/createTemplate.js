@@ -10,7 +10,7 @@ function cssImports(css) {
 }
 
 // :: [String] -> [String]
-function javascriptImports(javascript) {
+function jsImports(javascript) {
   return javascript
     .map((scriptPath) =>
       `<script src="${scriptPath}"></script>`
@@ -53,7 +53,7 @@ function createTemplate(assets = {}) {
 
         <script>APP_STATE=${serialize(initialState)};</script>
         <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-        ${javascriptScripts}
+        ${jsScripts}
       </body>
     </html>`
   }
