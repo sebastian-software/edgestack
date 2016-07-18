@@ -88,6 +88,7 @@ class HotServer {
         title: "Server",
         message: "Error: Bundle invalid, check console for error",
       })
+      console.error(err)
     }
   }
 
