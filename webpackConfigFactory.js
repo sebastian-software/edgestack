@@ -60,7 +60,7 @@ function merge()
   )
 }
 
-function webpackConfigFactory({ target, mode })
+function webpackConfigFactory({ target, mode, root })
 {
   if (!target || !~[ "client", "server" ].findIndex((valid) => target === valid))
   {
@@ -148,7 +148,7 @@ function webpackConfigFactory({ target, mode })
     output:
     {
       // The dir in which our bundle should be output.
-      path: `./build/${target}`,
+      path: path.resolve(root, `./build/${target}`),
 
       // The filename format for our bundle's entries.
       filename: ifProdClient(
@@ -223,7 +223,7 @@ function webpackConfigFactory({ target, mode })
       new AssetsPlugin(
       {
         filename: "assets.json",
-        path: `./build/${target}`,
+        path: path.resolve(root, `./build/${target}`),
       }),
 
       // We don't want webpack errors to occur during development as it will
@@ -383,7 +383,7 @@ function webpackConfigFactory({ target, mode })
         {
           test: /\.jsx?$/,
           loader: "babel-loader",
-          exclude: [ /node_modules/, "./build" ],
+          exclude: [ /node_modules/, path.resolve(root, "./build") ],
           query: merge(
             {
               env:
