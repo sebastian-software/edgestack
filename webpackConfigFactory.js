@@ -210,15 +210,11 @@ function webpackConfigFactory({ target, mode, root }, { json })
       mainFields: [ "jsnext:main", "main" ],
 
       // These extensions are tried when resolving a file.
-<<<<<<< HEAD
-      extensions: [ ".js", ".jsx", ".json" ],
-=======
       extensions: [
         '.js',
         '.jsx',
         '.json',
-      ],
->>>>>>> dcab988
+      ]
     },
 
     plugins: removeEmpty([
@@ -300,16 +296,10 @@ function webpackConfigFactory({ target, mode, root }, { json })
       // This is a production client so we will extract our CSS into
       // CSS files.
       ifProdClient(
-<<<<<<< HEAD
         new ExtractTextPlugin({
           filename: "[name]-[chunkhash].css",
           allChunks: true
         })
-=======
-        // This is a production client so we will extract our CSS into
-        // CSS files.
-        new ExtractTextPlugin({ filename: '[name]-[chunkhash].css', allChunks: true })
->>>>>>> dcab988
       ),
     ]),
 
@@ -417,13 +407,8 @@ function webpackConfigFactory({ target, mode, root }, { json })
         // Javascript
         {
           test: /\.jsx?$/,
-<<<<<<< HEAD
           loader: "babel-loader",
           exclude: [ /node_modules/, path.resolve(root, "./build") ],
-=======
-          loader: 'babel-loader',
-          exclude: [/node_modules/, path.resolve(__dirname, './build')],
->>>>>>> dcab988
           query: merge(
             {
               env:
