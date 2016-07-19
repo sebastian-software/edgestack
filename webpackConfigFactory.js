@@ -60,7 +60,7 @@ function merge()
   )
 }
 
-function webpackConfigFactory({ target, mode, root })
+function webpackConfigFactory({ target, mode, root }, { json })
 {
   if (!target || !~[ "client", "server" ].findIndex((valid) => target === valid))
   {
@@ -77,6 +77,23 @@ function webpackConfigFactory({ target, mode, root })
   }
 
   // console.log(`Creating webpack "${target}" config in "${mode}" mode...`)
+  if (!json) {
+    // Our bundle is outputing json for bundle analysis, therefore we don't
+    // want to do this console output as it will interfere with the json output.
+    //
+    // You can run a bundle analysis by executing the following:
+    //
+    // $(npm bin)/webpack \
+    //   --env.mode production \
+    //   --config webpack.client.config.js \
+    //   --json \
+    //   > build/client/analysis.json
+    //
+    // And then upload the build/client/analysis.json to http://webpack.github.io/analyse/
+    // This allows you to analyse your webpack bundle to make sure it is
+    // optimal.
+    console.log(`Creating webpack "${target}" config in "${mode}" mode`);
+  }
 
   const isDev = mode === "development"
   const isProd = mode === "production"
@@ -193,7 +210,15 @@ function webpackConfigFactory({ target, mode, root })
       mainFields: [ "jsnext:main", "main" ],
 
       // These extensions are tried when resolving a file.
+<<<<<<< HEAD
       extensions: [ ".js", ".jsx", ".json" ],
+=======
+      extensions: [
+        '.js',
+        '.jsx',
+        '.json',
+      ],
+>>>>>>> dcab988
     },
 
     plugins: removeEmpty([
@@ -275,10 +300,16 @@ function webpackConfigFactory({ target, mode, root })
       // This is a production client so we will extract our CSS into
       // CSS files.
       ifProdClient(
+<<<<<<< HEAD
         new ExtractTextPlugin({
           filename: "[name]-[chunkhash].css",
           allChunks: true
         })
+=======
+        // This is a production client so we will extract our CSS into
+        // CSS files.
+        new ExtractTextPlugin({ filename: '[name]-[chunkhash].css', allChunks: true })
+>>>>>>> dcab988
       ),
     ]),
 
@@ -386,8 +417,13 @@ function webpackConfigFactory({ target, mode, root })
         // Javascript
         {
           test: /\.jsx?$/,
+<<<<<<< HEAD
           loader: "babel-loader",
           exclude: [ /node_modules/, path.resolve(root, "./build") ],
+=======
+          loader: 'babel-loader',
+          exclude: [/node_modules/, path.resolve(__dirname, './build')],
+>>>>>>> dcab988
           query: merge(
             {
               env:
