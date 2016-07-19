@@ -189,7 +189,7 @@ function webpackConfigFactory({ target, mode, root }, { json })
         "[name].js"
       ),
 
-      chunkFilename: "[name]-[chunkhash].js",
+      chunkFilename: "chunk-[name]-[chunkhash].js",
 
       // This is the web path under which our webpack bundled output should
       // be considered as being served from.
