@@ -2,6 +2,9 @@ const express = require("express")
 const createWebpackHotMiddleware = require("webpack-hot-middleware")
 const createWebpackMiddleware = require("webpack-dev-middleware")
 
+const ListenerManager = require("./ListenerManager")
+const util = require("./util")
+
 class HotClient {
   constructor(compiler) {
     const app = express()
@@ -23,8 +26,8 @@ class HotClient {
     const listener = app.listen(process.env.CLIENT_DEVSERVER_PORT)
     this.listenerManager = new ListenerManager(listener)
 
-    createNotification({
-      title: "Client",
+    util.createNotification({
+      title: "Hot Client",
       message: "Running",
     })
   }
@@ -37,3 +40,5 @@ class HotClient {
     ])
   }
 }
+
+module.exports = HotClient

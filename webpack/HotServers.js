@@ -1,11 +1,16 @@
 const path = require("path")
+const process = require("process")
 const webpack = require("webpack")
 const chokidar = require("chokidar")
+
 const util = require("./util")
+const HotClient = require("./HotClient")
+const HotServer = require("./HotServer")
+
+const CWD = process.cwd()
 
 class HotServers {
   constructor(root) {
-    console.log("Setting root to: ", root)
     this.root = root
 
     // Bind our functions to avoid any scope/closure issues.
@@ -21,7 +26,7 @@ class HotServers {
 
     // Any changes to our webpack config builder will cause us to restart our
     // hot servers.
-    console.log(`Restarting hot servers when files in ${__dirname} are modified.`)
+    console.log(`Restarting hot servers when files in "${path.relative(CWD, __dirname)}" are modified.`)
     const watcher = chokidar.watch(
       path.resolve(__dirname)
     )
@@ -34,9 +39,12 @@ class HotServers {
   {
     try
     {
-      const clientConfig = require(path.resolve(this.root, "/webpack.client.config"))({ mode: "development" })
+      const clientConfigPath = path.resolve(this.root, "webpack.client.config")
+      const clientConfig = require(clientConfigPath)({ mode: "development" })
       this.clientCompiler = webpack(clientConfig)
-      const serverConfig = require(path.resolve(this.root + "/webpack.server.config"))({ mode: "development" })
+
+      const serverConfigPath = path.resolve(this.root, "webpack.server.config")
+      const serverConfig = require(serverConfigPath)({ mode: "development" })
       this.serverCompiler = webpack(serverConfig)
     }
     catch (err)
@@ -147,7 +155,7 @@ class HotServers {
     // Now we will configure `chokidar` to watch our server specific source folder.
     // Any changes will cause a rebuild of the server bundle.
     const serverConfigRoot = path.resolve(this.root, "./src/server")
-    console.log$(`Recompiling hot servers when files in ${serverConfigRoot} are modified.`)
+    console.log(`Recompiling hot servers when files in "${path.relative(CWD, serverConfigRoot)}" are modified.`)
 
     this.watcher = chokidar.watch([
       serverConfigRoot
