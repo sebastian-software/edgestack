@@ -7,6 +7,7 @@ const nodeExternals = require("webpack-node-externals")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 const $css = {
+  atImport: require("postcss-import"),
   discardComments: require("postcss-discard-comments"),
   advancedVariables: require("postcss-advanced-variables"),
   sassyMixins: require("postcss-sassy-mixins"),
@@ -310,6 +311,8 @@ function webpackConfigFactory({ target, mode, root }, { json })
           silent: true
         }),
         */
+
+        $css.atImport(),
 
         // Discard comments in your CSS files with PostCSS.
         // https://github.com/ben-eb/postcss-discard-comments
