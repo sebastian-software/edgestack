@@ -39,7 +39,7 @@
     "url": "https://github.com/sebastian-software/advanced-boilerplate/issues"
   },
   "engines": {
-    "node": ">= 6"
+    "node": "~6.3.0"
   },
   "homepage": "https://github.com/sebastian-software/advanced-boilerplate#readme",
   "dependencies": {
