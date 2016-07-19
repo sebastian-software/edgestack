@@ -455,6 +455,12 @@ function webpackConfigFactory({ target, mode, root }, { json })
           loader: "json-loader"
         },
 
+        // Font file references etc.
+        {
+          test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|mp4|mp3|ogg|pdf)$/,
+          loader: 'file-loader'
+        },
+
         // CSS
         merge(
           {
