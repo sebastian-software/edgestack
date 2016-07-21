@@ -427,9 +427,15 @@ function webpackConfigFactory({ target, mode, root }, { json })
             ifServer(
             {
               // We are running a node 6 server which has support for almost
-              // all of the ES2015 syntax, therefore we only transpile JSX.
-              // It also supports APIs from stage-1... see also: http://node.green/
-              presets: [ "react" ],
+              // all of the ES2015 syntax, therefore we only transpile JSX and later ES features.
+              presets:
+              [
+                "react",
+
+                // Add Stage-1/2/3 presets (which are all bundled in Stage-1)
+                // It seems that not all of these features are natively supported by Node >= 6.3.x
+                "stage-1"
+              ],
 
               // Do not keep formatting (slower). Source maps are enough for inspection.
               compact: "auto"
