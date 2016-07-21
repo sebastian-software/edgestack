@@ -428,6 +428,7 @@ function webpackConfigFactory({ target, mode, root }, { json })
             {
               // We are running a node 6 server which has support for almost
               // all of the ES2015 syntax, therefore we only transpile JSX.
+              // It also supports APIs from stage-1... see also: http://node.green/
               presets: [ "react" ],
 
               // Do not keep formatting (slower). Source maps are enough for inspection.
@@ -446,6 +447,9 @@ function webpackConfigFactory({ target, mode, root }, { json })
                 // Webpack 2 includes support for es2015 imports, therefore we used this
                 // modified preset.
                 "es2015-webpack",
+
+                // Add Stage-1/2/3 presets (which are all bundled in Stage-1)
+                "stage-1"
               ],
 
               // Do not keep formatting (slower). Source maps are enough for inspection.

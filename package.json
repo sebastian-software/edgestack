@@ -51,6 +51,7 @@
     "babel-loader": "^6.2.4",
     "babel-preset-es2015-webpack": "^6.4.1",
     "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-1": "^6.5.0",
     "buble": "^0.12.5",
     "chokidar": "^1.6.0",
     "colorguard": "^1.2.0",
