@@ -511,7 +511,7 @@ function webpackConfigFactory({ target, mode, root }, { json })
             // Note: Unfortunately it seems like it does not support the new query syntax of webpack v2
             // See also: https://github.com/webpack/extract-text-webpack-plugin/issues/196
             loader: ExtractTextPlugin.extract({
-              notExtractLoader: "style-loader",
+              fallbackLoader: "style-loader",
               loader: "css-loader?modules&sourceMap&minimize=false&localIdentName=[local]-[hash:base62:6]!postcss-loader"
             })
           }),
