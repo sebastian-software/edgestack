@@ -3,6 +3,7 @@
   "version": "0.4.6",
   "description": "React Universally with PostCSS",
   "main": "build/server/main.js",
+  "jsnext:main": "src/server/index.js",
   "engines": {
     "node": "~6.3.0"
   },
