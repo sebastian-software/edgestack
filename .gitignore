@@ -5,6 +5,7 @@
 build/
 public/
 dist/
+es5/
 
 # Webpack build output of the js client
 backend/assets/client/

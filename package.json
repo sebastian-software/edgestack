@@ -2,7 +2,7 @@
   "name": "advanced-boilerplate",
   "version": "0.4.7",
   "description": "React Universally with PostCSS",
-  "main": "build/server/main.js",
+  "main": "es5/server/main.js",
   "jsnext:main": "src/server/index.js",
   "engines": {
     "node": "~6.3.0"
@@ -16,6 +16,7 @@
     "prod:build:server": "webpack --env.mode production --config webpack.server.config.js",
     "prod:start": "node build/server/main.js",
     "prod:clean": "rimraf build",
+    "prepublish": "babel --presets react,es2015,stage-1 --source-maps true --out-dir es5/ src/",
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major",
