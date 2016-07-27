@@ -78,7 +78,6 @@ function webpackConfigFactory({ target, mode, root }, { json })
     )
   }
 
-  // console.log(`Creating webpack "${target}" config in "${mode}" mode...`)
   if (!json) {
     // Our bundle is outputing json for bundle analysis, therefore we don't
     // want to do this console output as it will interfere with the json output.
