@@ -50,7 +50,7 @@ if (process.env.NODE_ENV === "development" && module.hot) {
   // Accept changes to this file for hot reloading.
   module.hot.accept("./index.js")
   // Any changes to our routes will cause a hotload re-render.
-  module.hot.accept("../shared/routes", renderApp)
+  module.hot.accept("../routes", renderApp)
 }
 
 renderApp()
