@@ -132,7 +132,17 @@ function webpackConfigFactory({ target, mode, root }, { json })
       // prefering them to be resolved via native node module system.  Therefore
       // we use the `webpack-node-externals` library to help us generate an
       // externals config that will ignore all node_modules.
-      ifServer(nodeExternals())
+      // For ignoring all files which should be bundled e.g. which is true for
+      // all files being loader-specific (Webpack dependend). This includes
+      // files like CSS files, static files, dynamically generated files, etc.
+      ifServer(nodeExternals({
+        whitelist: [
+          /\.(eot|woff|woff2|ttf|otf)$/,
+          /\.(svg|png|jpg|jpeg|gif|webp)$/,
+          /\.(mp4|mp3|ogg|pdf|swf)$/,
+          /\.(css|scss|sss|less)$/
+        ]
+      }))
     ]),
 
     // See also: https://webpack.github.io/docs/configuration.html#devtool
