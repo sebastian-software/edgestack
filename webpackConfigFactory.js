@@ -491,13 +491,10 @@ function webpackConfigFactory({ target, mode, root }, { json })
             loaders:
             [
               {
-                loader: "fake-style-loader"
-              },
-              {
-                loader: "css-loader",
+                loader: "css-loader/locals",
                 query:
                 {
-                  sourceMap: true,
+                  sourceMap: false,
                   modules: true,
                   localIdentName: "[local]-[hash:base62:6]",
                   minimize: false
