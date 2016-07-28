@@ -1,4 +1,5 @@
 import "normalize.css/normalize.css"
+import "./Fonts.css"
 
 import React, { PropTypes } from "react"
 import Link from "react-router/lib/Link"
