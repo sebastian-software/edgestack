@@ -56,7 +56,6 @@
     "babel-preset-stage-1": "^6.5.0",
     "buble": "^0.12.5",
     "chokidar": "^1.6.0",
-    "classnames": "^2.2.5",
     "colorguard": "^1.2.0",
     "compression": "^1.6.2",
     "css-loader": "^0.23.1",
