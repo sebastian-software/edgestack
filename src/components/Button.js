@@ -14,6 +14,9 @@ function Button({
   if (isBlock)
     className.push(Style.block)
 
+  if (disabled)
+    className.push(Style.disabled)
+
   return (
     <button
       type="button"
