@@ -2,7 +2,6 @@ import React from "react"
 import Style from "./Button.css"
 
 function Button({
-  sheet,
   size = "md",
   disabled,
   isBlock,
