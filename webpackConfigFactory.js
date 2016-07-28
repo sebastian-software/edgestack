@@ -3,6 +3,7 @@
 const path = require("path")
 const webpack = require("webpack")
 const AssetsPlugin = require("assets-webpack-plugin")
+const NpmInstallPlugin = require("npm-install-webpack-plugin")
 const nodeExternals = require("webpack-node-externals")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
@@ -218,6 +219,8 @@ function webpackConfigFactory({ target, mode, root }, { json })
     },
 
     plugins: removeEmpty([
+      new NpmInstallPlugin(),
+
       // Each key passed into DefinePlugin is an identifier.
       // The values for each key will be inlined into the code replacing any
       // instances of the keys that are found.
