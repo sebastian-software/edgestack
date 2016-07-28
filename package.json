@@ -78,7 +78,6 @@
     "node-noop": "^1.0.0",
     "node-notifier": "^4.6.0",
     "normalize.css": "^4.2.0",
-    "npm-install-webpack-plugin": "^4.0.4",
     "path": "^0.12.7",
     "postcss": "^5.1.1",
     "postcss-advanced-variables": "^1.2.2",
