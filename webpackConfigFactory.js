@@ -123,7 +123,7 @@ function webpackConfigFactory({ target, mode, root }, { json })
       __filename: true,
     },
 
-    // cache: !(isDev && isServer),
+    cache: !(isDev && isServer),
 
     // Anything listed in externals will not be included in our bundle.
     externals: removeEmpty(
