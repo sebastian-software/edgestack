@@ -281,9 +281,10 @@ function webpackConfigFactory({ target, mode, root }, { json })
       // JS Minification.
       ifProdClient(
         new webpack.optimize.UglifyJsPlugin({
+          comments: false,
           compress: {
             screw_ie8: true,
-            warnings: false,
+            warnings: false
           },
         })
       ),
