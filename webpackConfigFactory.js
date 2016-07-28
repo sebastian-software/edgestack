@@ -254,6 +254,9 @@ function webpackConfigFactory({ target, mode, root }, { json })
         path: path.resolve(root, `./build/${target}`),
       }),
 
+      // Effectively fake all "file-loader" files with placeholders on server side
+      ifServer(new webpack.NormalModuleReplacementPlugin(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|mp4|mp3|ogg|pdf)$/, "node-noop")),
+
       // We don't want webpack errors to occur during development as it will
       // kill our dev servers.
       ifDev(new webpack.NoErrorsPlugin()),

@@ -75,6 +75,7 @@
     "json-loader": "^0.5.4",
     "load-plugins": "^2.1.0",
     "lost": "^7.0.3",
+    "node-noop": "^1.0.0",
     "node-notifier": "^4.6.0",
     "normalize.css": "^4.2.0",
     "npm-install-webpack-plugin": "^4.0.4",
