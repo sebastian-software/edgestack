@@ -7,12 +7,12 @@ import match from "react-router/lib/match"
 import routes from "../routes"
 
 // Get the DOM Element that will host our React application.
-const container = document.querySelector('#app')
+const container = document.querySelector("#app")
 
 function routerError(error)
 {
   // TODO: Error handling.
-  console.error('==> 😭  React Router match failed.') // eslint-disable-line no-console
+  console.error("React Router match failed.") // eslint-disable-line no-console
   if (error) { console.error(error) } // eslint-disable-line no-console
 }
 
@@ -49,6 +49,7 @@ function renderApp()
 if (process.env.NODE_ENV === "development" && module.hot) {
   // Accept changes to this file for hot reloading.
   module.hot.accept("./index.js")
+
   // Any changes to our routes will cause a hotload re-render.
   module.hot.accept("../routes", renderApp)
 }
