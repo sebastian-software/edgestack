@@ -14,15 +14,37 @@ class HotServers {
     this.root = root
 
     // Bind our functions to avoid any scope/closure issues.
-    this.start = this.start.bind(this);
-    this.restart = this.restart.bind(this);
-    this._configureHotClient = this._configureHotClient.bind(this);
-    this._configureHotServer = this._configureHotServer.bind(this);
+    this.start = this.start.bind(this)
+    this.restart = this.restart.bind(this)
+    this._configureHotClient = this._configureHotClient.bind(this)
+    this._configureHotServer = this._configureHotServer.bind(this)
 
-    this.clientBundle = null;
-    this.clientCompiler = null;
-    this.serverBundle = null;
-    this.serverCompiler = null;
+    this.clientBundle = null
+    this.clientCompiler = null
+    this.serverBundle = null
+    this.serverCompiler = null
+
+    const configPath = path.resolve(__dirname, "ConfigFactory.js")
+    console.log("Watching Config: ", configPath)
+
+    // Any changes to our webpack config builder will cause us to restart our hot servers.
+    const watcher = chokidar.watch(configPath)
+
+    watcher.on('ready', () =>
+    {
+      watcher.on('change', () =>
+      {
+        util.createNotification({
+          title: 'webpack',
+          message: 'Webpack config changed. Full restart occurring...',
+        });
+
+        this.restart();
+      });
+    });
+
+    // If we receive a kill cmd then we will first try to dispose our listeners.
+    process.on('SIGTERM', () => this.dispose().then(() => process.exit(0)));
   }
 
   start() {

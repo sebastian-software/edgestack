@@ -1,4 +1,4 @@
-const webpackConfigFactory = require("./webpackConfigFactory")
+const webpackConfigFactory = require("./webpack/ConfigFactory")
 
 module.exports = function serverConfigFactory(options = {}, args = {}) {
   const { mode = "development" } = options
