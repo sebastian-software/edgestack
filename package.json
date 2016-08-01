@@ -21,7 +21,7 @@
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major",
-    "test": "npm run build",
+    "test": "npm run prod",
     "nsp": "nsp check --output summary"
   },
   "repository": {
