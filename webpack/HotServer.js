@@ -36,10 +36,10 @@ class HotServer {
     }
   }
 
-  dispose() {
-    return Promise.all([
-      this.listenerManager ? this.listenerManager.dispose() : undefined,
-    ])
+  dispose(force = false) {
+    return this.listenerManager
+      ? this.listenerManager.dispose(force)
+      : Promise.resolve();
   }
 }
 

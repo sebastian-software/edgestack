@@ -32,12 +32,12 @@ class HotClient {
     })
   }
 
-  dispose() {
-    this.webpackDevMiddleware.close()
+  dispose(force = false) {
+    this.webpackDevMiddleware.close();
 
-    return Promise.all([
-      this.listenerManager ? this.listenerManager.dispose() : undefined,
-    ])
+    return this.listenerManager
+      ? this.listenerManager.dispose(force)
+      : Promise.resolve();
   }
 }
 
