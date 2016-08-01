@@ -301,7 +301,7 @@ function webpackConfigFactory({ target, mode, root }, { json })
       // CSS files.
       ifProdClient(
         new ExtractTextPlugin({
-          filename: "chunk-[name]-[chunkhash].css",
+          filename: "[name]-[chunkhash].css",
           allChunks: true
         })
       ),
