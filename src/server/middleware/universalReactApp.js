@@ -13,7 +13,7 @@ function universalReactAppMiddleware(request, response)
   if (process.env.DISABLE_SSR)
   {
     if (process.env.NODE_ENV === "development") {
-      console.log("Handling react route without SSR")  // eslint-disable-line no-console
+      console.log("Handling React Routing without SSR")  // eslint-disable-line no-console
     }
 
     // SSR is disabled so we will just return an empty html page and will

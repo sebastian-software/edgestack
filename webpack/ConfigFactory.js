@@ -100,8 +100,8 @@ function ConfigFactory(target, mode, root = CWD)
     stats: "errors-only",
 
     // We have to set this to be able to use these items when executing a
-    // server bundle.  Otherwise strangeness happens, like __dirname resolving
-    // to '/'.  There is no effect on our client bundle.
+    // server bundle. Otherwise strangeness happens, like __dirname resolving
+    // to '/'. There is no effect on our client bundle.
     node: {
       __dirname: true,
       __filename: true,
@@ -113,7 +113,7 @@ function ConfigFactory(target, mode, root = CWD)
     externals: removeEmpty(
     [
       // We don't want our node_modules to be bundled with our server package,
-      // prefering them to be resolved via native node module system.  Therefore
+      // prefering them to be resolved via native node module system. Therefore
       // we use the `webpack-node-externals` library to help us generate an
       // externals config that will ignore all node_modules.
       // For ignoring all files which should be bundled e.g. which is true for
@@ -132,9 +132,9 @@ function ConfigFactory(target, mode, root = CWD)
     // See also: https://webpack.github.io/docs/configuration.html#devtool
     //
     // We want to be able to get nice stack traces when running our server
-    // bundle.  To fully support this we'll also need to configure the
+    // bundle. To fully support this we'll also need to configure the
     // `node-source-map-support` module to execute at the start of the server
-    // bundle.  This module will allow the node to make use of the
+    // bundle. This module will allow the node to make use of the
     // source maps.
     //
     // We also want to be able to link to the source in Chrome dev tools
@@ -158,14 +158,14 @@ function ConfigFactory(target, mode, root = CWD)
       // The filename format for our bundle's entries.
       filename: ifProdClient(
 
-        // We include a hash for client caching purposes.  Including a unique
+        // We include a hash for client caching purposes. Including a unique
         // has for every build will ensure browsers always fetch our newest
         // bundle.
         "[name]-[hash].js",
 
         // We want a determinable file name when running our server bundles,
         // as we need to be able to target our server start file from our
-        // npm scripts.  We don't care about caching on the server anyway.
+        // npm scripts. We don't care about caching on the server anyway.
         // We also want our client development builds to have a determinable
         // name for our hot reloading client bundle server.
         "[name].js"
@@ -236,7 +236,7 @@ function ConfigFactory(target, mode, root = CWD)
       }),
 
       // Generates a JSON file containing a map of all the output files for
-      // our webpack bundle.  A necessisty for our server rendering process
+      // our webpack bundle. A necessisty for our server rendering process
       // as we need to interogate these files in order to know what JS/CSS
       // we need to inject into our HTML.
       new AssetsPlugin(
@@ -255,7 +255,7 @@ function ConfigFactory(target, mode, root = CWD)
       // We need this plugin to enable hot module reloading for our dev server.
       ifDevClient(new webpack.HotModuleReplacementPlugin()),
 
-      // Ensure only 1 file is output for the server bundles.  This makes it
+      // Ensure only 1 file is output for the server bundles. This makes it
       // much easer for us to clear the module cache when reloading the server.
       ifDevServer(new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })),
 
@@ -511,7 +511,7 @@ function ConfigFactory(target, mode, root = CWD)
             }),
 
           // For a production client build we use the ExtractTextPlugin which
-          // will extract our CSS into CSS files.  The plugin needs to be
+          // will extract our CSS into CSS files. The plugin needs to be
           // registered within the plugins section too.
           ifProdClient(
           {
@@ -526,7 +526,7 @@ function ConfigFactory(target, mode, root = CWD)
           }),
 
           // For a development client we will use a straight style & css loader
-          // along with source maps.  This combo gives us a better development
+          // along with source maps. This combo gives us a better development
           // experience.
           ifDevClient(
           {

@@ -6,12 +6,13 @@ const chokidar = require("chokidar")
 const util = require("./util")
 const HotClient = require("./HotClient")
 const HotServer = require("./HotServer")
-const ConfigFactory = require("./ConfigFactory")
 
 const CWD = process.cwd()
 
-class HotServers {
-  constructor(root = CWD) {
+class HotServers
+{
+  constructor(root = CWD)
+  {
     this.root = root
 
     // Bind our functions to avoid any scope/closure issues.
@@ -48,9 +49,12 @@ class HotServers {
     process.on("SIGTERM", () => this.dispose().then(() => process.exit(0)))
   }
 
-  start() {
+  start()
+  {
     try
     {
+      const ConfigFactory = require("./ConfigFactory")
+
       console.log("Compiling client...")
       this.clientCompiler = webpack(ConfigFactory("client", "development"))
 
@@ -71,7 +75,8 @@ class HotServers {
   }
 
 
-  dispose() {
+  dispose()
+  {
     // We want to forcefully close our servers (passing true) which will hard
     // kill any existing connections.  We don't care about them running as we
     // need to restart both the client and server bundles.
