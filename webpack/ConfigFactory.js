@@ -93,7 +93,7 @@ function webpackConfigFactory({ target, mode, root }, { json })
     // And then upload the build/client/analysis.json to http://webpack.github.io/analyse/
     // This allows you to analyse your webpack bundle to make sure it is
     // optimal.
-    console.log(`Creating webpack "${target}" config in "${mode}" mode`);
+    console.log(`Creating webpack "${target}" config in "${mode}" mode`)
   }
 
   const isDev = mode === "development"
@@ -113,7 +113,7 @@ function webpackConfigFactory({ target, mode, root }, { json })
     // We need to state that we are targetting "node" for our server bundle.
     target: ifServer("node", "web"),
 
-    stats: 'errors-only',
+    stats: "errors-only",
 
     // We have to set this to be able to use these items when executing a
     // server bundle.  Otherwise strangeness happens, like __dirname resolving
@@ -211,9 +211,9 @@ function webpackConfigFactory({ target, mode, root }, { json })
 
       // These extensions are tried when resolving a file.
       extensions: [
-        '.js',
-        '.jsx',
-        '.json',
+        ".js",
+        ".jsx",
+        ".json",
       ]
     },
 
@@ -307,7 +307,7 @@ function webpackConfigFactory({ target, mode, root }, { json })
       ),
     ]),
 
-    postcss: function () {
+    postcss: function() {
       return [
         /*
         $css.devtools({
@@ -482,7 +482,7 @@ function webpackConfigFactory({ target, mode, root }, { json })
         // Font file references etc.
         {
           test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf)$/,
-          loader: 'file-loader'
+          loader: "file-loader"
         },
 
         // CSS
@@ -494,24 +494,24 @@ function webpackConfigFactory({ target, mode, root }, { json })
           // When targetting the server we fake out the style loader as the
           // server can't handle the styles and doesn't care about them either..
           ifServer(
-          {
-            loaders:
-            [
-              {
-                loader: "css-loader/locals",
-                query:
+            {
+              loaders:
+              [
                 {
-                  sourceMap: false,
-                  modules: true,
-                  localIdentName: "[local]-[hash:base62:6]",
-                  minimize: false
+                  loader: "css-loader/locals",
+                  query:
+                  {
+                    sourceMap: false,
+                    modules: true,
+                    localIdentName: "[local]-[hash:base62:6]",
+                    minimize: false
+                  }
+                },
+                {
+                  loader: "postcss-loader"
                 }
-              },
-              {
-                loader: "postcss-loader"
-              }
-            ]
-          }),
+              ]
+            }),
 
           // For a production client build we use the ExtractTextPlugin which
           // will extract our CSS into CSS files.  The plugin needs to be

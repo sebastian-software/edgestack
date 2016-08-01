@@ -33,11 +33,11 @@ class HotClient {
   }
 
   dispose(force = false) {
-    this.webpackDevMiddleware.close();
+    this.webpackDevMiddleware.close()
 
     return this.listenerManager
       ? this.listenerManager.dispose(force)
-      : Promise.resolve();
+      : Promise.resolve()
   }
 }
 
