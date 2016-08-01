@@ -10,7 +10,9 @@ const HotServer = require("./HotServer")
 const CWD = process.cwd()
 
 class HotServers {
-  constructor() {
+  constructor(root) {
+    this.root = root
+
     // Bind our functions to avoid any scope/closure issues.
     this.start = this.start.bind(this);
     this.restart = this.restart.bind(this);
@@ -24,12 +26,17 @@ class HotServers {
   }
 
   start() {
-    try {
-      const clientConfig = require('./webpack.client.config')({ mode: 'development' });
-      this.clientCompiler = webpack(clientConfig);
-      const serverConfig = require('./webpack.server.config')({ mode: 'development' });
-      this.serverCompiler = webpack(serverConfig);
-    } catch (err) {
+    try
+    {
+      const clientConfigPath = path.resolve(this.root, "webpack.client.config")
+      const clientConfig = require(clientConfigPath)({ mode: "development" })
+      this.clientCompiler = webpack(clientConfig)
+
+      const serverConfigPath = path.resolve(this.root, "webpack.server.config")
+      const serverConfig = require(serverConfigPath)({ mode: "development" })
+      this.serverCompiler = webpack(serverConfig)
+    }
+    catch (err) {
       util.createNotification({
         title: 'webpack',
         message: '😵  Webpack config invalid, check console for error',
@@ -134,7 +141,7 @@ class HotServers {
 
     // Now we will configure `chokidar` to watch our server specific source folder.
     // Any changes will cause a rebuild of the server bundle.
-    this.watcher = chokidar.watch([path.resolve(__dirname, './src/server')]);
+    this.watcher = chokidar.watch([path.resolve(this.root, './src/server')]);
     this.watcher.on('ready', () => {
       this.watcher
         .on('add', compileHotServer)
