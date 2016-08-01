@@ -301,7 +301,7 @@ function webpackConfigFactory({ target, mode, root }, { json })
       // CSS files.
       ifProdClient(
         new ExtractTextPlugin({
-          filename: "[name]-[chunkhash].css",
+          filename: "chunk-[name]-[chunkhash].css",
           allChunks: true
         })
       ),
@@ -482,7 +482,10 @@ function webpackConfigFactory({ target, mode, root }, { json })
         // Font file references etc.
         {
           test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf)$/,
-          loader: "file-loader"
+          loader: "file-loader",
+          query: {
+            name: "file-[hash:base62:6].[ext]"
+          }
         },
 
         // CSS
