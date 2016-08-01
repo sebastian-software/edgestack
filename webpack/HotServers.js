@@ -6,6 +6,7 @@ const chokidar = require("chokidar")
 const util = require("./util")
 const HotClient = require("./HotClient")
 const HotServer = require("./HotServer")
+const ConfigFactory = require("./ConfigFactory")
 
 const CWD = process.cwd()
 
@@ -50,12 +51,10 @@ class HotServers {
   start() {
     try
     {
-      const clientConfigPath = path.resolve(this.root, "webpack.client.config")
-      const clientConfig = require(clientConfigPath)({ mode: "development" })
+      const clientConfig = ConfigFactory({ target: "client", mode: "production" }, {})
       this.clientCompiler = webpack(clientConfig)
 
-      const serverConfigPath = path.resolve(this.root, "webpack.server.config")
-      const serverConfig = require(serverConfigPath)({ mode: "development" })
+      const serverConfig = ConfigFactory({ target: "server", mode: "production" }, {})
       this.serverCompiler = webpack(serverConfig)
     }
     catch (err) {

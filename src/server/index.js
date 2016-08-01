@@ -8,7 +8,6 @@ import compression from "compression"
 import hpp from "hpp"
 import helmet from "helmet"
 import universalReactAppMiddleware from "./middleware/universalReactApp"
-import clientConfigBuilder from "../../webpack.client.config.js"
 
 // Create our express based server.
 const app = express()
@@ -41,10 +40,7 @@ app.use(helmet.noSniff())
 app.use(compression())
 
 // Configure static serving of our webpack bundled client files.
-const webpackClientConfig = clientConfigBuilder({ mode: process.env.NODE_ENV })
-app.use(
-  webpackClientConfig.output.publicPath,
-  express.static(webpackClientConfig.output.path))
+app.use(process.env.PUBLIC_PATH, express.static(process.env.OUTPUT_PATH))
 
 // Bind our universal react app middleware as the handler for all get requests.
 app.get("*", universalReactAppMiddleware)

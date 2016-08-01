@@ -237,6 +237,16 @@ function webpackConfigFactory({ target, mode, root }, { json })
           // builds as React relies on process.env.NODE_ENV for optimizations.
           NODE_ENV: JSON.stringify(mode),
 
+          PUBLIC_PATH: JSON.stringify(ifDev(
+            // As we run a seperate server for our client and server bundles we
+            // need to use an absolute http path for our assets public path.
+            `http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/assets/`,
+
+            // Otherwise we expect our bundled output to be served from this path.
+            "/assets/"
+          )),
+          OUTPUT_PATH: JSON.stringify(path.resolve(root, `./build/client/`)),
+
           // All the below items match the config items in our .env file. Go
           // to the .env_example for a description of each key.
           SERVER_PORT: JSON.stringify(process.env.SERVER_PORT),

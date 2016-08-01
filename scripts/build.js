@@ -1,26 +1,33 @@
 var chalk = require("chalk")
 var path = require("path")
-var rimrafSync = require("rimraf").sync
+var rimraf = require("rimraf")
 var webpack = require("webpack")
 var series = require("async/series")
 
 var ConfigFactory = require("../webpack/ConfigFactory")
 var util = require("../webpack/util")
 
-const CWD = process.cwd()
+const buildFolderClient = path.resolve("build", "client")
+const buildFolderServer = path.resolve("build", "server")
 
-const buildFolder = path.resolve(CWD, "build", "client")
-
-// Remove all content but keep the directory so that
-// if you're in it, you don't end up in Trash
-rimrafSync(buildFolder + '/*')
-
-console.log("Creating an optimized production build for client...")
 series(
 [
   function(callback)
   {
-    const clientConfig = ConfigFactory({ target: "client", mode: "production", root: CWD }, {})
+    // Remove all content but keep the directory so that
+    // if you're in it, you don't end up in Trash
+    rimraf(buildFolderClient + '/*', callback)
+  },
+  function(callback)
+  {
+    // Remove all content but keep the directory so that
+    // if you're in it, you don't end up in Trash
+    rimraf(buildFolderServer + '/*', callback)
+  },
+  function(callback)
+  {
+    console.log("Creating an optimized production build for client...")
+    const clientConfig = ConfigFactory({ target: "client", mode: "production" }, {})
     webpack(clientConfig).run(function(err, stats)
     {
       if (err)
@@ -30,14 +37,14 @@ series(
         process.exit(1)
       }
 
-      util.logAssets(stats.toJson().assets, buildFolder)
+      util.logAssets(stats.toJson().assets, buildFolderClient)
       callback()
     })
   },
   function(callback)
   {
     console.log("Creating an production build for server...")
-    const serverConfig = ConfigFactory({ target: "server", mode: "production", root: CWD }, {})
+    const serverConfig = ConfigFactory({ target: "server", mode: "production" }, {})
     webpack(serverConfig).run(function(err, stats)
     {
       if (err)
