@@ -12,8 +12,8 @@
   },
   "scripts": {
     "start": "./bin/advanced-script.js start",
-    "build": "./bin/advanced-script.js build",
-    "build:start": "npm run build && node build/server/main.js",
+    "prod": "./bin/advanced-script.js build",
+    "prod:start": "npm run prod && node build/server/main.js",
     "clean": "rimraf build/client/* build/server/* lib/* es/*",
     "prepublish": "npm run transpile-es5 && npm run transpile-es6",
     "transpile-es5": "babel --no-babelrc --presets react,es2015,stage-1 --source-maps true --out-dir lib/ src/",
@@ -47,6 +47,7 @@
   "dependencies": {
     "assetgraph": "^2.13.0",
     "assets-webpack-plugin": "^3.4.0",
+    "async": "^2.0.1",
     "ava": "^0.15.2",
     "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
