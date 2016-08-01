@@ -51,11 +51,11 @@ class HotServers {
   start() {
     try
     {
-      const clientConfig = ConfigFactory({ target: "client", mode: "production" }, {})
-      this.clientCompiler = webpack(clientConfig)
+      console.log("Compiling client...")
+      this.clientCompiler = webpack(ConfigFactory("client", "development"))
 
-      const serverConfig = ConfigFactory({ target: "server", mode: "production" }, {})
-      this.serverCompiler = webpack(serverConfig)
+      console.log("Compiling server...")
+      this.serverCompiler = webpack(ConfigFactory("server", "development"))
     }
     catch (err) {
       util.createNotification({

@@ -26,16 +26,18 @@ series(
   },
   function(callback)
   {
-    console.log("Creating an optimized production build for client...")
-    const clientConfig = ConfigFactory({ target: "client", mode: "production" }, {})
-    webpack(clientConfig).run(function(err, stats)
+    console.log("Creating a production build for client...")
+    webpack(ConfigFactory("client", "production")).run(function(err, stats)
     {
       if (err)
       {
-        console.error("Failed to create a production build. Reason:")
+        console.error("Failed to create a production build for client:")
         console.error(err.message || err)
         process.exit(1)
       }
+
+      console.log("- Done")
+      console.log("")
 
       util.logAssets(stats.toJson().assets, buildFolderClient)
       callback()
@@ -43,17 +45,18 @@ series(
   },
   function(callback)
   {
-    console.log("Creating an production build for server...")
-    const serverConfig = ConfigFactory({ target: "server", mode: "production" }, {})
-    webpack(serverConfig).run(function(err, stats)
+    console.log("Creating a production build for server...")
+    webpack(ConfigFactory("server", "production")).run(function(err, stats)
     {
       if (err)
       {
-        console.error("Failed to create a production build. Reason:")
+        console.error("Failed to create a production build for client:")
         console.error(err.message || err)
         process.exit(1)
       }
 
+      console.log("- Done")
+      console.log("")
       callback()
     })
   }

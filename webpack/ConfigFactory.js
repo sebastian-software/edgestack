@@ -64,42 +64,20 @@ function merge()
   )
 }
 
-function webpackConfigFactory({ target, mode, root }, { json })
+function ConfigFactory(target, mode, root = CWD)
 {
   if (!target || !~[ "client", "server" ].findIndex((valid) => target === valid))
   {
     throw new Error(
-      'You must provide a "target" (client|server) to the webpackConfigFactory.'
+      'You must provide a "target" (client|server) to the ConfigFactory.'
     )
   }
 
   if (!mode || !~[ "development", "production" ].findIndex((valid) => mode === valid))
   {
     throw new Error(
-      'You must provide a "mode" (development|production) to the webpackConfigFactory.'
+      'You must provide a "mode" (development|production) to the ConfigFactory.'
     )
-  }
-
-  if (!root) {
-    root = CWD
-  }
-
-  if (!json) {
-    // Our bundle is outputing json for bundle analysis, therefore we don't
-    // want to do this console output as it will interfere with the json output.
-    //
-    // You can run a bundle analysis by executing the following:
-    //
-    // $(npm bin)/webpack \
-    //   --env.mode production \
-    //   --config webpack.client.config.js \
-    //   --json \
-    //   > build/client/analysis.json
-    //
-    // And then upload the build/client/analysis.json to http://webpack.github.io/analyse/
-    // This allows you to analyse your webpack bundle to make sure it is
-    // optimal.
-    console.log(`Creating webpack "${target}" config in "${mode}" mode`)
   }
 
   const isDev = mode === "development"
@@ -578,4 +556,4 @@ function webpackConfigFactory({ target, mode, root }, { json })
   }
 }
 
-module.exports = webpackConfigFactory
+module.exports = ConfigFactory
