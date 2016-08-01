@@ -475,7 +475,7 @@ function webpackConfigFactory({ target, mode, root }, { json })
 
         // Font file references etc.
         {
-          test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|mp4|mp3|ogg|pdf)$/,
+          test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf)$/,
           loader: 'file-loader'
         },
 
