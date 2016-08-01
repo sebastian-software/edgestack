@@ -10,7 +10,7 @@ const HotServer = require("./HotServer")
 const CWD = process.cwd()
 
 class HotServers {
-  constructor(root) {
+  constructor(root = CWD) {
     this.root = root
 
     // Bind our functions to avoid any scope/closure issues.

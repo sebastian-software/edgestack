@@ -7,23 +7,20 @@
   "engines": {
     "node": "~6.3.0"
   },
+  "bin": {
+    "advanced-script": "./bin/advanced-script.js"
+  },
   "scripts": {
-    "dev": "npm run dev:start",
-    "dev:start": "node ./devServer",
-    "prod": "npm run prod:build && npm run prod:start",
-    "prod:build": "npm run prod:clean && npm run prod:build:client && npm run prod:build:server",
-    "prod:build:client": "webpack --env.mode production --config webpack.client.config.js",
-    "prod:build:server": "webpack --env.mode production --config webpack.server.config.js",
-    "prod:start": "node build/server/main.js",
-    "prod:clean": "rimraf build",
-    "prepublish": "npm run build-es5 && npm run build-es6",
-    "build-es5": "babel --no-babelrc --presets react,es2015,stage-1 --source-maps true --out-dir lib/ src/",
-    "build-es6": "babel --no-babelrc --presets react,es2015-webpack,stage-1 --source-maps true --out-dir es/ src/",
+    "start": "./bin/advanced-script.js start",
+    "build": "./bin/advanced-script.js build",
+    "build:start": "npm run build && node build/server/main.js",
+    "clean": "rimraf build/client/* build/server/* lib/* es/*",
+    "prepublish": "npm run transpile-es5 && npm run transpile-es6",
+    "transpile-es5": "babel --no-babelrc --presets react,es2015,stage-1 --source-maps true --out-dir lib/ src/",
+    "transpile-es6": "babel --no-babelrc --presets react,es2015-webpack,stage-1 --source-maps true --out-dir es/ src/",
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major",
-    "start": "npm run dev",
-    "build": "npm run prod:build",
     "test": "npm run build",
     "nsp": "nsp check --output summary"
   },
