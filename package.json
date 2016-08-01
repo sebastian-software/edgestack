@@ -15,14 +15,15 @@
     "prod": "./bin/advanced-script.js build",
     "prod:start": "npm run prod && node build/server/main.js",
     "clean": "rimraf build/client/* build/server/* lib/* es/*",
+    "nsp": "nsp check --output summary",
+    "test": "npm run prod",
+
     "prepublish": "npm run transpile-es5 && npm run transpile-es6",
     "transpile-es5": "babel --no-babelrc --presets react,es2015,stage-1 --source-maps true --out-dir lib/ src/",
     "transpile-es6": "babel --no-babelrc --presets react,es2015-webpack,stage-1 --source-maps true --out-dir es/ src/",
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
-    "release:major": "release-it --github.release --npm.publish --non-interactive --increment major",
-    "test": "npm run prod",
-    "nsp": "nsp check --output summary"
+    "release:major": "release-it --github.release --npm.publish --non-interactive --increment major"
   },
   "repository": {
     "type": "git",
