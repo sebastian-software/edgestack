@@ -418,9 +418,15 @@ function webpackConfigFactory({ target, mode, root }, { json })
           exclude: [ /node_modules/, path.resolve(root, "./build") ],
           query: merge(
             {
+              // Prevent project-wide babel config from destroying behavior
+              // we especially like to have e.g. different configs between server/client.
+              babelrc: false,
+
+              // Enable caching for babel transpiles
+              cacheDirectory: true,
+
               env:
               {
-                cacheDirectory: true,
                 development: {
                   plugins: [ "react-hot-loader/babel" ],
                 }
