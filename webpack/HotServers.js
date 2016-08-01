@@ -35,8 +35,8 @@ class HotServers {
       watcher.on("change", () =>
       {
         util.createNotification({
-          title: "webpack",
-          message: "Webpack config changed. Full restart occurring...",
+          title: "Webpack",
+          message: "Config changed. Full restart occurring...",
         })
 
         this.restart()
@@ -60,10 +60,10 @@ class HotServers {
     }
     catch (err) {
       util.createNotification({
-        title: "webpack",
-        message: "Webpack config invalid, check console for error",
+        title: "Webpack",
+        message: "Config invalid, check console for error",
       })
-      console.log(err)
+      console.error(err)
       return
     }
 
