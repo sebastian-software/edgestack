@@ -6,6 +6,8 @@ const AssetsPlugin = require("assets-webpack-plugin")
 const nodeExternals = require("webpack-node-externals")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
+const CWD = process.cwd()
+
 const $css = {
   atImport: require("postcss-import"),
   url: require("postcss-url"),
@@ -76,6 +78,10 @@ function webpackConfigFactory({ target, mode, root }, { json })
     throw new Error(
       'You must provide a "mode" (development|production) to the webpackConfigFactory.'
     )
+  }
+
+  if (!root) {
+    root = CWD
   }
 
   if (!json) {
