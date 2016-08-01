@@ -420,6 +420,7 @@ function webpackConfigFactory({ target, mode, root }, { json })
             {
               env:
               {
+                cacheDirectory: true,
                 development: {
                   plugins: [ "react-hot-loader/babel" ],
                 }
