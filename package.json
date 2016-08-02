@@ -1,6 +1,6 @@
 {
   "name": "advanced-boilerplate",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "React Universally with PostCSS",
   "main": "es5/server/index.js",
   "jsnext:main": "src/server/index.js",
@@ -17,7 +17,6 @@
     "clean": "rimraf build/client/* build/server/* lib/* es/*",
     "nsp": "nsp check --output summary",
     "test": "npm run prod",
-
     "prepublish": "npm run transpile-es5 && npm run transpile-es6",
     "transpile-es5": "babel --no-babelrc --presets react,es2015,stage-1 --source-maps true --out-dir lib/ src/",
     "transpile-es6": "babel --no-babelrc --presets react,es2015-webpack,stage-1 --source-maps true --out-dir es/ src/",
