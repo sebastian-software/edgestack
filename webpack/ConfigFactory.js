@@ -213,13 +213,17 @@ function ConfigFactory(target, mode, root = CWD)
     resolve:
     {
       // Enable new jsnext:main field for requiring files
-      mainFields: [ "jsnext:main", "main" ],
+      mainFields: ifServer(
+        [ "jsnext:main", "main" ],
+        [ "jsnext:main", "browser", "main" ]
+      ),
 
       // These extensions are tried when resolving a file.
       extensions: [
         ".js",
         ".jsx",
         ".json",
+        ".css"
       ]
     },
 
