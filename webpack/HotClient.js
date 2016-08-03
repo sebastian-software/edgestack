@@ -10,7 +10,6 @@ class HotClient {
     const app = express()
     this.webpackDevMiddleware = createWebpackMiddleware(compiler, {
       quiet: true,
-      noInfo: true,
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
@@ -19,6 +18,11 @@ class HotClient {
       // case as we are running a seperate dev server the public path should
       // be absolute, i.e. including the "http://..."
       publicPath: compiler.options.output.publicPath,
+
+      // Make it beautiful
+      stats: {
+        colors: true
+      }
     })
     app.use(this.webpackDevMiddleware)
     app.use(createWebpackHotMiddleware(compiler))
