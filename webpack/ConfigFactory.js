@@ -309,14 +309,6 @@ function ConfigFactory(target, mode, root = CWD)
         })
       ),
 
-      // This is actually only useful when our deps are installed via npm2.
-      // In npm2 its possible to get duplicates of dependencies bundled
-      // given the nested module structure. npm3 is flat, so this doesn't
-      // occur.
-      ifProd(
-        new webpack.optimize.DedupePlugin()
-      ),
-
       // This is a production client so we will extract our CSS into
       // CSS files.
       ifProdClient(
