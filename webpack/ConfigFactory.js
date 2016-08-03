@@ -271,6 +271,11 @@ function ConfigFactory(target, mode, root = CWD)
         path: path.resolve(root, `./build/${target}`),
       }),
 
+      // Assign the module and chunk ids by occurrence count. Ids that are
+      // used often get lower (shorter) ids. This make ids predictable.
+      // This is a requirement for permanant caching on servers.
+      new webpack.optimize.OccurrenceOrderPlugin(true),
+
       // Effectively fake all "file-loader" files with placeholders on server side
       ifServer(new webpack.NormalModuleReplacementPlugin(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|mp4|mp3|ogg|pdf)$/, "node-noop")),
 
