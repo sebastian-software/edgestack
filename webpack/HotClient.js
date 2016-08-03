@@ -9,7 +9,7 @@ class HotClient {
   constructor(compiler) {
     const app = express()
     this.webpackDevMiddleware = createWebpackMiddleware(compiler, {
-      quiet: true,
+      noInfo: true,
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
