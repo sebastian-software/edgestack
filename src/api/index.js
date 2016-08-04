@@ -11,6 +11,7 @@ import helmet from "helmet"
 import React from "react"
 import { renderToString } from "react-dom/server"
 
+import ClientBundleAssets from "../../build/client/assets.json"
 import Button from "../components/Button"
 
 // Create our express based server.
@@ -49,10 +50,21 @@ app.use(process.env.PUBLIC_PATH, express.static(process.env.OUTPUT_PATH))
 // Test
 app.get('/', function (request, response)
 {
+  console.log("ASSETS: ", ClientBundleAssets)
   if (true)
   {
+
     const html = renderToString( <Button>TestButton</Button> )
-    response.status(200).send(html)
+    const js = ClientBundleAssets.main.js;
+    const css = ClientBundleAssets.main.css;
+
+    var page = `
+      <link rel="stylesheet" href="${css}"/>
+      ${html}
+      <script src="${js}"></script>
+    `
+
+    response.status(200).send(page)
   }
   else
   {
