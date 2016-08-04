@@ -50,27 +50,21 @@ app.use(process.env.PUBLIC_PATH, express.static(process.env.OUTPUT_PATH))
 // Test
 app.get('/button/:label', function (request, response)
 {
-  console.log("ASSETS: ", ClientBundleAssets)
+  const html = renderToString( <Button>{request.params.label}</Button> )
+  const js = ClientBundleAssets.main.js;
+  const css = ClientBundleAssets.main.css;
 
-  if (true)
-  {
+  var page = `
+    <link rel="stylesheet" href="${css}"/>
+    ${html}
+    <script src="${js}"></script>
+  `
 
-    const html = renderToString( <Button>{request.params.label}</Button> )
-    const js = ClientBundleAssets.main.js;
-    const css = ClientBundleAssets.main.css;
+  response.status(200).send(page)
+});
 
-    var page = `
-      <link rel="stylesheet" href="${css}"/>
-      ${html}
-      <script src="${js}"></script>
-    `
-
-    response.status(200).send(page)
-  }
-  else
-  {
-    response.status(404).send("Not found")
-  }
+app.use(function(req, res, next) {
+  res.status(404).send('Not found');
 });
 
 // Create an http listener for our express app.
