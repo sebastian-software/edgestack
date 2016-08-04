@@ -48,13 +48,14 @@ app.use(compression())
 app.use(process.env.PUBLIC_PATH, express.static(process.env.OUTPUT_PATH))
 
 // Test
-app.get('/', function (request, response)
+app.get('/button/:label', function (request, response)
 {
   console.log("ASSETS: ", ClientBundleAssets)
+
   if (true)
   {
 
-    const html = renderToString( <Button>TestButton</Button> )
+    const html = renderToString( <Button>{request.params.label}</Button> )
     const js = ClientBundleAssets.main.js;
     const css = ClientBundleAssets.main.css;
 
