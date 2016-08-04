@@ -147,7 +147,7 @@ function ConfigFactory(target, mode, root = CWD)
         // Exclude some more typical server-side packages.
         // TODO: Smarter detection between client-side vs. server-side would be useful to e.g.
         // to exclude all server-side stuff, but to bundle all client-side code.
-        if (/^(express|compression|helmet)$/.exec(basename)) {
+        if (/^(express|compression|helmet|nsp|fsevents|dotenv)$/.exec(basename)) {
           return callback(null, "commonjs " + request);
         }
 
