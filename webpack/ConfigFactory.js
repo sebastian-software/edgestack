@@ -235,8 +235,10 @@ function ConfigFactory(target, mode, root = CWD)
       // If the value isn’t a string, it will be stringified (including functions).
       // If the value is an object all keys are removeEmpty the same way.
       // If you prefix typeof to the key, it’s only removeEmpty for typeof calls.
-      new webpack.DefinePlugin({
-        "process.env": {
+      new webpack.DefinePlugin(
+      {
+        "process.env":
+        {
           // NOTE: The NODE_ENV key is especially important for production
           // builds as React relies on process.env.NODE_ENV for optimizations.
           NODE_ENV: JSON.stringify(mode),
@@ -249,13 +251,17 @@ function ConfigFactory(target, mode, root = CWD)
             // Otherwise we expect our bundled output to be served from this path.
             "/assets/"
           )),
+
           OUTPUT_PATH: JSON.stringify(path.resolve(root, `./build/client/`)),
 
           // All the below items match the config items in our .env file. Go
           // to the .env_example for a description of each key.
+          API_PORT: JSON.stringify(process.env.API_PORT),
           SERVER_PORT: JSON.stringify(process.env.SERVER_PORT),
           CLIENT_DEVSERVER_PORT: JSON.stringify(process.env.CLIENT_DEVSERVER_PORT),
+
           DISABLE_SSR: process.env.DISABLE_SSR,
+
           WEBSITE_TITLE: JSON.stringify(process.env.WEBSITE_TITLE),
           WEBSITE_DESCRIPTION: JSON.stringify(process.env.WEBSITE_DESCRIPTION),
         },
