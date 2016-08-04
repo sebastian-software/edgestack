@@ -13,6 +13,7 @@ import { renderToString } from "react-dom/server"
 
 import ClientBundleAssets from "../../build/client/assets.json"
 import Button from "../components/Button"
+import App from "./app"
 
 // Create our express based server.
 const app = express()
@@ -47,10 +48,32 @@ app.use(compression())
 // Configure static serving of our webpack bundled client files.
 app.use(process.env.PUBLIC_PATH, express.static(process.env.OUTPUT_PATH))
 
-// Test
+// Test 1
 app.get('/button/:label', function (request, response)
 {
-  const html = renderToString( <Button>{request.params.label}</Button> )
+  const html = renderToString(
+    <Button onClick={() => alert("clicked")}>{request.params.label}</Button>
+  )
+  const js = ClientBundleAssets.main.js;
+  const css = ClientBundleAssets.main.css;
+
+  var page = `
+    <link rel="stylesheet" href="${css}"/>
+    ${html}
+    <script src="${js}"></script>
+  `
+
+  response.status(200).send(page)
+});
+
+// Test 2
+app.get('/app', function (request, response)
+{
+  const html = renderToString(
+    <div id="root-app">
+      <App></App>
+    </div>
+  )
   const js = ClientBundleAssets.main.js;
   const css = ClientBundleAssets.main.css;
 

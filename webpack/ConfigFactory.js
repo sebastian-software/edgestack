@@ -248,6 +248,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       {
         "process.env":
         {
+          TARGET: JSON.stringify(target),
+
           // NOTE: The NODE_ENV key is especially important for production
           // builds as React relies on process.env.NODE_ENV for optimizations.
           NODE_ENV: JSON.stringify(mode),
