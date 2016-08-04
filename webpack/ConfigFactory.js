@@ -66,10 +66,10 @@ function merge()
 
 function ConfigFactory(target, mode, root = CWD)
 {
-  if (!target || !~[ "client", "server" ].findIndex((valid) => target === valid))
+  if (!target || !~[ "client", "server", "api" ].findIndex((valid) => target === valid))
   {
     throw new Error(
-      'You must provide a "target" (client|server) to the ConfigFactory.'
+      'You must provide a "target" (client|server|api) to the ConfigFactory.'
     )
   }
 
@@ -84,18 +84,22 @@ function ConfigFactory(target, mode, root = CWD)
   const isProd = mode === "production"
   const isClient = target === "client"
   const isServer = target === "server"
+  const isApi = target === "api"
+  const isNode = isServer || isApi
 
   const ifDev = ifElse(isDev)
   const ifProd = ifElse(isProd)
   const ifClient = ifElse(isClient)
   const ifServer = ifElse(isServer)
+  const ifApi = ifElse(isApi)
+  const ifNode = ifElse(isNode)
   const ifDevClient = ifElse(isDev && isClient)
   const ifDevServer = ifElse(isDev && isServer)
   const ifProdClient = ifElse(isProd && isClient)
 
   return {
     // We need to state that we are targetting "node" for our server bundle.
-    target: ifServer("node", "web"),
+    target: ifNode("node", "web"),
 
     stats: "errors-only",
 
@@ -130,11 +134,11 @@ function ConfigFactory(target, mode, root = CWD)
       })),
       */
 
-      ifServer(
+      ifNode(
         require("builtin-modules")
       ),
 
-      ifServer(function(context, request, callback) {
+      ifNode(function(context, request, callback) {
         if (request.charAt(0) == ".") {
           return callback();
         }
@@ -207,13 +211,13 @@ function ConfigFactory(target, mode, root = CWD)
       ),
 
       // When in server mode we will output our bundle as a commonjs2 module.
-      libraryTarget: ifServer("commonjs2", "var"),
+      libraryTarget: ifNode("commonjs2", "var"),
     },
 
     resolve:
     {
       // Enable new jsnext:main field for requiring files
-      mainFields: ifServer(
+      mainFields: ifNode(
         [ "jsnext:main", "main" ],
         [ "jsnext:main", "browser", "main" ]
       ),
@@ -283,7 +287,7 @@ function ConfigFactory(target, mode, root = CWD)
       new webpack.optimize.OccurrenceOrderPlugin(true),
 
       // Effectively fake all "file-loader" files with placeholders on server side
-      ifServer(new webpack.NormalModuleReplacementPlugin(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|mp4|mp3|ogg|pdf)$/, "node-noop")),
+      ifNode(new webpack.NormalModuleReplacementPlugin(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|mp4|mp3|ogg|pdf)$/, "node-noop")),
 
       // We don't want webpack errors to occur during development as it will
       // kill our dev servers.
@@ -456,7 +460,7 @@ function ConfigFactory(target, mode, root = CWD)
               }
             },
 
-            ifServer(
+            ifNode(
             {
               // We are running a node 6 server which has support for almost
               // all of the ES2015 syntax, therefore we only transpile JSX and later ES features.
@@ -519,7 +523,7 @@ function ConfigFactory(target, mode, root = CWD)
 
           // When targetting the server we fake out the style loader as the
           // server can't handle the styles and doesn't care about them either..
-          ifServer(
+          ifNode(
             {
               loaders:
               [

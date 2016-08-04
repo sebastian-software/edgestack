@@ -14,6 +14,8 @@
     "start": "./bin/advanced-script.js start",
     "prod": "./bin/advanced-script.js build",
     "prod:start": "npm run prod && node build/server/main.js",
+    "api": "./bin/advanced-script.js api",
+    "api:start": "npm run api && node build/api/main.js",
     "clean": "rimraf build/client/* build/server/* lib/* es/*",
     "nsp": "nsp check --output summary",
     "test": "npm run prod",
