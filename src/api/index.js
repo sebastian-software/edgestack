@@ -8,6 +8,11 @@ import compression from "compression"
 import hpp from "hpp"
 import helmet from "helmet"
 
+import React from "react"
+import { renderToString } from "react-dom/server"
+
+import Button from "../components/Button"
+
 // Create our express based server.
 const app = express()
 
@@ -42,8 +47,17 @@ app.use(compression())
 app.use(process.env.PUBLIC_PATH, express.static(process.env.OUTPUT_PATH))
 
 // Test
-app.get('/', function (req, res) {
-  res.send('Hello World!');
+app.get('/', function (request, response)
+{
+  if (true)
+  {
+    const html = renderToString({ rootElement: <Button>TestButton</Button> })
+    response.status(200).send(html)
+  }
+  else
+  {
+    response.status(404).send("Not found")
+  }
 });
 
 // Create an http listener for our express app.
