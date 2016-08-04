@@ -51,7 +51,7 @@ app.get('/', function (request, response)
 {
   if (true)
   {
-    const html = renderToString({ rootElement: <Button>TestButton</Button> })
+    const html = renderToString( <Button>TestButton</Button> )
     response.status(200).send(html)
   }
   else
