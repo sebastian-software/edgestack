@@ -64,8 +64,13 @@ function merge()
   )
 }
 
-function ConfigFactory(target, mode, root = CWD)
+function ConfigFactory(target, mode, options = {}, root = CWD)
 {
+  // Output custom options
+  if (Object.keys(options).length > 0) {
+    console.log("Using options: ", options)
+  }
+
   if (!target || !~[ "client", "server", "api" ].findIndex((valid) => target === valid))
   {
     throw new Error(
@@ -172,7 +177,7 @@ function ConfigFactory(target, mode, root = CWD)
       main: removeEmpty([
         ifDevClient("react-hot-loader/patch"),
         ifDevClient(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
-        `./src/${target}/index.js`,
+        options.entry ? options.entry : `./src/${target}/index.js`,
       ]),
     }),
 
