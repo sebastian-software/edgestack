@@ -252,7 +252,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
           // NOTE: The NODE_ENV key is especially important for production
           // builds as React relies on process.env.NODE_ENV for optimizations.
-          NODE_ENV: JSON.stringify(mode),
+          NODE_ENV: options.debug ? JSON.stringify("development") : JSON.stringify(mode),
 
           PUBLIC_PATH: JSON.stringify(ifDev(
             // As we run a seperate server for our client and server bundles we

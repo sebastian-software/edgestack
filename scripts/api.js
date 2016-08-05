@@ -28,7 +28,8 @@ series(
   {
     console.log("Creating a client bundle for Button...")
     webpack(ConfigFactory("client", "production", {
-      entry: "./src/api/app.js"
+      entry: "./src/api/app.js",
+      debug: true
     })).run(function(err, stats)
     {
       if (err)
