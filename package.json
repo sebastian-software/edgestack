@@ -18,7 +18,7 @@
     "apinew": "./bin/advanced-script.js api && node build/api/main.js",
     "clean": "rimraf build/client/* build/server/* lib/* es/*",
     "nsp": "nsp check --output summary",
-    "test": "npm run prod",
+    "test": "npm run prepublish && npm run prod",
     "prepublish": "npm run transpile",
     "transpile": "./bin/advanced-script.js transpile",
     "release": "release-it --github.release --npm.publish --non-interactive",
