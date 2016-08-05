@@ -6,6 +6,9 @@ const AssetsPlugin = require("assets-webpack-plugin")
 const nodeExternals = require("webpack-node-externals")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
+const BabelConfigClient = require("../config/babel.es.js")
+const BabelConfigNode = require("../config/babel.node.js")
+
 const CWD = process.cwd()
 
 const $css = {
@@ -451,11 +454,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           loader: "babel-loader",
           exclude: [ /node_modules/, path.resolve(root, "./build") ],
           query: merge(
+            // Babel-Loader specific settings
             {
-              // Prevent project-wide babel config from destroying behavior
-              // we especially like to have e.g. different configs between server/client.
-              babelrc: false,
-
               // Enable caching for babel transpiles
               cacheDirectory: true,
 
@@ -467,46 +467,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
               }
             },
 
-            ifNode(
-            {
-              // We are running a node 6 server which has support for almost
-              // all of the ES2015 syntax, therefore we only transpile JSX and later ES features.
-              presets:
-              [
-                "react",
-
-                "es2016",
-
-                // Add Stage-1/2/3 presets (which are all bundled in Stage-1)
-                // It seems that not all of these features are natively supported by Node >= 6.3.x
-                "stage-1"
-              ],
-
-              // Do not keep formatting (slower). Source maps are enough for inspection.
-              compact: "auto"
-            }),
-
-            ifClient(
-            {
-              // For our clients code we will need to transpile our JS into
-              // ES5 code for wider browser/device compatability.
-              presets:
-              [
-                // JSX
-                "react",
-
-                // Webpack 2 includes support for es2015 imports, therefore we disable modules transpile here
-                [ "es2015", { modules: false } ],
-
-                "es2016",
-
-                // Add Stage-1/2/3 presets (which are all bundled in Stage-1)
-                "stage-1"
-              ],
-
-              // Do not keep formatting (slower). Source maps are enough for inspection.
-              compact: "auto"
-            })
+            ifNode(BabelConfigNode),
+            ifClient(BabelConfigClient)
           )
         },
 
