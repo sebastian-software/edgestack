@@ -12,7 +12,7 @@ import React from "react"
 
 import ClientBundleAssets from "../../build/client/assets.json"
 import Button from "../components/Button"
-import { generateHtml } from "./app"
+import { dynamicRender } from "./app"
 
 // Create our express based server.
 const app = express()
@@ -71,9 +71,8 @@ app.get('/app', function (request, response)
   const js = ClientBundleAssets.main.js;
   const css = ClientBundleAssets.main.css;
 
-  generateHtml().then(function(html)
+  dynamicRender().then(function(html)
   {
-    console.log("HTML: ", html)
     var page = `
       <link rel="stylesheet" href="${css}"/>
       ${html}

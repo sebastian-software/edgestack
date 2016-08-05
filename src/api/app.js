@@ -1,45 +1,37 @@
 import React from "react"
-import About from "../components/About"
-import Button from "../components/Button"
 import { render } from "react-dom"
 import { renderToString } from "react-dom/server"
 
-/*
-System.import("./components/About")
-    .then((module) => cb(null, module.default))
-    .catch(handleError)
-*/
-
-function universalRender(component, target)
+// Universal server-/client-side component rendering engine
+export function universalRender(component, targetId)
 {
+  if (typeof component === "function") {
+    component = React.createElement(component)
+  }
+
   if (process.env.TARGET === "client")
-    render(component, document.getElementById(target))
+    render(component, document.getElementById(targetId))
   else
-    return `<div id=${target}>${renderToString(component)}</div>`
+    return `<div id=${targetId}>${renderToString(component)}</div>`
 }
 
-var counter = 33;
-function handleClick() {
-  console.log(counter++)
-}
-
-function generateHtml(reolve, reject) {
-  console.log("CALLED GENERATE...")
+// Promise-based HTML generator / renderer
+export function dynamicRender()
+{
   return new Promise(function(resolve, reject)
   {
-    var html =
-      universalRender(<About></About>, "first") +
-      universalRender(<About></About>, "second") +
-      universalRender(<Button onClick={handleClick}>Increase</Button>, "third")
-
-    resolve(html)
+    Promise.all([
+      System.import("../components/About").then((module) => universalRender(module.default, "first")),
+      System.import("../components/About").then((module) => universalRender(module.default, "second"))
+    ]).then(function(result) {
+      resolve(result.join(""))
+    }).catch(function(err) {
+      reject("Unable to render result: ", err)
+    })
   });
 }
 
+// Automatically execute rendering chain on client for rehydration
 if (process.env.TARGET === "client") {
-  generateHtml()
-}
-
-export {
-  generateHtml
+  dynamicRender()
 }
