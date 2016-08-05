@@ -9,11 +9,10 @@ import hpp from "hpp"
 import helmet from "helmet"
 
 import React from "react"
-import { renderToString } from "react-dom/server"
 
 import ClientBundleAssets from "../../build/client/assets.json"
 import Button from "../components/Button"
-import App from "./app"
+import { html } from "./app"
 
 // Create our express based server.
 const app = express()
@@ -69,11 +68,6 @@ app.get('/button/:label', function (request, response)
 // Test 2
 app.get('/app', function (request, response)
 {
-  const html = renderToString(
-    <div id="root-app">
-      <App></App>
-    </div>
-  )
   const js = ClientBundleAssets.main.js;
   const css = ClientBundleAssets.main.css;
 
