@@ -4,14 +4,6 @@ import Button from "../components/Button"
 import { render } from "react-dom"
 import { renderToString } from "react-dom/server"
 
-function App() {
-  return (
-    <About></About>
-  )
-}
-
-export default App
-
 /*
 System.import("./components/About")
     .then((module) => cb(null, module.default))
@@ -31,15 +23,23 @@ function handleClick() {
   console.log(counter++)
 }
 
-var myApp1 = <App></App>
-var myApp2 = <App></App>
-var myButton = <Button onClick={handleClick}>Increase</Button>;
+function generateHtml(reolve, reject) {
+  console.log("CALLED GENERATE...")
+  return new Promise(function(resolve, reject)
+  {
+    var html =
+      universalRender(<About></About>, "first") +
+      universalRender(<About></About>, "second") +
+      universalRender(<Button onClick={handleClick}>Increase</Button>, "third")
 
-var html =
-  universalRender(myApp1, "first") +
-  universalRender(myApp2, "second") +
-  universalRender(myButton, "third")
+    resolve(html)
+  });
+}
+
+if (process.env.TARGET === "client") {
+  generateHtml()
+}
 
 export {
-  html
+  generateHtml
 }

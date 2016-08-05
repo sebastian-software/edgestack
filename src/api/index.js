@@ -12,7 +12,7 @@ import React from "react"
 
 import ClientBundleAssets from "../../build/client/assets.json"
 import Button from "../components/Button"
-import { html } from "./app"
+import { generateHtml } from "./app"
 
 // Create our express based server.
 const app = express()
@@ -71,13 +71,17 @@ app.get('/app', function (request, response)
   const js = ClientBundleAssets.main.js;
   const css = ClientBundleAssets.main.css;
 
-  var page = `
-    <link rel="stylesheet" href="${css}"/>
-    ${html}
-    <script src="${js}"></script>
-  `
+  generateHtml().then(function(html)
+  {
+    console.log("HTML: ", html)
+    var page = `
+      <link rel="stylesheet" href="${css}"/>
+      ${html}
+      <script src="${js}"></script>
+    `
 
-  response.status(200).send(page)
+    response.status(200).send(page)
+  })
 });
 
 app.use(function(req, res, next) {
