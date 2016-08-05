@@ -475,6 +475,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
               [
                 "react",
 
+                "es2016",
+
                 // Add Stage-1/2/3 presets (which are all bundled in Stage-1)
                 // It seems that not all of these features are natively supported by Node >= 6.3.x
                 "stage-1"
@@ -493,9 +495,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
                 // JSX
                 "react",
 
-                // Webpack 2 includes support for es2015 imports, therefore we used this
-                // modified preset.
-                "es2015-webpack",
+                // Webpack 2 includes support for es2015 imports, therefore we disable modules transpile here
+                [ "es2015", { modules: false } ],
+
+                "es2016",
 
                 // Add Stage-1/2/3 presets (which are all bundled in Stage-1)
                 "stage-1"
