@@ -21,17 +21,17 @@ class HotServers
 
     this._configureHotClient = this._configureHotClient.bind(this)
     this._configureHotServer = this._configureHotServer.bind(this)
-    this._configureHotApi = this._configureHotApi.bind(this)
+    // this._configureHotApi = this._configureHotApi.bind(this)
 
     this.clientBundle = null
     this.clientCompiler = null
     this.serverBundle = null
     this.serverCompiler = null
-    this.apiBundle = null
-    this.apiCompiler = null
+    //this.apiBundle = null
+    //this.apiCompiler = null
 
     const configPath = path.resolve(__dirname, "ConfigFactory.js")
-    console.log(`Watching Config: ${path.relative(CWD, configPath)}`)
+    //console.log(`Watching Config: ${path.relative(CWD, configPath)}`)
 
     // Any changes to our webpack config builder will cause us to restart our hot servers.
     const watcher = chokidar.watch(configPath)
@@ -67,8 +67,8 @@ class HotServers
       console.log("Compiling server...")
       this.serverCompiler = webpack(ConfigFactory("server", "development"))
 
-      console.log("Compiling api...")
-      this.apiCompiler = webpack(ConfigFactory("api", "development"))
+      // console.log("Compiling api...")
+      // this.apiCompiler = webpack(ConfigFactory("api", "development"))
     }
     catch (err) {
       util.createNotification({
@@ -81,7 +81,7 @@ class HotServers
 
     this._configureHotClient()
     this._configureHotServer()
-    this._configureHotApi()
+    // this._configureHotApi()
   }
 
 
