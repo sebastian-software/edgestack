@@ -12,7 +12,7 @@ const BabelConfigNode = require("../config/babel.node.js")
 const CWD = process.cwd()
 
 const $css = {
-  atImport: require("postcss-import"),
+  atImport: require("postcss-smart-import"),
   url: require("postcss-url"),
   discardComments: require("postcss-discard-comments"),
   advancedVariables: require("postcss-advanced-variables"),
