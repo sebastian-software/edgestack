@@ -94,10 +94,10 @@ class HotServers
       (this.clientBundle ? this.clientBundle.dispose(true) : Promise.resolve())
     const safeDisposeServer = () =>
       (this.serverBundle ? this.serverBundle.dispose(true) : Promise.resolve())
-    const safeDisposeApi = () =>
-      (this.serverBundle ? this.serverBundle.dispose(true) : Promise.resolve())
+    //const safeDisposeApi = () =>
+    //  (this.apiBundle ? this.apiBundle.dispose(true) : Promise.resolve())
 
-    return safeDisposeClient().then(safeDisposeServer).then(safeDisposeApi)
+    return safeDisposeClient().then(safeDisposeServer) //.then(safeDisposeApi)
   }
 
   restart() {
