@@ -127,5 +127,8 @@
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2",
     "webpack-node-externals": "^1.3.3"
+  },
+  "devDependencies": {
+    "prepublish-lib": "^0.2.3"
   }
 }
