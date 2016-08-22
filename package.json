@@ -79,6 +79,7 @@
     "hpp": "^0.2.1",
     "json-loader": "^0.5.4",
     "load-plugins": "^2.1.0",
+    "lodash-es": "^4.15.0",
     "lost": "^7.0.4",
     "node-noop": "^1.0.0",
     "node-notifier": "^4.6.1",

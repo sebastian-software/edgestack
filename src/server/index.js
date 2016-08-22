@@ -8,6 +8,7 @@ import compression from "compression"
 import hpp from "hpp"
 import helmet from "helmet"
 import universalReactAppMiddleware from "./middleware/universalReactApp"
+import { camelCase } from "lodash-es"
 
 // Create our express based server.
 const app = express()
@@ -50,6 +51,9 @@ const listener = app.listen(parseInt(process.env.SERVER_PORT, 10))
 
 // User feedback
 console.log(`Running server at port ${process.env.SERVER_PORT}.`)
+
+// Demonstrating ES2015 Modules import
+console.log("Supports ES2015 Modules:", camelCase("hello-world") === "helloWorld")
 
 // We export the listener as it will be handy for our development hot reloader.
 export default listener
