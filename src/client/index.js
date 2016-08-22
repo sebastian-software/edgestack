@@ -1,4 +1,6 @@
 import React from "react"
+import { AppContainer } from "react-hot-loader"
+import Router from "react-router/lib/Router"
 import { render } from "react-dom"
 import browserHistory from "react-router/lib/browserHistory"
 import match from "react-router/lib/match"
