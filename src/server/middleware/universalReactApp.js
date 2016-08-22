@@ -30,6 +30,7 @@ function universalReactAppMiddleware(request, response)
   // https://github.com/reactjs/react-router/blob/master/docs/guides/ServerRendering.md
   match({ routes, history }, (error, redirectLocation, renderProps) =>
   {
+    /* eslint-disable no-magic-numbers */
     if (error)
     {
       response.status(500).send(error.message)
