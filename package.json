@@ -87,7 +87,7 @@
     "path": "^0.12.7",
     "postcss": "^5.1.2",
     "postcss-advanced-variables": "^1.2.2",
-    "postcss-calc": "^5.3.0",
+    "postcss-calc": "^5.3.1",
     "postcss-color-function": "^2.0.1",
     "postcss-color-hex-alpha": "^2.0.0",
     "postcss-devtools": "^1.1.0",
