@@ -1,7 +1,7 @@
 import serialize from "serialize-javascript"
 
-// :: [String] -> [String]
-function cssImports(css) {
+function cssImports(css)
+{
   return css
     .map((cssPath) =>
       `<link href="${cssPath}" rel="stylesheet"/>`
@@ -9,8 +9,8 @@ function cssImports(css) {
     .join("\n")
 }
 
-// :: [String] -> [String]
-function jsImports(javascript) {
+function jsImports(javascript)
+{
   return javascript
     .map((scriptPath) =>
       `<script src="${scriptPath}"></script>`
@@ -18,30 +18,30 @@ function jsImports(javascript) {
     .join("\n")
 }
 
-// :: Object -> [String]
-function metaTags(meta) {
+function metaTags(meta)
+{
   return Object.keys(meta).map((metaKey) =>
     `<meta name="${metaKey}" content="${meta[metaKey]}" />`
   )
 }
 
-// :: Assets -> Content -> String
-function createTemplate(assets = {}) {
+function createTemplate(assets = {})
+{
   const { css = [], js = [] } = assets
 
   const cssLinks = cssImports(css)
   const jsScripts = jsImports(js)
 
   return function pageTemplate(content = {}) {
-    const { title, meta = {}, initialState = {}, reactRootElement } = content
+    const { title, lang = "en-US", meta = {}, initialState = {}, reactRootElement } = content
 
     return `
     <!doctype html>
-    <html lang="en">
+    <html lang="${lang}">
       <head>
         <meta charset="utf-8" >
-        <meta httpequiv="X-UA-Compatible" content="IE=edge" >
-        <meta httpequiv="Content-Language" content="en" >
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+        <meta http-equiv="Content-Language" content="${lang}" >
 
         <title>${title}</title>
 
