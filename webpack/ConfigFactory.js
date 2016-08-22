@@ -310,9 +310,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // We need this plugin to enable hot module reloading for our dev server.
       ifDevClient(new webpack.HotModuleReplacementPlugin()),
 
-      // Ensure only 1 file is output for the server bundles. This makes it
-      // much easer for us to clear the module cache when reloading the server.
-      ifDevServer(new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })),
+      // Ensure only 1 file is output for the development bundles. This makes it
+      // much easer for us to clear the module cache when reloading the server +
+      // it helps with making hot module reloading more reliable.
+      ifDev(new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })),
 
       // Adds options to all of our loaders.
       ifProdClient(
