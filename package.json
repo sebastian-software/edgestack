@@ -16,11 +16,10 @@
     "prod:start": "npm run prod && node build/server/main.js",
     "api:start": "npm run prod && node build/api/main.js",
     "apinew": "node bin/advanced-script.js api && node build/api/main.js",
-    "clean": "rimraf build/client/* build/server/* lib/* es/*",
+    "clean": "rimraf build/client/* build/server/* lib/*",
     "nsp": "nsp check --output summary",
     "test": "npm run prepublish && npm run prod",
-    "prepublish": "npm run transpile",
-    "transpile": "node bin/advanced-script.js transpile",
+    "prepublish": "prepublish-lib",
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major"
