@@ -224,16 +224,20 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     resolve:
     {
-      // Enable new jsnext:main field for requiring files
+      // Enable new module/jsnext:main field for requiring files
       mainFields: ifNode(
-        [ "jsnext:main", "main" ],
-        [ "jsnext:main", "browser", "main" ]
+        [ "module", "jsnext:main", "main" ],
+        [ "module", "jsnext:main", "browser", "main" ]
       ),
 
       // These extensions are tried when resolving a file.
       extensions: [
         ".js",
         ".jsx",
+        ".es5",
+        ".es6",
+        ".es7",
+        ".es",
         ".json",
         ".css"
       ]
