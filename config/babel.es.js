@@ -11,9 +11,30 @@ module.exports =
 
   presets:
   [
+    // let, const, destructuring, classes (no modules)
     [ "babel-preset-es2015", { modules: false } ],
+
+    // exponentiation
     "babel-preset-es2016",
-    "babel-preset-react",
-    "babel-preset-stage-1"
+
+    // JSX, Flow
+    "babel-preset-react"
+  ],
+
+  plugins:
+  [
+    // function x(a, b, c,) { }
+    "syntax-trailing-function-commas",
+
+    // class { handleClick = () => { } }
+    "transform-class-properties",
+
+    // { ...todo, completed: true }
+    "transform-object-rest-spread",
+
+    // Polyfills the runtime needed
+    [ "transform-runtime", {
+      regenerator: false
+    }]
   ]
 }
