@@ -9,7 +9,6 @@ switch (script)
   case "build":
   case "start":
   case "api":
-  case "transpile":
     var result = spawn.sync(
       "node",
       [ require.resolve(`../scripts/${script}`) ].concat(args),
