@@ -6,6 +6,7 @@ const AssetsPlugin = require("assets-webpack-plugin")
 const nodeExternals = require("webpack-node-externals")
 const builtinModules = require("builtin-modules")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const WebpackMd5Hash = require('webpack-md5-hash');
 
 const BabelConfigClient = require("../config/babel.es.js")
 const BabelConfigNode = require("../config/babel.node.js")
@@ -188,7 +189,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     output:
     {
       // The dir in which our bundle should be output.
-      path: path.resolve(root, `./build/${target}`),
+      path: path.resolve(
+        root,
+        isClient
+          ? process.env.CLIENT_BUNDLE_OUTPUT_PATH
+          : process.env.SERVER_BUNDLE_OUTPUT_PATH
+      ),
 
       // The filename format for our bundle's entries.
       filename: ifProdClient(
@@ -245,6 +251,13 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     },
 
     plugins: removeEmpty([
+      // We use this so that our generated [chunkhash]'s are only different if
+      // the content for our respective chunks have changed.  This optimises
+      // our long term browser caching strategy for our client bundle, avoiding
+      // cases where browsers end up having to download all the client chunks
+      // even though 1 or 2 may have only changed.
+      ifClient(new WebpackMd5Hash()),
+
       // Each key passed into DefinePlugin is an identifier.
       // The values for each key will be inlined into the code replacing any
       // instances of the keys that are found.
@@ -271,30 +284,43 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             "/assets/"
           )),
 
-          OUTPUT_PATH: JSON.stringify(path.resolve(root, `./build/client/`)),
+
+          // NOTE: The NODE_ENV key is especially important for production
+          // builds as React relies on process.env.NODE_ENV for optimizations.
+          NODE_ENV: JSON.stringify(mode),
 
           // All the below items match the config items in our .env file. Go
           // to the .env_example for a description of each key.
-          API_PORT: JSON.stringify(process.env.API_PORT),
+
+          OUTPUT_PATH: JSON.stringify(path.resolve(root, `./build/client/`)),
+
+          APP_ROOT: JSON.stringify(path.resolve(root)),
+
+          // All the below items match the config items in our .env file. Go
+          // to the .env_example for a description of each key.
           SERVER_PORT: JSON.stringify(process.env.SERVER_PORT),
           CLIENT_DEVSERVER_PORT: JSON.stringify(process.env.CLIENT_DEVSERVER_PORT),
 
           DISABLE_SSR: process.env.DISABLE_SSR,
 
-          WEBSITE_TITLE: JSON.stringify(process.env.WEBSITE_TITLE),
-          WEBSITE_DESCRIPTION: JSON.stringify(process.env.WEBSITE_DESCRIPTION),
+          SERVER_BUNDLE_OUTPUT_PATH: JSON.stringify(process.env.SERVER_BUNDLE_OUTPUT_PATH),
+          CLIENT_BUNDLE_OUTPUT_PATH: JSON.stringify(process.env.CLIENT_BUNDLE_OUTPUT_PATH),
+          CLIENT_BUNDLE_ASSETS_FILENAME: JSON.stringify(process.env.CLIENT_BUNDLE_ASSETS_FILENAME),
+          CLIENT_BUNDLE_HTTP_PATH: JSON.stringify(process.env.CLIENT_BUNDLE_HTTP_PATH),
+          CLIENT_BUNDLE_CACHE_MAXAGE: JSON.stringify(process.env.CLIENT_BUNDLE_CACHE_MAXAGE)
         },
       }),
 
       // Generates a JSON file containing a map of all the output files for
-      // our webpack bundle. A necessisty for our server rendering process
+      // our webpack bundle.  A necessisty for our server rendering process
       // as we need to interogate these files in order to know what JS/CSS
       // we need to inject into our HTML.
-      new AssetsPlugin(
-      {
-        filename: "assets.json",
-        path: path.resolve(root, `./build/${target}`),
-      }),
+      ifClient(
+        new AssetsPlugin({
+          filename: process.env.CLIENT_BUNDLE_ASSETS_FILENAME,
+          path: path.resolve(root, process.env.CLIENT_BUNDLE_OUTPUT_PATH),
+        })
+      ),
 
       // Assign the module and chunk ids by occurrence count. Ids that are
       // used often get lower (shorter) ids. This make ids predictable.
@@ -458,7 +484,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         {
           test: /\.jsx?$/,
           loader: "babel-loader",
-          exclude: [ /node_modules/, path.resolve(root, "./build") ],
+          exclude: [
+            /node_modules/,
+            path.resolve(appRootPath, process.env.CLIENT_BUNDLE_OUTPUT_PATH),
+            path.resolve(appRootPath, process.env.SERVER_BUNDLE_OUTPUT_PATH)
+          ],
           query: merge(
             // Babel-Loader specific settings
             {
