@@ -1,14 +1,17 @@
-# Advanced Boilerplate<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status][ci-img]][ci] [![Dependencies][deps-img]][deps]
+# Advanced Boilerplate<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Dependencies][deps-img]][deps]
 
 [sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
 [sponsor]: https://www.sebastian-software.de
-[ci-img]: https://travis-ci.org/sebastian-software/advanced-boilerplate.svg?branch=master
-[ci]: https://travis-ci.org/sebastian-software/advanced-boilerplate
 [deps]: https://david-dm.org/sebastian-software/advanced-boilerplate
 [deps-img]: https://david-dm.org/sebastian-software/advanced-boilerplate.svg
 [npm]: https://www.npmjs.com/package/advanced-boilerplate
 [npm-downloads-img]: https://img.shields.io/npm/dm/advanced-boilerplate.svg
 [npm-version-img]: https://img.shields.io/npm/v/advanced-boilerplate.svg
+[travis-img]: https://img.shields.io/travis/sebastian-software/advanced-boilerplate/master.svg?branch=master&label=unix%20build
+[appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/advanced-boilerplate/master.svg?label=windows%20build
+[travis]: https://travis-ci.org/sebastian-software/advanced-boilerplate
+[appveyor]: https://ci.appveyor.com/project/swernerx/advanced-boilerplate/branch/master
+
 
 A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience.
 

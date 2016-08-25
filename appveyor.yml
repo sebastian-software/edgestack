@@ -1,0 +1,20 @@
+# http://www.appveyor.com/docs/appveyor-yml
+
+environment:
+  matrix:
+    - nodejs_version: 6
+    - nodejs_version: 5
+
+version: "{build}"
+build: off
+deploy: off
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - ps: Copy-Item .env_example .env
+  - npm install
+
+test_script:
+  - node --version
+  - npm --version
+  - cmd: "npm test"
