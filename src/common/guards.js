@@ -1,12 +1,13 @@
-export function notEmpty(x, message) {
-  if (x == null) {
+export function notEmpty(x, message)
+{
+  if (x == null)
     throw new Error(message)
-  }
 
   return x
 }
 
-export function envVarExists(envVarName) {
+export function envVarExists(envVarName)
+{
   const message =
     `The "${envVarName}" env variable was not found.  Please ensure you have ` +
     "set the environment variable. If you have but you are still seeing this " +

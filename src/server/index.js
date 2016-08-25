@@ -7,7 +7,8 @@ import express from "express"
 import compression from "compression"
 import hpp from "hpp"
 import helmet from "helmet"
-import universalReactAppMiddleware from "./middleware/universalReactApp"
+import universalReactAppMiddleware from "./middleware"
+
 import {
   CLIENT_BUNDLE_HTTP_PATH,
   CLIENT_BUNDLE_OUTPUT_PATH,
@@ -37,6 +38,7 @@ app.use(helmet.contentSecurityPolicy({
   mediaSrc: [ "'none'" ],
   frameSrc: [ "'none'" ],
 }))
+
 app.use(helmet.xssFilter())
 app.use(helmet.frameguard("deny"))
 app.use(helmet.ieNoOpen())
@@ -60,7 +62,7 @@ app.get("*", universalReactAppMiddleware)
 // Create an http listener for our express app.
 const listener = app.listen(SERVER_PORT)
 
-console.log(`==> 💚  HTTP Listener is running on port ${SERVER_PORT}`) // eslint-disable-line no-console,max-len
+console.log(`HTTP Listener is running on port ${SERVER_PORT}`) // eslint-disable-line no-console,max-len
 
 // We export the listener as it will be handy for our development hot reloader.
 export default listener
