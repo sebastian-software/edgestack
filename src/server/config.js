@@ -4,11 +4,11 @@
 // These config values then become a part of the server bundle.
 
 import path from "path"
-import appRoot from "app-root-path"
 import { envVarExists } from "../common/guards"
 import { fileExists } from "./guards"
 
-const appRootPath = appRoot.toString()
+const appRootPath = envVarExists("APP_ROOT")
+console.log("APP_ROOT: ", appRootPath)
 
 export const SERVER_PORT = parseInt(envVarExists("SERVER_PORT"), 10)
 
