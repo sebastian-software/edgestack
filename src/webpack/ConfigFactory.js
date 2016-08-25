@@ -24,17 +24,14 @@ const autoprefixerSettings =
 // @see https://github.com/motdotla/dotenv
 dotenv.config({ silent: true })
 
-// :: [Any] -> [Any]
 function removeEmpty(x) {
   return x.filter((y) => !!y)
 }
 
-// :: bool -> (Any, Any) -> Any
 function ifElse(condition) {
   return (then, or) => (condition ? then : or)
 }
 
-// :: ...Object -> Object
 function merge()
 {
   const funcArgs = Array.prototype.slice.call(arguments) // eslint-disable-line prefer-rest-params
@@ -70,14 +67,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   const isProd = mode === "production"
   const isClient = target === "client"
   const isServer = target === "server"
-  const isApi = target === "api"
-  const isNode = isServer || isApi
+  const isNode = isServer
 
   const ifDev = ifElse(isDev)
   const ifProd = ifElse(isProd)
   const ifClient = ifElse(isClient)
   const ifServer = ifElse(isServer)
-  const ifApi = ifElse(isApi)
   const ifNode = ifElse(isNode)
   const ifDevClient = ifElse(isDev && isClient)
   const ifDevServer = ifElse(isDev && isServer)
@@ -94,7 +89,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     // to '/'. There is no effect on our client bundle.
     node: {
       __dirname: true,
-      __filename: true,
+      __filename: true
     },
 
     cache: !(isDev && isServer),
