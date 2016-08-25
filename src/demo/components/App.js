@@ -10,14 +10,14 @@ function App({ children }) {
   return (
     <main>
       <Helmet
-        htmlAttributes={{ lang: 'en' }}
+        htmlAttributes={{ lang: "en" }}
         titleTemplate="Advanced Boilerplate - %s"
         defaultTitle="Advanced Boilerplate"
         meta={[
-          { name: 'description', content: websiteDescription },
+          { name: "description", content: websiteDescription },
         ]}
         script={[
-          { src: 'https://cdn.polyfill.io/v2/polyfill.min.js', type: 'text/javascript' },
+          { src: "https://cdn.polyfill.io/v2/polyfill.min.js", type: "text/javascript" },
         ]}
       />
 
