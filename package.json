@@ -11,13 +11,14 @@
     "advanced-script": "./bin/advanced-script.js"
   },
   "scripts": {
-    "start": "node bin/advanced-script.js start",
-    "prod": "node bin/advanced-script.js build",
+    "start": "npm run prescript && node bin/advanced-script.js start",
+    "prod": "npm run prescript && node bin/advanced-script.js build",
     "prod:start": "npm run prod && node build/server/main.js",
     "clean": "rimraf build/client/* build/server/* lib/*",
     "nsp": "nsp check --output summary",
     "test": "npm run prepublish && npm run prod",
-    "prepublish": "rollup --config rollup.script.cfg && prepublish-lib",
+    "prescript": "rollup --config rollup.script.cfg",
+    "prepublish": "npm run prescript && prepublish-lib",
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major"
