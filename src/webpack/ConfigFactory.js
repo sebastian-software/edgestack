@@ -10,26 +10,21 @@ import dotenv from "dotenv"
 import BabelConfigClient from "../config/babel.es.js"
 import BabelConfigNode from "../config/babel.node.js"
 
-import $css from "./PostCSS"
+import PostCSSConfig from "./PostCSSConfig"
 
 const CWD = process.cwd()
-
-const autoprefixerSettings =
-{
-  browsers: [ "> 2% in DE", "IE 10", "IE 11", "last 3 Chrome versions", "last 3 Firefox versions" ],
-  cascade: false,
-  flexbox: "no-2009"
-}
 
 // @see https://github.com/motdotla/dotenv
 dotenv.config({ silent: true })
 
-function removeEmpty(x) {
-  return x.filter((y) => !!y)
+function removeEmpty(array)
+{
+  return array.filter((entry) => !!entry)
 }
 
-function ifElse(condition) {
-  return (then, or) => (condition ? then : or)
+function ifElse(condition)
+{
+  return (then, otherwise) => (condition ? then : otherwise)
 }
 
 function merge()
@@ -332,103 +327,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     ]),
 
     postcss: function() {
-      return [
-        /*
-        $css.devtools({
-          silent: true
-        }),
-        */
-
-        $css.atImport(),
-        $css.url(),
-
-        // Discard comments in your CSS files with PostCSS.
-        // https://github.com/ben-eb/postcss-discard-comments
-        // Remove all comments... we don't need them further down the line
-        // which improves performance (reduces number of AST nodes)
-        $css.discardComments({
-          removeAll: true
-        }),
-
-        // PostCSS plugin for Sass-like variables, conditionals, and iteratives
-        // Supports local variables + @for/@each inspired by Sass
-        // https://github.com/jonathantneal/postcss-advanced-variables
-        $css.advancedVariables({
-          variables: {}
-        }),
-
-        // Sass-like mixins
-        // https://github.com/andyjansson/postcss-sassy-mixins
-        $css.sassyMixins,
-
-        // Fractional grid system built with calc(). Supports masonry, vertical, and waffle grids.
-        // https://github.com/peterramsing/lost
-        $css.lost,
-
-        // Insert 3D hack before will-change property
-        // https://github.com/postcss/postcss-will-change
-        $css.willChange,
-
-        // Reduce calc()
-        // Note: Important to keep this after mixin/variable processing
-        // https://github.com/postcss/postcss-calc
-        $css.calc,
-
-        // Fix up CSS gradients with transparency for older browsers
-        // https://github.com/gilmoreorless/postcss-gradient-transparency-fix
-        $css.gradientTransparencyFix,
-
-        // Replace easing names from http://easings.net to `cubic-bezier()`.
-        // https://github.com/postcss/postcss-easings
-        $css.easings,
-
-        // Transform W3C CSS color function to more compatible CSS
-        // https://github.com/postcss/postcss-color-function
-        $css.colorFunction,
-
-        // Transform RGBA hexadecimal notations (#RRGGBBAA or #RGBA) to more compatible CSS (rgba())
-        // https://github.com/postcss/postcss-color-hex-alpha
-        $css.colorHexAlpha,
-
-        // Tries to fix all of flexbug's issues
-        // https://github.com/luisrudge/postcss-flexbugs-fixes
-        $css.flexbugsFixes,
-
-        // Reduce z-index values with PostCSS.
-        // https://github.com/ben-eb/postcss-zindex
-        $css.zindex,
-
-        // Writing simple and graceful Media Queries!
-        // Support for CSS Media Queries Level 4: https://drafts.csswg.org/mediaqueries/#mq-range-context
-        // https://github.com/postcss/postcss-media-minmax
-        $css.mediaMinmax,
-
-        // Unwrap nested rules like how Sass does it.
-        // https://github.com/postcss/postcss-nested
-        $css.nested,
-
-        // Use the proposed :any-link pseudo-class in CSS
-        // https://github.com/jonathantneal/postcss-pseudo-class-any-link
-        $css.pseudoClassAnyLink,
-
-        // Transform :matches() W3C CSS pseudo class to more compatible CSS (simpler selectors)
-        // https://github.com/postcss/postcss-selector-matches
-        $css.selectorMatches,
-
-        // Add single and double colon peudo selectors
-        // Normalizes e.g. `::before` to `:before` for wider browser support
-        // https://github.com/axa-ch/postcss-pseudoelements
-        $css.pseudoelements,
-
-        // Parse CSS and add vendor prefixes to rules by Can I Use
-        // https://github.com/postcss/autoprefixer
-        $css.autoprefixer(autoprefixerSettings),
-
-        // Log PostCSS messages to the console
-        $css.reporter({
-          clearMessages: true
-        })
-      ]
+      return PostCSSConfig
     },
 
     module:
