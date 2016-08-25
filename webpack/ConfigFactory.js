@@ -219,10 +219,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       publicPath: ifDev(
         // As we run a seperate server for our client and server bundles we
         // need to use an absolute http path for our assets public path.
-        `http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/assets/`,
-
+        `http://localhost:${process.env.CLIENT_DEVSERVER_PORT}${process.env.CLIENT_BUNDLE_HTTP_PATH}`,
         // Otherwise we expect our bundled output to be served from this path.
-        "/assets/"
+        process.env.CLIENT_BUNDLE_HTTP_PATH
       ),
 
       // When in server mode we will output our bundle as a commonjs2 module.
@@ -275,24 +274,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           // builds as React relies on process.env.NODE_ENV for optimizations.
           NODE_ENV: options.debug ? JSON.stringify("development") : JSON.stringify(mode),
 
-          PUBLIC_PATH: JSON.stringify(ifDev(
-            // As we run a seperate server for our client and server bundles we
-            // need to use an absolute http path for our assets public path.
-            `http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/assets/`,
-
-            // Otherwise we expect our bundled output to be served from this path.
-            "/assets/"
-          )),
-
-
           // NOTE: The NODE_ENV key is especially important for production
           // builds as React relies on process.env.NODE_ENV for optimizations.
           NODE_ENV: JSON.stringify(mode),
-
-          // All the below items match the config items in our .env file. Go
-          // to the .env_example for a description of each key.
-
-          OUTPUT_PATH: JSON.stringify(path.resolve(root, `./build/client/`)),
 
           APP_ROOT: JSON.stringify(path.resolve(root)),
 
