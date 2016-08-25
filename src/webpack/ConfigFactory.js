@@ -44,10 +44,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     console.log("Using options: ", options)
   }
 
-  if (!target || !~[ "client", "server", "api" ].findIndex((valid) => target === valid))
+  if (!target || !~[ "client", "server" ].findIndex((valid) => target === valid))
   {
     throw new Error(
-      'You must provide a "target" (client|server|api) to the ConfigFactory.'
+      'You must provide a "target" (client|server) to the ConfigFactory.'
     )
   }
 
@@ -338,7 +338,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         {
           test: /\.jsx?$/,
           loader: "babel-loader",
-          exclude: [
+          exclude:
+          [
             /node_modules/,
             path.resolve(root, process.env.CLIENT_BUNDLE_OUTPUT_PATH),
             path.resolve(root, process.env.SERVER_BUNDLE_OUTPUT_PATH)
