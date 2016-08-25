@@ -29,24 +29,6 @@ class HotServers
 
     const configPath = path.resolve(__dirname, "ConfigFactory.js")
 
-    // Any changes to our webpack config builder will cause us to restart our hot servers.
-    const watcher = chokidar.watch(configPath)
-
-    /*
-    watcher.on("ready", () =>
-    {
-      watcher.on("change", () =>
-      {
-        util.createNotification({
-          title: "Webpack",
-          message: "Config changed. Full restart occurring...",
-        })
-
-        this.restart()
-      })
-    })
-    */
-
     // If we receive a kill cmd then we will first try to dispose our listeners.
     process.on("SIGTERM", () => this.dispose().then(() => process.exit(0)))
   }
