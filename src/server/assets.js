@@ -12,14 +12,15 @@ const ClientBundleAssets = JSON.parse(
 // configurations we add a hash to our filenames, therefore we won't know the
 // paths of the output by webpack unless we read them from the assets.json file.
 const chunks = Object.keys(ClientBundleAssets).map((key) => ClientBundleAssets[key])
-const assets = chunks.reduce((acc, chunk) => {
+const assets = chunks.reduce((sorted, chunk) =>
+{
   if (chunk.js) {
-    acc.scripts.push(chunk.js)
+    sorted.scripts.push(chunk.js)
   }
   if (chunk.css) {
-    acc.styles.push(chunk.css)
+    sorted.styles.push(chunk.css)
   }
-  return acc
+  return sorted
 }, { scripts: [], styles: [] })
 
 export default assets

@@ -14,6 +14,7 @@ import { IS_DEVELOPMENT } from "../common/config";
  */
 function universalMiddleware(request, response)
 {
+  /* eslint-disable no-magic-numbers */
   if (DISABLE_SSR)
   {
     if (IS_DEVELOPMENT)

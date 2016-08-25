@@ -1,7 +1,8 @@
 import { renderToString } from 'react-dom/server';
 import serialize from 'serialize-javascript';
 import Helmet from 'react-helmet';
-import clientAssets from '../clientAssets';
+
+import assets from './assets';
 
 function styleTags(styles : Array<string>) {
   return styles
@@ -19,8 +20,8 @@ function scriptTags(scripts : Array<string>) {
     .join('\n');
 }
 
-const styles = styleTags(clientAssets.styles);
-const scripts = scriptTags(clientAssets.scripts);
+const styles = styleTags(assets.styles);
+const scripts = scriptTags(assets.scripts);
 
 /**
  * Generates a full HTML page containing the render output of the given react
