@@ -6,7 +6,7 @@ const AssetsPlugin = require("assets-webpack-plugin")
 const nodeExternals = require("webpack-node-externals")
 const builtinModules = require("builtin-modules")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
-const WebpackMd5Hash = require('webpack-md5-hash');
+const WebpackShaHash = require('webpack-sha-hash');
 
 const BabelConfigClient = require("../config/babel.es.js")
 const BabelConfigNode = require("../config/babel.node.js")
@@ -202,7 +202,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // We include a hash for client caching purposes. Including a unique
         // has for every build will ensure browsers always fetch our newest
         // bundle.
-        "[name]-[hash].js",
+        "[name]-[chunkhash].js",
 
         // We want a determinable file name when running our server bundles,
         // as we need to be able to target our server start file from our
@@ -256,7 +256,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // our long term browser caching strategy for our client bundle, avoiding
       // cases where browsers end up having to download all the client chunks
       // even though 1 or 2 may have only changed.
-      ifClient(new WebpackMd5Hash()),
+      ifClient(new WebpackShaHash()),
 
       // Each key passed into DefinePlugin is an identifier.
       // The values for each key will be inlined into the code replacing any
