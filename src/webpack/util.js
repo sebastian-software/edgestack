@@ -16,21 +16,21 @@ function createNotification(options = {})
 }
 
 function logAssets(assets, buildFolder) {
-  console.log('File sizes after gzip:');
+  console.log("File sizes after gzip:")
   var assets = assets
-    .filter(asset => !/\.(map)$/.test(asset.name))
-    .map(asset => {
-      var fileContents = fs.readFileSync(buildFolder + '/' + asset.name);
+    .filter((asset) => !/\.(map)$/.test(asset.name))
+    .map((asset) => {
+      var fileContents = fs.readFileSync(buildFolder + "/" + asset.name)
       return {
         name: asset.name,
         size: gzipSize.sync(fileContents)
-      };
-    });
-  assets.sort((a, b) => b.name > a.name);
-  assets.forEach(asset => {
-    console.log('- ' + chalk.cyan(asset.name) + ': ' + chalk.green(filesize(asset.size)));
-  });
-  console.log();
+      }
+    })
+  assets.sort((a, b) => b.name > a.name)
+  assets.forEach((asset) => {
+    console.log("- " + chalk.cyan(asset.name) + ": " + chalk.green(filesize(asset.size)))
+  })
+  console.log()
 }
 
 export {

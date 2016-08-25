@@ -1,6 +1,6 @@
 import React from "react"
 import Markdown from "react-markdown"
-import Helmet from 'react-helmet';
+import Helmet from "react-helmet"
 
 import Button from "./Button"
 import Styles from "./About.css"

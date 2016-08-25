@@ -107,7 +107,7 @@ class HotServers
 
   _configureHotServer() {
     const compileHotServer = () => {
-      console.log('compiling hot server');
+      console.log("compiling hot server")
       const runCompiler = () => this.serverCompiler.run(() => undefined)
 
       // Shut down any existing running server if necessary before starting the

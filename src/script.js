@@ -1,8 +1,8 @@
 import build from "./scripts/build"
 import start from "./scripts/start"
 
-var script = process.argv[2];
-var args = process.argv.slice(3);
+var script = process.argv[2]
+var args = process.argv.slice(3)
 
 switch (script)
 {

@@ -1,13 +1,13 @@
-import { Middleware } from "express";
-import React from "react";
-import RouterContext from "react-router/lib/RouterContext";
-import createMemoryHistory from "react-router/lib/createMemoryHistory";
-import match from "react-router/lib/match";
+import { Middleware } from "express"
+import React from "react"
+import RouterContext from "react-router/lib/RouterContext"
+import createMemoryHistory from "react-router/lib/createMemoryHistory"
+import match from "react-router/lib/match"
 
-import render from "./render";
-import routes from "../demo/routes";
-import { DISABLE_SSR } from "./config";
-import { IS_DEVELOPMENT } from "../common/config";
+import render from "./render"
+import routes from "../demo/routes"
+import { DISABLE_SSR } from "./config"
+import { IS_DEVELOPMENT } from "../common/config"
 
 /**
  * An express middleware that is capabable of doing React server side rendering.
