@@ -4,8 +4,9 @@ import { AppContainer } from "react-hot-loader"
 import Router from "react-router/lib/Router"
 import browserHistory from "react-router/lib/browserHistory"
 import match from "react-router/lib/match"
+
 import routes from "../demo/routes"
-import { IS_HOT_DEVELOPMENT } from "../shared/config"
+import { IS_HOT_DEVELOPMENT } from "../common/config"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")
@@ -49,7 +50,7 @@ if (IS_HOT_DEVELOPMENT) {
   module.hot.accept("./index.js")
 
   // Any changes to our routes will cause a hotload re-render.
-  module.hot.accept("../routes", renderApp)
+  module.hot.accept("../demo/routes", renderApp)
 }
 
 renderApp()
