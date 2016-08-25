@@ -3,4 +3,14 @@ node_modules
 dist
 build
 src
+
 .env
+.babelrc
+.babelrc.md
+.editorconfig
+.eslintignore
+.eslintrc.yml
+.npmignore
+.travis.yml
+
+rollup.script.cfg
