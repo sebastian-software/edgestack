@@ -1,4 +1,3 @@
-/* @flow */
 
 // Contains all the configuration specific to our Server.
 // Please note that the DefinePlugin of webpack will inline/replace all the

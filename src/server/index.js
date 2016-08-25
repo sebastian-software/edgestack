@@ -1,4 +1,3 @@
-/* @flow */
 
 // This grants us source map support, which is handy as our webpack bundling
 // for the server will include source maps.  Therefore we will have nice stack

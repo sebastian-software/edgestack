@@ -1,4 +1,3 @@
-/* @flow */
 
 import type { Middleware } from 'express';
 import React from 'react';
