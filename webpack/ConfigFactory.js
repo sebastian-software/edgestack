@@ -486,8 +486,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           loader: "babel-loader",
           exclude: [
             /node_modules/,
-            path.resolve(appRootPath, process.env.CLIENT_BUNDLE_OUTPUT_PATH),
-            path.resolve(appRootPath, process.env.SERVER_BUNDLE_OUTPUT_PATH)
+            path.resolve(root, process.env.CLIENT_BUNDLE_OUTPUT_PATH),
+            path.resolve(root, process.env.SERVER_BUNDLE_OUTPUT_PATH)
           ],
           query: merge(
             // Babel-Loader specific settings
