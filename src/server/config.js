@@ -5,8 +5,8 @@
 
 import path from "path"
 import appRoot from "app-root-path"
-import { envVarExists } from "../../shared/utils/guards"
-import { fileExists } from "../utils/guards"
+import { envVarExists } from "../common/guards"
+import { fileExists } from "./guards"
 
 const appRootPath = appRoot.toString()
 
@@ -27,6 +27,7 @@ const assetsBundleFilePath = path.resolve(
   CLIENT_BUNDLE_OUTPUT_PATH,
   envVarExists("CLIENT_BUNDLE_ASSETS_FILENAME")
 )
+
 fileExists(
   assetsBundleFilePath,
   `We could not find the "${assetsBundleFilePath}" file, which contains a ` +
@@ -35,6 +36,7 @@ fileExists(
   "environment variables are configured (CLIENT_BUNDLE_OUTPUT_PATH & " +
   "CLIENT_BUNDLE_ASSETS_FILENAME)"
 )
+
 export const CLIENT_BUNDLE_ASSETSJSON_FILEPATH = assetsBundleFilePath
 
 export const PUBLIC_DIR_PATH = path.resolve(appRootPath, "./public")

@@ -17,6 +17,7 @@ This is a paragraph rendered using Markdown.
 function About() {
   return (
     <article>
+      <Helmet title="About" />
       <p className={Styles.intro}>
         Produced with ❤️ by <a href="https://github.com/sebastiansoft">Sebastian Software</a>
         <Button onClick={() => alert("clicked")}>Click me</Button>
