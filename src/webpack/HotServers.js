@@ -3,9 +3,10 @@ import process from "process"
 import webpack from "webpack"
 import chokidar from "chokidar"
 
-import { createNotification } from "./util"
 import HotClient from "./HotClient"
 import HotServer from "./HotServer"
+import ConfigFactory from "./ConfigFactory"
+import { createNotification } from "./util"
 
 const CWD = process.cwd()
 
@@ -37,8 +38,6 @@ class HotServers
   {
     try
     {
-      const ConfigFactory = require("./ConfigFactory")
-
       console.log("Compiling client...")
       this.clientCompiler = webpack(ConfigFactory("client", "development"))
 
