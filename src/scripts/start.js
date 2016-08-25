@@ -1,2 +1,6 @@
 const HotServers = require("../webpack/HotServers")
-new HotServers().start()
+
+export default function start()
+{
+  new HotServers().start()
+}
