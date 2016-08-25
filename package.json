@@ -1,6 +1,6 @@
 {
   "name": "advanced-boilerplate",
-  "version": "0.7.8",
+  "version": "0.8.0",
   "description": "React Universally with PostCSS",
   "main": "es5/server/index.js",
   "jsnext:main": "src/server/index.js",
