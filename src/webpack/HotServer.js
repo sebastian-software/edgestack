@@ -1,7 +1,7 @@
-const path = require("path")
+import path from "path"
 
-const ListenerManager = require("./ListenerManager")
-const util = require("./util")
+import ListenerManager from "./ListenerManager"
+import { createNotification } from "./util"
 
 class HotServer {
   constructor(compiler) {
@@ -20,7 +20,7 @@ class HotServer {
 
       const url = `http://localhost:${process.env.SERVER_PORT}`
 
-      util.createNotification({
+      createNotification({
         title: "Server",
         message: `Running on ${url}`,
         open: url,
@@ -28,7 +28,7 @@ class HotServer {
     }
     catch (err)
     {
-      util.createNotification({
+      createNotification({
         title: "Server",
         message: "Error: Bundle invalid, check console for error",
       })
@@ -43,4 +43,4 @@ class HotServer {
   }
 }
 
-module.exports = HotServer
+export default HotServer

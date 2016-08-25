@@ -135,6 +135,9 @@
     "webpack-sha-hash": "^1.0.0"
   },
   "devDependencies": {
-    "prepublish-lib": "^0.2.7"
+    "prepublish-lib": "^0.2.7",
+    "rollup-plugin-buble": "^0.13.0",
+    "rollup-plugin-commonjs": "^3.3.1",
+    "rollup-plugin-node-resolve": "^2.0.0"
   }
 }

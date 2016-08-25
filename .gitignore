@@ -6,6 +6,7 @@ build/
 public/
 dist/
 lib/
+bin/
 
 # Logs
 logs

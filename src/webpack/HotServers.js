@@ -1,11 +1,11 @@
-const path = require("path")
-const process = require("process")
-const webpack = require("webpack")
-const chokidar = require("chokidar")
+import path from "path"
+import process from "process"
+import webpack from "webpack"
+import chokidar from "chokidar"
 
-const util = require("./util")
-const HotClient = require("./HotClient")
-const HotServer = require("./HotServer")
+import { createNotification } from "./util"
+import HotClient from "./HotClient"
+import HotServer from "./HotServer"
 
 const CWD = process.cwd()
 
@@ -46,7 +46,7 @@ class HotServers
       this.serverCompiler = webpack(ConfigFactory("server", "development"))
     }
     catch (err) {
-      util.createNotification({
+      createNotification({
         title: "Webpack",
         message: "Config invalid, check console for error",
       })
@@ -90,13 +90,13 @@ class HotServers
   _configureHotClient() {
     this.clientCompiler.plugin("done", (stats) => {
       if (stats.hasErrors()) {
-        util.createNotification({
+        createNotification({
           title: "Client",
           message: "Build failed, check console for error",
         })
         console.log(stats.toString())
       } else {
-        util.createNotification({
+        createNotification({
           title: "Client",
           message: "Built",
         })
@@ -128,7 +128,7 @@ class HotServers
 
     this.serverCompiler.plugin("done", (stats) => {
       if (stats.hasErrors()) {
-        util.createNotification({
+        createNotification({
           title: "Server",
           message: "Build failed, check console for error",
         })
@@ -136,7 +136,7 @@ class HotServers
         return
       }
 
-      util.createNotification({
+      createNotification({
         title: "Server",
         message: "Built",
       })
@@ -165,4 +165,4 @@ class HotServers
   }
 }
 
-module.exports = HotServers
+export default HotServers

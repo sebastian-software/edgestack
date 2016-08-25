@@ -1,8 +1,8 @@
-const notifier = require("node-notifier")
-const fs = require("fs");
-const filesize = require("filesize");
-const gzipSize = require("gzip-size").sync;
-const chalk = require("chalk");
+import notifier from "node-notifier"
+import fs from "fs"
+import filesize from "filesize"
+import gzipSize from "gzip-size"
+import chalk from "chalk"
 
 function createNotification(options = {})
 {
@@ -23,7 +23,7 @@ function logAssets(assets, buildFolder) {
       var fileContents = fs.readFileSync(buildFolder + '/' + asset.name);
       return {
         name: asset.name,
-        size: gzipSize(fileContents)
+        size: gzipSize.sync(fileContents)
       };
     });
   assets.sort((a, b) => b.name > a.name);
@@ -33,7 +33,7 @@ function logAssets(assets, buildFolder) {
   console.log();
 }
 
-module.exports = {
+export {
   createNotification,
   logAssets
 }

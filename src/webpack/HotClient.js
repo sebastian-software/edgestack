@@ -1,9 +1,9 @@
-const express = require("express")
-const createWebpackHotMiddleware = require("webpack-hot-middleware")
-const createWebpackMiddleware = require("webpack-dev-middleware")
+import express from "express"
+import createWebpackHotMiddleware from "webpack-hot-middleware"
+import createWebpackMiddleware from "webpack-dev-middleware"
 
-const ListenerManager = require("./ListenerManager")
-const util = require("./util")
+import ListenerManager from "./ListenerManager"
+import { createNotification } from "./util"
 
 class HotClient {
   constructor(compiler) {
@@ -30,7 +30,7 @@ class HotClient {
     const listener = app.listen(process.env.CLIENT_DEVSERVER_PORT)
     this.listenerManager = new ListenerManager(listener)
 
-    util.createNotification({
+    createNotification({
       title: "Hot Client",
       message: "Running",
     })
@@ -45,4 +45,4 @@ class HotClient {
   }
 }
 
-module.exports = HotClient
+export default HotClient

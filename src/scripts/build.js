@@ -4,7 +4,7 @@ import webpack from "webpack"
 import series from "async/series"
 
 import ConfigFactory from "../webpack/ConfigFactory"
-import util from "../webpack/util"
+import { logAssets } from "../webpack/util"
 
 export default function build()
 {
@@ -40,7 +40,7 @@ export default function build()
         console.log("- Done")
         console.log("")
 
-        util.logAssets(stats.toJson().assets, buildFolderClient)
+        logAssets(stats.toJson().assets, buildFolderClient)
         callback()
       })
     },

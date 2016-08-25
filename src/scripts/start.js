@@ -1,4 +1,4 @@
-const HotServers = require("../webpack/HotServers")
+import HotServers from "../webpack/HotServers"
 
 export default function start()
 {

@@ -1,41 +1,18 @@
-/* eslint-disable no-console */
+import path from "path"
+import webpack from "webpack"
+import AssetsPlugin from "assets-webpack-plugin"
+import nodeExternals from "webpack-node-externals"
+import builtinModules from "builtin-modules"
+import ExtractTextPlugin from "extract-text-webpack-plugin"
+import WebpackShaHash from "webpack-sha-hash"
+import dotenv from "dotenv"
 
-const path = require("path")
-const webpack = require("webpack")
-const AssetsPlugin = require("assets-webpack-plugin")
-const nodeExternals = require("webpack-node-externals")
-const builtinModules = require("builtin-modules")
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
-const WebpackShaHash = require('webpack-sha-hash');
+import BabelConfigClient from "../config/babel.es.js"
+import BabelConfigNode from "../config/babel.node.js"
 
-const BabelConfigClient = require("../config/babel.es.js")
-const BabelConfigNode = require("../config/babel.node.js")
+import $css from "./PostCSS"
 
 const CWD = process.cwd()
-
-const $css = {
-  atImport: require("postcss-smart-import"),
-  url: require("postcss-url"),
-  discardComments: require("postcss-discard-comments"),
-  advancedVariables: require("postcss-advanced-variables"),
-  sassyMixins: require("postcss-sassy-mixins"),
-  lost: require("lost"),
-  willChange: require("postcss-will-change"),
-  calc: require("postcss-calc"),
-  gradientTransparencyFix: require("postcss-gradient-transparency-fix"),
-  easings: require("postcss-easings"),
-  colorFunction: require("postcss-color-function"),
-  colorHexAlpha: require("postcss-color-hex-alpha"),
-  flexbugsFixes: require("postcss-flexbugs-fixes"),
-  zindex: require("postcss-zindex"),
-  mediaMinmax: require("postcss-media-minmax"),
-  nested: require("postcss-nested"),
-  pseudoClassAnyLink: require("postcss-pseudo-class-any-link"),
-  selectorMatches: require("postcss-selector-matches"),
-  pseudoelements: require("postcss-pseudoelements"),
-  autoprefixer: require("autoprefixer"),
-  reporter: require("postcss-reporter")
-}
 
 const autoprefixerSettings =
 {
@@ -45,7 +22,6 @@ const autoprefixerSettings =
 }
 
 // @see https://github.com/motdotla/dotenv
-const dotenv = require("dotenv")
 dotenv.config({ silent: true })
 
 // :: [Any] -> [Any]
@@ -145,7 +121,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       */
 
       ifNode(
-        require("builtin-modules")
+        builtinModules
       ),
 
       ifNode(function(context, request, callback) {
@@ -581,4 +557,4 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   }
 }
 
-module.exports = ConfigFactory
+export default ConfigFactory
