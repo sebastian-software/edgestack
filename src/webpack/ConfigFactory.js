@@ -150,7 +150,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     // source maps.
     //
     // We also want to be able to link to the source in Chrome dev tools
-    devtool: "source-map",
+    devtool: "eval-cheap-module-source-map",
 
     // Define our entry chunks for our bundle.
     entry: merge(
