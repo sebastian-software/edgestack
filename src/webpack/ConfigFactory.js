@@ -7,6 +7,9 @@ import ExtractTextPlugin from "extract-text-webpack-plugin"
 import WebpackShaHash from "webpack-sha-hash"
 import dotenv from "dotenv"
 
+import esModules from "./Modules"
+
+
 import BabelConfigClient from "../config/babel.es.js"
 import BabelConfigNode from "../config/babel.node.js"
 
