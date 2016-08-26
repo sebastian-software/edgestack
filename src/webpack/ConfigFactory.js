@@ -184,7 +184,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         "[name].js"
       ),
 
-      chunkFilename: "chunk-[name]-[chunkhash].js",
+      chunkFilename: ifProdClient(
+        "chunk-[name]-[chunkhash].js",
+        "chunk-[name].js"
+      ),
 
       // This is the web path under which our webpack bundled output should
       // be considered as being served from.
