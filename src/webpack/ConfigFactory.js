@@ -94,7 +94,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       __filename: true
     },
 
-    cache: !(isDev && isServer),
+    // debug: true,
+    cache: true,
 
     // Anything listed in externals will not be included in our bundle.
     externals: removeEmpty(
