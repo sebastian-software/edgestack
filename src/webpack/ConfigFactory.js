@@ -15,6 +15,9 @@ import BabelConfigNode from "../config/babel.node.js"
 
 import PostCSSConfig from "./PostCSSConfig"
 
+
+const builtInSet = new Set(builtinModules)
+const problematicCommonJS = new Set(["helmet"])
 const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
