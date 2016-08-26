@@ -301,8 +301,22 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // it helps with making hot module reloading more reliable.
       ifDev(new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })),
 
+
       // Adds options to all of our loaders.
-      ifProdClient(
+      ifDev(
+        new webpack.LoaderOptionsPlugin({
+          // Indicates to our loaders that they should minify their output
+          // if they have the capability to do so.
+          minimize: false,
+
+          // Indicates to our loaders that they should enter into debug mode
+          // should they support it.
+          debug: true
+        })
+      ),
+
+      // Adds options to all of our loaders.
+      ifProd(
         new webpack.LoaderOptionsPlugin({
           // Indicates to our loaders that they should minify their output
           // if they have the capability to do so.
