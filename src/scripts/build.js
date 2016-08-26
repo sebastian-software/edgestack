@@ -2,6 +2,7 @@ import path from "path"
 import rimraf from "rimraf"
 import webpack from "webpack"
 import series from "async/series"
+import gutil from "gulp-util"
 
 import ConfigFactory from "../webpack/ConfigFactory"
 import { logAssets } from "../webpack/util"
@@ -40,6 +41,11 @@ export default function build()
         console.log("- Done")
         console.log("")
 
+        gutil.log(stats.toString({
+          chunks: false, // Makes the build much quieter
+          colors: true
+        }))        
+
         logAssets(stats.toJson().assets, buildFolderClient)
         callback()
       })
@@ -58,6 +64,12 @@ export default function build()
 
         console.log("- Done")
         console.log("")
+
+        gutil.log(stats.toString({
+          chunks: false, // Makes the build much quieter
+          colors: true
+        }))
+
         callback()
       })
     }
