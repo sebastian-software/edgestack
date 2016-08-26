@@ -9,6 +9,9 @@ export default
   // Keep origin information alive
   sourceMaps: "inline",
 
+  // Nobody needs the original comments when having source maps
+  comments: false,
+
   presets:
   [
     // let, const, destructuring, classes (no modules)
