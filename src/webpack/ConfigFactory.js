@@ -251,10 +251,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           // builds as React relies on process.env.NODE_ENV for optimizations.
           "process.env.NODE_ENV": options.debug ? JSON.stringify("development") : JSON.stringify(mode),
 
-          // NOTE: The NODE_ENV key is especially important for production
-          // builds as React relies on process.env.NODE_ENV for optimizations.
-          "process.env.NODE_ENV": JSON.stringify(mode),
-
           "process.env.APP_ROOT": JSON.stringify(path.resolve(root)),
 
           // All the below items match the config items in our .env file. Go
