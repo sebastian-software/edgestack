@@ -75,6 +75,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   const ifDevClient = ifElse(isDev && isClient)
   const ifDevServer = ifElse(isDev && isServer)
   const ifProdClient = ifElse(isProd && isClient)
+  const ifProdServer = ifElse(isProd && isServer)
 
   return {
     // We need to state that we are targetting "node" for our server bundle.
