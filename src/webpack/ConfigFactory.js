@@ -102,7 +102,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // For ignoring all files which should be bundled e.g. which is true for
       // all files being loader-specific (Webpack dependend). This includes
       // files like CSS files, static files, dynamically generated files, etc.
-      ifServer(nodeExternals({
+      /*
+      ifNode(nodeExternals({
         whitelist: [
           /\.(eot|woff|woff2|ttf|otf)$/,
           /\.(svg|png|jpg|jpeg|gif|webp|ico)$/,
@@ -110,28 +111,30 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           /\.(css|scss|sass|sss|less)$/
         ]
       })),
-
-      /*
-      ifNode(
-        builtinModules
-      ),
-
-      ifNode(function(context, request, callback) {
-        if (request.charAt(0) == ".") {
-          return callback();
-        }
-
-        var basename = request.split("/")[0]
-        // Exclude some more typical server-side packages.
-        // TODO: Smarter detection between client-side vs. server-side would be useful to e.g.
-        // to exclude all server-side stuff, but to bundle all client-side code.
-        if (/^(express|compression|helmet|nsp|fsevents|dotenv)$/.exec(basename)) {
-          return callback(null, "commonjs " + request);
-        }
-
-        callback();
-      })
       */
+
+      ifNode(function(context, request, callback)
+      {
+        var basename = request.split("/")[0]
+
+        // Externalize built-in modules
+        if (builtInSet.has(basename))
+          return callback(null, "commonjs " + request)
+
+        // Ignore inline files
+        if (basename.charAt(0) === ".")
+          return callback()
+
+        // But inline all es2015 modules
+        if (esModules[basename])
+          return callback()
+
+        // Keep care that problematic common-js code is external
+        if (problematicCommonJS.has(basename))
+          return callback(null, "commonjs " + request)
+
+        callback()
+      })
     ]),
 
     // See also: https://webpack.github.io/docs/configuration.html#devtool
