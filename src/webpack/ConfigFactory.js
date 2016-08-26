@@ -143,6 +143,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     ]),
 
     // See also: https://webpack.github.io/docs/configuration.html#devtool
+    // and http://webpack.github.io/docs/build-performance.html#sourcemaps
     //
     // We want to be able to get nice stack traces when running our server
     // bundle. To fully support this we'll also need to configure the
@@ -200,6 +201,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // As we run a seperate server for our client and server bundles we
         // need to use an absolute http path for our assets public path.
         `http://localhost:${process.env.CLIENT_DEVSERVER_PORT}${process.env.CLIENT_BUNDLE_HTTP_PATH}`,
+
         // Otherwise we expect our bundled output to be served from this path.
         process.env.CLIENT_BUNDLE_HTTP_PATH
       ),
