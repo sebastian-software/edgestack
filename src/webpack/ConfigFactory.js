@@ -5,6 +5,7 @@ import nodeExternals from "webpack-node-externals"
 import builtinModules from "builtin-modules"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 import WebpackShaHash from "webpack-sha-hash"
+import ESCompressPlugin from "escompress-webpack-plugin"
 import dotenv from "dotenv"
 
 import esModules from "./Modules"
@@ -336,6 +337,13 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             screw_ie8: true,
             warnings: false
           }
+        })
+      ),
+
+      ifProdServer(
+        new ESCompressPlugin({
+          sourceMap: true,
+          comments: false
         })
       ),
 
