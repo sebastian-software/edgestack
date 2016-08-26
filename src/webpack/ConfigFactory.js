@@ -234,7 +234,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // our long term browser caching strategy for our client bundle, avoiding
       // cases where browsers end up having to download all the client chunks
       // even though 1 or 2 may have only changed.
-      ifClient(new WebpackShaHash()),
+      ifProdClient(new WebpackShaHash()),
 
       // Each key passed into DefinePlugin is an identifier.
       // The values for each key will be inlined into the code replacing any
