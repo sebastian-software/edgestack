@@ -4,28 +4,27 @@
 // These config values then become a part of the server bundle.
 
 import path from "path"
-import { envVarExists } from "../common/guards"
 import { fileExists } from "./guards"
 
-const root = envVarExists("APP_ROOT")
+const root = process.env.APP_ROOT
 console.log("Root:", root)
 
-export const SERVER_PORT = parseInt(envVarExists("SERVER_PORT"), 10)
+export const SERVER_PORT = parseInt(process.env.SERVER_PORT, 10)
 
 export const DISABLE_SSR = process.env.DISABLE_SSR === "true"
 
-export const CLIENT_BUNDLE_HTTP_PATH = envVarExists("CLIENT_BUNDLE_HTTP_PATH")
+export const CLIENT_BUNDLE_HTTP_PATH = process.env.CLIENT_BUNDLE_HTTP_PATH
 
 export const CLIENT_BUNDLE_OUTPUT_PATH = path.resolve(
-  root, envVarExists("CLIENT_BUNDLE_OUTPUT_PATH")
+  root, process.env.CLIENT_BUNDLE_OUTPUT_PATH
 )
 
-export const CLIENT_BUNDLE_CACHE_MAXAGE = envVarExists("CLIENT_BUNDLE_CACHE_MAXAGE")
+export const CLIENT_BUNDLE_CACHE_MAXAGE = process.env.CLIENT_BUNDLE_CACHE_MAXAGE
 
 const assetsBundleFilePath = path.resolve(
   root,
   CLIENT_BUNDLE_OUTPUT_PATH,
-  envVarExists("CLIENT_BUNDLE_ASSETS_FILENAME")
+  process.env.CLIENT_BUNDLE_ASSETS_FILENAME
 )
 
 fileExists(
