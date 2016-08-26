@@ -307,7 +307,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
           // Indicates to our loaders that they should enter into debug mode
           // should they support it.
-          debug: false,
+          debug: false
         })
       ),
 
@@ -318,7 +318,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           compress: {
             screw_ie8: true,
             warnings: false
-          },
+          }
         })
       ),
 
