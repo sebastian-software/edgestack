@@ -99,7 +99,7 @@
     "postcss-easings": "^0.3.0",
     "postcss-flexbugs-fixes": "^2.0.0",
     "postcss-gradient-transparency-fix": "^1.0.2",
-    "postcss-loader": "^0.10.1",
+    "postcss-loader": "^0.11.0",
     "postcss-media-minmax": "^2.1.2",
     "postcss-nested": "^1.0.0",
     "postcss-pseudo-class-any-link": "^1.0.0",
