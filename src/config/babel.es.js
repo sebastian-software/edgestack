@@ -26,9 +26,6 @@ export default
 
   plugins:
   [
-    // function x(a, b, c,) { }
-    "syntax-trailing-function-commas",
-
     // class { handleClick = () => { } }
     "transform-class-properties",
 

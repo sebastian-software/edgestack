@@ -28,9 +28,6 @@ export default
     "transform-es2015-spread",
     "transform-es2015-destructuring",
 
-    // function x(a, b, c,) { }
-    "syntax-trailing-function-commas",
-
     // class { handleClick = () => { } }
     "transform-class-properties",
 
