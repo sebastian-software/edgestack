@@ -19,6 +19,7 @@ import PostCSSConfig from "./PostCSSConfig"
 const builtInSet = new Set(builtinModules)
 const problematicCommonJS = new Set(["helmet", "express"])
 const CWD = process.cwd()
+const cache = {}
 
 // @see https://github.com/motdotla/dotenv
 dotenv.config({ silent: true })
@@ -87,8 +88,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     // We need to state that we are targetting "node" for our server bundle.
     target: ifNode("node", "web"),
 
-    stats: "errors-only",
-
     // We have to set this to be able to use these items when executing a
     // server bundle. Otherwise strangeness happens, like __dirname resolving
     // to '/'. There is no effect on our client bundle.
@@ -97,8 +96,19 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       __filename: true
     },
 
-    // debug: true,
-    cache: true,
+    // Switch loaders to debug mode.
+    debug: true,
+
+    // This is not the file cache, but the runtime cache.
+    // The reference is used to speed-up rebuilds in one execution e.g. via watcher    
+    cache: cache,
+
+    // Capture timing information for each module.
+    // Analyse tool: http://webpack.github.io/analyse
+    profile: false,
+
+    // Report the first error as a hard error instead of tolerating it.
+    bail: isProd,
 
     // Anything listed in externals will not be included in our bundle.
     externals: removeEmpty(
@@ -155,7 +165,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     // source maps.
     //
     // We also want to be able to link to the source in Chrome dev tools
-    devtool: "eval-cheap-module-source-map",
+    //devtool: "eval-cheap-module-source-map",
+    devtool: "source-map",
 
     // Define our entry chunks for our bundle.
     entry: merge(
@@ -197,6 +208,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         "chunk-[name]-[chunkhash].js",
         "chunk-[name].js"
       ),
+
+      // Add path information during development
+      pathInfo: isDev,
+
+      // Prefixes every line of the source in the bundle with this string.
+      sourcePrefix: "",
 
       // This is the web path under which our webpack bundled output should
       // be considered as being served from.
