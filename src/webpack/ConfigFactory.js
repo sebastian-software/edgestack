@@ -5,7 +5,6 @@ import nodeExternals from "webpack-node-externals"
 import builtinModules from "builtin-modules"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 import WebpackShaHash from "webpack-sha-hash"
-import ESCompressPlugin from "escompress-webpack-plugin"
 import dotenv from "dotenv"
 
 import esModules from "./Modules"
@@ -328,8 +327,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         })
       ),
 
-/*
-      // JS Minification.
+      // JS Minification for client
+      // Should not be needed anymore when the comments:false option for babel is fixed.
+      // See: https://phabricator.babeljs.io/T6858
       ifProdClient(
         new webpack.optimize.UglifyJsPlugin({
           comments: false,
@@ -339,14 +339,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           }
         })
       ),
-
-      ifProdServer(
-        new ESCompressPlugin({
-          sourceMap: true,
-          comments: false
-        })
-      ),
-      */
 
       // This is a production client so we will extract our CSS into
       // CSS files.
