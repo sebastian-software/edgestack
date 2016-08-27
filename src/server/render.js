@@ -35,7 +35,7 @@ const scripts = scriptTags(assets.scripts);
  *
  * @return The full HTML page in the form of a React element.
  */
-function render(rootReactElement : ?$React$Element, initialState : ?Object) {
+function render(rootReactElement, initialState) {
   const reactRenderString = rootReactElement
     ? renderToString(rootReactElement)
     : null;
