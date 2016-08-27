@@ -1,3 +1,4 @@
+import os from "os"
 import path from "path"
 import webpack from "webpack"
 import AssetsPlugin from "assets-webpack-plugin"
@@ -403,7 +404,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             {
               // Enable caching for babel transpiles
               // Babel-Loader specific setting
-              cacheDirectory: true,
+              cacheDirectory: path.resolve(os.tmpdir(), "advanced-boilerplate", "local"),
 
               env:
               {
@@ -434,7 +435,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           {
             // Enable caching for babel transpiles
             // Babel-Loader specific setting
-            cacheDirectory: true,
+            cacheDirectory: path.resolve(os.tmpdir(), "advanced-boilerplate", "external"),
 
             env:
             {
