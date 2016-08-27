@@ -64,6 +64,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     )
   }
 
+  process.env.NODE_ENV = options.debug ? "development" : mode
+  process.env.BABEL_ENV = mode
+
   const isDev = mode === "development"
   const isProd = mode === "production"
   const isClient = target === "client"
