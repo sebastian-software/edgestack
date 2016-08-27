@@ -139,6 +139,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         if (builtInSet.has(basename))
           return callback(null, "commonjs " + request)
 
+        // Keep care that problematic common-js code is external
+        if (problematicCommonJS.has(basename))
+          return callback(null, "commonjs " + request)
+
         // Ignore inline files
         if (basename.charAt(0) === ".")
           return callback()
@@ -146,10 +150,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // But inline all es2015 modules
         if (esModules[basename])
           return callback()
-
-        // Keep care that problematic common-js code is external
-        if (problematicCommonJS.has(basename))
-          return callback(null, "commonjs " + request)
 
         callback()
       })
