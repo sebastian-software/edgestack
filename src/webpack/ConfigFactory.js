@@ -442,7 +442,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             env:
             {
               production: {
-                presets: [ "babili" ]
+                presets: [ "babili" ],
+                comments: false
               }
             }            
           }
