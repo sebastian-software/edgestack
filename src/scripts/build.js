@@ -43,8 +43,9 @@ export default function build()
         console.log("")
 
         gutil.log(stats.toString({
-          chunks: false, // Makes the build much quieter
-          colors: true
+          children: false,
+          chunks: false,
+          colors: true,
         }))        
 
         var jsonStats = stats.toJson()
@@ -69,8 +70,9 @@ export default function build()
         console.log("")
 
         gutil.log(stats.toString({
-          chunks: false, // Makes the build much quieter
-          colors: true
+          children: false,
+          chunks: false,
+          colors: true,
         }))
 
         var jsonStats = stats.toJson()
