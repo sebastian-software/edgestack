@@ -3,6 +3,7 @@ import rimraf from "rimraf"
 import webpack from "webpack"
 import series from "async/series"
 import gutil from "gulp-util"
+import fse from "fs-extra"
 
 import ConfigFactory from "../webpack/ConfigFactory"
 import { logAssets } from "../webpack/util"
@@ -46,7 +47,9 @@ export default function build()
           colors: true
         }))        
 
-        logAssets(stats.toJson().assets, buildFolderClient)
+        var jsonStats = stats.toJson()
+        logAssets(jsonStats.assets, buildFolderClient)
+        fse.writeJsonSync(path.resolve(buildFolderClient, "stats.json"), jsonStats)
         callback()
       })
     },
@@ -70,6 +73,8 @@ export default function build()
           colors: true
         }))
 
+        var jsonStats = stats.toJson()
+        fse.writeJsonSync(path.resolve(buildFolderServer, "stats.json"), jsonStats)
         callback()
       })
     }
