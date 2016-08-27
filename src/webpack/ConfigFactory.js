@@ -302,7 +302,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // it helps with making hot module reloading more reliable.
       ifDev(new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })),
 
-
       // Adds options to all of our loaders.
       ifDev(
         new webpack.LoaderOptionsPlugin({
@@ -329,6 +328,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         })
       ),
 
+/*
       // JS Minification.
       ifProdClient(
         new webpack.optimize.UglifyJsPlugin({
@@ -346,6 +346,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           comments: false
         })
       ),
+      */
 
       // This is a production client so we will extract our CSS into
       // CSS files.
@@ -363,11 +364,22 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     module:
     {
+      // Before going through our normal loaders, we convert simple JSON files to JS
+      // This is useful for further processing e.g. compression with babili
+      preLoaders: 
+      [
+        // JSON
+        {
+          test: /\.json$/,
+          loader: "json-loader"
+        }
+      ],
+
       loaders:
       [
         // Javascript
         {
-          test: /\.jsx?$/,
+          test: /\.(js|jsx|json)$/,
           loader: "babel-loader",
           exclude:
           [
@@ -376,15 +388,19 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             path.resolve(root, process.env.SERVER_BUNDLE_OUTPUT_PATH)
           ],
           query: merge(
-            // Babel-Loader specific settings
             {
               // Enable caching for babel transpiles
+              // Babel-Loader specific setting
               cacheDirectory: true,
 
               env:
               {
+                production: {
+                  presets: [ "babili" ],
+                  comments: false
+                },
                 development: {
-                  plugins: [ "react-hot-loader/babel" ],
+                  plugins: [ "react-hot-loader/babel" ]
                 }
               }
             },
@@ -394,11 +410,27 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           )
         },
 
-        // JSON
+        // External JavaScript
         {
-          test: /\.json$/,
-          loader: "json-loader"
-        },
+          test: /\.(js|json)$/,
+          loader: "babel-loader",
+          exclude:
+          [
+            path.resolve(root, "src")
+          ],
+          query: 
+          {
+            // Enable caching for babel transpiles
+            cacheDirectory: true,
+
+            env:
+            {
+              production: {
+                presets: [ "babili" ]
+              }
+            }            
+          }
+        },        
 
         // Font file references etc.
         {
