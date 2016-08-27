@@ -433,6 +433,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           query: 
           {
             // Enable caching for babel transpiles
+            // Babel-Loader specific setting
             cacheDirectory: true,
 
             env:
