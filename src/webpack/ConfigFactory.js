@@ -84,6 +84,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   const ifProdClient = ifElse(isProd && isClient)
   const ifProdServer = ifElse(isProd && isServer)
 
+  const projectId = path.basename(root)
+
   return {
     // We need to state that we are targetting "node" for our server bundle.
     target: ifNode("node", "web"),
@@ -404,7 +406,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             {
               // Enable caching for babel transpiles
               // Babel-Loader specific setting
-              cacheDirectory: path.resolve(os.tmpdir(), "advanced-boilerplate", "local"),
+              cacheDirectory: path.resolve(os.tmpdir(), projectId, "babel-local"),
 
               env:
               {
@@ -435,7 +437,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           {
             // Enable caching for babel transpiles
             // Babel-Loader specific setting
-            cacheDirectory: path.resolve(os.tmpdir(), "advanced-boilerplate", "external"),
+            cacheDirectory: path.resolve(os.tmpdir(), projectId, "babel-external"),
 
             env:
             {
