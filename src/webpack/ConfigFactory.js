@@ -388,7 +388,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         }
       ],
 
-      loaders:
+      loaders: removeEmpty(
       [
         // Javascript
         {
@@ -424,8 +424,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         },
 
         // External JavaScript
-        {
-          test: /\.(js|json)$/,
+        ifProdServer({
+          test: /\.(js)$/,
           loader: "babel-loader",
           exclude:
           [
@@ -444,7 +444,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
               }
             }            
           }
-        },        
+        }),        
 
         // Font file references etc.
         {
@@ -524,7 +524,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             ]
           })
         )
-      ]
+      ])
     }
   }
 }
