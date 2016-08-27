@@ -19,7 +19,6 @@ import PostCSSConfig from "./PostCSSConfig"
 const builtInSet = new Set(builtinModules)
 const problematicCommonJS = new Set(["helmet", "express"])
 const CWD = process.cwd()
-const cache = {}
 
 // @see https://github.com/motdotla/dotenv
 dotenv.config({ silent: true })
@@ -100,8 +99,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     debug: true,
 
     // This is not the file cache, but the runtime cache.
-    // The reference is used to speed-up rebuilds in one execution e.g. via watcher    
-    cache: cache,
+    // The reference is used to speed-up rebuilds in one execution e.g. via watcher  
+    // Note: But is has to share the same configuration as the cache is not config aware.  
+    // cache: cache,
 
     // Capture timing information for each module.
     // Analyse tool: http://webpack.github.io/analyse
