@@ -4,7 +4,7 @@ export default
   babelrc: false,
 
   // Faster transpiling for minor loose in formatting
-  compact: "auto",
+  compact: true,
 
   // Keep origin information alive
   sourceMaps: true,
