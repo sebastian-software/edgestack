@@ -248,26 +248,26 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // If you prefix typeof to the key, it’s only removeEmpty for typeof calls.
       new webpack.DefinePlugin(
       {
-          "process.env.TARGET": JSON.stringify(target),
+        "process.env.TARGET": JSON.stringify(target),
 
-          // NOTE: The NODE_ENV key is especially important for production
-          // builds as React relies on process.env.NODE_ENV for optimizations.
-          "process.env.NODE_ENV": options.debug ? JSON.stringify("development") : JSON.stringify(mode),
+        // NOTE: The NODE_ENV key is especially important for production
+        // builds as React relies on process.env.NODE_ENV for optimizations.
+        "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
 
-          "process.env.APP_ROOT": JSON.stringify(path.resolve(root)),
+        "process.env.APP_ROOT": JSON.stringify(path.resolve(root)),
 
-          // All the below items match the config items in our .env file. Go
-          // to the .env_example for a description of each key.
-          "process.env.SERVER_PORT": JSON.stringify(process.env.SERVER_PORT),
-          "process.env.CLIENT_DEVSERVER_PORT": JSON.stringify(process.env.CLIENT_DEVSERVER_PORT),
+        // All the below items match the config items in our .env file. Go
+        // to the .env_example for a description of each key.
+        "process.env.SERVER_PORT": JSON.stringify(process.env.SERVER_PORT),
+        "process.env.CLIENT_DEVSERVER_PORT": JSON.stringify(process.env.CLIENT_DEVSERVER_PORT),
 
-          "process.env.DISABLE_SSR": process.env.DISABLE_SSR,
+        "process.env.DISABLE_SSR": process.env.DISABLE_SSR,
 
-          "process.env.SERVER_BUNDLE_OUTPUT_PATH": JSON.stringify(process.env.SERVER_BUNDLE_OUTPUT_PATH),
-          "process.env.CLIENT_BUNDLE_OUTPUT_PATH": JSON.stringify(process.env.CLIENT_BUNDLE_OUTPUT_PATH),
-          "process.env.CLIENT_BUNDLE_ASSETS_FILENAME": JSON.stringify(process.env.CLIENT_BUNDLE_ASSETS_FILENAME),
-          "process.env.CLIENT_BUNDLE_HTTP_PATH": JSON.stringify(process.env.CLIENT_BUNDLE_HTTP_PATH),
-          "process.env.CLIENT_BUNDLE_CACHE_MAXAGE": JSON.stringify(process.env.CLIENT_BUNDLE_CACHE_MAXAGE)
+        "process.env.SERVER_BUNDLE_OUTPUT_PATH": JSON.stringify(process.env.SERVER_BUNDLE_OUTPUT_PATH),
+        "process.env.CLIENT_BUNDLE_OUTPUT_PATH": JSON.stringify(process.env.CLIENT_BUNDLE_OUTPUT_PATH),
+        "process.env.CLIENT_BUNDLE_ASSETS_FILENAME": JSON.stringify(process.env.CLIENT_BUNDLE_ASSETS_FILENAME),
+        "process.env.CLIENT_BUNDLE_HTTP_PATH": JSON.stringify(process.env.CLIENT_BUNDLE_HTTP_PATH),
+        "process.env.CLIENT_BUNDLE_CACHE_MAXAGE": JSON.stringify(process.env.CLIENT_BUNDLE_CACHE_MAXAGE)
       }),
 
       // Generates a JSON file containing a map of all the output files for
