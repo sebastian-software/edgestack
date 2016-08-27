@@ -7,7 +7,7 @@ export default
   compact: "auto",
 
   // Keep origin information alive
-  sourceMaps: "inline",
+  sourceMaps: true,
 
   // Nobody needs the original comments when having source maps
   comments: false,
@@ -18,7 +18,7 @@ export default
     "babel-preset-es2016",
 
     // JSX, Flow
-    "babel-preset-react"
+    "babel-preset-react",
   ],
 
   plugins:
