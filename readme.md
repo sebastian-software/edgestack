@@ -149,6 +149,7 @@ Fret not! This is a known issue when using React Hot Loader 3 alongside React Ro
   - __dotenv__ - https://github.com/bkeepers/dotenv
 
 
+## [License](license)
 
 ## Copyright
 
