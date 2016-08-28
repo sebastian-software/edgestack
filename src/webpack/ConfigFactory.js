@@ -76,7 +76,13 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   process.env.NODE_ENV = options.debug ? "development" : mode
   process.env.BABEL_ENV = mode
 
-  const useLightServerBuild = true
+  // Just bundle the server files which are from the local project instead
+  // of a deep self-contained bundle.
+  // See also: https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/
+  const useLightServerBundle = options.lightBundle == null ? isDev : options.lightBundle
+  if (useLightServerBundle) {
+    console.log("Using light server bundle")
+  }
 
   const isDev = mode === "development"
   const isProd = mode === "production"
@@ -150,7 +156,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         if (isLoaderSpecificFile(request))
           return callback()
 
-        useLightServerBuild ? callback(null, "commonjs " + request) : callback()
+        // In all other cases follow the user given preference
+        useLightServerBundle ? callback(null, "commonjs " + request) : callback()
       })
     ]),
 
