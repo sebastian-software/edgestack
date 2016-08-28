@@ -106,8 +106,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     debug: true,
 
     // This is not the file cache, but the runtime cache.
-    // The reference is used to speed-up rebuilds in one execution e.g. via watcher  
-    // Note: But is has to share the same configuration as the cache is not config aware.  
+    // The reference is used to speed-up rebuilds in one execution e.g. via watcher
+    // Note: But is has to share the same configuration as the cache is not config aware.
     // cache: cache,
 
     // Capture timing information for each module.
@@ -385,7 +385,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     {
       // Before going through our normal loaders, we convert simple JSON files to JS
       // This is useful for further processing e.g. compression with babili
-      preLoaders: 
+      preLoaders:
       [
         // JSON
         {
@@ -431,13 +431,13 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
         // External JavaScript
         ifProdServer({
-          test: /\.(js)$/,
+          test: /\.(js|json)$/,
           loader: "babel-loader",
           exclude:
           [
             path.resolve(root, "src")
           ],
-          query: 
+          query:
           {
             // Enable caching for babel transpiles
             // Babel-Loader specific setting
@@ -446,12 +446,19 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             env:
             {
               production: {
+                // Adding babili to babel does not remove comments/formatting added by Webpack.
+                // It works on a per-file level which is actually better to cache.
+                // What's needed is some output flag for webpack to omit adding too much cruft
+                // to the output.
+                // To postprocess the result (remove comments/rename webpack vars) one can use
+                // babel --no-comments --plugins minify-mangle-names bundle.js
+                // See also: https://github.com/webpack/webpack/issues/2924
                 presets: [ "babili" ],
                 comments: false
               }
-            }            
+            }
           }
-        }),        
+        }),
 
         // Font file references etc.
         {
