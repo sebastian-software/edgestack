@@ -1,14 +1,17 @@
-# Advanced Boilerplate<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status][ci-img]][ci] [![Dependencies][deps-img]][deps]
+# Advanced Boilerplate<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Dependencies][deps-img]][deps]
 
 [sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
 [sponsor]: https://www.sebastian-software.de
-[ci-img]: https://travis-ci.org/sebastian-software/advanced-boilerplate.svg?branch=master
-[ci]: https://travis-ci.org/sebastian-software/advanced-boilerplate
 [deps]: https://david-dm.org/sebastian-software/advanced-boilerplate
 [deps-img]: https://david-dm.org/sebastian-software/advanced-boilerplate.svg
 [npm]: https://www.npmjs.com/package/advanced-boilerplate
 [npm-downloads-img]: https://img.shields.io/npm/dm/advanced-boilerplate.svg
 [npm-version-img]: https://img.shields.io/npm/v/advanced-boilerplate.svg
+[travis-img]: https://img.shields.io/travis/sebastian-software/advanced-boilerplate/master.svg?branch=master&label=unix%20build
+[appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/advanced-boilerplate/master.svg?label=windows%20build
+[travis]: https://travis-ci.org/sebastian-software/advanced-boilerplate
+[appveyor]: https://ci.appveyor.com/project/swernerx/advanced-boilerplate/branch/master
+
 
 A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience.
 
@@ -19,7 +22,6 @@ A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience.
  - [Features](https://github.com/sebastian-software/advanced-boilerplate#features)
  - [Overview](https://github.com/sebastian-software/advanced-boilerplate#overview)
  - [Project Structure](https://github.com/sebastian-software/advanced-boilerplate#project-structure)
- - [Server Runtime Dependencies](https://github.com/sebastian-software/advanced-boilerplate#server-runtime-dependencies)
  - [NPM Commands](https://github.com/sebastian-software/advanced-boilerplate#npm-script-commands)
  - [References](https://github.com/sebastian-software/advanced-boilerplate#references)
 
@@ -52,14 +54,9 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 Data persistence, test frameworks, and all the other bells and whistles have been explicitly excluded from this boilerplate. It's up to you to decide what technologies you would like to add to your own implementation based upon your own needs, this boilerplate simply serves as a clean base upon which to do so.
 
 This boilerplate uses Webpack 2 to produce bundles for both the client and the
-server code. You will notice two Webpack configuration files that allow you to target the respective environments:
+server code.
 
-   - `webpack.client.config.js`
-   - `webpack.server.config.js`
-
-Both of these then call into the `webpackConfigFactory.js` in order to generate their respective webpack configurations. I've tried to keep the webpack configuration as centralized and well documented as possible as it can be a confusing topic at times.
-
-My reasoning for using webpack to bundle both the client and the server is to bring greater interop and extensibility to the table. This will for instance allowing server bundles to handle React components that introduce things like CSS or Images (as and when you add the respective loaders).
+The reasoning for using Webpack to bundle both the client and the server is to bring greater interop and extensibility to the table. This will for instance allowing server bundles to handle React components that introduce things like CSS or Images (as and when you add the respective loaders).
 
 Given that we are bundling our server code I have included the `source-map-support` module to ensure that we get nice stack traces when executing our code via node.
 
@@ -73,72 +70,47 @@ The application configuration is supported by the `dotenv` module and it require
 
 ```
 /
+|- lib // The target output dir for our library export
+|  |- index.es.js // ES2015 module export
+|  |- index.js // CommonJS export
+|
 |- build // The target output dir for our build commands.
 |  |- client // The built client module.
 |  |- server // The built server module
 |
 |- src  // All the source code
+|  |- common // Common utilities
+|  |- config // Central configuration files
 |  |- server // The server specific source
 |  |- client // The client specific source
-|  |- shared // The shared code between the client/server
+|  |- demo // Demo application
+|  |- webpack // Build infrastructure
+|  |- scripts // Available scripts when installed via npm
 |
+|- .babelrc // Dummy babel configuration
 |- .env_example // An example from which to create your own .env file.
-|- devServer.js // Creates a hot reloading development environment
-|- webpack.client.config.js // Client target webpack configuration
-|- webpack.server.config.js // Server target webpack configuration
-|- webpackConfigFactory.js  // Webpack configuration builder
+|- rollup.script.cfg // Configuration file for bundling scripts into executable
 ```
 
 
 
-## Server Runtime Dependencies
-
-Even though we are using webpack to support our universal application we keep the webpack runtime out of our production runtime environment. Everything is prebundled in prep for production execution. Therefore we only have the following runtime dependencies:
-
-  - `node` v6
-  - `compression` - Gzip compression support for express server responses.
-  - `express` - Web server.
-  - `helmet` - Provides a content security policy for express.
-  - `hpp` - Express middleware to protect against HTTP Parameter Pollution attacks.
-  - `react` - A declarative, efficient, and flexible JavaScript library for building user interfaces.
-  - `react-dom` - React support for the DOM.
-  - `react-router` - A complete routing library for React.
-  - `serialize-javascript` - A superset of JSON that includes regular expressions and functions.
-  - `source-map-support` - Adds source map support to node.js (for stack traces).
-
-
 ## NPM Commands
 
-### `npm run dev`
+### `npm run start`
 
 Starts a development server for both the client and server bundles. We use `react-hot-loader` v3 to power the hot reloading of the client bundle, whilst a filesystem watch is implemented to reload the server bundle when any changes have occurred.
 
-### `npm run build`
+### `npm run prod`
 
 Builds the client and server bundles, with the output being production optimized.
 
-### `npm run start`
+### `npm run prod:start`
 
 Executes the server. It expects you to have already built the bundles either via the `npm run build` command or manually.
 
 ### `npm run clean`
 
 Deletes any build output that would have originated from the other commands.
-
-
-
-## Troubleshooting
-
-___Q:___ __I see `react-router` warnings during hot reloading.__
-
-For example:
-
-```
-Warning: [react-router] You cannot change <Router history>;
-Warning: [react-router] You cannot change <Router routes>;
-```
-
-Fret not! This is a known issue when using React Hot Loader 3 alongside React Router. It is being looked in to. Everything still works, unfortunately you just get a few warnings alongside your changes. They are harmless though, promise. :)
 
 
 

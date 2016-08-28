@@ -10,3 +10,8 @@ parserOptions:
   ecmaFeatures:
     jsx: true
 
+rules:
+  no-console:
+    - off
+  no-process-env:
+    - off

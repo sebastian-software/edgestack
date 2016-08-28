@@ -5,15 +5,8 @@
 build/
 public/
 dist/
-es/
 lib/
-
-# Webpack build output of the js client
-backend/assets/client/
-
-# Isomorphic webpack output
-webpack-assets.json
-webpack-stats.json
+bin/
 
 # Logs
 logs
@@ -23,9 +16,6 @@ logs
 pids
 *.pid
 *.seed
-
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
