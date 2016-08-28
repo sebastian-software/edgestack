@@ -239,9 +239,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     resolve:
     {
       // Enable new module/jsnext:main field for requiring files
+      // Defaults: https://webpack.github.io/docs/configuration.html#resolve-packagemains
       mainFields: ifNode(
-        [ "module", "jsnext:main", "main" ],
-        [ "module", "jsnext:main", "browser", "main" ]
+        [ "module", "jsnext:main", "webpack", "main" ],
+        [ "module", "jsnext:main", "webpack", "browser", "web", "browserify", "main" ]
       ),
 
       // These extensions are tried when resolving a file.
