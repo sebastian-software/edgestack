@@ -155,7 +155,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           return callback()
 
         // But inline all es2015 modules
-        if (esModules[basename])
+        if (esModules.has(basename))
           return callback()
 
         callback()
