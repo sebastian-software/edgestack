@@ -1,16 +1,16 @@
-import fs from "fs"
-import path from "path"
+import { readdirSync } from "fs"
+import { resolve } from "path"
 import { readJsonSync } from "fs-extra"
 
 const root = "node_modules"
-const modules = new Set
+const modules = new Set()
 
-const nodePackages = fs.readdirSync(root).filter((dirname) => dirname.charAt(0) !== ".")
+const nodePackages = readdirSync(root).filter((dirname) => dirname.charAt(0) !== ".")
 
-nodePackages.forEach(function(pkg)
+nodePackages.forEach((pkg) =>
 {
-  var json = readJsonSync(path.resolve(root, pkg, "package.json"))
-  if (json["jsnext:main"] || json["module"])
+  var json = readJsonSync(resolve(root, pkg, "package.json"))
+  if (json.module || json["jsnext:main"])
     modules.add(pkg)
 })
 
