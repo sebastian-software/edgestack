@@ -48,6 +48,10 @@ function merge()
   )
 }
 
+function isLoaderSpecificFile(request) {
+  return Boolean(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|ico|mp4|mp3|ogg|pdf|swf|css|scss|sass|sss|less)$/.exec(request))
+}
+
 function ConfigFactory(target, mode, options = {}, root = CWD)
 {
   // Output custom options
@@ -71,6 +75,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
   process.env.NODE_ENV = options.debug ? "development" : mode
   process.env.BABEL_ENV = mode
+
+  const useLightServerBuild = true
 
   const isDev = mode === "development"
   const isProd = mode === "production"
@@ -120,24 +126,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     // Anything listed in externals will not be included in our bundle.
     externals: removeEmpty(
     [
-      // We don't want our node_modules to be bundled with our server package,
-      // prefering them to be resolved via native node module system. Therefore
-      // we use the `webpack-node-externals` library to help us generate an
-      // externals config that will ignore all node_modules.
-      // For ignoring all files which should be bundled e.g. which is true for
-      // all files being loader-specific (Webpack dependend). This includes
-      // files like CSS files, static files, dynamically generated files, etc.
-      /*
-      ifNode(nodeExternals({
-        whitelist: [
-          /\.(eot|woff|woff2|ttf|otf)$/,
-          /\.(svg|png|jpg|jpeg|gif|webp|ico)$/,
-          /\.(mp4|mp3|ogg|pdf|swf)$/,
-          /\.(css|scss|sass|sss|less)$/
-        ]
-      })),
-      */
-
       ifNode(function(context, request, callback)
       {
         var basename = request.split("/")[0]
@@ -158,7 +146,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         if (esModules.has(basename))
           return callback()
 
-        callback()
+        // Inline all files which are dependend on Webpack loaders e.g. CSS, images, etc.
+        if (isLoaderSpecificFile(request))
+          return callback()
+
+        useLightServerBuild ? callback(null, "commonjs " + request) : callback()
       })
     ]),
 
