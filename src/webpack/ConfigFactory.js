@@ -76,14 +76,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   process.env.NODE_ENV = options.debug ? "development" : mode
   process.env.BABEL_ENV = mode
 
-  // Just bundle the server files which are from the local project instead
-  // of a deep self-contained bundle.
-  // See also: https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/
-  const useLightServerBundle = options.lightBundle == null ? isDev : options.lightBundle
-  if (useLightServerBundle) {
-    console.log("Using light server bundle")
-  }
-
   const isDev = mode === "development"
   const isProd = mode === "production"
   const isClient = target === "client"
@@ -101,6 +93,14 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   const ifProdServer = ifElse(isProd && isServer)
 
   const projectId = path.basename(root)
+
+  // Just bundle the server files which are from the local project instead
+  // of a deep self-contained bundle.
+  // See also: https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/
+  const useLightServerBundle = options.lightBundle == null ? isDev : options.lightBundle
+  if (useLightServerBundle && isServer) {
+    console.log("Using light server bundle")
+  }
 
   return {
     // We need to state that we are targetting "node" for our server bundle.
