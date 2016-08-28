@@ -4,11 +4,11 @@ import "./Fonts.css"
 import React, { PropTypes } from "react"
 import Link from "react-router/lib/Link"
 import Helmet from "react-helmet"
-import { capitalize } from "lodash-es"
+import { camelCase } from "lodash-es"
 
 const websiteDescription = "A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience."
 
-console.log(capitalize("hello world"))
+console.log("ES Modules Supported:", camelCase("hello-world") === "helloWorld")
 
 function App({ children }) {
   return (
