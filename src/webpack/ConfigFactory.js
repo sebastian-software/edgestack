@@ -289,6 +289,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       new webpack.DefinePlugin(
       {
         "process.env.TARGET": JSON.stringify(target),
+        "process.env.MODE": JSON.stringify(mode),
 
         // NOTE: The NODE_ENV key is especially important for production
         // builds as React relies on process.env.NODE_ENV for optimizations.
