@@ -266,7 +266,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // - `raw`: true tells webpack to prepend the text as it is, not wrapping it in a comment.
       // - `entryOnly`: false adds the text to all generated files, which you might have multiple if using code splitting.
       // Via: http://jlongster.com/Backend-Apps-with-Webpack--Part-I
-      ifServer(new webpack.BannerPlugin('require("source-map-support").install();', { raw: true, entryOnly: false })),
+      ifServer(new webpack.BannerPlugin({
+        banner: 'require("source-map-support").install();',
+        raw: true,
+        entryOnly: false
+      })),
 
       // We use this so that our generated [chunkhash]'s are only different if
       // the content for our respective chunks have changed.  This optimises
