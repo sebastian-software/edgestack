@@ -121,6 +121,7 @@ Deletes any build output that would have originated from the other commands.
   - __dotenv__ - https://github.com/bkeepers/dotenv
 
 
+## [License](license)
 
 ## Copyright
 
