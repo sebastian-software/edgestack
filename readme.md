@@ -34,19 +34,31 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 
 ## Features
 
-  - Server side rendering.
-  - Extreme live development - hot reloading of client/server source as well as your _webpack configuration_, with high level of error tolerance.
-  - Express server with a basic security configuration.
-  - ReactJS as the view layer.
-  - React Router as the router.
-  - CSS Support with CSS modules and additional flexible full PostCSS chain for advanced transformations e.g. autoprefixer
-  - Full ES2015 support, using `babel` to transpile where needed.
-  - Bundling of both client and server using `webpack` v2.
-  - Client bundle is automatically split by routes and uses tree-shaking (newly supported by `webpack` v2).
-  - A development and optimized production configuration.
-  - Easy environment configuration via `dotenv` files.
-  - ESLint v3 integrated with sensible default configuration.
-  - Markdown rendering for Components.
+- Universal / Isomorphic application development.
+- Extreme live development - hot reloading of client/server source with high level of error tolerance.
+- Express server with a basic security configuration using *hpp* and *helmet*.
+- *ReactJS* as the view layer.
+- React Router as the router.
+- *React Helmet* allowing control of the page title/meta/styles/scripts from within your components. Direct control for your SEO needs.
+- CSS Support with CSS modules and additional flexible full PostCSS chain for advanced transformations e.g. autoprefixer
+- Fully integrated asset support for referencing files in CSS and JavaScript.
+- Full ES2015 support, using *Babel* to transpile where needed.
+- Bundling of both client and server using *Webpack* v2.
+- Client bundle is automatically split by routes and uses tree-shaking for smallest possible builds.
+- Long term caching of the client bundle works out of the box.
+- Support for development and optimized production configuration.
+- Easy environment configuration via `dotenv` files.
+- *Markdown* rendering for Components integrated.
+
+## Work in progress
+
+- *Ava*, *Sinon* and *Enzyme* for unit testing
+- *Stylelint* CSS linting
+- *ESLint* v3 integrated with sensible default configuration.
+- Fetch API Polyfill integrated
+- PostCSS Lost Grid integrated
+- Super modular Lodash-ES with tree shaking
+- Flow Typechecking
 
 
 ## Overview
