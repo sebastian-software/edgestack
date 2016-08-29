@@ -259,6 +259,15 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     },
 
     plugins: removeEmpty([
+
+      // For server bundle, you also want to use "source-map-support" which automatically sourcemaps
+      // stack traces from NodeJS. We need to install it at the top of the generated file, and we
+      // can use the BannerPlugin to do this.
+      // - `raw`: true tells webpack to prepend the text as it is, not wrapping it in a comment.
+      // - `entryOnly`: false adds the text to all generated files, which you might have multiple if using code splitting.
+      // Via: http://jlongster.com/Backend-Apps-with-Webpack--Part-I
+      ifServer(new webpack.BannerPlugin('require("source-map-support").install();', { raw: true, entryOnly: false }))
+
       // We use this so that our generated [chunkhash]'s are only different if
       // the content for our respective chunks have changed.  This optimises
       // our long term browser caching strategy for our client bundle, avoiding
@@ -358,6 +367,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // Should not be needed anymore when the comments:false option for babel is fixed.
       // See: https://phabricator.babeljs.io/T6858
       ifProdClient(
+        // Uglify does not work with ES6. Therefor we can only use it for ES5 transpiled
+        // client bundles right now.
+        // See: https://github.com/mishoo/UglifyJS2/issues/448
         new webpack.optimize.UglifyJsPlugin({
           comments: false,
           compress: {

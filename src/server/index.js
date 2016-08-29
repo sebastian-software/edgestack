@@ -1,8 +1,3 @@
-// This grants us source map support, which is handy as our webpack bundling
-// for the server will include source maps.  Therefore we will have nice stack
-// traces again for our server.
-import "source-map-support/register"
-
 import express from "express"
 import compression from "compression"
 import hpp from "hpp"
