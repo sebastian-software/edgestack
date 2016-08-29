@@ -17,6 +17,9 @@ export default
     // exponentiation
     "babel-preset-es2016",
 
+    // async to generators + trailing function commas
+    "babel-preset-es2017",
+
     // JSX, Flow
     "babel-preset-react",
   ],

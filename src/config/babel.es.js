@@ -14,11 +14,14 @@ export default
 
   presets:
   [
-    // let, const, destructuring, classes (no modules)
+    // let, const, destructuring, classes, no modules
     [ "babel-preset-es2015", { modules: false } ],
 
     // exponentiation
     "babel-preset-es2016",
+
+    // async to generators + trailing function commas
+    "babel-preset-es2017",
 
     // JSX, Flow
     "babel-preset-react"
