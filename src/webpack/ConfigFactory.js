@@ -49,7 +49,7 @@ function merge()
 }
 
 function isLoaderSpecificFile(request) {
-  return Boolean(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|ico|mp4|mp3|ogg|pdf|swf|css|scss|sass|sss|less)$/.exec(request))
+  return Boolean(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|ico|mp4|mp3|ogg|pdf|swf|css|scss|sass|sss|less)$/.exec(request))
 }
 
 function ConfigFactory(target, mode, options = {}, root = CWD)
@@ -327,7 +327,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       ifProdClient(new webpack.optimize.OccurrenceOrderPlugin(true)),
 
       // Effectively fake all "file-loader" files with placeholders on server side
-      ifNode(new webpack.NormalModuleReplacementPlugin(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|mp4|mp3|ogg|pdf)$/, "node-noop")),
+      ifNode(new webpack.NormalModuleReplacementPlugin(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|mp4|mp3|ogg|pdf)$/, "node-noop")),
 
       // We don't want webpack errors to occur during development as it will
       // kill our dev servers.
