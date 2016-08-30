@@ -11,7 +11,6 @@ import easings from "postcss-easings"
 import colorFunction from "postcss-color-function"
 import colorHexAlpha from "postcss-color-hex-alpha"
 import flexbugsFixes from "postcss-flexbugs-fixes"
-import zindex from "postcss-zindex"
 import mediaMinmax from "postcss-media-minmax"
 import nested from "postcss-nested"
 import pseudoClassAnyLink from "postcss-pseudo-class-any-link"
@@ -88,10 +87,6 @@ export default [
   // Tries to fix all of flexbug's issues
   // https://github.com/luisrudge/postcss-flexbugs-fixes
   flexbugsFixes,
-
-  // Reduce z-index values with PostCSS.
-  // https://github.com/ben-eb/postcss-zindex
-  zindex,
 
   // Writing simple and graceful Media Queries!
   // Support for CSS Media Queries Level 4: https://drafts.csswg.org/mediaqueries/#mq-range-context
