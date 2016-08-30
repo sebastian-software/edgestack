@@ -19,10 +19,11 @@ import PostCSSConfig from "./PostCSSConfig"
 
 const builtInSet = new Set(builtinModules)
 
-// - helmet uses some look with require which are not solvable with webpack
-// - express also uses some dynamic requires
-// - commonmark breaks babili compression right now: https://github.com/babel/babili/issues/115
-const problematicCommonJS = new Set(["helmet", "express", "commonmark"])
+// - "helmet" uses some look with require which are not solvable with webpack
+// - "express" also uses some dynamic requires
+// - "commonmark" breaks babili compression right now: https://github.com/babel/babili/issues/115
+// - "encoding" uses dynamic iconv loading
+const problematicCommonJS = new Set(["helmet", "express", "commonmark", "encoding"])
 const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
