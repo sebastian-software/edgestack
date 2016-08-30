@@ -10,7 +10,7 @@ const nodePackages = readdirSync(root).filter((dirname) => dirname.charAt(0) !==
 nodePackages.forEach((pkg) =>
 {
   var json = readJsonSync(resolve(root, pkg, "package.json"))
-  if (json.module || json["jsnext:main"])
+  if (json.module || json.style || json["jsnext:main"])
     modules.add(pkg)
 })
 
