@@ -135,6 +135,6 @@
     "nsp": "^2.6.1",
     "source-sans-pro": "^2.0.10",
     "normalize.css": "^4.2.0",
-    "prepublish-lib": "^0.2.7"
+    "prepublish-lib": "^0.3.2"
   }
 }
