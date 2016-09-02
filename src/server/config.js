@@ -7,7 +7,6 @@ import path from "path"
 import { fileExists } from "./guards"
 
 const root = process.env.APP_ROOT
-console.log("Root:", root)
 
 export const SERVER_PORT = parseInt(process.env.SERVER_PORT, 10)
 
