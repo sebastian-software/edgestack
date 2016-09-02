@@ -12,7 +12,7 @@ import { IS_DEVELOPMENT } from "../common/config"
 /**
  * An express middleware that is capabable of doing React server side rendering.
  */
-function universalMiddleware(request, response)
+export default function universalMiddleware(request, response)
 {
   /* eslint-disable no-magic-numbers */
   if (DISABLE_SSR)
@@ -49,7 +49,7 @@ function universalMiddleware(request, response)
       // below, if you're using a catch-all route.
 
       try{
-        const html = render(<RouterContext {...renderProps} />)  
+        const html = render(<RouterContext {...renderProps} />)
         response.status(200).send(html)
       } catch(ex) {
         response.status(500).send(`Error during rendering: ${ex}!`)
@@ -61,5 +61,3 @@ function universalMiddleware(request, response)
     }
   })
 }
-
-export default universalMiddleware
