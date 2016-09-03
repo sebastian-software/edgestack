@@ -20,9 +20,6 @@ function App({ children }) {
         meta={[
           { name: "description", content: websiteDescription },
         ]}
-        script={[
-          { src: "https://cdn.polyfill.io/v2/polyfill.min.js", type: "text/javascript" },
-        ]}
       />
 
       <div>
