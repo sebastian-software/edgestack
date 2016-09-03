@@ -393,7 +393,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // CSS files.
       ifProdClient(
         new ExtractTextPlugin({
-          filename: "[name]-[chunkhash].css",
+          filename: "[name]-[contenthash].css",
           allChunks: true
         })
       ),
