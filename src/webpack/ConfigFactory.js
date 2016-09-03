@@ -183,6 +183,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         ifDevClient(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
         options.entry ? options.entry : `./src/${target}/index.js`,
       ]),
+      vendor: ifProdClient(["react", "react-dom", "react-helmet", "react-intl", "isomorphic-fetch", "intl"], [])
     }),
 
     output:
@@ -260,6 +261,19 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     },
 
     plugins: removeEmpty([
+
+      ifProdClient(new webpack.optimize.CommonsChunkPlugin({
+        name: "vendor",
+
+        // filename: "vendor.js"
+        // (Give the chunk a different name)
+
+        minChunks: Infinity,
+        // (with more entries, this ensures that no other module
+        //  goes into the vendor chunk)
+
+        async: true
+      })),
 
       // For server bundle, you also want to use "source-map-support" which automatically sourcemaps
       // stack traces from NodeJS. We need to install it at the top of the generated file, and we
