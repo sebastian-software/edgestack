@@ -21,11 +21,14 @@ export default
     "babel-preset-es2017",
 
     // JSX, Flow
-    "babel-preset-react",
+    "babel-preset-react"
   ],
 
   plugins:
   [
+    // Optimization for lodash imports
+    "lodash",
+
     // just the parts from es2015 preset which are required for supporting
     // transform-object-rest-spread" support (which always must be transpiled)
     "transform-es2015-spread",

@@ -29,6 +29,9 @@ export default
 
   plugins:
   [
+    // Optimization for lodash imports
+    "lodash",
+
     // class { handleClick = () => { } }
     "transform-class-properties",
 

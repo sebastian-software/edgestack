@@ -6,10 +6,10 @@ import nodeExternals from "webpack-node-externals"
 import builtinModules from "builtin-modules"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 import WebpackShaHash from "webpack-sha-hash"
+import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
 import dotenv from "dotenv"
 
 import esModules from "./Modules"
-
 
 import BabelConfigClient from "../config/babel.es.js"
 import BabelConfigNode from "../config/babel.node.js"
@@ -27,7 +27,7 @@ const problematicCommonJS = new Set(["helmet", "express", "commonmark", "encodin
 const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
-dotenv.config({ silent: true })
+dotenv.config()
 
 function removeEmpty(array)
 {
@@ -279,6 +279,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // cases where browsers end up having to download all the client chunks
       // even though 1 or 2 may have only changed.
       ifProdClient(new WebpackShaHash()),
+
+      // Optimize lodash bundles when importing. Works together with Babel plugin.
+      // See: https://github.com/lodash/lodash-webpack-plugin#feature-sets
+      ifProd(new LodashModuleReplacementPlugin()),
 
       // Each key passed into DefinePlugin is an identifier.
       // The values for each key will be inlined into the code replacing any

@@ -24,11 +24,14 @@ export default
     "babel-preset-es2017",
 
     // JSX, Flow
-    "babel-preset-react",
+    "babel-preset-react"
   ],
 
   plugins:
   [
+    // Optimization for lodash imports
+    "lodash",
+
     // class { handleClick = () => { } }
     "transform-class-properties",
 
