@@ -1,5 +1,6 @@
 import express from "express"
 import compression from "compression"
+import shrinkRay from "shrink-ray"
 import hpp from "hpp"
 import helmet from "helmet"
 
@@ -39,8 +40,12 @@ export default function generateServer()
   app.use(helmet.ieNoOpen())
   app.use(helmet.noSniff())
 
-  // Response compression.
-  app.use(compression())
+  // Response compression (plain and fast gzip)
+  // app.use(compression())
+
+  // Advanced response compression using a async zopfli/brotli combination
+  // https://github.com/aickin/shrink-ray
+  app.use(shrinkRay())
 
   // Configure static serving of our webpack bundled client files.
   app.use(

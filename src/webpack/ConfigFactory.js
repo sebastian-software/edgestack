@@ -23,7 +23,10 @@ const builtInSet = new Set(builtinModules)
 // - "express" also uses some dynamic requires
 // - "commonmark" breaks babili compression right now: https://github.com/babel/babili/issues/115
 // - "encoding" uses dynamic iconv loading
-const problematicCommonJS = new Set(["helmet", "express", "commonmark", "encoding"])
+// - "node-pre-gyp" native code module helper
+// - "iltorb" brotli compression wrapper for NodeJS
+// - "node-zopfli" native Zopfli implementation
+const problematicCommonJS = new Set(["helmet", "express", "commonmark", "encoding", "node-pre-gyp", "iltorb", "node-zopfli"])
 const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
