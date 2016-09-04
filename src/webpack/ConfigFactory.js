@@ -1,4 +1,5 @@
 import os from "os"
+import fs from "fs"
 import path from "path"
 import webpack from "webpack"
 import AssetsPlugin from "assets-webpack-plugin"
@@ -37,6 +38,18 @@ function removeEmpty(array)
   return array.filter((entry) => !!entry)
 }
 
+function removeEmptyKeys(obj)
+{
+  var copy = {}
+  for (var key in obj)
+  {
+    if (!(obj[key] == null || obj[key].length === 0))
+      copy[key] = obj[key]
+  }
+
+  return copy
+}
+
 function ifElse(condition)
 {
   return (then, otherwise) => (condition ? then : otherwise)
@@ -54,6 +67,13 @@ function merge()
 
 function isLoaderSpecificFile(request) {
   return Boolean(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|ico|mp4|mp3|ogg|pdf|swf|css|scss|sass|sss|less)$/.exec(request))
+}
+
+function ifIsFile(filePath) {
+  try {
+    return fs.statSync(filePath).isFile() ? filePath : ""
+  } catch(ex) {}
+  return ""
 }
 
 const isDebug = true
@@ -195,14 +215,15 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     devtool: "source-map",
 
     // Define our entry chunks for our bundle.
-    entry: merge(
+    entry: removeEmptyKeys(
     {
       main: removeEmpty([
         ifDevClient("react-hot-loader/patch"),
         ifDevClient(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
-        options.entry ? options.entry : `./src/${target}/index.js`,
+        options.entry ? options.entry : ifIsFile(`./src/${target}/index.js`),
       ]),
-      vendor: ifProdClient(["react", "react-dom", "react-helmet", "react-intl", "isomorphic-fetch", "intl"], [])
+
+      vendor: options.vendor ? options.vendor : ifIsFile(`./src/${target}/vendor.js`)
     }),
 
     output:
@@ -281,19 +302,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     plugins: removeEmpty([
 
-      ifProdClient(new webpack.optimize.CommonsChunkPlugin({
-        name: "vendor",
-
-        // filename: "vendor.js"
-        // (Give the chunk a different name)
-
-        minChunks: Infinity,
-        // (with more entries, this ensures that no other module
-        //  goes into the vendor chunk)
-
-        async: true
-      })),
-
       // For server bundle, you also want to use "source-map-support" which automatically sourcemaps
       // stack traces from NodeJS. We need to install it at the top of the generated file, and we
       // can use the BannerPlugin to do this.
@@ -304,6 +312,19 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         banner: 'require("source-map-support").install();',
         raw: true,
         entryOnly: false
+      })),
+
+      // More aggressive chunk merging strategy. Even similar chunks are merged if the
+      // total size is reduced enough.
+      ifProdClient(new webpack.optimize.AggressiveMergingPlugin()),
+
+      // Extract vendor bundle for keeping larger parts of the application code
+      // delivered to users stable during development (improves positive cache hits)
+      ifProdClient(new webpack.optimize.CommonsChunkPlugin(
+      {
+        name: "vendor",
+        minChunks: Infinity,
+        async: true
       })),
 
       // We use this so that our generated [chunkhash]'s are only different if
