@@ -3,7 +3,6 @@ import fs from "fs"
 import path from "path"
 import webpack from "webpack"
 import AssetsPlugin from "assets-webpack-plugin"
-import nodeExternals from "webpack-node-externals"
 import builtinModules from "builtin-modules"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
@@ -21,8 +20,8 @@ import ChunkManifestPlugin from "./ChunkManifestPlugin"
 
 import esModules from "./Modules"
 
-import BabelConfigClient from "../config/babel.es.js"
-import BabelConfigNode from "../config/babel.node.js"
+import BabelConfigClient from "../config/babel.es"
+import BabelConfigNode from "../config/babel.node"
 
 import getPostCSSConfig from "./PostCSSConfig"
 
@@ -322,10 +321,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         entryOnly: false
       })),
 
-      // More aggressive chunk merging strategy. Even similar chunks are merged if the
-      // total size is reduced enough.
-      ifProdClient(new webpack.optimize.AggressiveMergingPlugin()),
-
       // Extract vendor bundle for keeping larger parts of the application code
       // delivered to users stable during development (improves positive cache hits)
       ifProdClient(new webpack.optimize.CommonsChunkPlugin(
@@ -333,6 +328,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         name: "vendor",
         minChunks: Infinity
       })),
+
+      // More aggressive chunk merging strategy. Even similar chunks are merged if the
+      // total size is reduced enough.
+      ifProdClient(new webpack.optimize.AggressiveMergingPlugin()),
 
       // We use this so that our generated [chunkhash]'s are only different if
       // the content for our respective chunks have changed.  This optimises
