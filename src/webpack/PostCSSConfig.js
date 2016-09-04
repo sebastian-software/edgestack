@@ -12,6 +12,7 @@ import colorFunction from "postcss-color-function"
 import colorHexAlpha from "postcss-color-hex-alpha"
 import flexbugsFixes from "postcss-flexbugs-fixes"
 import mediaMinmax from "postcss-media-minmax"
+import customMedia from "postcss-custom-media"
 import nested from "postcss-nested"
 import pseudoClassAnyLink from "postcss-pseudo-class-any-link"
 import selectorMatches from "postcss-selector-matches"
@@ -97,6 +98,10 @@ export default function getConfig(bundler, variables = {})
     // Support for CSS Media Queries Level 4: https://drafts.csswg.org/mediaqueries/#mq-range-context
     // https://github.com/postcss/postcss-media-minmax
     mediaMinmax,
+
+    // Custom Media Queries
+    // https://github.com/postcss/postcss-custom-media
+    customMedia(),
 
     // Unwrap nested rules like how Sass does it.
     // https://github.com/postcss/postcss-nested
