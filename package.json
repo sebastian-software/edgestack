@@ -94,6 +94,7 @@
     "node-noop": "^1.0.0",
     "node-notifier": "^4.6.1",
     "path": "^0.12.7",
+    "pleeease-filters": "^3.0.0",
     "postcss": "^5.1.2",
     "postcss-advanced-variables": "^1.2.2",
     "postcss-calc": "^5.3.1",

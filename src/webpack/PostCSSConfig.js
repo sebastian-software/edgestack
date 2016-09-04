@@ -14,6 +14,7 @@ import flexbugsFixes from "postcss-flexbugs-fixes"
 import mediaMinmax from "postcss-media-minmax"
 import customMedia from "postcss-custom-media"
 import nested from "postcss-nested"
+import filters from "pleeease-filters"
 import pseudoClassAnyLink from "postcss-pseudo-class-any-link"
 import selectorMatches from "postcss-selector-matches"
 import pseudoelements from "postcss-pseudoelements"
@@ -68,6 +69,12 @@ export default function getConfig(bundler, variables = {})
     // Insert 3D hack before will-change property
     // https://github.com/postcss/postcss-will-change
     willChange,
+
+    // Fallback for Webkit Filters property to SVG filters. Amazing stuff.
+    // It converts all 10 CSS shorthand filters:
+    // grayscale, sepia, saturate, hue-rotate, invert, opacity, brightness, contrast, blur, drop-shadow
+    // https://github.com/iamvdo/pleeease-filters
+    filters(),
 
     // Reduce calc()
     // Note: Important to keep this after mixin/variable processing

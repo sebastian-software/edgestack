@@ -5,6 +5,7 @@ import React, { PropTypes } from "react"
 import Link from "react-router/lib/Link"
 import Helmet from "react-helmet"
 import { camelCase } from "lodash-es"
+import styles from "./App.css"
 
 const websiteDescription = "A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience."
 
