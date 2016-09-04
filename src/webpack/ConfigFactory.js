@@ -357,6 +357,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         new AssetsPlugin({
           filename: process.env.CLIENT_BUNDLE_ASSETS_FILENAME,
           path: path.resolve(root, process.env.CLIENT_BUNDLE_OUTPUT_PATH),
+          prettyPrint: true
         })
       ),
 
