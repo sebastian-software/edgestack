@@ -21,7 +21,7 @@ import reporter from "postcss-reporter"
 
 const autoprefixerSettings =
 {
-  browsers: [ "> 2% in DE", "IE 10", "IE 11", "last 3 Chrome versions", "last 3 Firefox versions" ],
+  browsers: [ "> 2%", "IE 10", "IE 11", "last 3 Chrome versions", "last 3 Firefox versions" ],
   cascade: false,
   flexbox: "no-2009"
 }
