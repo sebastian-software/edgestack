@@ -43,7 +43,7 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 - CSS Support with CSS modules and additional flexible full PostCSS chain for advanced transformations e.g. autoprefixer
 - Fully integrated asset support for referencing files in CSS and JavaScript.
 - Full ES2015 support, using *Babel* to transpile where needed.
-- Bundling of both client and server using *Webpack* v2.
+- Bundling of both client and server using *Webpack* v2. See also: [The Cost of Small Modules](https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/)
 - Client bundle is automatically split by routes and uses tree-shaking for smallest possible builds.
 - Long term caching of the client bundle works out of the box.
 - Support for development and optimized production configuration.
