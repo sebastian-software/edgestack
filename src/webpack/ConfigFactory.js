@@ -541,7 +541,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf)$/,
           loader: "file-loader",
           query: {
-            name: "file-[hash:base62:6].[ext]"
+            name: ifProdClient("file-[hash:base62:6].[ext]", "[name].[ext]")
           }
         },
 
@@ -563,7 +563,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
                   {
                     sourceMap: false,
                     modules: true,
-                    localIdentName: "[local]-[hash:base62:6]",
+                    localIdentName: ifProd("[local]-[hash:base62:6]", "[path][name]-[local]"),
                     minimize: false
                   }
                 },
@@ -604,7 +604,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
                 {
                   sourceMap: true,
                   modules: true,
-                  localIdentName: "[local]-[hash:base62:6]",
+                  localIdentName: "[path][name]-[local]",
                   minimize: false
                 }
               },
