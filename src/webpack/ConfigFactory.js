@@ -460,7 +460,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // CSS files.
       ifProdClient(
         new ExtractTextPlugin({
-          filename: "[name]-[contenthash].css",
+          filename: "[name]-[contenthash:base62:8].css",
           allChunks: true
         })
       ),
@@ -555,7 +555,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf)$/,
           loader: "file-loader",
           query: {
-            name: ifProdClient("file-[hash:base62:6].[ext]", "[name].[ext]")
+            name: ifProdClient("file-[hash:base62:8].[ext]", "[name].[ext]")
           }
         },
 
@@ -577,7 +577,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
                   {
                     sourceMap: false,
                     modules: true,
-                    localIdentName: ifProd("[local]-[hash:base62:6]", "[path][name]-[local]"),
+                    localIdentName: ifProd("[local]-[hash:base62:8]", "[path][name]-[local]"),
                     minimize: false
                   }
                 },
@@ -598,7 +598,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             // See also: https://github.com/webpack/extract-text-webpack-plugin/issues/196
             loader: ExtractTextPlugin.extract({
               fallbackLoader: "style-loader",
-              loader: "css-loader?modules&sourceMap&localIdentName=[local]-[hash:base62:6]!postcss-loader"
+              loader: "css-loader?modules&sourceMap&localIdentName=[local]-[hash:base62:8]!postcss-loader"
             })
           }),
 
