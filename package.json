@@ -18,7 +18,7 @@
     "clean": "rimraf build/client/* build/server/* lib/* bin/*",
     "nsp": "nsp check --output summary",
     "test": "npm run prepublish && npm run prod",
-    "prescript": "rimraf bin && rollup --config rollup.script.cfg",
+    "prescript": "npm run clean && rollup --config rollup.script.cfg",
     "prepublish": "npm run prescript && rimraf lib && prepublish-lib",
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
