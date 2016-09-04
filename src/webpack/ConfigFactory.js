@@ -343,7 +343,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // Extract chunk hashes into separate file
       ifProdClient(new ChunkManifestPlugin({
         filename: "manifest.json",
-        manifestVariable: "webpackManifest"
+        manifestVariable: "CHUNK_MANIFEST"
       })),
 
       // Optimize lodash bundles when importing. Works together with Babel plugin.

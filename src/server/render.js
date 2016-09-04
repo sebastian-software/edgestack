@@ -1,27 +1,32 @@
-import { renderToString } from 'react-dom/server';
-import serialize from 'serialize-javascript';
-import Helmet from 'react-helmet';
+import { renderToString } from "react-dom/server"
+import serialize from "serialize-javascript"
+import Helmet from "react-helmet"
+import { readFileSync } from "fs"
 
-import assets from './assets';
+import assets from "./assets"
 
-function styleTags(styles : Array<string>) {
+import { CLIENT_BUNDLE_MANIFEST_FILEPATH } from "./config"
+
+const ClientManifest = readFileSync(CLIENT_BUNDLE_MANIFEST_FILEPATH, "utf8")
+
+function styleTags(styles) {
   return styles
     .map(style =>
       `<link href="${style}" media="screen, projection" rel="stylesheet" type="text/css" />`
     )
-    .join('\n');
+    .join('\n')
 }
 
-function scriptTags(scripts : Array<string>) {
+function scriptTags(scripts) {
   return scripts
     .map(script =>
       `<script type="text/javascript" src="${script}"></script>`
     )
-    .join('\n');
+    .join('\n')
 }
 
-const styles = styleTags(assets.styles);
-const scripts = scriptTags(assets.scripts);
+const styles = styleTags(assets.styles)
+const scripts = scriptTags(assets.scripts)
 
 /**
  * Generates a full HTML page containing the render output of the given react
@@ -38,7 +43,7 @@ const scripts = scriptTags(assets.scripts);
 function render(rootReactElement, initialState) {
   const reactRenderString = rootReactElement
     ? renderToString(rootReactElement)
-    : null;
+    : null
 
   const helmet = rootReactElement
     // We run 'react-helmet' after our renderToString call so that we can fish
@@ -48,7 +53,7 @@ function render(rootReactElement, initialState) {
     // @see https://github.com/nfl/react-helmet
     ? Helmet.rewind()
     // There was no react element, so we just us an empty helmet.
-    : null;
+    : null
 
   return `<!DOCTYPE html>
     <html ${helmet ? helmet.htmlAttributes.toString() : ''}>
@@ -68,9 +73,10 @@ function render(rootReactElement, initialState) {
         <div id='app'>${reactRenderString || ''}</div>
 
         <script type='text/javascript'>${
-          initialState
+          (initialState
             ? `window.APP_STATE=${serialize(initialState)};`
-            : ''
+            : '')
+          + `window.CHUNK_MANIFEST=${ClientManifest};`
         }</script>
 
         ${scripts}

@@ -26,6 +26,12 @@ const assetsBundleFilePath = path.resolve(
   process.env.CLIENT_BUNDLE_ASSETS_FILENAME
 )
 
+export const CLIENT_BUNDLE_MANIFEST_FILEPATH = path.resolve(
+  root,
+  CLIENT_BUNDLE_OUTPUT_PATH,
+  "manifest.json"
+)
+
 fileExists(
   assetsBundleFilePath,
   `We could not find the "${assetsBundleFilePath}" file, which contains a ` +
