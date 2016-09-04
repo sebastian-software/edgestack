@@ -223,7 +223,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         options.entry ? options.entry : ifIsFile(`./src/${target}/index.js`),
       ]),
 
-      vendor: options.vendor ? options.vendor : ifIsFile(`./src/${target}/vendor.js`)
+      vendor: ifProdClient(options.vendor ? options.vendor : ifIsFile(`./src/${target}/vendor.js`))
     }),
 
     output:
@@ -323,8 +323,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       ifProdClient(new webpack.optimize.CommonsChunkPlugin(
       {
         name: "vendor",
-        minChunks: Infinity,
-        async: true
+        minChunks: Infinity
       })),
 
       // We use this so that our generated [chunkhash]'s are only different if
