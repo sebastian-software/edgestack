@@ -1,26 +1,28 @@
 # http://www.appveyor.com/docs/appveyor-yml
 
+clone_depth: 10
+
 environment:
   matrix:
     - nodejs_version: 6.5.0
       platform: x64
-      msvs_toolset: 12
+      # msvs_toolset: 12
     - nodejs_version: 6.5.0
       platform: x86
-      msvs_toolset: 12
+      # msvs_toolset: 12
 
 version: "{build}"
 build: off
 deploy: off
 
 install:
-  - ps: Install-Product node $env:nodejs_version
+  - ps: Install-Product node $env:nodejs_version $env:platform
   - ps: Copy-Item .env_example .env
-  #- IF "%platform%" == "x64" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" amd64
-  #- IF "%platform%" == "x86" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" x86
+  - IF "%platform%" == "x64" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" amd64
+  - IF "%platform%" == "x86" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" x86
   - npm install
 
 test_script:
   - node --version
   - npm --version
-  - cmd: "npm test"
+  - npm test
