@@ -15,10 +15,18 @@ const chunks = Object.keys(ClientBundleAssets).map((key) => ClientBundleAssets[k
 const assets = chunks.reduce((sorted, chunk) =>
 {
   if (chunk.js) {
-    sorted.scripts.push(chunk.js)
+    if (chunk.js.indexOf("/vendor-") !== -1) {
+      sorted.scripts.unshift(chunk.js)
+    } else {
+      sorted.scripts.push(chunk.js)
+    }
   }
   if (chunk.css) {
-    sorted.styles.push(chunk.css)
+    if (chunk.css.indexOf("/vendor-") !== -1) {
+      sorted.styles.unshift(chunk.css)
+    } else {
+      sorted.styles.push(chunk.css)
+    }
   }
   return sorted
 }, { scripts: [], styles: [] })
