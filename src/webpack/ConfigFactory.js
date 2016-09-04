@@ -295,8 +295,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         ".es6",
         ".es7",
         ".es",
-        ".json",
-        ".css"
+        ".json"
       ]
     },
 
