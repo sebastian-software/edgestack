@@ -4,12 +4,14 @@ clone_depth: 10
 
 environment:
   matrix:
-    #- nodejs_version: 6.5.0
-    #  platform: x64
-    #  # msvs_toolset: 12
+    - nodejs_version: 5
+      platform: x64
+    - nodejs_version: 5
+      platform: x86
+    - nodejs_version: 6.5.0
+      platform: x64
     - nodejs_version: 6.5.0
       platform: x86
-      # msvs_toolset: 12
 
 version: "{build}"
 build: off
