@@ -56,6 +56,9 @@ function isLoaderSpecificFile(request) {
   return Boolean(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|ico|mp4|mp3|ogg|pdf|swf|css|scss|sass|sss|less)$/.exec(request))
 }
 
+const isDebug = true
+const isVerbose = true
+
 function ConfigFactory(target, mode, options = {}, root = CWD)
 {
   // Output custom options
@@ -119,7 +122,20 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     },
 
     // Switch loaders to debug mode.
-    debug: true,
+    debug: isDebug,
+
+    // What information should be printed to the console
+    stats: {
+      colors: true,
+      reasons: isDebug,
+      hash: isVerbose,
+      version: isVerbose,
+      timings: true,
+      chunks: isVerbose,
+      chunkModules: isVerbose,
+      cached: isVerbose,
+      cachedAssets: isVerbose,
+    },
 
     // This is not the file cache, but the runtime cache.
     // The reference is used to speed-up rebuilds in one execution e.g. via watcher

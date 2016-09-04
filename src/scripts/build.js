@@ -6,7 +6,6 @@ import gutil from "gulp-util"
 import fse from "fs-extra"
 
 import ConfigFactory from "../webpack/ConfigFactory"
-import { logAssets } from "../webpack/util"
 
 export default function build()
 {
@@ -46,10 +45,9 @@ export default function build()
           children: false,
           chunks: false,
           colors: true,
-        }))        
+        }))
 
         var jsonStats = stats.toJson()
-        logAssets(jsonStats.assets, buildFolderClient)
         fse.writeJsonSync(path.resolve(buildFolderClient, "stats.json"), jsonStats)
         callback()
       })
