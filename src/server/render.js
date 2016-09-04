@@ -7,7 +7,11 @@ import assets from "./assets"
 
 import { CLIENT_BUNDLE_MANIFEST_FILEPATH } from "./config"
 
-const ClientManifest = readFileSync(CLIENT_BUNDLE_MANIFEST_FILEPATH, "utf8")
+try{
+  var ClientManifest = readFileSync(CLIENT_BUNDLE_MANIFEST_FILEPATH, "utf8")
+} catch(ex) {
+  ClientManifest = "{}"
+}
 
 function styleTags(styles) {
   return styles
