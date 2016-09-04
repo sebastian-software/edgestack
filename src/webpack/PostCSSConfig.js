@@ -26,96 +26,102 @@ const autoprefixerSettings =
   flexbox: "no-2009"
 }
 
-export default [
-  /*
-  $css.devtools({
-    silent: true
-  }),
-  */
+export default function getConfig(bundler, variables = {})
+{
+  return [
+    /*
+    $css.devtools({
+      silent: true
+    }),
+    */
 
-  atImport(),
-  url(),
+    atImport({
+      addDependencyTo: bundler
+    }),
 
-  // Discard comments in your CSS files with PostCSS.
-  // https://github.com/ben-eb/postcss-discard-comments
-  // Remove all comments... we don't need them further down the line
-  // which improves performance (reduces number of AST nodes)
-  discardComments({
-    removeAll: true
-  }),
+    url(),
 
-  // PostCSS plugin for Sass-like variables, conditionals, and iteratives
-  // Supports local variables + @for/@each inspired by Sass
-  // https://github.com/jonathantneal/postcss-advanced-variables
-  advancedVariables({
-    variables: {}
-  }),
+    // Discard comments in your CSS files with PostCSS.
+    // https://github.com/ben-eb/postcss-discard-comments
+    // Remove all comments... we don't need them further down the line
+    // which improves performance (reduces number of AST nodes)
+    discardComments({
+      removeAll: true
+    }),
 
-  // Sass-like mixins
-  // https://github.com/andyjansson/postcss-sassy-mixins
-  sassyMixins,
+    // PostCSS plugin for Sass-like variables, conditionals, and iteratives
+    // Supports local variables + @for/@each inspired by Sass
+    // https://github.com/jonathantneal/postcss-advanced-variables
+    advancedVariables({
+      variables
+    }),
 
-  // Fractional grid system built with calc(). Supports masonry, vertical, and waffle grids.
-  // https://github.com/peterramsing/lost
-  lost,
+    // Sass-like mixins
+    // https://github.com/andyjansson/postcss-sassy-mixins
+    sassyMixins,
 
-  // Insert 3D hack before will-change property
-  // https://github.com/postcss/postcss-will-change
-  willChange,
+    // Fractional grid system built with calc(). Supports masonry, vertical, and waffle grids.
+    // https://github.com/peterramsing/lost
+    lost,
 
-  // Reduce calc()
-  // Note: Important to keep this after mixin/variable processing
-  // https://github.com/postcss/postcss-calc
-  calc,
+    // Insert 3D hack before will-change property
+    // https://github.com/postcss/postcss-will-change
+    willChange,
 
-  // Fix up CSS gradients with transparency for older browsers
-  // https://github.com/gilmoreorless/postcss-gradient-transparency-fix
-  gradientTransparencyFix,
+    // Reduce calc()
+    // Note: Important to keep this after mixin/variable processing
+    // https://github.com/postcss/postcss-calc
+    calc,
 
-  // Replace easing names from http://easings.net to `cubic-bezier()`.
-  // https://github.com/postcss/postcss-easings
-  easings,
+    // Fix up CSS gradients with transparency for older browsers
+    // https://github.com/gilmoreorless/postcss-gradient-transparency-fix
+    gradientTransparencyFix,
 
-  // Transform W3C CSS color function to more compatible CSS
-  // https://github.com/postcss/postcss-color-function
-  colorFunction,
+    // Replace easing names from http://easings.net to `cubic-bezier()`.
+    // https://github.com/postcss/postcss-easings
+    easings,
 
-  // Transform RGBA hexadecimal notations (#RRGGBBAA or #RGBA) to more compatible CSS (rgba())
-  // https://github.com/postcss/postcss-color-hex-alpha
-  colorHexAlpha,
+    // Transform W3C CSS color function to more compatible CSS
+    // https://github.com/postcss/postcss-color-function
+    colorFunction,
 
-  // Tries to fix all of flexbug's issues
-  // https://github.com/luisrudge/postcss-flexbugs-fixes
-  flexbugsFixes,
+    // Transform RGBA hexadecimal notations (#RRGGBBAA or #RGBA) to more compatible CSS (rgba())
+    // https://github.com/postcss/postcss-color-hex-alpha
+    colorHexAlpha,
 
-  // Writing simple and graceful Media Queries!
-  // Support for CSS Media Queries Level 4: https://drafts.csswg.org/mediaqueries/#mq-range-context
-  // https://github.com/postcss/postcss-media-minmax
-  mediaMinmax,
+    // Tries to fix all of flexbug's issues
+    // https://github.com/luisrudge/postcss-flexbugs-fixes
+    flexbugsFixes,
 
-  // Unwrap nested rules like how Sass does it.
-  // https://github.com/postcss/postcss-nested
-  nested,
+    // Writing simple and graceful Media Queries!
+    // Support for CSS Media Queries Level 4: https://drafts.csswg.org/mediaqueries/#mq-range-context
+    // https://github.com/postcss/postcss-media-minmax
+    mediaMinmax,
 
-  // Use the proposed :any-link pseudo-class in CSS
-  // https://github.com/jonathantneal/postcss-pseudo-class-any-link
-  pseudoClassAnyLink,
+    // Unwrap nested rules like how Sass does it.
+    // https://github.com/postcss/postcss-nested
+    nested,
 
-  // Transform :matches() W3C CSS pseudo class to more compatible CSS (simpler selectors)
-  // https://github.com/postcss/postcss-selector-matches
-  selectorMatches,
+    // Use the proposed :any-link pseudo-class in CSS
+    // https://github.com/jonathantneal/postcss-pseudo-class-any-link
+    pseudoClassAnyLink,
 
-  // Add single and double colon peudo selectors
-  // Normalizes e.g. `::before` to `:before` for wider browser support
-  // https://github.com/axa-ch/postcss-pseudoelements
-  pseudoelements,
+    // Transform :matches() W3C CSS pseudo class to more compatible CSS (simpler selectors)
+    // https://github.com/postcss/postcss-selector-matches
+    selectorMatches,
 
-  // Parse CSS and add vendor prefixes to rules by Can I Use
-  // https://github.com/postcss/autoprefixer
-  autoprefixer(autoprefixerSettings),
+    // Add single and double colon peudo selectors
+    // Normalizes e.g. `::before` to `:before` for wider browser support
+    // https://github.com/axa-ch/postcss-pseudoelements
+    pseudoelements,
 
-  // Log PostCSS messages to the console
-  reporter({
-    clearMessages: true
-  })
-]
+    // Parse CSS and add vendor prefixes to rules by Can I Use
+    // https://github.com/postcss/autoprefixer
+    autoprefixer(autoprefixerSettings),
+
+    // Log PostCSS messages to the console
+    reporter({
+      clearMessages: true
+    })
+  ]
+}

@@ -14,7 +14,7 @@ import esModules from "./Modules"
 import BabelConfigClient from "../config/babel.es.js"
 import BabelConfigNode from "../config/babel.node.js"
 
-import PostCSSConfig from "./PostCSSConfig"
+import getPostCSSConfig from "./PostCSSConfig"
 
 
 const builtInSet = new Set(builtinModules)
@@ -416,8 +416,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       ),
     ]),
 
-    postcss: function() {
-      return PostCSSConfig
+    postcss: function(bundler)
+    {
+      return getPostCSSConfig(bundler, {})
     },
 
     module:
