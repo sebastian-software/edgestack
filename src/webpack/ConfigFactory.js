@@ -6,9 +6,18 @@ import AssetsPlugin from "assets-webpack-plugin"
 import nodeExternals from "webpack-node-externals"
 import builtinModules from "builtin-modules"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
-import WebpackShaHash from "webpack-sha-hash"
 import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
 import dotenv from "dotenv"
+
+// Using more modern approach of hashing than "webpack-md5-hash". Somehow the SHA256 version
+// ("webpack-sha-hash") does not correctly work based (produces different hashes for same content).
+// This is basically a replacement of md5 with the loader-utils implementation which also supports
+// shorter generated hashes based on base62 encoding instead of hex.
+import WebpackDigestHash from "./ChunkHash"
+
+// Waiting for Pull-Request being merged:
+// https://github.com/diurnalist/chunk-manifest-webpack-plugin/pull/13
+import ChunkManifestPlugin from "./ChunkManifestPlugin"
 
 import esModules from "./Modules"
 
@@ -330,7 +339,13 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // our long term browser caching strategy for our client bundle, avoiding
       // cases where browsers end up having to download all the client chunks
       // even though 1 or 2 may have only changed.
-      ifProdClient(new WebpackShaHash()),
+      ifProdClient(new WebpackDigestHash()),
+
+      // Extract chunk hashes into separate file
+      ifProdClient(new ChunkManifestPlugin({
+        filename: "manifest.json",
+        manifestVariable: "webpackManifest"
+      })),
 
       // Optimize lodash bundles when importing. Works together with Babel plugin.
       // See: https://github.com/lodash/lodash-webpack-plugin#feature-sets
