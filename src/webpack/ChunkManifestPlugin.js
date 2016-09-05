@@ -1,4 +1,4 @@
-import RawSource from "webpack-core/lib/RawSource"
+import { RawSource } from "webpack-sources"
 
 export default function ChunkManifestPlugin(options) {
   options = options || {};
