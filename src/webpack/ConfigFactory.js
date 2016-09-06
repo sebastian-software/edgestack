@@ -8,6 +8,7 @@ import ExtractTextPlugin from "extract-text-webpack-plugin"
 import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
 import Dashboard from "webpack-dashboard/plugin"
 import ProgressBar from "progress-bar-webpack-plugin"
+import HtmlPlugin from "html-webpack-plugin"
 import dotenv from "dotenv"
 
 // Using more modern approach of hashing than "webpack-md5-hash". Somehow the SHA256 version
@@ -313,6 +314,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     },
 
     plugins: removeEmpty([
+
+      // Create static HTML page. This can be used when server rendering is not interesting.
+      ifProdClient(new HtmlPlugin()),
 
       // Render Dashboard for Client Development + ProgressBar for production builds
       ifIntegration(null, ifDevClient(new Dashboard())),
