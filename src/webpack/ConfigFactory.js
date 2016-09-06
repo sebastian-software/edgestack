@@ -480,7 +480,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           filename: "[name]-[contenthash:base62:8].css",
           allChunks: true
         })
-      ),
+      )
     ]),
 
     postcss: function(bundler)
