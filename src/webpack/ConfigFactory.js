@@ -7,6 +7,7 @@ import builtinModules from "builtin-modules"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
 import Dashboard from "webpack-dashboard/plugin"
+import ProgressBar from "progress-bar-webpack-plugin"
 import dotenv from "dotenv"
 
 // Using more modern approach of hashing than "webpack-md5-hash". Somehow the SHA256 version
@@ -312,8 +313,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     plugins: removeEmpty([
 
-      // Render Dashboard for Client Development
+      // Render Dashboard for Client Development + ProgressBar for production builds
       ifDevClient(new Dashboard()),
+      ifProd(new ProgressBar()),
 
       // For server bundle, you also want to use "source-map-support" which automatically sourcemaps
       // stack traces from NodeJS. We need to install it at the top of the generated file, and we
