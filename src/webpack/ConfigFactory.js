@@ -299,6 +299,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       extensions: [
         ".js",
         ".jsx",
+        ".ts",
+        ".tsx",
         ".es5",
         ".es6",
         ".es7",
@@ -549,6 +551,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             }
           }
         }),
+
+        // Typescript + Typescript/JSX
+        {
+          test: /\.(ts|tsx)$/,
+          loader: 'awesome-typescript-loader'
+        },
 
         // Font file references etc.
         {
