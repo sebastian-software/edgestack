@@ -8,6 +8,7 @@ import ExtractTextPlugin from "extract-text-webpack-plugin"
 import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
 import Dashboard from "webpack-dashboard/plugin"
 import ProgressBar from "progress-bar-webpack-plugin"
+import BabiliPlugin from "babili-webpack-plugin"
 import HtmlPlugin from "html-webpack-plugin"
 import dotenv from "dotenv"
 
@@ -223,8 +224,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     // source maps.
     //
     // We also want to be able to link to the source in Chrome dev tools
-    //devtool: "eval-cheap-module-source-map",
-    devtool: "source-map",
+    devtool: ifProd("cheap-module-source-map", "cheap-module-eval-source-map"),
 
     // Define our entry chunks for our bundle.
     entry: removeEmptyKeys(
@@ -454,7 +454,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       ),
 
       // JS Minification for client
-      // Should not be needed anymore when the comments:false option for babel is fixed.
       // See: https://phabricator.babeljs.io/T6858
       ifProdClient(
         // Uglify does not work with ES6. Therefor we can only use it for ES5 transpiled
@@ -462,11 +461,16 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // See: https://github.com/mishoo/UglifyJS2/issues/448
         new webpack.optimize.UglifyJsPlugin({
           comments: false,
+          sourceMap : true,
           compress: {
             screw_ie8: true,
             warnings: false
           }
         })
+
+        // Alternative using Babel based compressor. Currently increases built-time by 10sec (=250%)
+        // of the timing produced by Uglify.
+        // new BabiliPlugin()
       ),
 
       // This is a production client so we will extract our CSS into
