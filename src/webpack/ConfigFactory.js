@@ -128,6 +128,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   const ifDevServer = ifElse(isDev && isServer)
   const ifProdClient = ifElse(isProd && isClient)
   const ifProdServer = ifElse(isProd && isServer)
+  const ifIntegration = ifElse(process.env.CI || false)
 
   const projectId = path.basename(root)
 
@@ -314,8 +315,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     plugins: removeEmpty([
 
       // Render Dashboard for Client Development + ProgressBar for production builds
-      ifDevClient(new Dashboard()),
-      ifProd(new ProgressBar()),
+      ifIntegration(null, ifDevClient(new Dashboard())),
+      ifIntegration(null, ifProd(new ProgressBar())),
 
       // For server bundle, you also want to use "source-map-support" which automatically sourcemaps
       // stack traces from NodeJS. We need to install it at the top of the generated file, and we
