@@ -25,6 +25,7 @@ install:
   - ps: Copy-Item .env_example .env
   - IF "%platform%" == "x64" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" amd64
   - IF "%platform%" == "x86" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" x86
+  - npm prune
   - npm install
 
 test_script:
