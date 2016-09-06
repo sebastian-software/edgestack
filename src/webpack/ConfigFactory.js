@@ -557,9 +557,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         }),
 
         // Typescript + Typescript/JSX
+        // https://github.com/s-panferov/awesome-typescript-loader
         {
           test: /\.(ts|tsx)$/,
-          loader: 'awesome-typescript-loader'
+          loader: "awesome-typescript-loader"
         },
 
         // Font file references etc.
