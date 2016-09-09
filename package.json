@@ -118,7 +118,7 @@
     "postcss-reporter": "^1.4.1",
     "postcss-sassy-mixins": "^2.0.0",
     "postcss-selector-matches": "^2.0.4",
-    "postcss-smart-import": "^0.2.9",
+    "postcss-smart-import": "^0.3.0",
     "postcss-url": "^5.1.2",
     "postcss-will-change": "^1.1.0",
     "progress-bar-webpack-plugin": "^1.9.0",
