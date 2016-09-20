@@ -92,7 +92,7 @@
     "json-loader": "^0.5.4",
     "load-plugins": "^2.1.0",
     "loader-utils": "^0.2.15",
-    "lodash-es": "^4.15.0",
+    "lodash-es": "^4.16.1",
     "lodash-webpack-plugin": "^0.10.0",
     "lost": "^7.1.0",
     "node-noop": "^1.0.0",
