@@ -138,7 +138,7 @@
     "style-loader": "^0.13.1",
     "stylefmt": "^4.2.3",
     "stylelint": "^7.2.0",
-    "stylelint-config-standard": "^13.0.0",
+    "stylelint-config-standard": "^13.0.2",
     "webpack": "^2.1.0-beta.21",
     "webpack-dashboard": "^0.1.8",
     "webpack-dev-middleware": "^1.6.1",
