@@ -68,7 +68,7 @@
     "colorguard": "^1.2.0",
     "compression": "^1.6.2",
     "cross-env": "^2.0.1",
-    "cross-spawn": "^4.0.0",
+    "cross-spawn": "^4.0.2",
     "css-loader": "^0.25.0",
     "cssstats": "^3.0.0-beta.2",
     "dotenv": "^2.0.0",
