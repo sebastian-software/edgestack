@@ -143,7 +143,7 @@
     "webpack-dashboard": "^0.1.8",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2",
-    "webpack-node-externals": "^1.3.3",
+    "webpack-node-externals": "^1.5.4",
     "webpack-sources": "^0.1.2"
   },
   "devDependencies": {
