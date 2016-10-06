@@ -93,7 +93,7 @@
     "load-plugins": "^2.1.0",
     "loader-utils": "^0.2.15",
     "lodash-es": "^4.15.0",
-    "lodash-webpack-plugin": "^0.10.0",
+    "lodash-webpack-plugin": "^0.10.2",
     "lost": "^7.1.0",
     "node-noop": "^1.0.0",
     "node-notifier": "^4.6.1",
