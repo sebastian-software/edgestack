@@ -90,7 +90,7 @@
     "intl": "^1.2.4",
     "isomorphic-fetch": "^2.2.1",
     "json-loader": "^0.5.4",
-    "load-plugins": "^2.1.0",
+    "load-plugins": "^2.1.1",
     "loader-utils": "^0.2.15",
     "lodash-es": "^4.15.0",
     "lodash-webpack-plugin": "^0.10.0",
