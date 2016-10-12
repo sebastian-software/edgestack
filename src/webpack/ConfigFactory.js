@@ -430,7 +430,14 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
           // Indicates to our loaders that they should enter into debug mode
           // should they support it.
-          debug: true
+          debug: true,
+
+          // Pass options for PostCSS
+          options: {
+            postcssLoader: {
+              postcss: getPostCSSConfig(webpack, {})
+            }
+          }
         })
       ),
 
@@ -443,7 +450,14 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
           // Indicates to our loaders that they should enter into debug mode
           // should they support it.
-          debug: false
+          debug: false,
+
+          // Pass options for PostCSS
+          options: {
+            postcssLoader: {
+              postcss: getPostCSSConfig(webpack, {})
+            }
+          }
         })
       ),
 
@@ -476,11 +490,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         })
       )
     ]),
-
-    postcss: function(bundler)
-    {
-      return getPostCSSConfig(bundler, {})
-    },
 
     module:
     {
