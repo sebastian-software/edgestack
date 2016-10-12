@@ -434,9 +434,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
           // Pass options for PostCSS
           options: {
-            postcssLoader: {
-              postcss: getPostCSSConfig(webpack, {})
-            }
+            postcss: getPostCSSConfig(webpack, {}),
+            context: CWD
           }
         })
       ),
@@ -454,9 +453,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
           // Pass options for PostCSS
           options: {
-            postcssLoader: {
-              postcss: getPostCSSConfig(webpack, {})
-            }
+            postcss: getPostCSSConfig(webpack, {}),
+            context: CWD
           }
         })
       ),
