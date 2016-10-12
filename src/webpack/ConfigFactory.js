@@ -493,19 +493,17 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     module:
     {
-      // Before going through our normal loaders, we convert simple JSON files to JS
-      // This is useful for further processing e.g. compression with babili
-      preLoaders:
+      rules: removeEmpty(
       [
         // JSON
         {
           test: /\.json$/,
+          // Before going through our normal loaders, we convert simple JSON files to JS
+          // This is useful for further processing e.g. compression with babili
+          enforce: "pre",
           loader: "json-loader"
-        }
-      ],
+        },
 
-      loaders: removeEmpty(
-      [
         // Javascript
         {
           test: /\.(js|jsx|json)$/,
