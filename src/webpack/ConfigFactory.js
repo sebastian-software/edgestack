@@ -154,9 +154,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       __filename: true
     },
 
-    // Switch loaders to debug mode.
-    debug: isDebug,
-
     // What information should be printed to the console
     stats: {
       colors: true,
@@ -268,9 +265,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         "chunk-[name]-[chunkhash].js",
         "chunk-[name].js"
       ),
-
-      // Add path information during development
-      pathInfo: isDev,
 
       // Prefixes every line of the source in the bundle with this string.
       sourcePrefix: "",
