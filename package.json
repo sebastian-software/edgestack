@@ -6,7 +6,7 @@
   "jsnext:main": "lib/index.es.js",
   "module": "lib/index.es.js",
   "engines": {
-    "node": "~6.3.0"
+    "node": ">=6.0.0"
   },
   "bin": {
     "advanced-script": "./bin/advanced-script.js"
