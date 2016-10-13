@@ -154,9 +154,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       __filename: true
     },
 
-    // Switch loaders to debug mode.
-    debug: isDebug,
-
     // What information should be printed to the console
     stats: {
       colors: true,
@@ -268,9 +265,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         "chunk-[name]-[chunkhash].js",
         "chunk-[name].js"
       ),
-
-      // Add path information during development
-      pathInfo: isDev,
 
       // Prefixes every line of the source in the bundle with this string.
       sourcePrefix: "",
@@ -436,7 +430,13 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
           // Indicates to our loaders that they should enter into debug mode
           // should they support it.
-          debug: true
+          debug: true,
+
+          // Pass options for PostCSS
+          options: {
+            postcss: getPostCSSConfig(webpack, {}),
+            context: CWD
+          }
         })
       ),
 
@@ -449,7 +449,13 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
           // Indicates to our loaders that they should enter into debug mode
           // should they support it.
-          debug: false
+          debug: false,
+
+          // Pass options for PostCSS
+          options: {
+            postcss: getPostCSSConfig(webpack, {}),
+            context: CWD
+          }
         })
       ),
 
@@ -483,26 +489,19 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       )
     ]),
 
-    postcss: function(bundler)
-    {
-      return getPostCSSConfig(bundler, {})
-    },
-
     module:
     {
-      // Before going through our normal loaders, we convert simple JSON files to JS
-      // This is useful for further processing e.g. compression with babili
-      preLoaders:
+      rules: removeEmpty(
       [
         // JSON
         {
           test: /\.json$/,
+          // Before going through our normal loaders, we convert simple JSON files to JS
+          // This is useful for further processing e.g. compression with babili
+          enforce: "pre",
           loader: "json-loader"
-        }
-      ],
+        },
 
-      loaders: removeEmpty(
-      [
         // Javascript
         {
           test: /\.(js|jsx|json)$/,
