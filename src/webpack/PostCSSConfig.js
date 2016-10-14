@@ -62,16 +62,17 @@ export default function getConfig(bundler, variables = {})
     // https://github.com/seaneking/postcss-responsive-type
     responsiveType(),
 
+    // Sass-like mixins
+    // Needs to be executed before any variable handling plugins
+    // https://github.com/andyjansson/postcss-sassy-mixins
+    sassyMixins,
+
     // PostCSS plugin for Sass-like variables, conditionals, and iteratives
     // Supports local variables + @for/@each inspired by Sass
     // https://github.com/jonathantneal/postcss-advanced-variables
     advancedVariables({
       variables
     }),
-
-    // Sass-like mixins
-    // https://github.com/andyjansson/postcss-sassy-mixins
-    sassyMixins,
 
     // Fractional grid system built with calc(). Supports masonry, vertical, and waffle grids.
     // https://github.com/peterramsing/lost
