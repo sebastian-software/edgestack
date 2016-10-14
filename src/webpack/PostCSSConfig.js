@@ -21,6 +21,12 @@ import pseudoelements from "postcss-pseudoelements"
 import autoprefixer from "autoprefixer"
 import reporter from "postcss-reporter"
 
+import hexrgba from "postcss-hexrgba"
+import zindex from "postcss-zindex"
+import warn from "postcss-at-warn"
+import responsiveType from "postcss-responsive-type"
+import inputStyles from "postcss-input-style"
+
 const autoprefixerSettings =
 {
   browsers: [ "> 2%", "IE 10", "IE 11", "last 3 Chrome versions", "last 3 Firefox versions" ],
@@ -50,6 +56,11 @@ export default function getConfig(bundler, variables = {})
     discardComments({
       removeAll: true
     }),
+
+    // Automagical responsive typography. Adds a responsive property to font-size,
+    // line-height and letter-spacing that generates complex calc and vw based font sizes.
+    // https://github.com/seaneking/postcss-responsive-type
+    responsiveType(),
 
     // PostCSS plugin for Sass-like variables, conditionals, and iteratives
     // Supports local variables + @for/@each inspired by Sass
@@ -89,6 +100,10 @@ export default function getConfig(bundler, variables = {})
     // https://github.com/postcss/postcss-easings
     easings,
 
+    // Adds shorthand hex methods to rbga() values.
+    // https://github.com/seaneking/postcss-hexrgba
+    hexrgba,
+
     // Transform W3C CSS color function to more compatible CSS
     // https://github.com/postcss/postcss-color-function
     colorFunction,
@@ -114,6 +129,10 @@ export default function getConfig(bundler, variables = {})
     // https://github.com/postcss/postcss-nested
     nested,
 
+    // Adds new pseudo-elements to inputs for easy cross-browser styling of their inner elements.
+    // https://github.com/seaneking/postcss-input-style
+    inputStyles,
+
     // Use the proposed :any-link pseudo-class in CSS
     // https://github.com/jonathantneal/postcss-pseudo-class-any-link
     pseudoClassAnyLink,
@@ -126,6 +145,14 @@ export default function getConfig(bundler, variables = {})
     // Normalizes e.g. `::before` to `:before` for wider browser support
     // https://github.com/axa-ch/postcss-pseudoelements
     pseudoelements,
+
+    // Reduce z-index values with PostCSS.
+    // https://github.com/ben-eb/postcss-zindex
+    zindex,
+
+    // Sass like @warn for PostCSS.
+    // https://github.com/ben-eb/postcss-at-warn
+    warn,
 
     // Parse CSS and add vendor prefixes to rules by Can I Use
     // https://github.com/postcss/autoprefixer
