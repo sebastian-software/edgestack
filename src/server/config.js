@@ -10,7 +10,7 @@ const root = process.env.APP_ROOT
 
 export const SERVER_PORT = parseInt(process.env.SERVER_PORT, 10)
 
-export const DISABLE_SSR = process.env.DISABLE_SSR === "true"
+export const DISABLE_SSR = process.env.DISABLE_SSR === true
 
 export const CLIENT_BUNDLE_HTTP_PATH = process.env.CLIENT_BUNDLE_HTTP_PATH
 
