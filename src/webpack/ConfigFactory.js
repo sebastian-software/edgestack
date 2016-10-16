@@ -642,7 +642,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
                   sourceMap: true,
                   modules: true,
                   localIdentName: "[path][name]-[local]",
-                  minimize: false
+                  minimize: false,
+                  import: false
                 }
               },
               {
