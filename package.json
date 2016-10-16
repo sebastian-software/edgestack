@@ -113,7 +113,7 @@
     "postcss-gradient-transparency-fix": "^1.0.2",
     "postcss-hexrgba": "^0.2.1",
     "postcss-input-style": "^0.3.0",
-    "postcss-loader": "^0.13.0",
+    "postcss-loader": "^1.0.0",
     "postcss-media-minmax": "^2.1.2",
     "postcss-nested": "^1.0.0",
     "postcss-pseudo-class-any-link": "^1.0.0",
