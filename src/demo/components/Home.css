@@ -1,6 +1,6 @@
 .preloader{
   background: url(./logo.svg);
-  width: 100px;
-  height: 100px;
+  width: calc(width('./logo.svg') / 2);
+  height: calc(width('./logo.svg') / 2);
   border: 1px solid black;
 }

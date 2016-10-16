@@ -24,6 +24,7 @@ import zindex from "postcss-zindex"
 import warn from "postcss-at-warn"
 import responsiveType from "postcss-responsive-type"
 import inputStyles from "postcss-input-style"
+import assets from "postcss-assets"
 
 const autoprefixerSettings =
 {
@@ -44,6 +45,8 @@ export default function getConfig(bundler, variables = {})
     atImport({
       addDependencyTo: bundler
     }),
+
+    assets(),
 
     // Discard comments in your CSS files with PostCSS.
     // https://github.com/ben-eb/postcss-discard-comments
