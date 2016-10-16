@@ -101,6 +101,7 @@
     "pleeease-filters": "^3.0.0",
     "postcss": "^5.2.4",
     "postcss-advanced-variables": "^1.2.2",
+    "postcss-assets": "^4.1.0",
     "postcss-at-warn": "^1.0.0",
     "postcss-calc": "^5.3.1",
     "postcss-color-function": "^2.0.1",
