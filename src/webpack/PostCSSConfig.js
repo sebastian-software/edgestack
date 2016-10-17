@@ -162,6 +162,7 @@ export default function getConfig(bundler, variables = {})
 
     // Log PostCSS messages to the console
     reporter({
+      clearMessages: true,
       filter: function(message) {
         return message.type !== "dependency"
       }
