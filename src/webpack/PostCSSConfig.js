@@ -1,4 +1,5 @@
 import atImport from "postcss-smart-import"
+import simpleUrl from "postcss-simple-url"
 import discardComments from "postcss-discard-comments"
 import advancedVariables from "postcss-advanced-variables"
 import sassyMixins from "postcss-sassy-mixins"
@@ -46,6 +47,7 @@ export default function getConfig(bundler, variables = {})
       addDependencyTo: bundler
     }),
 
+    simpleUrl(),
     assets(),
 
     // Discard comments in your CSS files with PostCSS.
