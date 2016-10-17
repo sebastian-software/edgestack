@@ -123,7 +123,7 @@
     "postcss-responsive-type": "^0.4.0",
     "postcss-sassy-mixins": "^2.0.0",
     "postcss-selector-matches": "^2.0.5",
-    "postcss-smart-import": "^0.3.2",
+    "postcss-smart-import": "^0.4.1",
     "postcss-url": "^5.1.2",
     "postcss-will-change": "^1.1.0",
     "postcss-zindex": "^2.1.1",
