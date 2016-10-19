@@ -30,9 +30,10 @@ export default
     "lodash",
 
     // just the parts from es2015 preset which are required for supporting
-    // transform-object-rest-spread" support (which always must be transpiled)
+    // transform-object-rest-spread" in all relevant scenarios (which always must be transpiled)
     "transform-es2015-spread",
     "transform-es2015-destructuring",
+    "transform-es2015-parameters",
 
     // class { handleClick = () => { } }
     "transform-class-properties",
