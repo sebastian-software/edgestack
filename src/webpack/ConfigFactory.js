@@ -471,6 +471,13 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           compress: {
             screw_ie8: true,
             warnings: false
+          },
+          mangle: {
+            screw_ie8: true,
+          },
+          output: {
+            comments: false,
+            screw_ie8: true,
           }
         })
 
