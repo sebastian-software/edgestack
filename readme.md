@@ -49,15 +49,19 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 - Support for development and optimized production configuration.
 - Easy environment configuration via `dotenv` files.
 - *Markdown* rendering for Components integrated.
+- Super modular Lodash with Babel/Webpack tooling to enable automatic tree shaking
+- Fetch API Polyfill integrated
+- *Serialize Javascript* Library allows us to serialize our js in a format safe for embedding in webpages.
+
+
+
 
 ## Work in progress
 
-- *Ava*, *Sinon* and *Enzyme* for unit testing
+- PostCSS Lost Grid integrated
+- *Jest* for unit testing
 - *Stylelint* CSS linting
 - *ESLint* v3 integrated with sensible default configuration.
-- Fetch API Polyfill integrated
-- PostCSS Lost Grid integrated
-- Super modular Lodash-ES with tree shaking
 - Flow Typechecking
 
 
