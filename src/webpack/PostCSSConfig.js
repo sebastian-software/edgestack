@@ -152,9 +152,11 @@ export default function getConfig(bundler, variables = {})
     // https://github.com/ben-eb/postcss-zindex
     zindex,
 
-    // Sass like @warn for PostCSS.
+    // Sass like @warn for PostCSS. Disabling internal usage of "postcss-reporter".
     // https://github.com/ben-eb/postcss-at-warn
-    warn,
+    warn({
+      silent: true
+    }),
 
     // Parse CSS and add vendor prefixes to rules by Can I Use
     // https://github.com/postcss/autoprefixer
