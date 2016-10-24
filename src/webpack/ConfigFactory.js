@@ -305,7 +305,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     plugins: removeEmpty([
 
       // Create static HTML page. This can be used when server rendering is not interesting.
-      ifProdClient(new HtmlPlugin()),
+      // ifProdClient(new HtmlPlugin()),
 
       // Render Dashboard for Client Development + ProgressBar for production builds
       ifIntegration(null, ifDevClient(new Dashboard())),
