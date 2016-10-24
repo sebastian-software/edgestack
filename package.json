@@ -154,9 +154,10 @@
     "webpack-sources": "^0.1.2"
   },
   "devDependencies": {
-    "nsp": "^2.6.2",
-    "source-sans-pro": "^2.0.10",
     "normalize.css": "^5.0.0",
-    "prepublish-lib": "^0.5.1"
+    "nsp": "^2.6.2",
+    "prepublish-lib": "^0.5.1",
+    "rollup": "^0.36.3",
+    "source-sans-pro": "^2.0.10"
   }
 }
