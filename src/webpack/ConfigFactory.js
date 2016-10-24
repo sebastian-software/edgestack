@@ -131,6 +131,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   const ifProdClient = ifElse(isProd && isClient)
   const ifProdServer = ifElse(isProd && isServer)
   const ifIntegration = ifElse(process.env.CI || false)
+  const ifUniversal = ifElse(process.env.DISABLE_SSR === false)
 
   const projectId = path.basename(root)
 
@@ -305,7 +306,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     plugins: removeEmpty([
 
       // Create static HTML page. This can be used when server rendering is not interesting.
-      // ifProdClient(new HtmlPlugin()),
+      ifUniversal(null, ifProdClient(new HtmlPlugin())),
 
       // Render Dashboard for Client Development + ProgressBar for production builds
       ifIntegration(null, ifDevClient(new Dashboard())),
