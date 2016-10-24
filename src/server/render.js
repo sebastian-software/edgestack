@@ -5,12 +5,13 @@ import { readFileSync } from "fs"
 
 import assets from "./assets"
 
-import { CLIENT_BUNDLE_MANIFEST_FILEPATH } from "./config"
+import { CLIENT_CHUNKHASHES_MANIFESTJSON_FILEPATH } from "./config"
 
 try{
-  var ClientManifest = readFileSync(CLIENT_BUNDLE_MANIFEST_FILEPATH, "utf8")
+  var ClientChunkManifest = readFileSync(CLIENT_CHUNKHASHES_MANIFESTJSON_FILEPATH, "utf8")
 } catch(ex) {
-  ClientManifest = "{}"
+  console.warn("Could not parse chunkhashes from manifest.json: ", ex)
+  ClientChunkManifest = "{}"
 }
 
 function styleTags(styles) {
@@ -80,7 +81,7 @@ function render(rootReactElement, initialState) {
           (initialState
             ? `window.APP_STATE=${serialize(initialState)};`
             : '')
-          + `window.CHUNK_MANIFEST=${ClientManifest};`
+          + `window.CHUNK_MANIFEST=${ClientChunkManifest};`
         }</script>
 
         ${scripts}
@@ -89,4 +90,4 @@ function render(rootReactElement, initialState) {
     </html>`;
 }
 
-export default render;
+export default render

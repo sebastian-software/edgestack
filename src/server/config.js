@@ -26,7 +26,7 @@ const assetsBundleFilePath = path.resolve(
   process.env.CLIENT_BUNDLE_ASSETS_FILENAME
 )
 
-export const CLIENT_BUNDLE_MANIFEST_FILEPATH = path.resolve(
+export const CLIENT_CHUNKHASHES_MANIFESTJSON_FILEPATH = path.resolve(
   root,
   CLIENT_BUNDLE_OUTPUT_PATH,
   "manifest.json"
