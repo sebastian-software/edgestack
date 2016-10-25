@@ -3,9 +3,7 @@ import serialize from "serialize-javascript"
 import Helmet from "react-helmet"
 import { readFileSync } from "fs"
 
-import assets from "./assets"
-
-import { ABSOLUTE_CHUNKMANIFEST_PATH } from "./config"
+import { ABSOLUTE_ASSETSINFO_PATH, ABSOLUTE_CHUNKMANIFEST_PATH } from "./config"
 
 var ClientChunkManifest = "{}"
 if (process.env.MODE === "production")
@@ -17,6 +15,39 @@ if (process.env.MODE === "production")
   }
 }
 
+const ClientBundleAssets = JSON.parse(
+  readFileSync(ABSOLUTE_ASSETSINFO_PATH, "utf-8")
+)
+
+// Convert the assets json it into an object that contains all the paths to our
+// javascript and css files.  Doing this is required as for production
+// configurations we add a hash to our filenames, therefore we won't know the
+// paths of the output by webpack unless we read them from the assets.json file.
+const chunks = Object.keys(ClientBundleAssets).map((key) => ClientBundleAssets[key])
+const assets = chunks.reduce((sorted, chunk) =>
+{
+  if (chunk.js) {
+    if (chunk.js.indexOf("/vendor-") !== -1) {
+      sorted.scripts.unshift(chunk.js)
+    } else {
+      sorted.scripts.push(chunk.js)
+    }
+  }
+  if (chunk.css) {
+    if (chunk.css.indexOf("/vendor-") !== -1) {
+      sorted.styles.unshift(chunk.css)
+    } else {
+      sorted.styles.push(chunk.css)
+    }
+  }
+  return sorted
+}, { scripts: [], styles: [] })
+
+
+/**
+ *
+ *
+ */
 function styleTags(styles) {
   return styles
     .map(style =>
@@ -25,6 +56,11 @@ function styleTags(styles) {
     .join('\n')
 }
 
+
+/**
+ *
+ *
+ */
 function scriptTags(scripts) {
   return scripts
     .map(script =>
@@ -46,7 +82,7 @@ function scriptTags(scripts) {
  *
  * @return The full HTML page in the form of a React element.
  */
-function render(rootReactElement, initialState) {
+export default function render(rootReactElement, initialState) {
   const reactRenderString = rootReactElement
     ? renderToString(rootReactElement)
     : null
@@ -89,5 +125,3 @@ function render(rootReactElement, initialState) {
       </body>
     </html>`
 }
-
-export default render
