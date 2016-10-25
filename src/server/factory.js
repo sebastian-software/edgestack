@@ -6,7 +6,7 @@ import helmet from "helmet"
 
 import {
   ABSOLUTE_CLIENT_OUTPUT_PATH,
-  ABSOLUTE_PUBLIC_DIR_PATH
+  ABSOLUTE_PUBLIC_PATH
 } from "./config"
 
 export default function generateServer()
@@ -54,7 +54,7 @@ export default function generateServer()
   )
 
   // Configure static serving of our "public" root http path static files.
-  app.use(express.static(ABSOLUTE_PUBLIC_DIR_PATH))
+  app.use(express.static(ABSOLUTE_PUBLIC_PATH))
 
   return app
 }

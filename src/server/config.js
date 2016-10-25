@@ -22,7 +22,7 @@ export const ABSOLUTE_CHUNKMANIFEST_PATH = path.resolve(
   process.env.CLIENT_BUNDLE_CHUNK_MANIFEST_FILENAME
 )
 
-export const ABSOLUTE_PUBLIC_DIR_PATH = path.resolve(
+export const ABSOLUTE_PUBLIC_PATH = path.resolve(
   process.env.APP_ROOT,
   process.env.CLIENT_PUBLIC_PATH
 )
