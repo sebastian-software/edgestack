@@ -5,8 +5,6 @@
 
 import path from "path"
 
-export const CLIENT_BUNDLE_HTTP_PATH = process.env.CLIENT_BUNDLE_HTTP_PATH
-
 export const ABSOLUTE_CLIENT_OUTPUT_PATH = path.resolve(
   process.env.APP_ROOT,
   process.env.CLIENT_BUNDLE_OUTPUT_PATH
