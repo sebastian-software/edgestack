@@ -5,17 +5,17 @@ import { readFileSync } from "fs"
 
 import { ABSOLUTE_ASSETSINFO_PATH, ABSOLUTE_CHUNKMANIFEST_PATH } from "./config"
 
-var ClientChunkManifest = "{}"
+var chunkManifest = "{}"
 if (process.env.MODE === "production")
 {
-  try{
-    ClientChunkManifest = readFileSync(ABSOLUTE_CHUNKMANIFEST_PATH, "utf-8")
+  try {
+    chunkManifest = readFileSync(ABSOLUTE_CHUNKMANIFEST_PATH, "utf-8")
   } catch(ex) {
     console.warn("Could not parse chunkhashes from manifest.json: ", ex)
   }
 }
 
-const ClientBundleAssets = JSON.parse(
+const clientAssets = JSON.parse(
   readFileSync(ABSOLUTE_ASSETSINFO_PATH, "utf-8")
 )
 
@@ -23,7 +23,7 @@ const ClientBundleAssets = JSON.parse(
 // javascript and css files.  Doing this is required as for production
 // configurations we add a hash to our filenames, therefore we won't know the
 // paths of the output by webpack unless we read them from the assets.json file.
-const chunks = Object.keys(ClientBundleAssets).map((key) => ClientBundleAssets[key])
+const chunks = Object.keys(clientAssets).map((key) => clientAssets[key])
 const assets = chunks.reduce((sorted, chunk) =>
 {
   if (chunk.js) {
@@ -114,10 +114,8 @@ export default function render(rootReactElement, initialState) {
         <div id="app">${reactRenderString || ""}</div>
 
         <script>${
-          (initialState
-            ? `window.APP_STATE=${serialize(initialState)};`
-            : "")
-          + `window.CHUNK_MANIFEST=${ClientChunkManifest};`
+          (initialState ? `window.APP_STATE=${serialize(initialState)};` : "")
+          + `window.CHUNK_MANIFEST=${chunkManifest};`
         }</script>
 
         ${scriptTags(assets.scripts)}

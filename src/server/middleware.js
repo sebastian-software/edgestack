@@ -50,7 +50,7 @@ export default function universalMiddleware(request, response)
       // your "not found" component or route respectively, and send a 404 as
       // below, if you're using a catch-all route.
 
-      try{
+      try {
         const html = render(<RouterContext {...renderProps} />, data)
         response.status(200).send(html)
       } catch(ex) {
