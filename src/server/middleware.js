@@ -1,4 +1,3 @@
-import { Middleware } from "express"
 import React from "react"
 import RouterContext from "react-router/lib/RouterContext"
 import createMemoryHistory from "react-router/lib/createMemoryHistory"
@@ -6,8 +5,6 @@ import match from "react-router/lib/match"
 
 import render from "./render"
 import routes from "../demo/routes"
-import { DISABLE_SSR } from "./config"
-import { IS_DEVELOPMENT } from "../common/config"
 
 /**
  * An express middleware that is capabable of doing React server side rendering.
@@ -15,15 +12,17 @@ import { IS_DEVELOPMENT } from "../common/config"
 export default function universalMiddleware(request, response)
 {
   /* eslint-disable no-magic-numbers */
-  if (DISABLE_SSR)
+  if (process.env.DISABLE_SSR === true)
   {
-    if (IS_DEVELOPMENT)
-      console.log("Handling react route without SSR")  // eslint-disable-line no-console
-
     // SSR is disabled so we will just return an empty html page and will
     // rely on the client to populate the initial react application state.
-    const html = render()
-    response.status(200).send(html)
+    try{
+      const html = render()
+      response.status(200).send(html)
+    } catch(ex) {
+      response.status(500).send(`Error during rendering: ${ex}!`)
+    }
+
     return
   }
 
@@ -44,12 +43,15 @@ export default function universalMiddleware(request, response)
     }
     else if (renderProps)
     {
+      // Testing for data recovery
+      var data = { dummy: true }
+
       // You can check renderProps.components or renderProps.routes for
       // your "not found" component or route respectively, and send a 404 as
       // below, if you're using a catch-all route.
 
       try{
-        const html = render(<RouterContext {...renderProps} />)
+        const html = render(<RouterContext {...renderProps} />, data)
         response.status(200).send(html)
       } catch(ex) {
         response.status(500).send(`Error during rendering: ${ex}!`)
