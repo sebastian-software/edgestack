@@ -46,11 +46,12 @@ const scripts = scriptTags(assets.scripts)
  * @return The full HTML page in the form of a React element.
  */
 function render(rootReactElement, initialState) {
+  const clientRendering = !!rootReactElement
   const reactRenderString = rootReactElement
     ? renderToString(rootReactElement)
     : null
 
-  const helmet = rootReactElement
+  const helmet = clientRendering
     // We run 'react-helmet' after our renderToString call so that we can fish
     // out all the attributes which need to be attached to our page.
     // React Helmet allows us to control our page header contents via our
@@ -60,19 +61,18 @@ function render(rootReactElement, initialState) {
     // There was no react element, so we just us an empty helmet.
     : null
 
-  return `<!DOCTYPE html>
+  return `<!doctype html>
     <html ${helmet ? helmet.htmlAttributes.toString() : ''}>
       <head>
         <meta charset="utf-8" />
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <meta http-equiv="content-language" content="en" />
 
-        ${helmet ? helmet.title.toString() : ''}
-        ${helmet ? helmet.meta.toString() : ''}
-        ${helmet ? helmet.link.toString() : ''}
+        ${helmet ? helmet.title.toString() : ""}
+        ${helmet ? helmet.meta.toString() : ""}
+        ${helmet ? helmet.link.toString() : ""}
 
         ${styles}
-        ${helmet ? helmet.style.toString() : ''}
+        ${helmet ? helmet.style.toString() : ""}
       </head>
       <body>
         <div id="app">${reactRenderString || ""}</div>
