@@ -1,10 +1,10 @@
 // This file resolves the assets available from our client bundle.
 
 import fs from "fs"
-import { ABSOLUTE_CLIENT_BUNDLE_ASSETS_FILENAME } from "./config"
+import { ABSOLUTE_ASSETSINFO_PATH } from "./config"
 
 const ClientBundleAssets = JSON.parse(
-  fs.readFileSync(ABSOLUTE_CLIENT_BUNDLE_ASSETS_FILENAME, "utf8")
+  fs.readFileSync(ABSOLUTE_ASSETSINFO_PATH, "utf8")
 )
 
 // Convert the assets json it into an object that contains all the paths to our

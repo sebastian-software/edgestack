@@ -12,13 +12,13 @@ export const ABSOLUTE_CLIENT_OUTPUT_PATH = path.resolve(
   process.env.CLIENT_BUNDLE_OUTPUT_PATH
 )
 
-export const ABSOLUTE_CLIENT_BUNDLE_ASSETS_FILENAME = path.resolve(
+export const ABSOLUTE_ASSETSINFO_PATH = path.resolve(
   process.env.APP_ROOT,
   process.env.CLIENT_BUNDLE_OUTPUT_PATH,
   process.env.CLIENT_BUNDLE_ASSETS_FILENAME
 )
 
-export const ABSOLUTE_CLIENT_BUNDLE_CHUNK_MANIFEST_FILENAME = path.resolve(
+export const ABSOLUTE_CHUNKMANIFEST_PATH = path.resolve(
   process.env.APP_ROOT,
   process.env.CLIENT_BUNDLE_OUTPUT_PATH,
   process.env.CLIENT_BUNDLE_CHUNK_MANIFEST_FILENAME

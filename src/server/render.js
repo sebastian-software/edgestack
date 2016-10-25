@@ -5,13 +5,13 @@ import { readFileSync } from "fs"
 
 import assets from "./assets"
 
-import { ABSOLUTE_CLIENT_BUNDLE_CHUNK_MANIFEST_FILENAME } from "./config"
+import { ABSOLUTE_CHUNKMANIFEST_PATH } from "./config"
 
 var ClientChunkManifest = "{}"
 if (process.env.MODE === "production")
 {
   try{
-    ClientChunkManifest = readFileSync(ABSOLUTE_CLIENT_BUNDLE_CHUNK_MANIFEST_FILENAME, "utf-8")
+    ClientChunkManifest = readFileSync(ABSOLUTE_CHUNKMANIFEST_PATH, "utf-8")
   } catch(ex) {
     console.warn("Could not parse chunkhashes from manifest.json: ", ex)
   }
@@ -33,8 +33,6 @@ function scriptTags(scripts) {
     .join('\n')
 }
 
-const styles = styleTags(assets.styles)
-const scripts = scriptTags(assets.scripts)
 
 /**
  * Generates a full HTML page containing the render output of the given react
@@ -73,7 +71,7 @@ function render(rootReactElement, initialState) {
         ${helmet ? helmet.meta.toString() : ""}
         ${helmet ? helmet.link.toString() : ""}
 
-        ${styles}
+        ${styleTags(assets.styles)}
         ${helmet ? helmet.style.toString() : ""}
       </head>
       <body>
@@ -86,7 +84,7 @@ function render(rootReactElement, initialState) {
           + `window.CHUNK_MANIFEST=${ClientChunkManifest};`
         }</script>
 
-        ${scripts}
+        ${scriptTags(assets.scripts)}
         ${helmet ? helmet.script.toString() : ""}
       </body>
     </html>`
