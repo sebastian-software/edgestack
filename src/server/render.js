@@ -46,12 +46,11 @@ const scripts = scriptTags(assets.scripts)
  * @return The full HTML page in the form of a React element.
  */
 function render(rootReactElement, initialState) {
-  const clientRendering = !!rootReactElement
   const reactRenderString = rootReactElement
     ? renderToString(rootReactElement)
     : null
 
-  const helmet = clientRendering
+  const helmet = rootReactElement
     // We run 'react-helmet' after our renderToString call so that we can fish
     // out all the attributes which need to be attached to our page.
     // React Helmet allows us to control our page header contents via our
