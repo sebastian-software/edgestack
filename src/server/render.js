@@ -17,7 +17,7 @@ try{
 function styleTags(styles) {
   return styles
     .map(style =>
-      `<link href="${style}" media="screen, projection" rel="stylesheet" type="text/css" />`
+      `<link href="${style}" media="screen, projection" rel="stylesheet" />`
     )
     .join('\n')
 }
@@ -25,7 +25,7 @@ function styleTags(styles) {
 function scriptTags(scripts) {
   return scripts
     .map(script =>
-      `<script type="text/javascript" src="${script}"></script>`
+      `<script src="${script}"></script>`
     )
     .join('\n')
 }
@@ -63,9 +63,9 @@ function render(rootReactElement, initialState) {
   return `<!DOCTYPE html>
     <html ${helmet ? helmet.htmlAttributes.toString() : ''}>
       <head>
-        <meta charSet='utf-8' />
-        <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
-        <meta httpEquiv='Content-Language' content='en' />
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta http-equiv="content-language" content="en" />
 
         ${helmet ? helmet.title.toString() : ''}
         ${helmet ? helmet.meta.toString() : ''}
@@ -75,19 +75,19 @@ function render(rootReactElement, initialState) {
         ${helmet ? helmet.style.toString() : ''}
       </head>
       <body>
-        <div id='app'>${reactRenderString || ''}</div>
+        <div id="app">${reactRenderString || ""}</div>
 
-        <script type='text/javascript'>${
+        <script>${
           (initialState
             ? `window.APP_STATE=${serialize(initialState)};`
-            : '')
+            : "")
           + `window.CHUNK_MANIFEST=${ClientChunkManifest};`
         }</script>
 
         ${scripts}
-        ${helmet ? helmet.script.toString() : ''}
+        ${helmet ? helmet.script.toString() : ""}
       </body>
-    </html>`;
+    </html>`
 }
 
 export default render
