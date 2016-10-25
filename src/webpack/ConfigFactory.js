@@ -552,6 +552,20 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             // Babel-Loader specific setting
             cacheDirectory: path.resolve(os.tmpdir(), projectId, "babel-external"),
 
+            // Don't try to find .babelrc because we want to force this configuration.
+            // This is critical for 3rd party as they sometimes deliver `.babelrc`
+            // inside their npm packages (which is wrong BTW, but we can't fix the whole world)
+            babelrc: false,
+
+            // Faster transpiling for minor loose in formatting
+            compact: true,
+
+            // Keep origin information alive
+            sourceMaps: true,
+
+            // Nobody needs the original comments when having source maps
+            comments: false,
+
             env:
             {
               production: {
