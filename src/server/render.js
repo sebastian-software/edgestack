@@ -5,13 +5,13 @@ import { readFileSync } from "fs"
 
 import assets from "./assets"
 
-import { CLIENT_CHUNKHASHES_MANIFESTJSON_FILEPATH } from "./config"
+import { ABSOLUTE_CLIENT_BUNDLE_CHUNK_MANIFEST_FILENAME } from "./config"
 
 var ClientChunkManifest = "{}"
 if (process.env.MODE === "production")
 {
   try{
-    ClientChunkManifest = readFileSync(CLIENT_CHUNKHASHES_MANIFESTJSON_FILEPATH, "utf-8")
+    ClientChunkManifest = readFileSync(ABSOLUTE_CLIENT_BUNDLE_CHUNK_MANIFEST_FILENAME, "utf-8")
   } catch(ex) {
     console.warn("Could not parse chunkhashes from manifest.json: ", ex)
   }

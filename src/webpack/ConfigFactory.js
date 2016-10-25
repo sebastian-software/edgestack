@@ -380,7 +380,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
         "process.env.SERVER_BUNDLE_OUTPUT_PATH": JSON.stringify(process.env.SERVER_BUNDLE_OUTPUT_PATH),
         "process.env.CLIENT_BUNDLE_OUTPUT_PATH": JSON.stringify(process.env.CLIENT_BUNDLE_OUTPUT_PATH),
+        "process.env.CLIENT_PUBLIC_PATH": JSON.stringify(process.env.CLIENT_PUBLIC_PATH),
+
         "process.env.CLIENT_BUNDLE_ASSETS_FILENAME": JSON.stringify(process.env.CLIENT_BUNDLE_ASSETS_FILENAME),
+        "process.env.CLIENT_BUNDLE_CHUNK_MANIFEST_FILENAME": JSON.stringify(process.env.CLIENT_BUNDLE_CHUNK_MANIFEST_FILENAME),
+
         "process.env.CLIENT_BUNDLE_HTTP_PATH": JSON.stringify(process.env.CLIENT_BUNDLE_HTTP_PATH),
         "process.env.CLIENT_BUNDLE_CACHE_MAXAGE": JSON.stringify(process.env.CLIENT_BUNDLE_CACHE_MAXAGE)
       }),
