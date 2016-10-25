@@ -7,11 +7,14 @@ import assets from "./assets"
 
 import { CLIENT_CHUNKHASHES_MANIFESTJSON_FILEPATH } from "./config"
 
-try{
-  var ClientChunkManifest = readFileSync(CLIENT_CHUNKHASHES_MANIFESTJSON_FILEPATH, "utf8")
-} catch(ex) {
-  console.warn("Could not parse chunkhashes from manifest.json: ", ex)
-  ClientChunkManifest = "{}"
+var ClientChunkManifest = "{}"
+if (process.env.MODE === "production")
+{
+  try{
+    ClientChunkManifest = readFileSync(CLIENT_CHUNKHASHES_MANIFESTJSON_FILEPATH, "utf-8")
+  } catch(ex) {
+    console.warn("Could not parse chunkhashes from manifest.json: ", ex)
+  }
 }
 
 function styleTags(styles) {
