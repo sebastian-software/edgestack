@@ -75,6 +75,10 @@ export default function getConfig(bundler, variables = {})
       variables
     }),
 
+    // Unwrap nested rules like how Sass does it.
+    // https://github.com/postcss/postcss-nested
+    nested,
+
     // Fractional grid system built with calc(). Supports masonry, vertical, and waffle grids.
     // https://github.com/peterramsing/lost
     lost,
@@ -126,10 +130,6 @@ export default function getConfig(bundler, variables = {})
     // Custom Media Queries
     // https://github.com/postcss/postcss-custom-media
     customMedia(),
-
-    // Unwrap nested rules like how Sass does it.
-    // https://github.com/postcss/postcss-nested
-    nested,
 
     // Adds new pseudo-elements to inputs for easy cross-browser styling of their inner elements.
     // https://github.com/seaneking/postcss-input-style
