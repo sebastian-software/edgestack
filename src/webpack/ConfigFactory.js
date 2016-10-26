@@ -603,6 +603,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           }
         },
 
+        // Load static HTML files e.g. with SVG sprite icons
+        {
+          test: /\.html$/,
+          loader: "html-loader"
+        },
+
         // CSS
         merge(
           {
