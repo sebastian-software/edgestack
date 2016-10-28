@@ -78,7 +78,7 @@ function merge()
 }
 
 function isLoaderSpecificFile(request) {
-  return Boolean(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|ico|mp4|mp3|ogg|pdf|swf|css|scss|sass|sss|less)$/.exec(request))
+  return Boolean(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|ico|mp4|mp3|ogg|html|pdf|swf|css|scss|sass|sss|less)$/.exec(request))
 }
 
 function ifIsFile(filePath) {
@@ -407,7 +407,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       ifProdClient(new webpack.optimize.OccurrenceOrderPlugin(true)),
 
       // Effectively fake all "file-loader" files with placeholders on server side
-      ifNode(new webpack.NormalModuleReplacementPlugin(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|mp4|mp3|ogg|pdf)$/, "node-noop")),
+      ifNode(new webpack.NormalModuleReplacementPlugin(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|mp4|mp3|ogg|html|pdf)$/, "node-noop")),
 
       // We don't want webpack errors to occur during development as it will
       // kill our dev servers.
@@ -596,17 +596,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
         // Font file references etc.
         {
-          test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf)$/,
+          test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf|html)$/,
           loader: "file-loader",
           query: {
             name: ifProdClient("file-[hash:base62:8].[ext]", "[name].[ext]")
           }
-        },
-
-        // Load static HTML files e.g. with SVG sprite icons
-        {
-          test: /\.html$/,
-          loader: "html-loader"
         },
 
         // CSS
