@@ -22,44 +22,44 @@ export default function universalMiddleware(request, response)
     } catch(ex) {
       response.status(500).send(`Error during rendering: ${ex}!`)
     }
-
-    return
   }
-
-  const history = createMemoryHistory(request.originalUrl)
-
-  // Server side handling of react-router.
-  // Read more about this here:
-  // https://github.com/reactjs/react-router/blob/master/docs/guides/ServerRendering.md
-  match({ routes, history }, (error, redirectLocation, renderProps) =>
+  else
   {
-    if (error)
-    {
-      response.status(500).send(error.message)
-    }
-    else if (redirectLocation)
-    {
-      response.redirect(302, redirectLocation.pathname + redirectLocation.search)
-    }
-    else if (renderProps)
-    {
-      // Testing for data recovery
-      var data = { dummy: true }
+    const history = createMemoryHistory(request.originalUrl)
 
-      // You can check renderProps.components or renderProps.routes for
-      // your "not found" component or route respectively, and send a 404 as
-      // below, if you're using a catch-all route.
-
-      try {
-        const html = render(<RouterContext {...renderProps} />, data)
-        response.status(200).send(html)
-      } catch(ex) {
-        response.status(500).send(`Error during rendering: ${ex}!`)
+    // Server side handling of react-router.
+    // Read more about this here:
+    // https://github.com/reactjs/react-router/blob/master/docs/guides/ServerRendering.md
+    match({ routes, history }, (error, redirectLocation, renderProps) =>
+    {
+      if (error)
+      {
+        response.status(500).send(error.message)
       }
-    }
-    else
-    {
-      response.status(404).send("Not found")
-    }
-  })
+      else if (redirectLocation)
+      {
+        response.redirect(302, redirectLocation.pathname + redirectLocation.search)
+      }
+      else if (renderProps)
+      {
+        // Testing for data recovery
+        var data = { dummy: true }
+
+        // You can check renderProps.components or renderProps.routes for
+        // your "not found" component or route respectively, and send a 404 as
+        // below, if you're using a catch-all route.
+
+        try {
+          const html = render(<RouterContext {...renderProps} />, data)
+          response.status(200).send(html)
+        } catch(ex) {
+          response.status(500).send(`Error during rendering: ${ex}!`)
+        }
+      }
+      else
+      {
+        response.status(404).send("Not found")
+      }
+    })
+  }
 }
