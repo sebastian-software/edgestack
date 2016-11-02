@@ -156,7 +156,7 @@
   "devDependencies": {
     "normalize.css": "^5.0.0",
     "nsp": "^2.6.2",
-    "prepublish-lib": "^0.5.1",
+    "prepublish-lib": "^0.5.2",
     "rollup": "^0.36.3",
     "source-sans-pro": "^2.0.10"
   }
