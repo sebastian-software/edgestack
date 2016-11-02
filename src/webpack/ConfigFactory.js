@@ -595,7 +595,24 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             // See also: https://github.com/webpack/extract-text-webpack-plugin/issues/196
             loader: ExtractTextPlugin.extract({
               fallbackLoader: "style-loader",
-              loader: "css-loader?modules&sourceMap&localIdentName=[local]-[hash:base62:8]!postcss-loader"
+              allChunks: true,
+              loader:
+              [
+                {
+                  loader: "css-loader",
+                  query:
+                  {
+                    sourceMap: true,
+                    modules: true,
+                    localIdentName: "[local]-[hash:base62:8]",
+                    minimize: false,
+                    import: false
+                  }
+                },
+                {
+                  loader: "postcss-loader"
+                }
+              ]
             })
           }),
 
