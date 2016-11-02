@@ -1,17 +1,759 @@
-extends:
-  ./node_modules/s15e-javascript/.eslintrc.yml
-
 env:
   browser: true
-  es6: true
   node: true
+  es6: true
+  jest: true
+  worker: true
+  serviceworker: true
+
+installedESLint: true
 
 parserOptions:
   ecmaFeatures:
+    experimentalObjectRestSpread: true
+    generators: true
     jsx: true
+  sourceType: module
+
+plugins:
+  - import
+  - react
+  - flowtype
+  - jsx-a11y
+
+extends:
+  - eslint:recommended
+  - plugin:react/recommended
+  - plugin:import/errors
+  - plugin:import/warnings
 
 rules:
+  #######################################################################################
+  # Basics
+  #######################################################################################
+
+  indent:
+    - error
+    - 2
+    - SwitchCase: 1
+      VariableDeclarator: 0
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - double
+    - avoidEscape: true
+      allowTemplateLiterals: true
+  semi:
+    - error
+    - never
   no-console:
     - off
-  no-process-env:
+  no-extra-parens:
     - off
+  brace-style:
+    - off
+
+
+  #######################################################################################
+  # Code Quality
+  #######################################################################################
+
+  array-callback-return:
+    - error
+  block-scoped-var:
+    - off
+
+  # Keeping complexity down. The default of 20 is far to high in my opinion.
+  complexity:
+    - error
+    - 5
+  consistent-return:
+    - error
+
+  # Allo using curly braces or not (e.g. for simple if-statements)
+  curly:
+    - off
+
+  default-case:
+    - error
+  dot-location:
+    - error
+    - property
+  dot-notation:
+    - error
+    - allowKeywords: true
+
+  # Smart option allows simple equal for null-comparison which is good
+  eqeqeq:
+    - error
+    - smart
+  no-alert:
+    - error
+
+  # Was mainly relevant while people extended Object.prototype.xxx
+  guard-for-in:
+    - off
+
+  # Match ES5 strict
+  no-caller:
+    - error
+
+  # Hard to read code must be forbidden
+  no-div-regex:
+    - error
+
+  # Makes codes easier to read
+  no-else-return:
+    - error
+
+  no-empty-function:
+    - error
+  no-empty-pattern:
+    - error
+
+  # This is just stupid
+  no-eq-null:
+    - off
+
+  no-eval:
+    - error
+  no-extend-native:
+    - error
+  no-fallthrough:
+    - error
+  no-floating-decimal:
+    - error
+
+  # I like some of these, but numbers are to awkward for me.
+  no-implicit-coercion:
+    - error
+    - boolean: true
+      string: true
+      number: false
+
+  # Does not make sense with ES6 modules
+  no-implicit-globals:
+    - off
+
+  no-implied-eval:
+    - error
+  no-invalid-this:
+    - error
+  no-iterator:
+    - error
+  no-lone-blocks:
+    - error
+
+  # Good style
+  no-magic-numbers:
+    - error
+    - ignoreArrayIndexes: true
+      ignore: [ -1, 0, 1, 2, 10, 16, 100, 1000 ]
+
+  no-mixed-operators:
+    - warn
+    - groups:
+      - ['&', '|', '^', '~', '<<', '>>', '>>>']
+      - ['==', '!=', '===', '!==', '>', '>=', '<', '<=']
+      - ['&&', '||']
+      - ['in', 'instanceof']
+      allowSamePrecedence: false
+
+  # Useless formatting with high maintenance
+  no-multi-spaces:
+    - error
+
+  no-multi-str:
+    - error
+  no-native-reassign:
+    - error
+  no-new-func:
+    - error
+  no-new-wrappers:
+    - error
+  no-octal:
+    - error
+  no-octal-escape:
+    - error
+
+  valid-typeof: error
+
+  # Prevent side effects to arguments objects, but also makes code sometimes more complexer
+  # when you have some logic in place to deal with different argument sets
+  no-param-reassign:
+    - off
+
+  # For maintainability of NodeJS code
+  no-process-env:
+    - error
+
+  # Deprecated feature
+  no-proto:
+    - error
+
+  # Disabled. Therefor they are variables, right?
+  no-redeclare:
+    - off
+
+  # Readability wins
+  no-return-assign:
+    - error
+
+  no-script-url:
+    - error
+  no-self-assign:
+    - error
+  no-self-compare:
+    - error
+
+  # Omit magic syntax... Readability for all wins
+  no-sequences:
+    - error
+
+  # Good idea to keep some more error info:
+  # "The fundamental benefit of Error objects is that they automatically keep track of where they were built and originated."
+  no-throw-literal:
+    - error
+
+  no-unmodified-loop-condition:
+    - error
+  no-unused-expressions:
+    - error
+    - allowTernary: true
+      allowShortCircuit: true
+  no-useless-call:
+    - error
+  no-useless-concat:
+    - error
+  no-useless-computed-key:
+    - error
+  no-useless-constructor:
+    - error
+  no-useless-escape:
+    - error
+  no-useless-rename:
+    - warn
+    - ignoreDestructuring: false
+      ignoreImport: false
+      ignoreExport: false
+
+  no-void:
+    - error
+  no-with:
+    - error
+
+  # Mainly for securing code compatibility
+  radix:
+    - error
+    - always
+
+  # Does not improve maintainability in my opinion... instead makes
+  # unused variables harder to track over time
+  vars-on-top:
+    - off
+
+  # Prefer inside for readability
+  wrap-iife:
+    - error
+    - inside
+
+  # Actually interesting that this ugliness should be even something to consider
+  yoda:
+    - error
+    - never
+
+  # Enforce strict mode globally which also happens during bundling
+  strict:
+    - error
+    - global
+
+  # Only relevant in IE8 and earlier. Would not allow to use the same error variable in
+  # the same scope. Still no good practice for understanding the code.
+  no-catch-shadow:
+    - error
+
+  # For better maintainability
+  no-shadow:
+    - error
+
+  # Cleaner code
+  no-shadow-restricted-names:
+    - error
+
+  no-sparse-arrays:
+    - error
+
+  no-this-before-super:
+    - error
+
+  # Stupid idea which needs to be prevented
+  no-undef-init:
+    - error
+
+  # I sometimes like using it to differentiate between null and undefined
+  no-undefined:
+    - off
+
+  no-unexpected-multiline:
+    - error
+
+  no-unreachable:
+    - error
+
+  no-unused-vars:
+    - error
+    - varsIgnorePattern: '^_'
+      args: none
+  no-use-before-define:
+    - error
+    - nofunc
+
+
+  #################################################################
+  # Stylistic
+  #################################################################
+
+  array-bracket-spacing:
+    - error
+    - always
+
+  block-spacing:
+    - error
+    - always
+
+  # See also: https://en.wikipedia.org/wiki/Indent_style
+  # brace-style:
+  #  - error
+  #  - 1tbs
+
+  camelcase:
+    - error
+
+  comma-spacing:
+    - error
+    - before: false
+      after: true
+
+  comma-style:
+    - error
+    - last
+
+  computed-property-spacing:
+    - error
+    - never
+
+  consistent-this:
+    - error
+    - self
+
+  eol-last:
+    - error
+
+  # Useful for debugging in older browsers, but a lot of work to manually add everywhere
+  func-names:
+    - off
+
+  # Prefering declaration
+  func-style:
+    - error
+    - declaration
+
+  id-length:
+    - error
+    - min: 3
+      max: 30
+      # 'i' + 'l' = typical looping constructs
+      # 't' = support convention in ava test runner
+      exceptions: ["i", "l", "t", "id", "to", "ex"]
+
+  key-spacing:
+    - error
+    - beforeColon: false
+      afterColon: true
+      mode: strict
+
+  keyword-spacing:
+    - error
+
+  lines-around-comment:
+    - error
+    - beforeBlockComment: true
+      afterBlockComment: false
+      beforeLineComment: true
+      afterLineComment: false
+      allowBlockStart: true
+      allowBlockEnd: false
+      allowObjectStart: true
+      allowObjectEnd: false
+      allowArrayStart: true
+      allowArrayEnd: false
+
+  max-depth:
+    - error
+    - maximum: 3
+
+  max-len:
+    - error
+    - code: 140
+      comments: 160
+      ignoreUrls: true
+      tabWidth: 2
+
+  max-nested-callbacks:
+    - error
+    - 2
+
+  max-params:
+    - error
+    - 3
+
+  max-statements:
+    - error
+    - 10
+    - ignoreTopLevelFunctions: true
+
+  new-cap:
+    - error
+
+  new-parens:
+    - error
+
+  # It good to have newlines when declaring a block of variables, but not for just one
+  # where we directly have some actionable stuff afterwards.
+  newline-after-var:
+    - off
+
+  # Increase readability, but does not work everywhere... therefor we keep it off
+  # and let the individual developer decide.
+  newline-before-return: off
+  newline-per-chained-call: off
+
+  no-array-constructor: error
+
+  # Generally prevents errors + rule can be disabled locally when required
+  no-bitwise: error
+
+  # Don't see why this is regarded as problematic
+  no-continue: off
+  no-control-regex: error
+  no-delete-var: error
+
+  no-dupe-args: error
+  no-dupe-keys: error
+  no-duplicate-case: error
+  no-empty-character-class: error
+  no-ex-assign: error
+  no-extra-bind: error
+  no-extra-label: error
+  no-func-assign: error
+  no-invalid-regexp: error
+  no-label-var: error
+  no-labels:
+    - error
+    - allowLoop: false
+      allowSwitch: false
+
+  # Leads to complexer to overlook code
+  no-inline-comments: error
+
+  # Might be used to improve code for human logic
+  no-lonely-if: off
+
+  no-multiple-empty-lines:
+    - error
+    - max: 4
+      maxEOF: 1
+      maxBOF: 0
+
+  # Can help, but also can make code more complex/unnaturally structured
+  no-negated-condition: off
+  no-nested-ternary: error
+  no-new-object: error
+  no-obj-calls: error
+
+  # Seems to be a new trend to omit this e.g. in Swift and other modern languages
+  # But is pretty convenient in classic for-loops... therefor we allow it there
+  no-plusplus:
+    - warn
+    - allowForLoopAfterthoughts: true
+
+  no-restricted-syntax:
+    - error
+    - WithStatement
+    - DebuggerStatement
+    - LabeledStatement
+
+  no-spaced-func:
+    - error
+
+  no-ternary:
+    - off
+
+  # Lead to harder to diff changesets
+  no-trailing-spaces: error
+
+  no-underscore-dangle: off
+
+  # Getting people to senior level...
+  no-unneeded-ternary: error
+
+  no-whitespace-before-property: error
+
+  object-curly-spacing:
+    - error
+    - always
+
+  one-var:
+    - error
+    - initialized: never
+
+  one-var-declaration-per-line:
+    - error
+    - initializations
+
+  operator-assignment: error
+
+  operator-linebreak:
+    - error
+    - after
+
+  rest-spread-spacing:
+    - error
+    - never
+
+  unicode-bom:
+    - error
+    - never
+
+  use-isnan:
+    - error
+
+  # Not needed with Alman style. Interestingly deals with the same issue in a different way.
+  padded-blocks:
+    - error
+    - never
+
+  # That's a neat little setting for keeping code readable
+  quote-props:
+    - error
+    - consistent-as-needed
+
+  semi-spacing:
+    - error
+    - after: true
+      before: false
+
+  # Variables and Imports should be sorted in semantic groups not by name
+  sort-imports:
+    - off
+  sort-vars:
+    - off
+
+  # Keeping things readable
+  space-before-blocks:
+    - error
+    - always
+
+  # Parens belong to the function... a spacing could break easy grasping of the code
+  space-before-function-paren:
+    - error
+    - never
+
+  space-in-parens:
+    - error
+    - never
+
+  space-infix-ops:
+    - error
+
+  space-unary-ops:
+    - error
+    - words: true
+      nonwords: false
+
+  spaced-comment:
+    - error
+    - always
+
+  # I like the improved readability when using parens
+  wrap-regex:
+    - error
+
+  no-negated-in-lhs: warn
+  no-new-symbol: warn
+  no-regex-spaces: warn
+  no-template-curly-in-string: warn
+  no-undef: error
+  no-unused-labels: warn
+  require-yield: warn
+
+  #################################################################
+  # ES6+
+  #################################################################
+
+  # Call me old fashioned
+  arrow-body-style:
+    - warn
+    - as-needed
+  arrow-parens:
+    - error
+    - always
+
+  arrow-spacing:
+    - error
+
+  constructor-super:
+    - error
+
+  # The star is no operator but a modifier of the function
+  generator-star-spacing:
+    - error
+    - before
+
+  no-class-assign:
+    - error
+
+  no-const-assign:
+    - error
+
+  no-dupe-class-members:
+    - error
+
+  # Trying to start new code the modern way - at least for what it makes sense
+  prefer-arrow-callback:
+    - warn
+  prefer-rest-params:
+    - warn
+  prefer-spread:
+    - warn
+  prefer-template:
+    - off
+
+
+  #######################################################################################
+  # Import Plugin
+  #######################################################################################
+
+  import/no-webpack-loader-syntax:
+    - error
+
+
+  #######################################################################################
+  # React Plugin
+  #######################################################################################
+
+  react/jsx-no-undef:
+    - error
+  react/jsx-pascal-case:
+    - error
+    - allowAllCaps: true
+      ignore: []
+  react/jsx-uses-react:
+    - error
+  react/jsx-uses-vars:
+    - error
+  react/jsx-filename-extension:
+    - error
+    - extensions: [ ".js" ]
+
+  # Developer Support
+  react/display-name:
+    - warn
+  react/require-render-return:
+    - error
+  react/jsx-key:
+    - error
+
+  # Bad practise
+  react/no-children-prop:
+    - error
+
+  # Make sure React is imported when using JSX
+  react/react-in-jsx-scope:
+    - error
+
+  # Clean code
+  react/no-multi-comp:
+    - error
+  react/no-unused-prop-types:
+    - warn
+  react/prefer-es6-class:
+    - error
+  react/prefer-stateless-function:
+    - error
+  react/self-closing-comp:
+    - warn
+  react/sort-comp:
+    - warn
+  react/jsx-wrap-multilines:
+    - error
+
+  # Formatting
+  react/jsx-closing-bracket-location:
+    - warn
+  react/jsx-curly-spacing:
+    - warn
+  react/jsx-handler-names:
+    - error
+  react/jsx-indent:
+    - error
+    - 2
+  react/jsx-indent-props:
+    - error
+    - 2
+
+  # Unsafe
+  react/no-danger:
+    - error
+  react/no-danger-with-children:
+    - error
+  react/no-direct-mutation-state:
+    - error
+  react/no-unescaped-entities:
+    - error
+  react/style-prop-object:
+    - error
+  react/jsx-no-duplicate-props:
+    - error
+    - ignoreCase: true
+  react/jsx-no-target-blank:
+    - error
+
+  # Don't pollute DOM
+  react/no-unknown-property:
+    - warn
+
+  # Deprecated
+  react/no-deprecated:
+    - error
+  react/no-is-mounted:
+    - error
+  react/no-string-refs:
+    - warn
+
+  # Unsafe + Bad performance + Deprecated
+  react/no-find-dom-node:
+    - error
+
+  # Bad performance
+  react/no-did-mount-set-state:
+    - error
+  react/no-did-update-set-state:
+    - error
+  react/jsx-no-bind:
+    - error
+
+
+  #######################################################################################
+  # Accessibility Plugin
+  #######################################################################################
+
+  jsx-a11y/aria-role: error
+  jsx-a11y/img-has-alt: error
+  jsx-a11y/img-redundant-alt: error
+  jsx-a11y/no-access-key: error
+  jsx-a11y/aria-props: error
+  jsx-a11y/label-has-for: error
+  jsx-a11y/role-has-required-aria-props: error
