@@ -551,7 +551,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf|html)$/,
           loader: "file-loader",
           query: {
-            name: ifProdClient("file-[hash:base62:8].[ext]", "[name].[ext]")
+            name: ifProdClient("file-[hash:base62:8].[ext]", "[name].[ext]"),
+            emitFile: isClient
           }
         },
 
