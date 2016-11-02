@@ -93,7 +93,7 @@ export default function generateServer()
 
         // FIXME: Required for eval-source-maps (devtool in webpack)
         process.env.NODE_ENV === "development" ? "'unsafe-eval'" : ""
-      ],
+      ].filter((value) => value !== ""),
 
       styleSrc: [ "'self'", "'unsafe-inline'", "blob:" ],
       imgSrc: [ "'self'", "data:" ],
