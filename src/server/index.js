@@ -7,7 +7,7 @@ const app = generateServer()
 app.get("*", universalMiddleware)
 
 // Create an http listener for our express app.
-const listener = app.listen(parseInt(process.env.SERVER_PORT, 10))
+const listener = app.listen(process.env.SERVER_PORT)
 
 // We export the listener as it will be handy for our development hot reloader.
 export default listener

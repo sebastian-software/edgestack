@@ -375,8 +375,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
         // All the below items match the config items in our .env file. Go
         // to the .env_example for a description of each key.
-        "process.env.SERVER_PORT": JSON.stringify(process.env.SERVER_PORT),
-        "process.env.CLIENT_DEVSERVER_PORT": JSON.stringify(process.env.CLIENT_DEVSERVER_PORT),
+        "process.env.SERVER_PORT": process.env.SERVER_PORT,
+        "process.env.CLIENT_DEVSERVER_PORT": process.env.CLIENT_DEVSERVER_PORT,
 
         "process.env.DISABLE_SSR": process.env.DISABLE_SSR,
 
