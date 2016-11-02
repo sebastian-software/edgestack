@@ -1,4 +1,4 @@
-  {
+{
   "name": "advanced-boilerplate",
   "version": "0.9.30",
   "description": "Universal React + PostCSS + CSS Modules + ESLint + Stylelint + ...",
@@ -51,7 +51,7 @@
     "autoprefixer": "^6.5.1",
     "awesome-typescript-loader": "^2.2.4",
     "babel-cli": "^6.18.0",
-    "babel-core": "^6.18.0",
+    "babel-core": "^6.18.2",
     "babel-loader": "^6.2.7",
     "babel-plugin-lodash": "^3.2.9",
     "babel-plugin-transform-class-properties": "^6.18.0",
@@ -77,7 +77,7 @@
     "eslint-plugin-flowtype": "^2.25.0",
     "eslint-plugin-import": "^2.0.1",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.4.1",
+    "eslint-plugin-react": "^6.5.0",
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^2.0.0-beta.3",
     "file-loader": "^0.9.0",
@@ -88,6 +88,7 @@
     "html-loader": "^0.4.4",
     "html-webpack-plugin": "^2.24.1",
     "intl": "^1.2.5",
+    "intl-locales-supported": "^1.0.0",
     "isomorphic-fetch": "^2.2.1",
     "jest": "^16.0.2",
     "json-loader": "^0.5.4",
