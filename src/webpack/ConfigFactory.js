@@ -2,14 +2,15 @@ import os from "os"
 import fs from "fs"
 import path from "path"
 import webpack from "webpack"
+
 import AssetsPlugin from "assets-webpack-plugin"
 import builtinModules from "builtin-modules"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
+
 import Dashboard from "webpack-dashboard/plugin"
 import ProgressBar from "progress-bar-webpack-plugin"
-import BabiliPlugin from "babili-webpack-plugin"
-import HtmlPlugin from "html-webpack-plugin"
+
 import dotenv from "dotenv"
 
 // Using more modern approach of hashing than "webpack-md5-hash". Somehow the SHA256 version
@@ -34,19 +35,17 @@ const builtInSet = new Set(builtinModules)
 
 // - "helmet" uses some look with require which are not solvable with webpack
 // - "express" also uses some dynamic requires
-// - "commonmark" breaks babili compression right now: https://github.com/babel/babili/issues/115
 // - "encoding" uses dynamic iconv loading
 // - "node-pre-gyp" native code module helper
 // - "iltorb" brotli compression wrapper for NodeJS
 // - "node-zopfli" native Zopfli implementation
-const problematicCommonJS = new Set([ "helmet", "express", "commonmark", "encoding", "node-pre-gyp", "iltorb", "node-zopfli" ])
+const problematicCommonJS = new Set([ "helmet", "express", "encoding", "node-pre-gyp", "iltorb", "node-zopfli" ])
 const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
 dotenv.config()
 
-function removeEmpty(array)
-{
+function removeEmpty(array) {
   return array.filter((entry) => Boolean(entry))
 }
 
@@ -62,8 +61,7 @@ function removeEmptyKeys(obj)
   return copy
 }
 
-function ifElse(condition)
-{
+function ifElse(condition) {
   return (then, otherwise) => (condition ? then : otherwise)
 }
 
@@ -306,9 +304,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     plugins: removeEmpty([
 
-      // Create static HTML page. This can be used when server rendering is not interesting.
-      ifUniversal(null, ifProdClient(new HtmlPlugin())),
-
       // Render Dashboard for Client Development + ProgressBar for production builds
       ifIntegration(null, ifDevClient(new Dashboard())),
       ifIntegration(null, ifProd(new ProgressBar())),
@@ -502,18 +497,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     {
       rules: removeEmpty(
       [
-        // JSON
-        {
-          test: /\.json$/,
-          // Before going through our normal loaders, we convert simple JSON files to JS
-          // This is useful for further processing e.g. compression with babili
-          enforce: "pre",
-          loader: "json-loader"
-        },
-
         // Javascript
         {
-          test: /\.(js|jsx|json)$/,
+          test: /\.(js|jsx)$/,
           loader: "babel-loader",
           exclude:
           [
@@ -530,7 +516,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
               env:
               {
                 production: {
-                  presets: [ "babili" ],
                   comments: false
                 },
                 development: {
@@ -544,59 +529,32 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           )
         },
 
-        // External JavaScript
-        ifProdServer({
-          test: /\.(js|json)$/,
-          loader: "babel-loader",
-          exclude:
-          [
-            path.resolve(root, "src")
-          ],
-          query:
-          {
-            // Enable caching for babel transpiles
-            // Babel-Loader specific setting
-            cacheDirectory: path.resolve(os.tmpdir(), projectId, "babel-external"),
-
-            // Don't try to find .babelrc because we want to force this configuration.
-            // This is critical for 3rd party as they sometimes deliver `.babelrc`
-            // inside their npm packages (which is wrong BTW, but we can't fix the whole world)
-            babelrc: false,
-
-            // Faster transpiling for minor loose in formatting
-            compact: true,
-
-            // Keep origin information alive
-            sourceMaps: true,
-
-            // Nobody needs the original comments when having source maps
-            comments: false,
-
-            env:
-            {
-              production: {
-                // Adding babili to babel does not remove comments/formatting added by Webpack.
-                // It works on a per-file level which is actually better to cache.
-                // What's needed is some output flag for webpack to omit adding too much cruft
-                // to the output.
-                // To postprocess the result (remove comments/rename webpack vars) one can use
-                // babel --no-comments --plugins minify-mangle-names bundle.js
-                // See also: https://github.com/webpack/webpack/issues/2924
-                presets: [ "babili" ],
-                comments: false
-              }
-            }
-          }
-        }),
-
-        // Typescript + Typescript/JSX
+        // Typescript
         // https://github.com/s-panferov/awesome-typescript-loader
         {
           test: /\.(ts|tsx)$/,
-          loader: "awesome-typescript-loader"
+          loader: "awesome-typescript-loader",
+          exclude:
+          [
+            /node_modules/,
+            path.resolve(root, process.env.CLIENT_BUNDLE_OUTPUT_PATH),
+            path.resolve(root, process.env.SERVER_BUNDLE_OUTPUT_PATH)
+          ]
         },
 
-        // Font file references etc.
+        // JSON
+        {
+          test: /\.json$/,
+          loader: "json-loader"
+        },
+
+        // YAML
+        {
+          test: /\.(yml|yaml)$/,
+          loader: "yaml-loader"
+        },
+
+        // References to images, fonts, movies, music, etc.
         {
           test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf|html)$/,
           loader: "file-loader",
