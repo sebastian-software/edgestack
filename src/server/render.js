@@ -10,7 +10,7 @@ if (process.env.MODE === "production")
 {
   try {
     chunkManifest = readFileSync(ABSOLUTE_CHUNKMANIFEST_PATH, "utf-8")
-  } catch(ex) {
+  } catch (ex) {
     console.warn("Could not parse chunkhashes from manifest.json: ", ex)
   }
 }
@@ -50,10 +50,10 @@ const assets = chunks.reduce((sorted, chunk) =>
  */
 function styleTags(styles) {
   return styles
-    .map(style =>
+    .map((style) =>
       `<link href="${style}" media="screen, projection" rel="stylesheet" />`
     )
-    .join('\n')
+    .join("\n")
 }
 
 
@@ -63,10 +63,10 @@ function styleTags(styles) {
  */
 function scriptTags(scripts) {
   return scripts
-    .map(script =>
+    .map((script) =>
       `<script src="${script}"></script>`
     )
-    .join('\n')
+    .join("\n")
 }
 
 
@@ -74,7 +74,7 @@ function scriptTags(scripts) {
 // providing us with prefetched caching and offline application support.
 // @see https://github.com/goldhand/sw-precache-webpack-plugin
 function serviceWorkerScript(nonce) {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === "production") {
     return `
       <script nonce="${nonce}">
         (function swRegister() {
@@ -82,10 +82,10 @@ function serviceWorkerScript(nonce) {
             navigator.serviceWorker.register('/sw.js');
           }
         }());
-      </script>`;
+      </script>`
   }
 
-  return '';
+  return ""
 }
 
 /**
@@ -110,7 +110,7 @@ export default function render({ app, initialState, nonce }) {
   const helmet = app ? Helmet.rewind() : null
 
   return `<!doctype html>
-    <html ${helmet ? helmet.htmlAttributes.toString() : ''}>
+    <html ${helmet ? helmet.htmlAttributes.toString() : ""}>
       <head>
         ${helmet ? helmet.title.toString() : ""}
         ${helmet ? helmet.meta.toString() : ""}

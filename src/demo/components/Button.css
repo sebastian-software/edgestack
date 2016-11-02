@@ -1,48 +1,48 @@
-.root{
+.root {
   box-sizing: border-box;
+  cursor: pointer;
   line-height: 1.1em;
   border-radius: 2px;
   margin-bottom: 12px;
-  cursor: pointer;
 
   &::-moz-focus-inner {
-    border: 0
+    border: 0;
   }
 
   &:focus {
-    outline: none
+    outline: none;
   }
 }
 
-.disabled{
+.disabled {
   cursor: default;
 }
 
-.block{
+.block {
   display: block;
   width: 100%;
 }
 
-.lg{
-  font-size: 18px;
-  padding: 18px 18px 18px 18px;
+.lg {
   min-height: 74px;
+  padding: 18px;
+  font-size: 18px;
 }
 
-.md{
-  font-size: 16px;
-  padding: 12px 18px 12px 18px;
+.md {
   min-height: 50px;
-}
-
-.sm{
+  padding: 12px 18px;
   font-size: 16px;
-  padding: 6px 12px 6px 12px;
-  min-height: 38px;
 }
 
-.xs{
-  font-size: 14px;
-  padding: 3px 9px 3px 9px;
+.sm {
+  min-height: 38px;
+  padding: 6px 12px;
+  font-size: 16px;
+}
+
+.xs {
   min-height: 26px;
+  padding: 3px 9px;
+  font-size: 14px;
 }

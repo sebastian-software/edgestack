@@ -11,7 +11,7 @@ nodePackages.forEach((pkg) =>
 {
   try {
     var json = readJsonSync(resolve(root, pkg, "package.json"))
-  } catch(except) {
+  } catch (except) {
     return
   }
 

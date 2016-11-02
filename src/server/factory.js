@@ -1,6 +1,6 @@
 import express from "express"
 import shrinkRay from "shrink-ray"
-import uuid from 'node-uuid';
+import uuid from "node-uuid"
 import hpp from "hpp"
 import helmet from "helmet"
 import { resolve } from "path"
@@ -17,8 +17,8 @@ export function addFallbackHandler(server) {
   // example you may bind a /api path to express.
   server.use((req, res, next) => {
     // eslint-disable-line no-unused-vars,max-len
-    res.status(404).send('Sorry, that resource was not found.');
-  });
+    res.status(404).send("Sorry, that resource was not found.")
+  })
 
   // Handle all other errors (i.e. 500).
   // Note: You must provide specify all 4 parameters on this callback function
@@ -26,11 +26,11 @@ export function addFallbackHandler(server) {
   server.use((err, req, res, next) => {
     // eslint-disable-line no-unused-vars,max-len
     if (err) {
-      console.log(err);
-      console.log(err.stack);
+      console.log(err)
+      console.log(err.stack)
     }
-    res.status(500).send('Sorry, an unexpected error occurred.');
-  });
+    res.status(500).send("Sorry, an unexpected error occurred.")
+  })
 }
 
 export default function generateServer()
@@ -42,9 +42,9 @@ export default function generateServer()
   // inline scripts as being safe for execution against our content security policy.
   // @see https://helmetjs.github.io/docs/csp/
   server.use((req, res, next) => {
-    res.locals.nonce = uuid.v4(); // eslint-disable-line no-param-reassign
-    next();
-  });
+    res.locals.nonce = uuid.v4() // eslint-disable-line no-param-reassign
+    next()
+  })
 
   // Don't expose any software information to hackers.
   server.disable("x-powered-by")
@@ -74,7 +74,7 @@ export default function generateServer()
   // the added security.
   const cspConfig = {
     directives: {
-      defaultSrc: ["'self'"],
+      defaultSrc: [ "'self'" ],
 
       scriptSrc:
       [
@@ -92,25 +92,25 @@ export default function generateServer()
         (req, res) => `'nonce-${res.locals.nonce}'`,
 
         // FIXME: Required for eval-source-maps (devtool in webpack)
-        process.env.NODE_ENV === 'development' ? "'unsafe-eval'" : ""
+        process.env.NODE_ENV === "development" ? "'unsafe-eval'" : ""
       ],
 
-      styleSrc: ["'self'", "'unsafe-inline'", 'blob:'],
-      imgSrc: ["'self'", 'data:'],
+      styleSrc: [ "'self'", "'unsafe-inline'", "blob:" ],
+      imgSrc: [ "'self'", "data:" ],
 
       // Note: Setting this to stricter than * breaks the service worker. :(
       // I can't figure out how to get around this, so if you know of a safer
       // implementation that is kinder to service workers please let me know.
-      connectSrc: ['*'], // ["'self'", 'ws:'],
+      connectSrc: [ "*" ], // ["'self'", 'ws:'],
 
-      fontSrc: ["'self'"],
+      fontSrc: [ "'self'" ],
       objectSrc: [],
       mediaSrc: [],
-      childSrc: ["'self'"]
+      childSrc: [ "'self'" ]
     }
-  };
+  }
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     // When in development mode we need to add our secondary express server that
     // is used to host our client bundle to our csp config.
     Object.keys(cspConfig.directives).forEach((directive) =>
@@ -118,27 +118,27 @@ export default function generateServer()
     )
   }
 
-  server.use(helmet.contentSecurityPolicy(cspConfig));
+  server.use(helmet.contentSecurityPolicy(cspConfig))
 
   // The xssFilter middleware sets the X-XSS-Protection header to prevent
   // reflected XSS attacks.
   // @see https://helmetjs.github.io/docs/xss-filter/
-  server.use(helmet.xssFilter());
+  server.use(helmet.xssFilter())
 
   // Frameguard mitigates clickjacking attacks by setting the X-Frame-Options header.
   // @see https://helmetjs.github.io/docs/frameguard/
-  server.use(helmet.frameguard('deny'));
+  server.use(helmet.frameguard("deny"))
 
   // Sets the X-Download-Options to prevent Internet Explorer from executing
   // downloads in your site’s context.
   // @see https://helmetjs.github.io/docs/ienoopen/
-  server.use(helmet.ieNoOpen());
+  server.use(helmet.ieNoOpen())
 
   // Don’t Sniff Mimetype middleware, noSniff, helps prevent browsers from trying
   // to guess (“sniff”) the MIME type, which can have security implications. It
   // does this by setting the X-Content-Type-Options header to nosniff.
   // @see https://helmetjs.github.io/docs/dont-sniff-mimetype/
-  server.use(helmet.noSniff());
+  server.use(helmet.noSniff())
 
   // Advanced response compression using a async zopfli/brotli combination
   // https://github.com/aickin/shrink-ray
@@ -159,8 +159,8 @@ export default function generateServer()
   // be served.
   // Note: the service worker needs to be available at the http root of your
   // application for the offline support to work.
-  if (process.env.NODE_ENV === 'production') {
-    server.use(express.static(resolve(process.env.ABSOLUTE_CLIENT_OUTPUT_PATH, './serviceWorker')))
+  if (process.env.NODE_ENV === "production") {
+    server.use(express.static(resolve(process.env.ABSOLUTE_CLIENT_OUTPUT_PATH, "./serviceWorker")))
   }
 
   return server

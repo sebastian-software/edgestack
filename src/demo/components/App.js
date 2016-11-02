@@ -4,7 +4,7 @@ import "./Fonts.css"
 import React from "react"
 import { Match, Miss, Link } from "react-router"
 import Helmet from "react-helmet"
-import CodeSplit from "code-split-component";
+import CodeSplit from "code-split-component"
 
 import styles from "./App.css"
 
@@ -13,7 +13,7 @@ const websiteLanguage = "en-US"
 const websiteTitle = "Advanced Boilerplate"
 
 function Error404() {
-  return <div>Sorry, that page was not found.</div>;
+  return <div>Sorry, that page was not found.</div>
 }
 
 function App({ children }) {
@@ -27,8 +27,8 @@ function App({ children }) {
         defaultTitle={websiteTitle}
         meta={[
           { name: "charset", content: "utf-8" },
-          { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
-          { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+          { "http-equiv": "X-UA-Compatible", "content": "IE=edge" },
+          { name: "viewport", content: "width=device-width, initial-scale=1" },
           { name: "content-language", content: websiteLanguage },
           { name: "description", content: websiteDescription }
         ]}
@@ -49,18 +49,18 @@ function App({ children }) {
         <Match
           exactly
           pattern="/"
-          render={routerProps =>
-            <CodeSplit module={System.import('./Home')}>
-              { Home => Home && <Home {...routerProps} /> }
+          render={(routerProps) =>
+            <CodeSplit module={System.import("./Home")}>
+              { (Home) => Home && <Home {...routerProps} /> }
             </CodeSplit>
           }
         />
 
         <Match
           pattern="/about"
-          render={routerProps =>
-            <CodeSplit module={System.import('./About')}>
-              { About => About && <About {...routerProps} /> }
+          render={(routerProps) =>
+            <CodeSplit module={System.import("./About")}>
+              { (About) => About && <About {...routerProps} /> }
             </CodeSplit>
           }
         />

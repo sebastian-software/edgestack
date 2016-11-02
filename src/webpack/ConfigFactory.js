@@ -39,7 +39,7 @@ const builtInSet = new Set(builtinModules)
 // - "node-pre-gyp" native code module helper
 // - "iltorb" brotli compression wrapper for NodeJS
 // - "node-zopfli" native Zopfli implementation
-const problematicCommonJS = new Set(["helmet", "express", "commonmark", "encoding", "node-pre-gyp", "iltorb", "node-zopfli"])
+const problematicCommonJS = new Set([ "helmet", "express", "commonmark", "encoding", "node-pre-gyp", "iltorb", "node-zopfli" ])
 const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
@@ -47,7 +47,7 @@ dotenv.config()
 
 function removeEmpty(array)
 {
-  return array.filter((entry) => !!entry)
+  return array.filter((entry) => Boolean(entry))
 }
 
 function removeEmptyKeys(obj)
@@ -84,7 +84,7 @@ function isLoaderSpecificFile(request) {
 function ifIsFile(filePath) {
   try {
     return fs.statSync(filePath).isFile() ? filePath : ""
-  } catch(ex) {}
+  } catch (ex) {}
   return ""
 }
 
@@ -268,6 +268,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // This is the web path under which our webpack bundled output should
       // be considered as being served from.
       publicPath: ifDev(
+
         // As we run a seperate server for our client and server bundles we
         // need to use an absolute http path for our assets public path.
         `http://localhost:${process.env.CLIENT_DEVSERVER_PORT}${process.env.CLIENT_BUNDLE_HTTP_PATH}`,
@@ -462,12 +463,13 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // JS Minification for client
       // See: https://phabricator.babeljs.io/T6858
       ifProdClient(
+
         // Uglify does not work with ES6. Therefor we can only use it for ES5 transpiled
         // client bundles right now.
         // See: https://github.com/mishoo/UglifyJS2/issues/448
         new webpack.optimize.UglifyJsPlugin({
           comments: false,
-          sourceMap : true,
+          sourceMap: true,
           compress: {
             screw_ie8: true,
             warnings: false
