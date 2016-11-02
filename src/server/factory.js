@@ -10,12 +10,12 @@ import {
   ABSOLUTE_PUBLIC_PATH
 } from "./config"
 
-export function addFallbackHandler(app) {
+export function addFallbackHandler(server) {
   // Handle 404 errors.
   // Note: the react application middleware hands 404 paths, but it is good to
   // have this backup for paths not handled by the universal middleware. For
   // example you may bind a /api path to express.
-  app.use((req, res, next) => {
+  server.use((req, res, next) => {
     // eslint-disable-line no-unused-vars,max-len
     res.status(404).send('Sorry, that resource was not found.');
   });
@@ -23,7 +23,7 @@ export function addFallbackHandler(app) {
   // Handle all other errors (i.e. 500).
   // Note: You must provide specify all 4 parameters on this callback function
   // even if they aren't used, otherwise it won't be used.
-  app.use((err, req, res, next) => {
+  server.use((err, req, res, next) => {
     // eslint-disable-line no-unused-vars,max-len
     if (err) {
       console.log(err);
@@ -36,21 +36,21 @@ export function addFallbackHandler(app) {
 export default function generateServer()
 {
   // Create our express based server.
-  const app = express()
+  const server = express()
 
   // Attach a unique "nonce" to every response.  This allows use to declare
   // inline scripts as being safe for execution against our content security policy.
   // @see https://helmetjs.github.io/docs/csp/
-  app.use((req, res, next) => {
+  server.use((req, res, next) => {
     res.locals.nonce = uuid.v4(); // eslint-disable-line no-param-reassign
     next();
   });
 
   // Don't expose any software information to hackers.
-  app.disable("x-powered-by")
+  server.disable("x-powered-by")
 
   // Prevent HTTP Parameter pollution.
-  app.use(hpp())
+  server.use(hpp())
 
   // Content Security Policy (CSP)
   //
@@ -118,34 +118,34 @@ export default function generateServer()
     )
   }
 
-  app.use(helmet.contentSecurityPolicy(cspConfig));
+  server.use(helmet.contentSecurityPolicy(cspConfig));
 
   // The xssFilter middleware sets the X-XSS-Protection header to prevent
   // reflected XSS attacks.
   // @see https://helmetjs.github.io/docs/xss-filter/
-  app.use(helmet.xssFilter());
+  server.use(helmet.xssFilter());
 
   // Frameguard mitigates clickjacking attacks by setting the X-Frame-Options header.
   // @see https://helmetjs.github.io/docs/frameguard/
-  app.use(helmet.frameguard('deny'));
+  server.use(helmet.frameguard('deny'));
 
   // Sets the X-Download-Options to prevent Internet Explorer from executing
   // downloads in your site’s context.
   // @see https://helmetjs.github.io/docs/ienoopen/
-  app.use(helmet.ieNoOpen());
+  server.use(helmet.ieNoOpen());
 
   // Don’t Sniff Mimetype middleware, noSniff, helps prevent browsers from trying
   // to guess (“sniff”) the MIME type, which can have security implications. It
   // does this by setting the X-Content-Type-Options header to nosniff.
   // @see https://helmetjs.github.io/docs/dont-sniff-mimetype/
-  app.use(helmet.noSniff());
+  server.use(helmet.noSniff());
 
   // Advanced response compression using a async zopfli/brotli combination
   // https://github.com/aickin/shrink-ray
-  app.use(shrinkRay())
+  server.use(shrinkRay())
 
   // Configure static serving of our webpack bundled client files.
-  app.use(
+  server.use(
     process.env.CLIENT_BUNDLE_HTTP_PATH,
     express.static(ABSOLUTE_CLIENT_OUTPUT_PATH, {
       maxAge: process.env.CLIENT_BUNDLE_CACHE_MAXAGE
@@ -153,15 +153,15 @@ export default function generateServer()
   )
 
   // Configure static serving of our "public" root http path static files.
-  app.use(express.static(ABSOLUTE_PUBLIC_PATH))
+  server.use(express.static(ABSOLUTE_PUBLIC_PATH))
 
   // When in production mode, bind our service worker folder so that it can
   // be served.
   // Note: the service worker needs to be available at the http root of your
   // application for the offline support to work.
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(resolve(process.env.ABSOLUTE_CLIENT_OUTPUT_PATH, './serviceWorker')))
+    server.use(express.static(resolve(process.env.ABSOLUTE_CLIENT_OUTPUT_PATH, './serviceWorker')))
   }
 
-  return app
+  return server
 }
