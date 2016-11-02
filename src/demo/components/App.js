@@ -2,7 +2,7 @@ import "normalize.css/normalize.css"
 import "./Fonts.css"
 
 import React from "react"
-import Link from "react-router/lib/Link"
+import { Link } from "react-router"
 import Helmet from "react-helmet"
 import styles from "./App.css"
 
@@ -24,6 +24,27 @@ function App({ children }) {
           { name: "description", content: websiteDescription }
         ]}
       />
+
+      <Match
+        exactly
+        pattern="/"
+        render={routerProps =>
+          <CodeSplit module={System.import('./Home')}>
+            { Home => Home && <Home {...routerProps} /> }
+          </CodeSplit>
+        }
+      />
+
+      <Match
+        pattern="/about"
+        render={routerProps =>
+          <CodeSplit module={System.import('./About')}>
+            { About => About && <About {...routerProps} /> }
+          </CodeSplit>
+        }
+      />
+
+      <Miss component={Error404} />
 
       <div>
         <h1>{websiteTitle}</h1>
