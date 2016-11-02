@@ -75,23 +75,34 @@ export default function generateServer()
   const cspConfig = {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: [
-      // Allow scripts hosted from our application.
-      "'self'",
-      // Allow scripts from cdn.polyfill.io so that we can import the polyfill.
-      'cdn.polyfill.io',
-      // Note: We will execution of any inline scripts that have the following
-      // nonce identifier attached to them.
-      // This is useful for guarding your application whilst allowing an inline
-      // script to do data store rehydration (redux/mobx/apollo) for example.
-      // @see https://helmetjs.github.io/docs/csp/
-      (req, res) => `'nonce-${res.locals.nonce}'`],
+
+      scriptSrc:
+      [
+        // Allow scripts hosted from our application.
+        "'self'",
+
+        // Allow scripts from cdn.polyfill.io so that we can import the polyfill.
+        // 'cdn.polyfill.io',
+
+        // Note: We will execution of any inline scripts that have the following
+        // nonce identifier attached to them.
+        // This is useful for guarding your application whilst allowing an inline
+        // script to do data store rehydration (redux/mobx/apollo) for example.
+        // @see https://helmetjs.github.io/docs/csp/
+        (req, res) => `'nonce-${res.locals.nonce}'`,
+
+        // FIXME: Required for eval-source-maps (devtool in webpack)
+        "'unsafe-eval'"
+      ],
+
       styleSrc: ["'self'", "'unsafe-inline'", 'blob:'],
       imgSrc: ["'self'", 'data:'],
+
       // Note: Setting this to stricter than * breaks the service worker. :(
       // I can't figure out how to get around this, so if you know of a safer
       // implementation that is kinder to service workers please let me know.
       connectSrc: ['*'], // ["'self'", 'ws:'],
+
       fontSrc: ["'self'"],
       objectSrc: ["'none'"],
       mediaSrc: ["'none'"],

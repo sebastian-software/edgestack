@@ -76,7 +76,7 @@ function scriptTags(scripts) {
 function serviceWorkerScript(nonce) {
   if (process.env.NODE_ENV === 'production') {
     return `
-      <script nonce="${nonce}" type="text/javascript">
+      <script nonce="${nonce}">
         (function swRegister() {
           if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js');
@@ -131,7 +131,7 @@ export default function render({ app, initialState, nonce }) {
       <body>
         <div id="app">${appString || ""}</div>
 
-        <script>${
+        <script nonce="${nonce}">${
           (initialState ? `window.APP_STATE=${serialize(initialState)};` : "")
           + `window.CHUNK_MANIFEST=${chunkManifest};`
         }</script>

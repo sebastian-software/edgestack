@@ -31,27 +31,6 @@ function App({ children }) {
         ]}
       />
 
-      <Match
-        exactly
-        pattern="/"
-        render={routerProps =>
-          <CodeSplit module={System.import('./Home')}>
-            { Home => Home && <Home {...routerProps} /> }
-          </CodeSplit>
-        }
-      />
-
-      <Match
-        pattern="/about"
-        render={routerProps =>
-          <CodeSplit module={System.import('./About')}>
-            { About => About && <About {...routerProps} /> }
-          </CodeSplit>
-        }
-      />
-
-      <Miss component={Error404} />
-
       <div>
         <h1>{websiteTitle}</h1>
         <strong>{websiteDescription}</strong>
@@ -62,8 +41,28 @@ function App({ children }) {
           <li><Link to="/about">About</Link></li>
         </ul>
       </div>
+
       <div>
-        {children}
+        <Match
+          exactly
+          pattern="/"
+          render={routerProps =>
+            <CodeSplit module={System.import('./Home')}>
+              { Home => Home && <Home {...routerProps} /> }
+            </CodeSplit>
+          }
+        />
+
+        <Match
+          pattern="/about"
+          render={routerProps =>
+            <CodeSplit module={System.import('./About')}>
+              { About => About && <About {...routerProps} /> }
+            </CodeSplit>
+          }
+        />
+
+        <Miss component={Error404} />
       </div>
     </main>
   )
@@ -72,5 +71,16 @@ function App({ children }) {
 App.propTypes = {
   children: React.PropTypes.node
 }
+
+// The following is needed so that we can hot reload our App.
+/*
+if (process.env.NODE_ENV === "development" && module.hot) {
+  // Any changes to our App will cause a hotload re-render.
+  module.hot.accept(
+    "./App.js",
+    () => renderApp(require("./App.js").default)
+  )
+}
+*/
 
 export default App
