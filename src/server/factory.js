@@ -92,7 +92,7 @@ export default function generateServer()
         (req, res) => `'nonce-${res.locals.nonce}'`,
 
         // FIXME: Required for eval-source-maps (devtool in webpack)
-        "'unsafe-eval'"
+        process.env.NODE_ENV === 'development' ? "'unsafe-eval'" : ""
       ],
 
       styleSrc: ["'self'", "'unsafe-inline'", 'blob:'],
