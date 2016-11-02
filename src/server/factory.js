@@ -161,7 +161,7 @@ export default function generateServer()
   // Note: the service worker needs to be available at the http root of your
   // application for the offline support to work.
   if (process.env.NODE_ENV === "production") {
-    server.use(express.static(resolve(process.env.ABSOLUTE_CLIENT_OUTPUT_PATH, "./serviceWorker")))
+    server.use(express.static(resolve(ABSOLUTE_CLIENT_OUTPUT_PATH, "./serviceWorker")))
   }
 
   return server
