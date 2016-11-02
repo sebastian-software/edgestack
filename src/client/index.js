@@ -6,8 +6,6 @@ import { BrowserRouter } from "react-router"
 import ReactHotLoader from "./ReactHotLoader"
 import App from "../demo/components/App"
 
-import routes from "../demo/routes"
-
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")
 

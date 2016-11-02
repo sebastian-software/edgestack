@@ -2,13 +2,19 @@ import "normalize.css/normalize.css"
 import "./Fonts.css"
 
 import React from "react"
-import { Link } from "react-router"
+import { Match, Miss, Link } from "react-router"
 import Helmet from "react-helmet"
+import CodeSplit from "code-split-component";
+
 import styles from "./App.css"
 
 const websiteDescription = "A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience."
 const websiteLanguage = "en-US"
 const websiteTitle = "Advanced Boilerplate"
+
+function Error404() {
+  return <div>Sorry, that page was not found.</div>;
+}
 
 function App({ children }) {
   return (

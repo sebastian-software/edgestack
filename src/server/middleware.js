@@ -1,7 +1,6 @@
 import React from "react"
-import RouterContext from "react-router/lib/RouterContext"
-import createMemoryHistory from "react-router/lib/createMemoryHistory"
-import match from "react-router/lib/match"
+import { ServerRouter, createServerRenderContext } from 'react-router';
+import App from '../demo/components/App';
 
 import render from "./render"
 
@@ -10,6 +9,11 @@ import render from "./render"
  */
 export default function universalMiddleware(request, response)
 {
+  if (typeof response.locals.nonce !== 'string') {
+    throw new Error('A "nonce" value has not been attached to the response');
+  }
+  const nonce = response.locals.nonce;
+
   /* eslint-disable no-magic-numbers */
   if (process.env.DISABLE_SSR === true)
   {
@@ -24,41 +28,39 @@ export default function universalMiddleware(request, response)
   }
   else
   {
-    const history = createMemoryHistory(request.originalUrl)
+    // First create a context for <ServerRouter>, which will allow us to
+    // query for the results of the render.
+    const context = createServerRenderContext();
 
-    // Server side handling of react-router.
-    // Read more about this here:
-    // https://github.com/reactjs/react-router/blob/master/docs/guides/ServerRendering.md
-    match({ routes, history }, (error, redirectLocation, renderProps) =>
-    {
-      if (error)
-      {
-        response.status(500).send(error.message)
-      }
-      else if (redirectLocation)
-      {
-        response.redirect(302, redirectLocation.pathname + redirectLocation.search)
-      }
-      else if (renderProps)
-      {
-        // Testing for data recovery
-        var data = { dummy: true }
+    // Create the application react element.
+    const app = (<ServerRouter location={request.url} context={context}>
+        <App />
+      </ServerRouter>);
 
-        // You can check renderProps.components or renderProps.routes for
-        // your "not found" component or route respectively, and send a 404 as
-        // below, if you're using a catch-all route.
+    // Render the app to a string.
+    const html = render({
+      // Provide the full app react element.
+      app,
+      // Nonce for allowing inline scripts.
+      nonce
+    });
 
-        try {
-          const html = render(<RouterContext {...renderProps} />, data)
-          response.status(200).send(html)
-        } catch(ex) {
-          response.status(500).send(`Error during rendering: ${ex}!`)
-        }
-      }
-      else
-      {
-        response.status(404).send("Not found")
-      }
-    })
+    // Get the render result from the server render context.
+    const renderResult = context.getResult();
+
+    // Check if the render result contains a redirect, if so we need to set
+    // the specific status and redirect header and end the response.
+    if (renderResult.redirect) {
+      response.status(301).setHeader('Location', renderResult.redirect.pathname);
+      response.end();
+      return;
+    }
+
+    response.status(renderResult.missed
+    // If the renderResult contains a "missed" match then we set a 404 code.
+    // Our App component will handle the rendering of an Error404 view.
+    ? 404
+    // Otherwise everything is all good and we send a 200 OK status.
+    : 200).send(html);
   }
 }

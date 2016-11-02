@@ -85,7 +85,7 @@ export default function generateServer()
       // This is useful for guarding your application whilst allowing an inline
       // script to do data store rehydration (redux/mobx/apollo) for example.
       // @see https://helmetjs.github.io/docs/csp/
-      (req, res) => `'nonce-${ res.locals.nonce }'`],
+      (req, res) => `'nonce-${res.locals.nonce}'`],
       styleSrc: ["'self'", "'unsafe-inline'", 'blob:'],
       imgSrc: ["'self'", 'data:'],
       // Note: Setting this to stricter than * breaks the service worker. :(
@@ -98,11 +98,15 @@ export default function generateServer()
       childSrc: ["'self'"]
     }
   };
+
   if (process.env.NODE_ENV === 'development') {
     // When in development mode we need to add our secondary express server that
     // is used to host our client bundle to our csp config.
-    Object.keys(cspConfig.directives).forEach(directive => cspConfig.directives[directive].push(`localhost:${ notEmpty(process.env.CLIENT_DEVSERVER_PORT) }`));
+    Object.keys(cspConfig.directives).forEach((directive) =>
+      cspConfig.directives[directive].push(`localhost:${process.env.CLIENT_DEVSERVER_PORT}`)
+    )
   }
+
   app.use(helmet.contentSecurityPolicy(cspConfig));
 
   // The xssFilter middleware sets the X-XSS-Protection header to prevent

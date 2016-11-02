@@ -70,6 +70,24 @@ function scriptTags(scripts) {
 }
 
 
+// We use a service worker configured created by the sw-precache webpack plugin,
+// providing us with prefetched caching and offline application support.
+// @see https://github.com/goldhand/sw-precache-webpack-plugin
+function serviceWorkerScript(nonce) {
+  if (process.env.NODE_ENV === 'production') {
+    return `
+      <script nonce="${nonce}" type="text/javascript">
+        (function swRegister() {
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+          }
+        }());
+      </script>`;
+  }
+
+  return '';
+}
+
 /**
  * Generates a full HTML page containing the render output of the given react
  * element.
@@ -82,12 +100,10 @@ function scriptTags(scripts) {
  *
  * @return The full HTML page in the form of a React element.
  */
-export default function render(rootReactElement, initialState) {
-  const reactRenderString = rootReactElement
-    ? renderToString(rootReactElement)
-    : null
+export default function render({ app, initialState, nonce }) {
+  const appString = app ? renderToString(app) : null
 
-  const helmet = rootReactElement
+  const helmet = app
     // We run 'react-helmet' after our renderToString call so that we can fish
     // out all the attributes which need to be attached to our page.
     // React Helmet allows us to control our page header contents via our
@@ -109,9 +125,11 @@ export default function render(rootReactElement, initialState) {
 
         ${styleTags(assets.styles)}
         ${helmet ? helmet.style.toString() : ""}
+
+        ${serviceWorkerScript(nonce)}
       </head>
       <body>
-        <div id="app">${reactRenderString || ""}</div>
+        <div id="app">${appString || ""}</div>
 
         <script>${
           (initialState ? `window.APP_STATE=${serialize(initialState)};` : "")
