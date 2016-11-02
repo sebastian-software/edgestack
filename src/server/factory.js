@@ -33,7 +33,7 @@ export function addFallbackHandler(server) {
   })
 }
 
-export default function generateServer()
+export function generateServer()
 {
   // Create our express based server.
   const server = express()
@@ -97,6 +97,7 @@ export default function generateServer()
 
       styleSrc: [ "'self'", "'unsafe-inline'", "blob:" ],
       imgSrc: [ "'self'", "data:" ],
+      fontSrc: [ "'self'" ],
 
       // Note: Setting this to stricter than * breaks the service worker. :(
       // I can't figure out how to get around this, so if you know of a safer
@@ -104,9 +105,9 @@ export default function generateServer()
       // ["'self'", 'ws:'],
       connectSrc: [ "*" ],
 
-      fontSrc: [ "'self'" ],
-      //objectSrc: [ "'none'" ],
-      //mediaSrc: [],
+      // objectSrc: [ "'none'" ],
+      // mediaSrc: [],
+
       childSrc: [ "'self'" ]
     }
   }
