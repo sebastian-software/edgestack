@@ -1,7 +1,7 @@
 import "normalize.css/normalize.css"
 import "./Fonts.css"
 
-import React, { PropTypes } from "react"
+import React from "react"
 import Link from "react-router/lib/Link"
 import Helmet from "react-helmet"
 import styles from "./App.css"
@@ -21,7 +21,7 @@ function App({ children }) {
         defaultTitle={websiteTitle}
         meta={[
           { name: "content-language", content: websiteLanguage },
-          { name: "description", content: websiteDescription },
+          { name: "description", content: websiteDescription }
         ]}
       />
 
@@ -43,7 +43,7 @@ function App({ children }) {
 }
 
 App.propTypes = {
-  children: PropTypes.node
+  children: React.PropTypes.node
 }
 
 export default App
