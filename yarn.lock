@@ -1732,6 +1732,10 @@ code-point-at@^1.0.0:
   dependencies:
     number-is-nan "^1.0.0"
 
+code-split-component@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/code-split-component/-/code-split-component-1.0.1.tgz#aa79d1c51458438e36b9fcb924be3d3dbe2fca9a"
+
 color-convert@^0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-0.5.3.tgz#bdb6c69ce660fadffe0b0007cc447e1b9f7282bd"
