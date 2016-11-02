@@ -133,6 +133,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
   const projectId = path.basename(root)
 
+  const excludeFromTranspilation = [
+    /node_modules/,
+    path.resolve(root, process.env.CLIENT_BUNDLE_OUTPUT_PATH),
+    path.resolve(root, process.env.SERVER_BUNDLE_OUTPUT_PATH)
+  ]
+
   // Just bundle the server files which are from the local project instead
   // of a deep self-contained bundle.
   // See also: https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/
@@ -497,12 +503,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         {
           test: /\.(js|jsx)$/,
           loader: "babel-loader",
-          exclude:
-          [
-            /node_modules/,
-            path.resolve(root, process.env.CLIENT_BUNDLE_OUTPUT_PATH),
-            path.resolve(root, process.env.SERVER_BUNDLE_OUTPUT_PATH)
-          ],
+          exclude: excludeFromTranspilation,
           query: merge(
             {
               // Enable caching for babel transpiles
@@ -530,12 +531,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         {
           test: /\.(ts|tsx)$/,
           loader: "awesome-typescript-loader",
-          exclude:
-          [
-            /node_modules/,
-            path.resolve(root, process.env.CLIENT_BUNDLE_OUTPUT_PATH),
-            path.resolve(root, process.env.SERVER_BUNDLE_OUTPUT_PATH)
-          ]
+          exclude: excludeFromTranspilation
         },
 
         // JSON
