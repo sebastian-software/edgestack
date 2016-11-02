@@ -103,22 +103,15 @@ function serviceWorkerScript(nonce) {
 export default function render({ app, initialState, nonce }) {
   const appString = app ? renderToString(app) : null
 
-  const helmet = app
-    // We run 'react-helmet' after our renderToString call so that we can fish
-    // out all the attributes which need to be attached to our page.
-    // React Helmet allows us to control our page header contents via our
-    // components.
-    // @see https://github.com/nfl/react-helmet
-    ? Helmet.rewind()
-    // There was no react element, so we just us an empty helmet.
-    : null
+  // We run 'react-helmet' after our renderToString call so that we can fish
+  // out all the attributes which need to be attached to our page.
+  // React Helmet allows us to control our page header contents via our
+  // components.
+  const helmet = app ? Helmet.rewind() : null
 
   return `<!doctype html>
     <html ${helmet ? helmet.htmlAttributes.toString() : ''}>
       <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="x-ua-compatible" content="ie=edge" />
-
         ${helmet ? helmet.title.toString() : ""}
         ${helmet ? helmet.meta.toString() : ""}
         ${helmet ? helmet.link.toString() : ""}
