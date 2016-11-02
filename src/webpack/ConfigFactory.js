@@ -477,10 +477,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             screw_ie8: true,
           }
         })
-
-        // Alternative using Babel based compressor. Currently increases built-time by 10sec (=250%)
-        // of the timing produced by Uglify.
-        // new BabiliPlugin()
       ),
 
       // This is a production client so we will extract our CSS into
