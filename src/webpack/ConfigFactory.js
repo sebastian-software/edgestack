@@ -464,7 +464,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // JS Minification for client
       // See: https://phabricator.babeljs.io/T6858
       ifProdClient(
-
         // Uglify does not work with ES6. Therefor we can only use it for ES5 transpiled
         // client bundles right now.
         // See: https://github.com/mishoo/UglifyJS2/issues/448
@@ -574,8 +573,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
                   {
                     sourceMap: false,
                     modules: true,
-                    localIdentName: ifProd("[local]-[hash:base62:8]", "[path][name]-[local]"),
-                    minimize: false
+                    localIdentName: ifProd("[local]-[hash:base62:8]", "[path][name]-[local]")
                   }
                 },
                 {
