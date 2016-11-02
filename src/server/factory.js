@@ -104,8 +104,8 @@ export default function generateServer()
       connectSrc: ['*'], // ["'self'", 'ws:'],
 
       fontSrc: ["'self'"],
-      objectSrc: ["'none'"],
-      mediaSrc: ["'none'"],
+      objectSrc: [],
+      mediaSrc: [],
       childSrc: ["'self'"]
     }
   };
