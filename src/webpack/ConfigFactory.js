@@ -1,5 +1,5 @@
-import os from "os"
-import fs from "fs"
+import { tmpdir } from "os"
+import { statSync } from "fs"
 import path from "path"
 import webpack from "webpack"
 
@@ -78,7 +78,7 @@ function isLoaderSpecificFile(request) {
 
 function ifIsFile(filePath) {
   try {
-    return fs.statSync(filePath).isFile() ? filePath : ""
+    return statSync(filePath).isFile() ? filePath : ""
   } catch (ex) {}
   return ""
 }
@@ -521,7 +521,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             {
               // Enable caching for babel transpiles
               // Babel-Loader specific setting
-              cacheDirectory: path.resolve(os.tmpdir(), projectId, "babel-local"),
+              cacheDirectory: path.resolve(tmpdir(), projectId, "babel-local"),
 
               env:
               {
