@@ -342,8 +342,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
       // Extract vendor bundle for keeping larger parts of the application code
       // delivered to users stable during development (improves positive cache hits)
-      ifProdClient(new webpack.optimize.CommonsChunkPlugin(
-      {
+      ifProdClient(new webpack.optimize.CommonsChunkPlugin({
         name: "vendor",
         minChunks: Infinity
       })),
@@ -376,8 +375,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // If the value isn’t a string, it will be stringified (including functions).
       // If the value is an object all keys are removeEmpty the same way.
       // If you prefix typeof to the key, it’s only removeEmpty for typeof calls.
-      new webpack.DefinePlugin(
-      {
+      new webpack.DefinePlugin({
         "process.env.TARGET": JSON.stringify(target),
         "process.env.MODE": JSON.stringify(mode),
 
@@ -423,7 +421,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       ifProdClient(new webpack.optimize.OccurrenceOrderPlugin(true)),
 
       // Effectively fake all "file-loader" files with placeholders on server side
-      ifNode(new webpack.NormalModuleReplacementPlugin(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|mp4|mp3|ogg|html|pdf)$/, "node-noop")),
+      ifNode(new webpack.NormalModuleReplacementPlugin(
+        /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|mp4|mp3|ogg|html|pdf)$/, "node-noop")),
 
       // We don't want webpack errors to occur during development as it will
       // kill our dev servers.
