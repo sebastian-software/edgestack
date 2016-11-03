@@ -468,6 +468,16 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       ifProdClient(
         new ExtractTextPlugin({
           filename: "[name]-[contenthash:base62:8].css",
+
+          // FIXME: Work on some alternative approach for ExtractText to produce multiple
+          // external CSS files.
+          //
+          // Possibly fork: https://github.com/webpack/extract-text-webpack-plugin
+          // The current allChunks flag extract all styles from all chunks into one CSS file.
+          // Without this flag all non entry chunks are keeping their CSS inline in the JS bundle.
+          //
+          // Idea: Split into multiple chunk oriented CSS files + load the CSS files during
+          // from inside the JS file e.g. via calling some external API to load stylesheets.
           allChunks: true
         })
       )
