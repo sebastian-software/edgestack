@@ -185,9 +185,9 @@ rules:
   no-param-reassign:
     - off
 
-  # For maintainability of NodeJS code
+  # Access NodeJS environment. Used mostly for code variations e.g. `NODE_ENV`
   no-process-env:
-    - error
+    - off
 
   # Deprecated feature
   no-proto:
