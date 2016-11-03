@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === "development") {
   ReactHotLoader = require("react-hot-loader").AppContainer
 } else {
   ReactHotLoader = function({ children }) {
-    React.Children.only(children)
+    return React.Children.only(children)
   }
 }
 
