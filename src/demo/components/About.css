@@ -1,20 +1,6 @@
 $textColor: orange;
 
-@mixin scale {
-  transform: scale(1.2);
-}
-
 .intro {
   display: flex;
   color: $textColor;
-
-  a {
-    padding-left: calc(2px + 3px);
-
-    &:hover {
-      @include scale;
-      background: blue;
-      color: white;
-    }
-  }
 }
