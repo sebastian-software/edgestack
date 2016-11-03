@@ -35,7 +35,7 @@ function App({ children }) {
       />
 
       <div>
-        <h1>{websiteTitle}</h1>
+        <h1 className={Styles.title}>{websiteTitle}</h1>
         <strong>{websiteDescription}</strong>
       </div>
       <div>
