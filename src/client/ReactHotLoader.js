@@ -1,6 +1,3 @@
-/* eslint-disable global-require */
-/* eslint-disable import/no-extraneous-dependencies */
-
 import React from "react"
 
 // Having this contained within an if statement like this allows webpack
