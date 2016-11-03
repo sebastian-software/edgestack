@@ -139,9 +139,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   // our development client bundle.
   // @see https://github.com/ctrlplusb/code-split-component
   var CodeSplittingPluginConfig = [
-    "code-split-component/babel",
-    {
-      enableCodeSplitting: isProd && isClient
+    "code-split-component/babel", {
+      enableCodeSplitting: isProd //&& isClient
     }
   ]
 
