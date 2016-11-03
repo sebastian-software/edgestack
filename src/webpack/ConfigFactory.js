@@ -471,7 +471,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
       // JS Minification for client
       // See: https://phabricator.babeljs.io/T6858
-      ifProdClient(
+      /*ifProdClient(
         // Uglify does not work with ES6. Therefor we can only use it for ES5 transpiled
         // client bundles right now.
         // See: https://github.com/mishoo/UglifyJS2/issues/448
@@ -491,6 +491,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           }
         })
       ),
+      */
 
       // This is a production client so we will extract our CSS into
       // CSS files.
