@@ -1,6 +1,5 @@
 import React from "react"
 import { render } from "react-dom"
-import { AppContainer } from "react-hot-loader"
 import { BrowserRouter } from "react-router"
 
 import ReactHotLoader from "./ReactHotLoader"
