@@ -74,6 +74,7 @@ function scriptTags(scripts) {
 // providing us with prefetched caching and offline application support.
 // @see https://github.com/goldhand/sw-precache-webpack-plugin
 function serviceWorkerScript(nonce) {
+  return ""
   if (process.env.NODE_ENV === "production") {
     return `
       <script nonce="${nonce}">
