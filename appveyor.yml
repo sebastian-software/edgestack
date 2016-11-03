@@ -26,7 +26,7 @@ install:
   - npm -g install npm@latest
   - node --version
   - npm --version
-  - ps: Copy-Item .env_example .env
+  - ps: Copy-Item .env.example .env
   - IF "%platform%" == "x64" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" amd64
   - IF "%platform%" == "x86" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" x86
   - npm prune

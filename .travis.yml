@@ -17,4 +17,4 @@ before_install:
   - npm -g install npm@latest
   - node --version
   - npm --version
-  - cp -f .env_example .env
+  - cp -f .env.example .env
