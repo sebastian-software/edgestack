@@ -84,9 +84,6 @@ export function generateServer()
         // Allow scripts hosted from our application.
         "'self'",
 
-        // Allow scripts from cdn.polyfill.io so that we can import the polyfill.
-        // 'cdn.polyfill.io',
-
         // Note: We will execution of any inline scripts that have the following
         // nonce identifier attached to them.
         // This is useful for guarding your application whilst allowing an inline
@@ -109,7 +106,7 @@ export function generateServer()
       connectSrc: [ "*" ],
 
       // objectSrc: [ "'none'" ],
-      // mediaSrc: [],
+      // mediaSrc: [ "'none'" ],
 
       childSrc: [ "'self'" ]
     }

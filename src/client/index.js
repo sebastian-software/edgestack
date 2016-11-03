@@ -12,7 +12,7 @@ function renderApp(AppComponent) {
   render(
     <ReactHotLoader>
       <BrowserRouter>
-        <AppComponent />
+        <AppComponent/>
       </BrowserRouter>
     </ReactHotLoader>,
     container
