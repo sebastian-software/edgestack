@@ -1,9 +1,9 @@
 .root {
   box-sizing: border-box;
-  cursor: pointer;
-  line-height: 1.1em;
-  border-radius: 2px;
   margin-bottom: 12px;
+  cursor: pointer;
+  line-height: 1.1;
+  border-radius: 2px;
 
   &::-moz-focus-inner {
     border: 0;
