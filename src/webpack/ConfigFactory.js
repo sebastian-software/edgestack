@@ -25,9 +25,6 @@ import ChunkManifestPlugin from "./ChunkManifestPlugin"
 
 import esModules from "./Modules"
 
-import BabelConfigClient from "../config/babel.es"
-import BabelConfigNode from "../config/babel.node"
-
 import getPostCSSConfig from "./PostCSSConfig"
 
 
@@ -130,6 +127,23 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   const ifProdServer = ifElse(isProd && isServer)
   const ifIntegration = ifElse(process.env.CI || false)
   const ifUniversal = ifElse(process.env.DISABLE_SSR)
+
+
+  // We use the code-split-component/babel plugin and only enable
+  // code splitting when bundling a production client bundle.
+  // For our node and development client bundles we configure the
+  // code-split-component/babel so that it will transpile
+  // the System.import statements on our CodeSplit components
+  // into synchronous require statements. This then supports
+  // full server side rendering as well as React Hot Loader 3 on
+  // our development client bundle.
+  // @see https://github.com/ctrlplusb/code-split-component
+  var CodeSplittingPluginConfig = [
+    "code-split-component/babel",
+    {
+      enableCodeSplitting: isProd && isClient
+    }
+  ]
 
   const projectId = path.basename(root)
 
@@ -520,8 +534,100 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
               }
             },
 
-            ifNode(BabelConfigNode),
-            ifClient(BabelConfigClient)
+            ifNode({
+              // Don't try to find .babelrc because we want to force this configuration.
+              babelrc: false,
+
+              // Faster transpiling for minor loose in formatting
+              compact: true,
+
+              // Keep origin information alive
+              sourceMaps: true,
+
+              // Nobody needs the original comments when having source maps
+              comments: false,
+
+              presets:
+              [
+                // exponentiation
+                "babel-preset-es2016",
+
+                // async to generators + trailing function commas
+                "babel-preset-es2017",
+
+                // JSX, Flow
+                "babel-preset-react"
+              ],
+
+              plugins:
+              [
+                // Optimization for lodash imports
+                "lodash",
+
+                // just the parts from es2015 preset which are required for supporting
+                // transform-object-rest-spread" in all relevant scenarios (which always must be transpiled)
+                "transform-es2015-spread",
+                "transform-es2015-destructuring",
+                "transform-es2015-parameters",
+
+                // class { handleClick = () => { } }
+                "transform-class-properties",
+
+                // { ...todo, completed: true }
+                "transform-object-rest-spread",
+
+                // Polyfills the runtime needed
+                [ "transform-runtime", { regenerator: false } ],
+
+                CodeSplittingPluginConfig
+              ]
+            }),
+
+            ifClient({
+              // Don't try to find .babelrc because we want to force this configuration.
+              babelrc: false,
+
+              // Faster transpiling for minor loose in formatting
+              compact: true,
+
+              // Keep origin information alive
+              sourceMaps: true,
+
+              // Nobody needs the original comments when having source maps
+              comments: false,
+
+              presets:
+              [
+                // let, const, destructuring, classes, no modules
+                [ "babel-preset-es2015", { modules: false } ],
+
+                // exponentiation
+                "babel-preset-es2016",
+
+                // async to generators + trailing function commas
+                "babel-preset-es2017",
+
+                // JSX, Flow
+                "babel-preset-react"
+              ],
+
+              plugins:
+              [
+                // Optimization for lodash imports
+                "lodash",
+
+                // class { handleClick = () => { } }
+                "transform-class-properties",
+
+                // { ...todo, completed: true }
+                "transform-object-rest-spread",
+
+                // Polyfills the runtime needed
+                [ "transform-runtime", { regenerator: false } ],
+
+                CodeSplittingPluginConfig
+              ]
+            })
           )
         },
 
