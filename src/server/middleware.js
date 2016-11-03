@@ -23,7 +23,7 @@ export default function universalMiddleware(request, response)
       const html = render()
       response.status(200).send(html)
     } catch (ex) {
-      response.status(500).send(`Error during rendering: ${ex}!`)
+      response.status(500).send(`Error during rendering: ${ex}!: ${ex.stack}`)
     }
   }
   else
@@ -33,9 +33,11 @@ export default function universalMiddleware(request, response)
     const context = createServerRenderContext()
 
     // Create the application react element.
-    const app = (<ServerRouter location={request.url} context={context}>
-      <App />
-    </ServerRouter>)
+    const app = (
+      <ServerRouter location={request.url} context={context}>
+        <App />
+      </ServerRouter>
+    )
 
     // Render the app to a string.
     const html = render({
@@ -57,13 +59,9 @@ export default function universalMiddleware(request, response)
       return
     }
 
-    response.status(renderResult.missed
-
     // If the renderResult contains a "missed" match then we set a 404 code.
     // Our App component will handle the rendering of an Error404 view.
-    ? 404
-
     // Otherwise everything is all good and we send a 200 OK status.
-    : 200).send(html)
+    response.status(renderResult.missed ? 404 : 200).send(html)
   }
 }

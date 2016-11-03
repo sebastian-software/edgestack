@@ -6,7 +6,7 @@ import { Match, Miss, Link } from "react-router"
 import Helmet from "react-helmet"
 import CodeSplit from "code-split-component"
 
-import styles from "./App.css"
+import Styles from "./App.css"
 
 const websiteDescription = "A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience."
 const websiteLanguage = "en-US"
@@ -51,7 +51,7 @@ function App({ children }) {
           pattern="/"
           render={(routerProps) =>
             <CodeSplit module={System.import("./Home")}>
-              { (Home) => Home && <Home {...routerProps} /> }
+              { (View) => View && <View {...routerProps} /> }
             </CodeSplit>
           }
         />
@@ -60,7 +60,7 @@ function App({ children }) {
           pattern="/about"
           render={(routerProps) =>
             <CodeSplit module={System.import("./About")}>
-              { (About) => About && <About {...routerProps} /> }
+              { (View) => View && <View {...routerProps} /> }
             </CodeSplit>
           }
         />
