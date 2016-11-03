@@ -26,6 +26,8 @@
   font-style: normal;
 }
 
+/* stylelint-disable selector-no-type */
+
 html {
   padding: 2rem;
   font-family: Source Sans Pro;
