@@ -75,15 +75,4 @@ App.propTypes = {
   children: React.PropTypes.node
 }
 
-// The following is needed so that we can hot reload our App.
-/*
-if (process.env.NODE_ENV === "development" && module.hot) {
-  // Any changes to our App will cause a hotload re-render.
-  module.hot.accept(
-    "./App.js",
-    () => renderApp(require("./App.js").default)
-  )
-}
-*/
-
 export default App
