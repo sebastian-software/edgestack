@@ -125,8 +125,8 @@ export default function render({ app, initialState, nonce }) {
         <div id="app">${appString || ""}</div>
 
         <script nonce="${nonce}">${
-          (initialState ? `window.APP_STATE=${serialize(initialState)};` : "")
-          + `window.CHUNK_MANIFEST=${chunkManifest};`
+          (initialState ? `window.APP_STATE=${serialize(initialState)};` : "") +
+          `window.CHUNK_MANIFEST=${chunkManifest};`
         }</script>
 
         ${scriptTags(assets.scripts)}

@@ -12,24 +12,23 @@ export default function build()
   const buildFolderClient = path.resolve("build", "client")
   const buildFolderServer = path.resolve("build", "server")
 
-  series(
-  [
+  series([
     function(callback)
     {
       // Remove all content but keep the directory so that
       // if you're in it, you don't end up in Trash
-      rimraf(buildFolderClient + '/*', callback)
+      rimraf(buildFolderClient + "/*", callback)
     },
     function(callback)
     {
       // Remove all content but keep the directory so that
       // if you're in it, you don't end up in Trash
-      rimraf(buildFolderServer + '/*', callback)
+      rimraf(buildFolderServer + "/*", callback)
     },
     function(callback)
     {
       console.log("Creating a production build for client...")
-      webpack(ConfigFactory("client", "production")).run(function(err, stats)
+      webpack(ConfigFactory("client", "production")).run((err, stats) =>
       {
         if (err)
         {
@@ -55,7 +54,7 @@ export default function build()
     function(callback)
     {
       console.log("Creating a production build for server...")
-      webpack(ConfigFactory("server", "production")).run(function(err, stats)
+      webpack(ConfigFactory("server", "production")).run((err, stats) =>
       {
         if (err)
         {

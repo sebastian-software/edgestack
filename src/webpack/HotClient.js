@@ -39,9 +39,7 @@ class HotClient {
   dispose(force = false) {
     this.webpackDevMiddleware.close()
 
-    return this.listenerManager
-      ? this.listenerManager.dispose(force)
-      : Promise.resolve()
+    return this.listenerManager ? this.listenerManager.dispose(force) : Promise.resolve()
   }
 }
 

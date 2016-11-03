@@ -11,6 +11,8 @@ import {
 } from "./config"
 
 export function addFallbackHandler(server) {
+  /* eslint-disable no-magic-numbers */
+
   // Handle 404 errors.
   // Note: the react application middleware hands 404 paths, but it is good to
   // have this backup for paths not handled by the universal middleware. For
@@ -29,6 +31,7 @@ export function addFallbackHandler(server) {
       console.log(err)
       console.log(err.stack)
     }
+
     res.status(500).send("Sorry, an unexpected error occurred.")
   })
 }

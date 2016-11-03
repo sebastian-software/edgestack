@@ -37,9 +37,7 @@ class HotServer {
   }
 
   dispose(force = false) {
-    return this.listenerManager
-      ? this.listenerManager.dispose(force)
-      : Promise.resolve()
+    return this.listenerManager ? this.listenerManager.dispose(force) : Promise.resolve()
   }
 }
 
