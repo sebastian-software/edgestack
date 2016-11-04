@@ -82,7 +82,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jest": "^16.0.2",
     "json-loader": "^0.5.4",
-    "lint-staged": "^3.2.0",
+    "lint-staged": "^3.2.1",
     "load-plugins": "^2.1.1",
     "loader-utils": "^0.2.16",
     "lodash": "^4.16.6",
@@ -116,7 +116,7 @@
     "postcss-sassy-mixins": "^2.0.0",
     "postcss-selector-matches": "^2.0.5",
     "postcss-simple-url": "^0.1.3",
-    "postcss-smart-import": "^0.4.4",
+    "postcss-smart-import": "^0.5.0",
     "postcss-url": "^5.1.2",
     "postcss-will-change": "^1.1.0",
     "postcss-zindex": "^2.1.1",
@@ -142,7 +142,7 @@
   "devDependencies": {
     "normalize.css": "^5.0.0",
     "nsp": "^2.6.2",
-    "prepublish-lib": "^0.5.2",
+    "prepublish-lib": "^0.6.1",
     "rollup": "^0.36.3",
     "source-sans-pro": "^2.0.10"
   }
