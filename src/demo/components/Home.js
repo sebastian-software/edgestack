@@ -6,6 +6,9 @@ import Styles from "./Home.css"
 import GraphQLTest from "./GraphQLTest.gql"
 console.log("Loading GraphQL queries works:", GraphQLTest.kind === "Document")
 
+import Config from "./Config.yml"
+console.log("Config", Config)
+
 function Home() {
   return (
     <article>

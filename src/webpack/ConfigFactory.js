@@ -623,7 +623,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // YAML
         {
           test: /\.(yml|yaml)$/,
-          loader: "yaml-loader"
+          loader: "json-loader!yaml-loader"
         },
 
         // References to images, fonts, movies, music, etc.
