@@ -3,6 +3,9 @@ import Helmet from "react-helmet"
 
 import Styles from "./Home.css"
 
+import GraphQLTest from "./GraphQLTest.gql"
+console.log("Loading GraphQL queries works:", GraphQLTest.kind === "Document")
+
 function Home() {
   return (
     <article>
