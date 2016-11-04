@@ -55,6 +55,7 @@ export function generateServer()
   // Prevent HTTP Parameter pollution.
   server.use(hpp())
 
+  /*
   // Content Security Policy (CSP)
   //
   // If you are unfamiliar with CSPs then I highly recommend that you do some
@@ -121,6 +122,7 @@ export function generateServer()
   }
 
   server.use(helmet.contentSecurityPolicy(cspConfig))
+  */
 
   // The xssFilter middleware sets the X-XSS-Protection header to prevent
   // reflected XSS attacks.
