@@ -636,6 +636,14 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           }
         },
 
+        // GraphQL support
+        // @see http://dev.apollodata.com/react/webpack.html
+        {
+          test: /\.(graphql|gql)$/,
+          exclude: /node_modules/,
+          loader: 'graphql-tag/loader'
+        },
+
         // CSS
         merge(
           {
