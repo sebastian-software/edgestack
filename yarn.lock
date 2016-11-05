@@ -3334,7 +3334,7 @@ graceful-fs@~1.2.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
 
-graphql-tag@^0.1.15:
+graphql-tag@^0.1.16:
   version "0.1.16"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-0.1.16.tgz#dc91350b19093b4771a013b55f32ee2290567c4e"
 
@@ -6318,7 +6318,7 @@ postcss-simple-vars@^1.2.0:
   dependencies:
     postcss "^5.0.13"
 
-postcss-smart-import@^0.5.0:
+postcss-smart-import@^0.5.0, postcss-smart-import@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/postcss-smart-import/-/postcss-smart-import-0.5.1.tgz#f8b6b056330f567deeb9c393b39bfec269890011"
   dependencies:
@@ -6402,7 +6402,7 @@ prepend-http@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
 
-prepublish-lib@^0.6.1:
+prepublish-lib@^0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/prepublish-lib/-/prepublish-lib-0.6.3.tgz#b71323bb80597e17a06e53f7c4b249b92bad2691"
   dependencies:
@@ -6594,7 +6594,7 @@ react-dom@^15.3.2:
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.3.2.tgz#c46b0aa5380d7b838e7a59c4a7beff2ed315531f"
 
-react-helmet@^3.1.0:
+react-helmet@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-3.2.1.tgz#d325e2f9f63b6a926dea7e2332142e39503f869e"
   dependencies:
@@ -7055,9 +7055,9 @@ rxjs@^5.0.0-beta.11:
   dependencies:
     symbol-observable "^1.0.1"
 
-s15e-javascript@^0.4.1:
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.4.5.tgz#63ac3b2c03a8d2eb9f9937517987fb55829b8a90"
+s15e-javascript@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.5.0.tgz#395d4c5390996d53c1ff0925f26c38be0dc9f163"
   dependencies:
     eslint "^3.9.1"
     eslint-find-rules "^1.14.3"
