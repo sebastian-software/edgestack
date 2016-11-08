@@ -202,7 +202,12 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       [ "transform-runtime", { regenerator: false } ],
 
       // Code Splitting by Routes
-      [ "code-split-component/babel", { disabled : isDev } ]
+      [
+        "code-split-component/babel", {
+          disabled : isDev,
+          role: "client"
+        }
+      ]
     ]
   } : null
 
