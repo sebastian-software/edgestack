@@ -1,6 +1,7 @@
 import React from "react"
 import { render } from "react-dom"
 import { BrowserRouter } from "react-router"
+import { CodeSplitProvider } from "code-split-component"
 
 import ReactHotLoader from "./ReactHotLoader"
 import App from "../demo/components/App"
@@ -10,11 +11,13 @@ const container = document.querySelector("#app")
 
 function renderApp(AppComponent) {
   render(
-    <ReactHotLoader>
-      <BrowserRouter>
-        <AppComponent/>
-      </BrowserRouter>
-    </ReactHotLoader>,
+    <CodeSplitProvider>
+      <ReactHotLoader>
+        <BrowserRouter>
+          <AppComponent/>
+        </BrowserRouter>
+      </ReactHotLoader>
+    </CodeSplitProvider>,
     container
   )
 }

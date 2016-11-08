@@ -11,6 +11,7 @@ import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
 import Dashboard from "webpack-dashboard/plugin"
 import ProgressBar from "progress-bar-webpack-plugin"
 import HappyPack from "happypack"
+import CodeSplitWebpackPlugin from "code-split-component/webpack"
 
 import dotenv from "dotenv"
 
@@ -98,21 +99,6 @@ function ifIsFile(filePath) {
 
 function getJsLoader({ isServer, isClient, isProd, isDev })
 {
-  // We use the code-split-component/babel plugin and only enable
-  // code splitting when bundling a production client bundle.
-  // For our node and development client bundles we configure the
-  // code-split-component/babel so that it will transpile
-  // the System.import statements on our CodeSplit components
-  // into synchronous require statements. This then supports
-  // full server side rendering as well as React Hot Loader 3 on
-  // our development client bundle.
-  // @see https://github.com/ctrlplusb/code-split-component
-  var CodeSplittingPluginConfig = [
-    "code-split-component/babel", {
-      enableCodeSplitting: isProd //&& isClient
-    }
-  ]
-
   const nodeBabel = isServer ? {
     // Don't try to find .babelrc because we want to force this configuration.
     babelrc: false,
@@ -165,7 +151,11 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       // Polyfills the runtime needed
       [ "transform-runtime", { regenerator: false } ],
 
-      CodeSplittingPluginConfig
+      // Code Splitting by Routes
+      [ "code-split-component/babel", {
+        disabled: isDev,
+        role: "server"
+      }]
     ]
   } : null
 
@@ -211,7 +201,8 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       // Polyfills the runtime needed
       [ "transform-runtime", { regenerator: false } ],
 
-      CodeSplittingPluginConfig
+      // Code Splitting by Routes
+      [ "code-split-component/babel", { disabled : isDev } ]
     ]
   } : null
 
@@ -568,6 +559,14 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     },
 
     plugins: removeEmpty([
+
+      new CodeSplitWebpackPlugin({
+        // The code-split-component doesn't work nicely with hot module reloading,
+        // which we use in our development builds, so we will disable it if we
+        // are creating a development bundle (which results in synchronous loading
+        // behavior on the CodeSplit instances).
+        disabled: isDev
+      }),
 
       // Javascript Thread Loader
       /*new HappyPack({

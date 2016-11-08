@@ -50,8 +50,8 @@ function App({ children }) {
           exactly
           pattern="/"
           render={(routerProps) =>
-            <CodeSplit module={System.import("./Home")}>
-              { (View) => View && <View {...routerProps} /> }
+            <CodeSplit chunkName="Home" modules={{ Home: require("./Home") }}>
+              { ({ Home }) => Home && <Home {...routerProps} /> }
             </CodeSplit>
           }
         />
@@ -59,8 +59,8 @@ function App({ children }) {
         <Match
           pattern="/about"
           render={(routerProps) =>
-            <CodeSplit module={System.import("./About")}>
-              { (View) => View && <View {...routerProps} /> }
+            <CodeSplit chunkName="About" modules={{ About: require("./About") }}>
+              { ({ About }) => About && <About {...routerProps} /> }
             </CodeSplit>
           }
         />
