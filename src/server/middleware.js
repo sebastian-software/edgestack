@@ -1,5 +1,8 @@
 import React from "react"
 import { ServerRouter, createServerRenderContext } from "react-router"
+import { CodeSplitProvider, createRenderContext } from "code-split-component"
+import Helmet from 'react-helmet';
+
 import App from "../demo/components/App"
 
 import render from "./render"
@@ -32,13 +35,19 @@ export default function universalMiddleware(request, response)
   {
     // First create a context for <ServerRouter>, which will allow us to
     // query for the results of the render.
-    const context = createServerRenderContext()
+    const routingContext = createServerRenderContext()
+
+    // We also create a context for our <CodeSplitProvider> which will allow us
+    // to query which chunks/modules were used during the render process.
+    const codeSplitContext = createRenderContext()
 
     // Create the application react element.
     const app = (
-      <ServerRouter location={request.url} context={context}>
-        <App />
-      </ServerRouter>
+      <CodeSplitProvider context={codeSplitContext}>
+        <ServerRouter location={request.url} context={routingContext}>
+          <App />
+        </ServerRouter>
+      </CodeSplitProvider>
     )
 
     // Render the app to a string.
@@ -47,11 +56,21 @@ export default function universalMiddleware(request, response)
       app,
 
       // Nonce for allowing inline scripts.
-      nonce
+      nonce,
+
+      // Running this gets all the helmet properties (e.g. headers/scripts/title etc)
+      // that need to be included within our html. It's based on the rendered app.
+      // @see https://github.com/nfl/react-helmet
+      helmet: Helmet.rewind(),
+
+      // We provide our code split state so that it can be included within the
+      // html, and then the client bundle can use this data to know which chunks/
+      // modules need to be rehydrated prior to the application being rendered.
+      codeSplitState: codeSplitContext.getState()
     })
 
     // Get the render result from the server render context.
-    const renderResult = context.getResult()
+    const renderResult = routingContext.getResult()
 
     // Check if the render result contains a redirect, if so we need to set
     // the specific status and redirect header and end the response.
