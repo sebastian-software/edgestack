@@ -10,6 +10,7 @@ import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
 
 import Dashboard from "webpack-dashboard/plugin"
 import ProgressBar from "progress-bar-webpack-plugin"
+import HappyPack from "happypack"
 
 import dotenv from "dotenv"
 
@@ -41,6 +42,17 @@ const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
 dotenv.config()
+
+// Generates a HappyPack plugin.
+// @see https://github.com/amireh/happypack/
+function happyPackPlugin({ name, loaders }) {
+  return new HappyPack({
+    id: name,
+    verbose: false,
+    threadPool: happyPackThreadPool,
+    loaders,
+  })
+}
 
 function removeEmpty(array) {
   return array.filter((entry) => Boolean(entry))
@@ -81,6 +93,238 @@ function ifIsFile(filePath) {
     return statSync(filePath).isFile() ? filePath : ""
   } catch (ex) {}
   return ""
+}
+
+
+function getJsLoader({ isServer, isClient, isProd, isDev })
+{
+  // We use the code-split-component/babel plugin and only enable
+  // code splitting when bundling a production client bundle.
+  // For our node and development client bundles we configure the
+  // code-split-component/babel so that it will transpile
+  // the System.import statements on our CodeSplit components
+  // into synchronous require statements. This then supports
+  // full server side rendering as well as React Hot Loader 3 on
+  // our development client bundle.
+  // @see https://github.com/ctrlplusb/code-split-component
+  var CodeSplittingPluginConfig = [
+    "code-split-component/babel", {
+      enableCodeSplitting: isProd //&& isClient
+    }
+  ]
+
+  const nodeBabel = isServer ? {
+    // Don't try to find .babelrc because we want to force this configuration.
+    babelrc: false,
+
+    // Faster transpiling for minor loose in formatting
+    compact: true,
+
+    // Keep origin information alive
+    sourceMaps: true,
+
+    // Nobody needs the original comments when having source maps
+    comments: false,
+
+    presets:
+    [
+      // It seems to be a good idea to use the minimum required
+      // transpiling infrastructure. But unfortunately it does not
+      // seem to work for us.
+      // Warning: React.createElement: type should not be null, undefined, boolean, or number.
+      // Not sure how this is related to React, though.
+      // "babel-preset-latest-minimal",
+
+      // exponentiation
+      "babel-preset-es2016",
+
+      // async to generators + trailing function commas
+      "babel-preset-es2017",
+
+      // JSX, Flow
+      "babel-preset-react"
+    ],
+
+    plugins:
+    [
+      // Optimization for lodash imports
+      "lodash",
+
+      // just the parts from es2015 preset which are required for supporting
+      // transform-object-rest-spread" in all relevant scenarios (which always must be transpiled)
+      "transform-es2015-spread",
+      "transform-es2015-destructuring",
+      "transform-es2015-parameters",
+
+      // class { handleClick = () => { } }
+      "transform-class-properties",
+
+      // { ...todo, completed: true }
+      "transform-object-rest-spread",
+
+      // Polyfills the runtime needed
+      [ "transform-runtime", { regenerator: false } ],
+
+      CodeSplittingPluginConfig
+    ]
+  } : null
+
+  const clientBabel = isClient ? {
+    // Don't try to find .babelrc because we want to force this configuration.
+    babelrc: false,
+
+    // Faster transpiling for minor loose in formatting
+    compact: true,
+
+    // Keep origin information alive
+    sourceMaps: true,
+
+    // Nobody needs the original comments when having source maps
+    comments: false,
+
+    presets:
+    [
+      // let, const, destructuring, classes, no modules
+      [ "babel-preset-es2015", { modules: false } ],
+
+      // exponentiation
+      "babel-preset-es2016",
+
+      // async to generators + trailing function commas
+      "babel-preset-es2017",
+
+      // JSX, Flow
+      "babel-preset-react"
+    ],
+
+    plugins:
+    [
+      // Optimization for lodash imports
+      "lodash",
+
+      // class { handleClick = () => { } }
+      "transform-class-properties",
+
+      // { ...todo, completed: true }
+      "transform-object-rest-spread",
+
+      // Polyfills the runtime needed
+      [ "transform-runtime", { regenerator: false } ],
+
+      CodeSplittingPluginConfig
+    ]
+  } : null
+
+  return [
+    {
+      loader: "babel",
+      query: merge(
+        {
+          // Enable caching for babel transpiles
+          cacheDirectory: true,
+
+          env:
+          {
+            production: {
+              comments: false
+            },
+            development: {
+              plugins: [ "react-hot-loader/babel" ]
+            }
+          }
+        },
+
+        nodeBabel,
+        clientBabel
+      )
+    }
+  ]
+}
+
+
+function getCssLoaders({ isServer, isClient, isProd, isDev })
+{
+  // When targetting the server we fake out the style loader as the
+  // server can't handle the styles and doesn't care about them either..
+  if (isServer)
+  {
+    return [
+      {
+        path: "css-loader/locals",
+        query:
+        {
+          sourceMap: false,
+          modules: true,
+          localIdentName: isProd ? "[local]-[hash:base62:8]" : "[path][name]-[local]"
+        }
+      },
+      {
+        path: "postcss-loader"
+      }
+    ]
+  }
+
+  if (isClient)
+  {
+    // For a production client build we use the ExtractTextPlugin which
+    // will extract our CSS into CSS files. The plugin needs to be
+    // registered within the plugins section too.
+    if (isProd)
+    {
+      // First: the loader(s) that should be used when the css is not extracted
+      // Second: the loader(s) that should be used for converting the resource to a css exporting module
+      // Note: Unfortunately it seems like it does not support the new query syntax of webpack v2
+      // See also: https://github.com/webpack/extract-text-webpack-plugin/issues/196
+      return [
+        ExtractTextPlugin.extract({
+          fallbackLoader: "style-loader",
+          allChunks: true,
+          loader:
+          [
+            {
+              loader: "css-loader",
+              query:
+              {
+                sourceMap: true,
+                modules: true,
+                localIdentName: "[local]-[hash:base62:8]",
+                minimize: false,
+                import: false
+              }
+            },
+            {
+              loader: "postcss-loader"
+            }
+          ]
+        })
+      ]
+    }
+    else
+    {
+      // For a development client we will use a straight style & css loader
+      // along with source maps. This combo gives us a better development
+      // experience.
+      return [
+        {
+          path: "style-loader"
+        },
+        {
+          path: "css-loader",
+          query:
+          {
+            sourceMap: true,
+            modules: true,
+            localIdentName: "[path][name]-[local]",
+            minimize: false,
+            import: false
+          }
+        },
+        {
+          path: "postcss-loader"
+        }
+      ]
+    }
+  }
 }
 
 const isDebug = true
@@ -129,20 +373,22 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   const ifUniversal = ifElse(process.env.DISABLE_SSR)
 
 
-  // We use the code-split-component/babel plugin and only enable
-  // code splitting when bundling a production client bundle.
-  // For our node and development client bundles we configure the
-  // code-split-component/babel so that it will transpile
-  // the System.import statements on our CodeSplit components
-  // into synchronous require statements. This then supports
-  // full server side rendering as well as React Hot Loader 3 on
-  // our development client bundle.
-  // @see https://github.com/ctrlplusb/code-split-component
-  var CodeSplittingPluginConfig = [
-    "code-split-component/babel", {
-      enableCodeSplitting: isProd //&& isClient
-    }
-  ]
+  const cssLoaders = getCssLoaders({
+    isProd,
+    isDev,
+    isClient,
+    isServer
+  })
+
+  const jsLoaders = getJsLoader({
+    isProd,
+    isDev,
+    isClient,
+    isServer
+  })
+
+  console.log(JSON.stringify(jsLoaders))
+
 
   const projectId = path.basename(root)
 
@@ -323,6 +569,22 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     plugins: removeEmpty([
 
+      // Javascript Thread Loader
+      /*new HappyPack({
+        id: 'js',
+        threads: 4,
+        debug: true,
+
+        loaders: jsLoaders
+      }),*/
+
+      // CSS Thread Loader
+      new HappyPack({
+        id: 'css',
+        threads: 2,
+        loaders: cssLoaders
+      }),
+
       // Render Dashboard for Client Development + ProgressBar for production builds
       ifIntegration(null, ifDevClient(new Dashboard())),
       ifIntegration(null, ifProd(new ProgressBar())),
@@ -487,123 +749,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     {
       rules: removeEmpty(
       [
-        // Javascript
+        // JavaScript
         {
           test: /\.(js|jsx)$/,
-          loader: "babel-loader",
-          exclude: excludeFromTranspilation,
-          query: merge(
-            {
-              // Enable caching for babel transpiles
-              // Babel-Loader specific setting
-              cacheDirectory: path.resolve(tmpdir(), projectId, "babel-local"),
-
-              env:
-              {
-                production: {
-                  comments: false
-                },
-                development: {
-                  plugins: [ "react-hot-loader/babel" ]
-                }
-              }
-            },
-
-            ifNode({
-              // Don't try to find .babelrc because we want to force this configuration.
-              babelrc: false,
-
-              // Faster transpiling for minor loose in formatting
-              compact: true,
-
-              // Keep origin information alive
-              sourceMaps: true,
-
-              // Nobody needs the original comments when having source maps
-              comments: false,
-
-              presets:
-              [
-                // exponentiation
-                "babel-preset-es2016",
-
-                // async to generators + trailing function commas
-                "babel-preset-es2017",
-
-                // JSX, Flow
-                "babel-preset-react"
-              ],
-
-              plugins:
-              [
-                // Optimization for lodash imports
-                "lodash",
-
-                // just the parts from es2015 preset which are required for supporting
-                // transform-object-rest-spread" in all relevant scenarios (which always must be transpiled)
-                "transform-es2015-spread",
-                "transform-es2015-destructuring",
-                "transform-es2015-parameters",
-
-                // class { handleClick = () => { } }
-                "transform-class-properties",
-
-                // { ...todo, completed: true }
-                "transform-object-rest-spread",
-
-                // Polyfills the runtime needed
-                [ "transform-runtime", { regenerator: false } ],
-
-                CodeSplittingPluginConfig
-              ]
-            }),
-
-            ifClient({
-              // Don't try to find .babelrc because we want to force this configuration.
-              babelrc: false,
-
-              // Faster transpiling for minor loose in formatting
-              compact: true,
-
-              // Keep origin information alive
-              sourceMaps: true,
-
-              // Nobody needs the original comments when having source maps
-              comments: false,
-
-              presets:
-              [
-                // let, const, destructuring, classes, no modules
-                [ "babel-preset-es2015", { modules: false } ],
-
-                // exponentiation
-                "babel-preset-es2016",
-
-                // async to generators + trailing function commas
-                "babel-preset-es2017",
-
-                // JSX, Flow
-                "babel-preset-react"
-              ],
-
-              plugins:
-              [
-                // Optimization for lodash imports
-                "lodash",
-
-                // class { handleClick = () => { } }
-                "transform-class-properties",
-
-                // { ...todo, completed: true }
-                "transform-object-rest-spread",
-
-                // Polyfills the runtime needed
-                [ "transform-runtime", { regenerator: false } ],
-
-                CodeSplittingPluginConfig
-              ]
-            })
-          )
+          //loader: 'happypack/loader?id=js',
+          loaders: jsLoaders,
+          exclude: excludeFromTranspilation
         },
 
         // Typescript
@@ -612,6 +763,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           test: /\.(ts|tsx)$/,
           loader: "awesome-typescript-loader",
           exclude: excludeFromTranspilation
+        },
+
+        // CSS
+        {
+          test: /\.css$/,
+          loader: 'happypack/loader?id=css'
         },
 
         // JSON
@@ -642,94 +799,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           test: /\.(graphql|gql)$/,
           exclude: /node_modules/,
           loader: 'graphql-tag/loader'
-        },
-
-        // CSS
-        merge(
-          {
-            test: /\.css$/
-          },
-
-          // When targetting the server we fake out the style loader as the
-          // server can't handle the styles and doesn't care about them either..
-          ifNode(
-            {
-              loaders:
-              [
-                {
-                  loader: "css-loader/locals",
-                  query:
-                  {
-                    sourceMap: false,
-                    modules: true,
-                    localIdentName: ifProd("[local]-[hash:base62:8]", "[path][name]-[local]")
-                  }
-                },
-                {
-                  loader: "postcss-loader"
-                }
-              ]
-            }),
-
-          // For a production client build we use the ExtractTextPlugin which
-          // will extract our CSS into CSS files. The plugin needs to be
-          // registered within the plugins section too.
-          ifProdClient(
-          {
-            // First: the loader(s) that should be used when the css is not extracted
-            // Second: the loader(s) that should be used for converting the resource to a css exporting module
-            // Note: Unfortunately it seems like it does not support the new query syntax of webpack v2
-            // See also: https://github.com/webpack/extract-text-webpack-plugin/issues/196
-            loader: ExtractTextPlugin.extract({
-              fallbackLoader: "style-loader",
-              allChunks: true,
-              loader:
-              [
-                {
-                  loader: "css-loader",
-                  query:
-                  {
-                    sourceMap: true,
-                    modules: true,
-                    localIdentName: "[local]-[hash:base62:8]",
-                    minimize: false,
-                    import: false
-                  }
-                },
-                {
-                  loader: "postcss-loader"
-                }
-              ]
-            })
-          }),
-
-          // For a development client we will use a straight style & css loader
-          // along with source maps. This combo gives us a better development
-          // experience.
-          ifDevClient(
-          {
-            loaders:
-            [
-              {
-                loader: "style-loader"
-              },
-              {
-                loader: "css-loader",
-                query:
-                {
-                  sourceMap: true,
-                  modules: true,
-                  localIdentName: "[path][name]-[local]",
-                  minimize: false,
-                  import: false
-                }
-              },
-              {
-                loader: "postcss-loader"
-              }
-            ]
-          })
-        )
+        }
       ])
     }
   }
