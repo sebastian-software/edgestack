@@ -211,30 +211,28 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
     ]
   } : null
 
-  return [
-    {
-      loader: "babel",
-      query: merge(
+  return [{
+    loader: "babel",
+    query: merge(
+      {
+        // Enable caching for babel transpiles
+        cacheDirectory: true,
+
+        env:
         {
-          // Enable caching for babel transpiles
-          cacheDirectory: true,
-
-          env:
-          {
-            production: {
-              comments: false
-            },
-            development: {
-              plugins: [ "react-hot-loader/babel" ]
-            }
+          production: {
+            comments: false
+          },
+          development: {
+            plugins: [ "react-hot-loader/babel" ]
           }
-        },
+        }
+      },
 
-        nodeBabel,
-        clientBabel
-      )
-    }
-  ]
+      nodeBabel,
+      clientBabel
+    )
+  }]
 }
 
 
