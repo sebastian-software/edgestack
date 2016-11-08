@@ -472,7 +472,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     // All 'module*' and 'cheap' variants do not seem to work with this kind
     // of setup where we have loaders involved. Even simple console messages jump
     // to the wrong location in these cases.
-    devtool: ifProd("source-map", "eval-source-map"),
+    //devtool: ifProd("source-map", "eval-source-map"),
+    devtool: "source-map",
 
     // Define our entry chunks for our bundle.
     entry: removeEmptyKeys(
