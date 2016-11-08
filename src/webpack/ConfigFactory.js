@@ -241,7 +241,7 @@ function getCssLoaders({ isServer, isClient, isProd, isDev })
   {
     return [
       {
-        path: "css-loader/locals",
+        loader: "css-loader/locals",
         query:
         {
           sourceMap: false,
@@ -250,7 +250,7 @@ function getCssLoaders({ isServer, isClient, isProd, isDev })
         }
       },
       {
-        path: "postcss-loader"
+        loader: "postcss-loader"
       }
     ]
   }
@@ -266,29 +266,27 @@ function getCssLoaders({ isServer, isClient, isProd, isDev })
       // Second: the loader(s) that should be used for converting the resource to a css exporting module
       // Note: Unfortunately it seems like it does not support the new query syntax of webpack v2
       // See also: https://github.com/webpack/extract-text-webpack-plugin/issues/196
-      return [
-        ExtractTextPlugin.extract({
-          fallbackLoader: "style-loader",
-          allChunks: true,
-          loader:
-          [
+      return ExtractTextPlugin.extract({
+        allChunks: true,
+        fallbackLoader: "style-loader",
+        loader:
+        [
+          {
+            loader: "css-loader",
+            query:
             {
-              loader: "css-loader",
-              query:
-              {
-                sourceMap: true,
-                modules: true,
-                localIdentName: "[local]-[hash:base62:8]",
-                minimize: false,
-                import: false
-              }
-            },
-            {
-              loader: "postcss-loader"
+              sourceMap: true,
+              modules: true,
+              localIdentName: "[local]-[hash:base62:8]",
+              minimize: false,
+              import: false
             }
-          ]
-        })
-      ]
+          },
+          {
+            loader: "postcss-loader"
+          }
+        ]
+      })
     }
     else
     {
@@ -297,10 +295,10 @@ function getCssLoaders({ isServer, isClient, isProd, isDev })
       // experience.
       return [
         {
-          path: "style-loader"
+          loader: "style-loader"
         },
         {
-          path: "css-loader",
+          loader: "css-loader",
           query:
           {
             sourceMap: true,
@@ -311,7 +309,7 @@ function getCssLoaders({ isServer, isClient, isProd, isDev })
           }
         },
         {
-          path: "postcss-loader"
+          loader: "postcss-loader"
         }
       ]
     }
@@ -378,7 +376,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     isServer
   })
 
-  console.log(JSON.stringify(jsLoaders))
+  console.log("JS Loaders: ", JSON.stringify(jsLoaders))
+  console.log("CSS Loaders: ", JSON.stringify(cssLoaders))
+
+  if (cssLoaders == null) {
+    throw new Error("WOGOOOO")
+  }
 
 
   const projectId = path.basename(root)
@@ -569,20 +572,22 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       }),
 
       // Javascript Thread Loader
-      /*new HappyPack({
-        id: 'js',
+      /*
+      new HappyPack({
+        id: "js",
         threads: 4,
         debug: true,
 
         loaders: jsLoaders
-      }),*/
+      }),
 
       // CSS Thread Loader
       new HappyPack({
-        id: 'css',
+        id: "css",
         threads: 2,
         loaders: cssLoaders
       }),
+      */
 
       // Render Dashboard for Client Development + ProgressBar for production builds
       ifIntegration(null, ifDevClient(new Dashboard())),
@@ -767,7 +772,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // CSS
         {
           test: /\.css$/,
-          loader: 'happypack/loader?id=css'
+          loaders: cssLoaders
+          //loader: 'happypack/loader?id=css'
         },
 
         // JSON
