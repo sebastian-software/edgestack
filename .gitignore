@@ -24,6 +24,7 @@ node_modules
 # Debug log from npm
 npm-debug.log
 
-# Cache file from ESLint
+# Cache file from ESLint, Happypack
 .eslintcache
+.happypack
 
