@@ -379,11 +379,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   console.log("JS Loaders: ", JSON.stringify(jsLoaders))
   console.log("CSS Loaders: ", JSON.stringify(cssLoaders))
 
-  if (cssLoaders == null) {
-    throw new Error("WOGOOOO")
-  }
-
-
   const projectId = path.basename(root)
 
   const excludeFromTranspilation = [
@@ -571,13 +566,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         disabled: isDev
       }),
 
-      // Javascript Thread Loader
       /*
+      // Javascript Thread Loader
       new HappyPack({
         id: "js",
         threads: 4,
         debug: true,
-
         loaders: jsLoaders
       }),
 
@@ -585,6 +579,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       new HappyPack({
         id: "css",
         threads: 2,
+        debug: true,
         loaders: cssLoaders
       }),
       */
