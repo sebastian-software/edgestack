@@ -20,7 +20,9 @@ export default function universalMiddleware(request, response)
     // SSR is disabled so we will just return an empty html page and will
     // rely on the client to populate the initial react application state.
     try {
-      const html = render({})
+      const html = render({
+        nonce
+      })
       response.status(200).send(html)
     } catch (ex) {
       response.status(500).send(`Error during rendering: ${ex}!: ${ex.stack}`)
