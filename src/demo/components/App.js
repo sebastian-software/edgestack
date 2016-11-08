@@ -4,7 +4,7 @@ import "./Fonts.css"
 import React from "react"
 import { Match, Miss, Link } from "react-router"
 import Helmet from "react-helmet"
-import CodeSplit from "code-split-component"
+import { CodeSplit } from "code-split-component"
 
 import Styles from "./App.css"
 
