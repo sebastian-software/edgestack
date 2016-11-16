@@ -212,7 +212,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
   } : null
 
   return [{
-    loader: "babel",
+    loader: "babel-loader",
     query: merge(
       {
         // Enable caching for babel transpiles
