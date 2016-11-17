@@ -379,9 +379,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     isServer
   })
 
-  console.log("JS Loaders: ", JSON.stringify(jsLoaders))
-  console.log("CSS Loaders: ", JSON.stringify(cssLoaders))
-
   const projectId = path.basename(root)
 
   const excludeFromTranspilation = [
@@ -755,7 +752,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // JavaScript
         {
           test: /\.(js|jsx)$/,
-          //loader: 'happypack/loader?id=js',
           loaders: jsLoaders,
           exclude: excludeFromTranspilation
         },
@@ -772,7 +768,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         {
           test: /\.css$/,
           loaders: cssLoaders
-          //loader: 'happypack/loader?id=css'
         },
 
         // JSON
@@ -784,14 +779,14 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // YAML
         {
           test: /\.(yml|yaml)$/,
-          loader: "json-loader!yaml-loader"
+          loaders: [ "json-loader", "yaml-loader" ]
         },
 
         // References to images, fonts, movies, music, etc.
         {
           test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf|html)$/,
           loader: "file-loader",
-          query: {
+          options: {
             name: ifProdClient("file-[hash:base62:8].[ext]", "[name].[ext]"),
             emitFile: isClient
           }
