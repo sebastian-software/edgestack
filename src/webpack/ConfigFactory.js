@@ -219,8 +219,11 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
           production: {
             comments: false,
             plugins: [
-              // cleanup descriptions for translations from compilation output
-              "react-intl"
+              // Cleanup descriptions for translations from compilation output
+              "react-intl",
+
+              // Remove prop types from our code
+              "transform-react-remove-prop-types"
             ]
           },
           development: {
