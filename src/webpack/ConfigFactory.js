@@ -136,12 +136,6 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       // Optimization for lodash imports
       "lodash",
 
-      // just the parts from es2015 preset which are required for supporting
-      // transform-object-rest-spread" in all relevant scenarios (which always must be transpiled)
-      "transform-es2015-spread",
-      "transform-es2015-destructuring",
-      "transform-es2015-parameters",
-
       // class { handleClick = () => { } }
       "transform-class-properties",
 
@@ -378,9 +372,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     isClient,
     isServer
   })
-
-  console.log("JS Loaders: ", JSON.stringify(jsLoaders))
-  console.log("CSS Loaders: ", JSON.stringify(cssLoaders))
 
   const projectId = path.basename(root)
 
