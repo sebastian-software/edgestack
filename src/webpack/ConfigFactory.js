@@ -133,6 +133,9 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
     plugins:
     [
+      // Convenience: Add generic global export when only one export is used
+      "add-module-exports",
+
       // Optimization for lodash imports
       "lodash",
 
@@ -146,10 +149,12 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       [ "transform-runtime", { regenerator: false } ],
 
       // Code Splitting by Routes
-      [ "code-split-component/babel", {
-        disabled: isDev,
-        role: "server"
-      }]
+      [
+        "code-split-component/babel", {
+          disabled: isDev,
+          role: "server"
+        }
+      ]
     ]
   } : null
 
@@ -183,6 +188,9 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
     plugins:
     [
+      // Convenience: Add generic global export when only one export is used
+      "add-module-exports",
+
       // Optimization for lodash imports
       "lodash",
 
@@ -215,7 +223,11 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
         env:
         {
           production: {
-            comments: false
+            comments: false,
+            plugins: [
+              // cleanup descriptions for translations from compilation output
+              "react-intl"
+            ]
           },
           development: {
             plugins: [ "react-hot-loader/babel" ]
