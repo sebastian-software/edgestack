@@ -133,9 +133,6 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
     plugins:
     [
-      // Convenience: Add generic global export when only one export is used
-      "add-module-exports",
-
       // Optimization for lodash imports
       "lodash",
 
@@ -188,9 +185,6 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
     plugins:
     [
-      // Convenience: Add generic global export when only one export is used
-      "add-module-exports",
-
       // Optimization for lodash imports
       "lodash",
 
