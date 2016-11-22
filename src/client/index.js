@@ -19,7 +19,7 @@ function renderApp(AppComponent) {
   // need to be registered for our application to render and the React checksum
   // to match the server response.
   // @see https://github.com/ctrlplusb/code-split-component
-  rehydrateState().then(codeSplitState =>
+  rehydrateState().then((codeSplitState) =>
     render(
       <ReactHotLoader>
         <CodeSplitProvider state={codeSplitState}>

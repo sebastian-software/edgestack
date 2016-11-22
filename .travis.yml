@@ -11,9 +11,9 @@ env:
   - CXX=g++-4.8
 
 cache:
+  yarn: true
   directories:
     - node_modules
-    - $HOME/.yarn-cache
 
 # Via: https://yarnpkg.com/en/docs/install-ci#travis-tab
 before_install:

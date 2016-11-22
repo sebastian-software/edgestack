@@ -1,4 +1,3 @@
-import { tmpdir } from "os"
 import { statSync } from "fs"
 import path from "path"
 import webpack from "webpack"
@@ -10,8 +9,9 @@ import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
 
 import Dashboard from "webpack-dashboard/plugin"
 import ProgressBar from "progress-bar-webpack-plugin"
-import HappyPack from "happypack"
 import CodeSplitWebpackPlugin from "code-split-component/webpack"
+
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 
 import dotenv from "dotenv"
 
@@ -43,17 +43,6 @@ const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
 dotenv.config()
-
-// Generates a HappyPack plugin.
-// @see https://github.com/amireh/happypack/
-function happyPackPlugin({ name, loaders }) {
-  return new HappyPack({
-    id: name,
-    verbose: false,
-    threadPool: happyPackThreadPool,
-    loaders,
-  })
-}
 
 function removeEmpty(array) {
   return array.filter((entry) => Boolean(entry))
@@ -136,12 +125,6 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       // Optimization for lodash imports
       "lodash",
 
-      // just the parts from es2015 preset which are required for supporting
-      // transform-object-rest-spread" in all relevant scenarios (which always must be transpiled)
-      "transform-es2015-spread",
-      "transform-es2015-destructuring",
-      "transform-es2015-parameters",
-
       // class { handleClick = () => { } }
       "transform-class-properties",
 
@@ -152,10 +135,12 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       [ "transform-runtime", { regenerator: false } ],
 
       // Code Splitting by Routes
-      [ "code-split-component/babel", {
-        disabled: isDev,
-        role: "server"
-      }]
+      [
+        "code-split-component/babel", {
+          disabled: isDev,
+          role: "server"
+        }
+      ]
     ]
   } : null
 
@@ -221,7 +206,14 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
         env:
         {
           production: {
-            comments: false
+            comments: false,
+            plugins: [
+              // Cleanup descriptions for translations from compilation output
+              "react-intl",
+
+              // Remove prop types from our code
+              "transform-react-remove-prop-types"
+            ]
           },
           development: {
             plugins: [ "react-hot-loader/babel" ]
@@ -559,6 +551,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     plugins: removeEmpty([
 
+      // Analyse webpack bundle
+      ifProdClient(new BundleAnalyzerPlugin({
+        openAnalyzer: false,
+        analyzerMode: "static"
+      })),
+
       new CodeSplitWebpackPlugin({
         // The code-split-component doesn't work nicely with hot module reloading,
         // which we use in our development builds, so we will disable it if we
@@ -566,24 +564,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // behavior on the CodeSplit instances).
         disabled: isDev
       }),
-
-      /*
-      // Javascript Thread Loader
-      new HappyPack({
-        id: "js",
-        threads: 4,
-        debug: true,
-        loaders: jsLoaders
-      }),
-
-      // CSS Thread Loader
-      new HappyPack({
-        id: "css",
-        threads: 2,
-        debug: true,
-        loaders: cssLoaders
-      }),
-      */
 
       // Render Dashboard for Client Development + ProgressBar for production builds
       ifIntegration(null, ifDevClient(new Dashboard())),
@@ -752,12 +732,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // JavaScript
         {
           test: /\.(js|jsx)$/,
-          // loaders: jsLoaders,
-          exclude: excludeFromTranspilation,
-          loader: "./wrapped-loader",
-          options: {
-            wrap: jsLoaders
-          }
+          loaders: jsLoaders,
+          exclude: excludeFromTranspilation
         },
 
         // Typescript

@@ -1,1 +1,1 @@
-require("s15e-javascript/gulpfile.js")
+require("s15e-javascript/gulpfile")
