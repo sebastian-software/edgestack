@@ -152,7 +152,7 @@
   "devDependencies": {
     "normalize.css": "^5.0.0",
     "nsp": "^2.6.2",
-    "prepublish-lib": "^0.7.1",
+    "prepublish-lib": "^0.7.2",
     "rollup": "^0.36.3",
     "s15e-javascript": "^0.5.7",
     "source-sans-pro": "^2.0.10"
