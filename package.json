@@ -49,15 +49,15 @@
     "assets-webpack-plugin": "^3.5.0",
     "async": "^2.1.2",
     "autoprefixer": "^6.5.3",
-    "awesome-typescript-loader": "^2.2.4",
+    "awesome-typescript-loader": "^3.0.0-beta.3",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.7",
-    "babel-plugin-lodash": "^3.2.9",
+    "babel-loader": "^6.2.8",
+    "babel-plugin-lodash": "^3.2.10",
     "babel-plugin-react-intl": "^2.2.0",
     "babel-plugin-transform-class-properties": "^6.19.0",
     "babel-plugin-transform-object-rest-spread": "^6.19.0",
-    "babel-plugin-transform-react-remove-prop-types": "^0.2.10",
+    "babel-plugin-transform-react-remove-prop-types": "^0.2.11",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-latest": "^6.16.0",
     "babel-preset-latest-minimal": "^1.1.2",
@@ -148,9 +148,9 @@
   "devDependencies": {
     "normalize.css": "^5.0.0",
     "nsp": "^2.6.2",
-    "prepublish-lib": "^0.6.3",
+    "prepublish-lib": "^0.7.1",
     "rollup": "^0.36.3",
-    "s15e-javascript": "^0.5.3",
+    "s15e-javascript": "^0.5.7",
     "source-sans-pro": "^2.0.10"
   }
 }
