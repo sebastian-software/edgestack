@@ -213,7 +213,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
   return [{
     loader: "babel-loader",
-    query: merge(
+    options: merge(
       {
         // Enable caching for babel transpiles
         cacheDirectory: true,
@@ -752,8 +752,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // JavaScript
         {
           test: /\.(js|jsx)$/,
-          loaders: jsLoaders,
-          exclude: excludeFromTranspilation
+          // loaders: jsLoaders,
+          exclude: excludeFromTranspilation,
+          loader: "./wrapped-loader",
+          options: {
+            wrap: jsLoaders
+          }
         },
 
         // Typescript
@@ -767,7 +771,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // CSS
         {
           test: /\.css$/,
-          loaders: cssLoaders
+          use: cssLoaders
         },
 
         // JSON
@@ -779,7 +783,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // YAML
         {
           test: /\.(yml|yaml)$/,
-          loaders: [ "json-loader", "yaml-loader" ]
+          use: [ "json-loader", "yaml-loader" ]
         },
 
         // References to images, fonts, movies, music, etc.
