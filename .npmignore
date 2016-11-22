@@ -4,13 +4,18 @@ dist
 build
 src
 
-.env
 .babelrc
 .babelrc.md
 .editorconfig
+.env
 .eslintignore
 .eslintrc.yml
+.gitignore
 .npmignore
+.stylelint.yml
 .travis.yml
+
+appveyor.yml
+gulpfile.js
 
 rollup.script.cfg
