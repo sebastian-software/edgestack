@@ -103,7 +103,7 @@
     "node-notifier": "^4.6.1",
     "node-uuid": "^1.4.7",
     "pleeease-filters": "^3.0.0",
-    "postcss": "^5.2.5",
+    "postcss": "^5.2.6",
     "postcss-advanced-variables": "^1.2.2",
     "postcss-assets": "^4.1.0",
     "postcss-at-warn": "^1.0.0",
@@ -159,6 +159,7 @@
     "prepublish-lib": "^0.7.2",
     "rollup": "^0.36.3",
     "s15e-javascript": "^0.5.7",
-    "source-sans-pro": "^2.0.10"
+    "source-sans-pro": "^2.0.10",
+    "webpack-bundle-analyzer": "^1.5.3"
   }
 }

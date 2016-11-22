@@ -11,6 +11,8 @@ import Dashboard from "webpack-dashboard/plugin"
 import ProgressBar from "progress-bar-webpack-plugin"
 import CodeSplitWebpackPlugin from "code-split-component/webpack"
 
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
+
 import dotenv from "dotenv"
 
 // Using more modern approach of hashing than "webpack-md5-hash". Somehow the SHA256 version
@@ -548,6 +550,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     },
 
     plugins: removeEmpty([
+
+      // Analyse webpack bundle
+      ifProdClient(new BundleAnalyzerPlugin({
+        openAnalyzer: false,
+        analyzerMode: "static"
+      })),
 
       new CodeSplitWebpackPlugin({
         // The code-split-component doesn't work nicely with hot module reloading,
