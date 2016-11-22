@@ -1,4 +1,3 @@
-import { tmpdir } from "os"
 import { statSync } from "fs"
 import path from "path"
 import webpack from "webpack"
