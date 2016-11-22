@@ -9,7 +9,6 @@ import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
 
 import Dashboard from "webpack-dashboard/plugin"
 import ProgressBar from "progress-bar-webpack-plugin"
-import HappyPack from "happypack"
 import CodeSplitWebpackPlugin from "code-split-component/webpack"
 
 import dotenv from "dotenv"
@@ -42,17 +41,6 @@ const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
 dotenv.config()
-
-// Generates a HappyPack plugin.
-// @see https://github.com/amireh/happypack/
-function happyPackPlugin({ name, loaders }) {
-  return new HappyPack({
-    id: name,
-    verbose: false,
-    threadPool: happyPackThreadPool,
-    loaders,
-  })
-}
 
 function removeEmpty(array) {
   return array.filter((entry) => Boolean(entry))
@@ -569,24 +557,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         disabled: isDev
       }),
 
-      /*
-      // Javascript Thread Loader
-      new HappyPack({
-        id: "js",
-        threads: 4,
-        debug: true,
-        loaders: jsLoaders
-      }),
-
-      // CSS Thread Loader
-      new HappyPack({
-        id: "css",
-        threads: 2,
-        debug: true,
-        loaders: cssLoaders
-      }),
-      */
-
       // Render Dashboard for Client Development + ProgressBar for production builds
       ifIntegration(null, ifDevClient(new Dashboard())),
       ifIntegration(null, ifProd(new ProgressBar())),
@@ -754,7 +724,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // JavaScript
         {
           test: /\.(js|jsx)$/,
-          //loader: 'happypack/loader?id=js',
           loaders: jsLoaders,
           exclude: excludeFromTranspilation
         },
@@ -771,7 +740,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         {
           test: /\.css$/,
           loaders: cssLoaders
-          //loader: 'happypack/loader?id=css'
         },
 
         // JSON

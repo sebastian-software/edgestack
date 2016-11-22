@@ -2,9 +2,10 @@
   "name": "advanced-boilerplate",
   "version": "0.10.6",
   "description": "Universal React + PostCSS + CSS Modules + ESLint + Stylelint + ...",
-  "main": "lib/index.js",
-  "jsnext:main": "lib/index.es.js",
-  "module": "lib/index.es.js",
+  "main": "lib/index.es5.commonjs.js",
+  "module": "lib/index.es5.esmodule.js",
+  "main:es2015": "lib/index.es2015.commonjs.js",
+  "module:es2015": "lib/index.es2015.esmodule.js",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -39,7 +40,11 @@
     "postcss",
     "cssmodules"
   ],
-  "author": "Sebastian Software <s.werner@sebastian-software.de>",
+  "author": {
+    "name": "Sebastian Software",
+    "email": "s.werner@sebastian-software.de",
+    "url": "sebastian-software.de"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sebastian-software/advanced-boilerplate/issues"
@@ -79,7 +84,6 @@
     "fs-extra": "^1.0.0",
     "graphql-tag": "^0.1.17",
     "gulp-util": "^3.0.7",
-    "happypack": "^3.0.0",
     "helmet": "^3.1.0",
     "hpp": "^0.2.1",
     "html-webpack-plugin": "^2.24.1",
