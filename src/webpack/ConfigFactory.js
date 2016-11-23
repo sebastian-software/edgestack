@@ -747,7 +747,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // CSS
         {
           test: /\.css$/,
-          use: cssLoaders
+          loader: cssLoaders
         },
 
         // JSON
@@ -759,7 +759,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // YAML
         {
           test: /\.(yml|yaml)$/,
-          use: [ "json-loader", "yaml-loader" ]
+          loaders: [ "json-loader", "yaml-loader" ]
         },
 
         // References to images, fonts, movies, music, etc.
@@ -777,7 +777,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         {
           test: /\.(graphql|gql)$/,
           exclude: /node_modules/,
-          loader: 'graphql-tag/loader'
+          loader: "graphql-tag/loader"
         }
       ])
     }
