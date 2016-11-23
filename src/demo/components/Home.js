@@ -7,7 +7,7 @@ import GraphQLTest from "./GraphQLTest.gql"
 console.log("Loading GraphQL queries works:", GraphQLTest.kind === "Document")
 
 import Config from "./Config.yml"
-console.log("Config", Config)
+console.log("Loading YAML works:", Config.colors.main != null)
 
 function Home() {
   return (
