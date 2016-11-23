@@ -1,6 +1,5 @@
 import { renderToString } from "react-dom/server"
 import serialize from "serialize-javascript"
-import Helmet from "react-helmet"
 import { readFileSync } from "fs"
 import { STATE_IDENTIFIER } from 'code-split-component';
 import { ABSOLUTE_ASSETSINFO_PATH, ABSOLUTE_CHUNKMANIFEST_PATH } from "./config"
@@ -10,8 +9,8 @@ if (process.env.MODE === "production")
 {
   try {
     chunkManifest = readFileSync(ABSOLUTE_CHUNKMANIFEST_PATH, "utf-8")
-  } catch (ex) {
-    console.warn("Could not parse chunkhashes from manifest.json: ", ex)
+  } catch (err) {
+    console.warn("Could not parse chunkhashes from manifest.json: ", err)
   }
 }
 
@@ -109,7 +108,7 @@ export default function render({ app, initialState, nonce, helmet, codeSplitStat
     // must always be the first item in the collection.
     "vendor",
     "main"
-  ];
+  ]
 
   if (codeSplitState) {
     // We add all the chunks that our CodeSplitProvider tracked as being used
@@ -120,7 +119,7 @@ export default function render({ app, initialState, nonce, helmet, codeSplitStat
     // even finished parsing our client bundle entry script.
     // Having the assets.json file available to us made implementing this
     // feature rather arbitrary.
-    codeSplitState.chunks.forEach(chunk => chunksForRender.push(chunk));
+    codeSplitState.chunks.forEach(chunk => chunksForRender.push(chunk))
   }
 
   // Now we get the assets (js/css) for the chunks.

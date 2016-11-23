@@ -12,7 +12,7 @@ function About() {
         <Button onClick={() => alert("clicked")}>Rehydrated Button</Button>
       </p>
       <p className={Styles.intro}>
-        Produced with ❤️ by <a href="https://github.com/sebastian-software">Sebastian Software</a>
+        Produced with ❤ by <a href="https://github.com/sebastian-software">Sebastian Software</a>
       </p>
     </article>
   )
