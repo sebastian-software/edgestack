@@ -47,7 +47,7 @@ class HotServers
     catch (err) {
       createNotification({
         title: "Webpack",
-        message: "Config invalid, check console for error",
+        message: "Config invalid, check console for error"
       })
       console.error(err)
       return
@@ -91,13 +91,13 @@ class HotServers
       if (stats.hasErrors()) {
         createNotification({
           title: "Client",
-          message: "Build failed, check console for error",
+          message: "Build failed, check console for error"
         })
         console.log(stats.toString())
       } else {
         createNotification({
           title: "Client",
-          message: "Built",
+          message: "Built"
         })
       }
     })
@@ -129,7 +129,7 @@ class HotServers
       if (stats.hasErrors()) {
         createNotification({
           title: "Server",
-          message: "Build failed, check console for error",
+          message: "Build failed, check console for error"
         })
         console.log(stats.toString())
         return
@@ -137,7 +137,7 @@ class HotServers
 
       createNotification({
         title: "Server",
-        message: "Built",
+        message: "Built"
       })
 
       // Make sure our newly built server bundles aren't in the module cache.

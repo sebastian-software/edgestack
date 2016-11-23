@@ -23,14 +23,14 @@ class HotServer {
       createNotification({
         title: "Server",
         message: `Running on ${url}`,
-        open: url,
+        open: url
       })
     }
     catch (err)
     {
       createNotification({
         title: "Server",
-        message: "Error: Bundle invalid, check console for error",
+        message: "Error: Bundle invalid, check console for error"
       })
       console.error(err)
     }

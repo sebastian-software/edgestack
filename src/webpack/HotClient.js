@@ -11,7 +11,7 @@ class HotClient {
     this.webpackDevMiddleware = createWebpackMiddleware(compiler, {
       noInfo: true,
       headers: {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "*"
       },
 
       // The path at which the client bundles are served from.  Note: in this
@@ -32,7 +32,7 @@ class HotClient {
 
     createNotification({
       title: "Hot Client",
-      message: "Running",
+      message: "Running"
     })
   }
 

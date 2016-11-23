@@ -43,7 +43,7 @@ export default function build()
         gutil.log(stats.toString({
           children: false,
           chunks: false,
-          colors: true,
+          colors: true
         }))
 
         var jsonStats = stats.toJson()
@@ -69,7 +69,7 @@ export default function build()
         gutil.log(stats.toString({
           children: false,
           chunks: false,
-          colors: true,
+          colors: true
         }))
 
         var jsonStats = stats.toJson()

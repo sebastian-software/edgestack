@@ -116,7 +116,7 @@ export default function render({ renderedApp, initialState, nonce, helmet, codeS
     // even finished parsing our client bundle entry script.
     // Having the assets.json file available to us made implementing this
     // feature rather arbitrary.
-    codeSplitState.chunks.forEach(chunk => chunksForRender.push(chunk))
+    codeSplitState.chunks.forEach((chunk) => chunksForRender.push(chunk))
   }
 
   // Now we get the assets (js/css) for the chunks.
