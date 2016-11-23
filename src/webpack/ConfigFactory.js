@@ -70,7 +70,7 @@ function merge()
 
   return Object.assign.apply(
     null,
-    removeEmpty([ {} ].concat(funcArgs))
+    removeEmpty([{}].concat(funcArgs))
   )
 }
 
@@ -81,7 +81,10 @@ function isLoaderSpecificFile(request) {
 function ifIsFile(filePath) {
   try {
     return statSync(filePath).isFile() ? filePath : ""
-  } catch (ex) {}
+  } catch (err) {
+    // empty
+  }
+
   return ""
 }
 
@@ -132,7 +135,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       "transform-object-rest-spread",
 
       // Polyfills the runtime needed
-      [ "transform-runtime", { regenerator: false } ],
+      [ "transform-runtime", { regenerator: false }],
 
       // Code Splitting by Routes
       [
@@ -160,7 +163,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
     presets:
     [
       // let, const, destructuring, classes, no modules
-      [ "babel-preset-es2015", { modules: false } ],
+      [ "babel-preset-es2015", { modules: false }],
 
       // exponentiation
       "babel-preset-es2016",
@@ -184,7 +187,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       "transform-object-rest-spread",
 
       // Polyfills the runtime needed
-      [ "transform-runtime", { regenerator: false } ],
+      [ "transform-runtime", { regenerator: false }],
 
       // Code Splitting by Routes
       [
@@ -324,14 +327,14 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   if (!target || !~[ "client", "server" ].findIndex((valid) => target === valid))
   {
     throw new Error(
-      'You must provide a "target" (client|server) to the ConfigFactory.'
+      `You must provide a "target" (client|server) to the ConfigFactory.`
     )
   }
 
   if (!mode || !~[ "development", "production" ].findIndex((valid) => mode === valid))
   {
     throw new Error(
-      'You must provide a "mode" (development|production) to the ConfigFactory.'
+      `You must provide a "mode" (development|production) to the ConfigFactory.`
     )
   }
 
@@ -371,8 +374,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     isServer
   })
 
-  const projectId = path.basename(root)
-
   const excludeFromTranspilation = [
     /node_modules/,
     path.resolve(root, process.env.CLIENT_BUNDLE_OUTPUT_PATH),
@@ -409,7 +410,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       chunks: isVerbose,
       chunkModules: isVerbose,
       cached: isVerbose,
-      cachedAssets: isVerbose,
+      cachedAssets: isVerbose
     },
 
     // This is not the file cache, but the runtime cache.
@@ -425,8 +426,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     bail: isProd,
 
     // Anything listed in externals will not be included in our bundle.
-    externals: removeEmpty(
-    [
+    externals: removeEmpty([
       ifNode(function(context, request, callback)
       {
         var basename = request.split("/")[0]
@@ -481,9 +481,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // The dir in which our bundle should be output.
       path: path.resolve(
         root,
-        isClient
-          ? process.env.CLIENT_BUNDLE_OUTPUT_PATH
-          : process.env.SERVER_BUNDLE_OUTPUT_PATH
+        isClient ? process.env.CLIENT_BUNDLE_OUTPUT_PATH : process.env.SERVER_BUNDLE_OUTPUT_PATH
       ),
 
       // The filename format for our bundle's entries.
@@ -523,7 +521,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       ),
 
       // When in server mode we will output our bundle as a commonjs2 module.
-      libraryTarget: ifNode("commonjs2", "var"),
+      libraryTarget: ifNode("commonjs2", "var")
     },
 
     resolve:
@@ -541,10 +539,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         ".jsx",
         ".ts",
         ".tsx",
-        ".es5",
-        ".es6",
-        ".es7",
-        ".es",
         ".json"
       ]
     },
@@ -658,7 +652,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
       // Effectively fake all "file-loader" files with placeholders on server side
       ifNode(new webpack.NormalModuleReplacementPlugin(
-        /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|mp4|mp3|ogg|html|pdf)$/, "node-noop")),
+        /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|mp4|mp3|ogg|html|pdf)$/,
+        "node-noop"
+      )),
 
       // We don't want webpack errors to occur during development as it will
       // kill our dev servers.
