@@ -1,11 +1,12 @@
 /* eslint-disable filenames/match-exported */
-import universalMiddleware from "./middleware"
+import { generateMiddleware } from "./middleware"
 import { generateServer, addFallbackHandler } from "./factory"
+import App from "../demo/components/App"
 
 const server = generateServer()
 
 // Bind our universal react app middleware as the handler for all get requests.
-server.get("*", universalMiddleware)
+server.get("*", generateMiddleware(App))
 
 // Add default handling for any remaining errors which are not catched by our middleware
 addFallbackHandler(server)
