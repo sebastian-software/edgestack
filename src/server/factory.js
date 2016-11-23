@@ -1,6 +1,6 @@
 import express from "express"
 import shrinkRay from "shrink-ray"
-import uuid from "node-uuid"
+import uuid from "uuid"
 import hpp from "hpp"
 import helmet from "helmet"
 import { resolve } from "path"
@@ -45,7 +45,7 @@ export function generateServer()
   // inline scripts as being safe for execution against our content security policy.
   // @see https://helmetjs.github.io/docs/csp/
   server.use((req, res, next) => {
-    res.locals.nonce = uuid.v4() // eslint-disable-line no-param-reassign
+    res.locals.nonce = uuid() // eslint-disable-line no-param-reassign
     next()
   })
 
