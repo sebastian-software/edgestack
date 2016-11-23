@@ -34,7 +34,7 @@ const autoprefixerSettings =
   flexbox: "no-2009"
 }
 
-export default function getConfig(bundler, variables = {})
+export default function getConfig(variables = {})
 {
   return [
     /*
@@ -42,10 +42,6 @@ export default function getConfig(bundler, variables = {})
       silent: true
     }),
     */
-
-    atImport({
-      addDependencyTo: bundler
-    }),
 
     simpleUrl(),
     assets(),

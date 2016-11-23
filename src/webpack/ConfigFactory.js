@@ -680,7 +680,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
           // Pass options for PostCSS
           options: {
-            postcss: getPostCSSConfig(webpack, {}),
+            postcss: getPostCSSConfig({}),
             context: CWD
           }
         })
@@ -699,7 +699,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
           // Pass options for PostCSS
           options: {
-            postcss: getPostCSSConfig(webpack, {}),
+            postcss: getPostCSSConfig({}),
             context: CWD
           }
         })
