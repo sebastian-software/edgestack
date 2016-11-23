@@ -1,3 +1,4 @@
+// This file is just for exporting infrastructure to applications built upon this.
 import * as ServerConfig from "./server/config"
 export { ServerConfig }
 

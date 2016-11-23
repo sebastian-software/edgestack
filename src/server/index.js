@@ -1,3 +1,4 @@
+/* eslint-disable filenames/match-exported */
 import universalMiddleware from "./middleware"
 import { generateServer, addFallbackHandler } from "./factory"
 
