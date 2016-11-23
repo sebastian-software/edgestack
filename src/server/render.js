@@ -1,7 +1,6 @@
-import { renderToString } from "react-dom/server"
 import serialize from "serialize-javascript"
 import { readFileSync } from "fs"
-import { STATE_IDENTIFIER } from 'code-split-component';
+import { STATE_IDENTIFIER } from "code-split-component"
 import { ABSOLUTE_ASSETSINFO_PATH, ABSOLUTE_CHUNKMANIFEST_PATH } from "./config"
 
 var chunkManifest = "{}"
@@ -26,17 +25,17 @@ const clientAssets = JSON.parse(
 
 function getAssetsForClientChunks(chunks) {
   return chunks.reduce((acc, chunkName) => {
-    const chunkAssets = clientAssets[chunkName];
+    const chunkAssets = clientAssets[chunkName]
     if (chunkAssets) {
       if (chunkAssets.js) {
-        acc.scripts.push(chunkAssets.js);
+        acc.scripts.push(chunkAssets.js)
       }
       if (chunkAssets.css) {
-        acc.styles.push(chunkAssets.css);
+        acc.styles.push(chunkAssets.css)
       }
     }
-    return acc;
-  }, { scripts: [], styles: [] });
+    return acc
+  }, { scripts: [], styles: [] })
 }
 
 
@@ -98,9 +97,7 @@ function serviceWorkerScript(nonce) {
  *
  * @return The full HTML page in the form of a React element.
  */
-export default function render({ app, initialState, nonce, helmet, codeSplitState }) {
-  const appString = app ? renderToString(app) : null
-
+export default function render({ renderedApp, initialState, nonce, helmet, codeSplitState }) {
   // The chunks that we need to fetch the assets (js/css) for and then include
   // said assets as script/style tags within our html.
   const chunksForRender = [
@@ -138,7 +135,7 @@ export default function render({ app, initialState, nonce, helmet, codeSplitStat
         ${serviceWorkerScript(nonce)}
       </head>
       <body>
-        <div id="app">${appString || ""}</div>
+        <div id="app">${renderedApp || ""}</div>
 
         <script nonce="${nonce}">${
           (initialState ? `window.APP_STATE=${serialize(initialState)};` : "") +

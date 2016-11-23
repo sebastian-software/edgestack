@@ -1,7 +1,8 @@
 import React from "react"
+import { renderToString } from "react-dom/server"
 import { ServerRouter, createServerRenderContext } from "react-router"
 import { CodeSplitProvider, createRenderContext } from "code-split-component"
-import Helmet from 'react-helmet';
+import Helmet from "react-helmet"
 
 import App from "../demo/components/App"
 
@@ -27,8 +28,8 @@ export default function universalMiddleware(request, response)
         nonce
       })
       response.status(200).send(html)
-    } catch (ex) {
-      response.status(500).send(`Error during rendering: ${ex}!: ${ex.stack}`)
+    } catch (err) {
+      response.status(500).send(`Error during rendering: ${err}!: ${err.stack}`)
     }
   }
   else
@@ -42,7 +43,7 @@ export default function universalMiddleware(request, response)
     const codeSplitContext = createRenderContext()
 
     // Create the application react element.
-    const app = (
+    const renderedApp = renderToString(
       <CodeSplitProvider context={codeSplitContext}>
         <ServerRouter location={request.url} context={routingContext}>
           <App />
@@ -52,8 +53,8 @@ export default function universalMiddleware(request, response)
 
     // Render the app to a string.
     const html = render({
-      // Provide the full app react element.
-      app,
+      // Provide the full rendered App react element.
+      renderedApp,
 
       // Nonce for allowing inline scripts.
       nonce,
@@ -70,19 +71,19 @@ export default function universalMiddleware(request, response)
     })
 
     // Get the render result from the server render context.
-    const renderResult = routingContext.getResult()
+    const renderedResult = routingContext.getResult()
 
     // Check if the render result contains a redirect, if so we need to set
     // the specific status and redirect header and end the response.
-    if (renderResult.redirect) {
-      response.status(301).setHeader("Location", renderResult.redirect.pathname)
+    if (renderedResult.redirect) {
+      response.status(301).setHeader("Location", renderedResult.redirect.pathname)
       response.end()
       return
     }
 
-    // If the renderResult contains a "missed" match then we set a 404 code.
+    // If the renderedResult contains a "missed" match then we set a 404 code.
     // Our App component will handle the rendering of an Error404 view.
     // Otherwise everything is all good and we send a 200 OK status.
-    response.status(renderResult.missed ? 404 : 200).send(html)
+    response.status(renderedResult.missed ? 404 : 200).send(html)
   }
 }
