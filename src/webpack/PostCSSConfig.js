@@ -43,6 +43,8 @@ export default function getConfig(variables = {})
     }),
     */
 
+    atImport(),
+
     simpleUrl(),
     assets(),
 
