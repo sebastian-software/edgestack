@@ -1,6 +1,6 @@
 import express from "express"
 import shrinkRay from "shrink-ray"
-import uuid from "node-uuid"
+import uuid from "uuid"
 import hpp from "hpp"
 import helmet from "helmet"
 import { resolve } from "path"
