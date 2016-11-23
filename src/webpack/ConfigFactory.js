@@ -198,7 +198,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
   return [{
     loader: "babel-loader",
-    query: merge(
+    options: merge(
       {
         // Enable caching for babel transpiles
         cacheDirectory: true,
@@ -747,7 +747,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // CSS
         {
           test: /\.css$/,
-          loaders: cssLoaders
+          use: cssLoaders
         },
 
         // JSON
@@ -759,14 +759,14 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // YAML
         {
           test: /\.(yml|yaml)$/,
-          loader: "json-loader!yaml-loader"
+          use: [ "json-loader", "yaml-loader" ]
         },
 
         // References to images, fonts, movies, music, etc.
         {
           test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf|html)$/,
           loader: "file-loader",
-          query: {
+          options: {
             name: ifProdClient("file-[hash:base62:8].[ext]", "[name].[ext]"),
             emitFile: isClient
           }
