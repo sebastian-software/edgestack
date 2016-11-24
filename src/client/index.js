@@ -1,10 +1,6 @@
 import React from "react"
 import { render } from "react-dom"
 import { BrowserRouter } from "react-router"
-
-// This library provides us with the capability to have declerative code
-// splitting within our application.
-// @see https://github.com/ctrlplusb/code-split-component
 import { CodeSplitProvider, rehydrateState } from "code-split-component"
 
 import ReactHotLoader from "./ReactHotLoader"
