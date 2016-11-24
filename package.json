@@ -150,7 +150,7 @@
     "style-loader": "^0.13.1",
     "uuid": "^3.0.0",
     "webpack": "^2.1.0-beta.27",
-    "webpack-bundle-analyzer": "^1.5.3",
+    "webpack-bundle-analyzer": "^1.5.4",
     "webpack-dashboard": "^0.2.0",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-hot-middleware": "^2.13.2",
