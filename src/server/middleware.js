@@ -20,7 +20,7 @@ function renderLight({ request, response, nonce }) {
   }
 }
 
-function renderFull({ request, response, nonce, App }) {
+function renderFull({ request, response, nonce, initialState, App }) {
   // First create a context for <ServerRouter>, which will allow us to
   // query for the results of the render.
   const routingContext = createServerRenderContext()
@@ -54,7 +54,10 @@ function renderFull({ request, response, nonce, App }) {
     // We provide our code split state so that it can be included within the
     // html, and then the client bundle can use this data to know which chunks/
     // modules need to be rehydrated prior to the application being rendered.
-    codeSplitState: codeSplitContext.getState()
+    codeSplitState: codeSplitContext.getState(),
+
+    // Redux/Apollo State
+    initialState
   })
 
   // Get the render result from the server render context.
@@ -77,7 +80,7 @@ function renderFull({ request, response, nonce, App }) {
 /**
  * An express middleware that is capabable of doing React server side rendering.
  */
-export function generateMiddleware(App)
+export function generateMiddleware(App, initialState)
 {
   return function middleware(request, response)
   {
@@ -90,7 +93,7 @@ export function generateMiddleware(App)
     if (process.env.DISABLE_SSR === true) {
       renderLight({ request, response, nonce })
     } else {
-      renderFull({ request, response, nonce, App })
+      renderFull({ request, response, nonce, initialState, App })
     }
   }
 }

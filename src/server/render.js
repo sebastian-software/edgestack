@@ -97,7 +97,7 @@ function serviceWorkerScript(nonce) {
  *
  * @return The full HTML page in the form of a React element.
  */
-export default function render({ renderedApp, initialState, nonce, helmet, codeSplitState }) {
+export default function render({ renderedApp, initialState = {}, nonce, helmet, codeSplitState = {} }) {
   // The chunks that we need to fetch the assets (js/css) for and then include
   // said assets as script/style tags within our html.
   const chunksForRender = [
@@ -138,9 +138,9 @@ export default function render({ renderedApp, initialState, nonce, helmet, codeS
         <div id="app">${renderedApp || ""}</div>
 
         <script nonce="${nonce}">${
-          (initialState ? `window.APP_STATE=${serialize(initialState)};` : "") +
-          `window.CHUNK_MANIFEST=${chunkManifest};` +
-          `window.${STATE_IDENTIFIER}=${serialize(codeSplitState)};`
+          `APP_STATE=${serialize(initialState)};` +
+          `CHUNK_MANIFEST=${chunkManifest};` +
+          `${STATE_IDENTIFIER}=${serialize(codeSplitState)};`
         }</script>
 
         ${scriptTags(assetsForRender.scripts)}
