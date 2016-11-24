@@ -1,6 +1,6 @@
 {
   "name": "advanced-boilerplate",
-  "version": "0.12.2",
+  "version": "0.13.0",
   "description": "Universal React + PostCSS + CSS Modules + ESLint + Stylelint + ...",
   "main": "lib/index.es5.commonjs.js",
   "module": "lib/index.es5.esmodule.js",
