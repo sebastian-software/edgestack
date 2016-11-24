@@ -1,5 +1,4 @@
-import path from "path"
-import process from "process"
+import { resolve } from "path"
 import webpack from "webpack"
 import chokidar from "chokidar"
 
@@ -27,8 +26,6 @@ class HotServers
     this.clientCompiler = null
     this.serverBundle = null
     this.serverCompiler = null
-
-    const configPath = path.resolve(__dirname, "ConfigFactory.js")
 
     // If we receive a kill cmd then we will first try to dispose our listeners.
     process.on("SIGTERM", () => this.dispose().then(() => process.exit(0)))
@@ -94,11 +91,6 @@ class HotServers
           message: "Build failed, check console for error"
         })
         console.log(stats.toString())
-      } else {
-        createNotification({
-          title: "Client",
-          message: "Built"
-        })
       }
     })
 
@@ -107,7 +99,6 @@ class HotServers
 
   _configureHotServer() {
     const compileHotServer = () => {
-      console.log("compiling hot server")
       const runCompiler = () => this.serverCompiler.run(() => undefined)
 
       // Shut down any existing running server if necessary before starting the
@@ -135,11 +126,6 @@ class HotServers
         return
       }
 
-      createNotification({
-        title: "Server",
-        message: "Built"
-      })
-
       // Make sure our newly built server bundles aren't in the module cache.
       Object.keys(require.cache).forEach((modulePath) => {
         if (~modulePath.indexOf(this.serverCompiler.options.output.path)) {
@@ -152,7 +138,7 @@ class HotServers
 
     // Now we will configure `chokidar` to watch our server specific source folder.
     // Any changes will cause a rebuild of the server bundle.
-    this.watcher = chokidar.watch([ path.resolve(this.root, "./src/server") ])
+    this.watcher = chokidar.watch([ resolve(this.root, "./src/server") ])
     this.watcher.on("ready", () => {
       this.watcher
         .on("add", compileHotServer)
