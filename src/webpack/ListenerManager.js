@@ -1,20 +1,26 @@
 class ListenerManager {
-  constructor(listener) {
+  constructor(server) {
     this.lastConnectionKey = 0
     this.connectionMap = {}
-    this.listener = listener
+    this.started = false
 
-    // Track all connections to our server so that we can close them when needed.
-    this.listener.on("connection", (connection) => {
-      // Generate a new key to represent the connection
-      const connectionKey = ++this.lastConnectionKey
+    server.then((listener) =>
+    {
+      this.started = true
+      this.listener = listener
 
-      // Add the connection to our map.
-      this.connectionMap[connectionKey] = connection
+      // Track all connections to our server so that we can close them when needed.
+      this.listener.on("connection", (connection) => {
+        // Generate a new key to represent the connection
+        const connectionKey = ++this.lastConnectionKey
 
-      // Remove the connection from our map when it closes.
-      connection.on("close", () => {
-        delete this.connectionMap[connectionKey]
+        // Add the connection to our map.
+        this.connectionMap[connectionKey] = connection
+
+        // Remove the connection from our map when it closes.
+        connection.on("close", () => {
+          delete this.connectionMap[connectionKey]
+        })
       })
     })
   }

@@ -7,33 +7,36 @@ import { createNotification } from "./util"
 
 class HotClient {
   constructor(compiler) {
-    const app = express()
-    this.webpackDevMiddleware = createWebpackMiddleware(compiler, {
-      noInfo: true,
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      },
+    this.listenerManager = new ListenerManager(new Promise((resolve, reject) => {
 
-      // The path at which the client bundles are served from.  Note: in this
-      // case as we are running a seperate dev server the public path should
-      // be absolute, i.e. including the "http://..."
-      publicPath: compiler.options.output.publicPath,
+      const app = express()
+      this.webpackDevMiddleware = createWebpackMiddleware(compiler, {
+        noInfo: true,
+        headers: {
+          "Access-Control-Allow-Origin": "*"
+        },
 
-      // Make it beautiful
-      stats: {
-        colors: true
-      }
-    })
-    app.use(this.webpackDevMiddleware)
-    app.use(createWebpackHotMiddleware(compiler))
+        // The path at which the client bundles are served from.  Note: in this
+        // case as we are running a seperate dev server the public path should
+        // be absolute, i.e. including the "http://..."
+        publicPath: compiler.options.output.publicPath,
 
-    const listener = app.listen(process.env.CLIENT_DEVSERVER_PORT)
-    this.listenerManager = new ListenerManager(listener)
+        // Make it beautiful
+        stats: {
+          colors: true
+        }
+      })
+      app.use(this.webpackDevMiddleware)
+      app.use(createWebpackHotMiddleware(compiler))
 
-    createNotification({
-      title: "Hot Client",
-      message: "Running"
-    })
+      var listener = app.listen(process.env.CLIENT_DEVSERVER_PORT)
+      createNotification({
+        title: "Hot Development Client",
+        message: `Started successfully (Port: ${process.env.CLIENT_DEVSERVER_PORT})!`
+      })
+
+      resolve(listener)
+    }))
   }
 
   dispose(force = false) {

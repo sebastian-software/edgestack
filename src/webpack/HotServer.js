@@ -1,4 +1,4 @@
-import path from "path"
+import { resolve } from "path"
 
 import ListenerManager from "./ListenerManager"
 import { createNotification } from "./util"
@@ -8,31 +8,33 @@ class HotServer {
     this.compiler = compiler
     this.listenerManager = null
 
-    const compiledOutputPath = path.resolve(
+    const compiledOutputPath = resolve(
       compiler.options.output.path, `${Object.keys(compiler.options.entry)[0]}.js`
     )
 
+    var importedServer
     try
     {
-      // The server bundle  will automatically start the web server just by
-      // requiring it. It returns the http listener too.
-      this.listenerManager = new ListenerManager(require(compiledOutputPath).default)
-
-      const url = `http://localhost:${process.env.SERVER_PORT}`
-
-      createNotification({
-        title: "Server",
-        message: `Running on ${url}`,
-        open: url
-      })
+      importedServer = require(compiledOutputPath)
     }
     catch (err)
     {
       createNotification({
-        title: "Server",
-        message: "Error: Bundle invalid, check console for error"
+        title: "Hot Server",
+        message: "Error: Bundle invalid. Check console for error!"
       })
+
       console.error(err)
+    }
+
+    if (importedServer) {
+      var listener = importedServer.start()
+      createNotification({
+        title: "Hot Server",
+        message: "Started successfully!"
+      })
+
+      this.listenerManager = new ListenerManager(listener)
     }
   }
 
