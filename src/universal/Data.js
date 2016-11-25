@@ -77,6 +77,18 @@ export function createApolloClient(headers, initialState)
     enhancers
   )
 
+  // The following is needed so that we can hot reload our App.
+  if (process.env.NODE_ENV === "development" && module.hot) {
+    // Enable Webpack hot module replacement for reducers. This is so that we
+    // don"t lose all of our current application state during hot reloading.
+    /*
+    module.hot.accept("./Data", () => {
+      const nextRootReducer = require("./Data").default // eslint-disable-line global-require
+      store.replaceReducer(nextRootReducer)
+    })
+    */
+  }
+
   return {
     client,
     store
