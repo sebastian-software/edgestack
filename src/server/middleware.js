@@ -24,7 +24,7 @@ function renderLight({ request, response, nonce }) {
   }
 }
 
-function renderFull({ request, response, nonce, App, apolloClient, store }) {
+function renderFull({ request, response, nonce, App, apollo }) {
   // First create a context for <ServerRouter>, which will allow us to
   // query for the results of the render.
   const routingContext = createServerRenderContext()
@@ -39,7 +39,7 @@ function renderFull({ request, response, nonce, App, apolloClient, store }) {
   renderToStringWithData(
     <CodeSplitProvider context={codeSplitContext}>
       <ServerRouter location={request.url} context={routingContext}>
-        <ApolloProvider client={apolloClient}>
+        <ApolloProvider client={apollo.client}>
           <App />
         </ApolloProvider>
       </ServerRouter>
@@ -48,7 +48,7 @@ function renderFull({ request, response, nonce, App, apolloClient, store }) {
 
     console.log("Server: Render complete!")
 
-    const state = store.getState()
+    const state = apollo.store.getState()
     console.log("Server: Rendered state:", state)
 
     // Render the app to a string.
@@ -110,8 +110,7 @@ export function generateMiddleware(App, createApolloClient)
     if (process.env.DISABLE_SSR === true) {
       renderLight({ request, response, nonce })
     } else {
-      const { apolloClient, store } = createApolloClient(request.headers)
-      renderFull({ request, response, nonce, App, apolloClient, store })
+      renderFull({ request, response, nonce, App, apollo: createApolloClient(request.headers) })
     }
   }
 }

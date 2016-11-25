@@ -12,7 +12,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 
 function createApolloClient(headers, initialState)
 {
-  var apolloClient = new ApolloClient({
+  var client = new ApolloClient({
     ssrMode: true,
     /*
     networkInterface: createNetworkInterface({
@@ -27,16 +27,16 @@ function createApolloClient(headers, initialState)
     })*/
   })
 
-  const enhancers = compose(
-    applyMiddleware(apolloClient.middleware()),
-    typeof window !== "undefined" && window.devToolsExtension ? window.devToolsExtension() : (f) => f
-  )
-
   const rootReducer = combineReducers({
     // todos: todoReducer,
     // users: userReducer,
-    apollo: apolloClient.reducer()
+    apollo: client.reducer()
   })
+
+  const enhancers = compose(
+    applyMiddleware(client.middleware()),
+    typeof window !== "undefined" && window.devToolsExtension ? window.devToolsExtension() : (f) => f
+  )
 
   const store = createStore(
     rootReducer,
@@ -44,9 +44,8 @@ function createApolloClient(headers, initialState)
     enhancers
   )
 
-
   return {
-    apolloClient,
+    client,
     store
   }
 }
