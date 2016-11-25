@@ -1,6 +1,9 @@
 /* eslint-disable filenames/match-exported */
 import ApolloClient, { createNetworkInterface } from "apollo-client"
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
+import thunk from "redux-thunk"
+import createSagaMiddleware from "redux-saga"
+import createLogger from "redux-logger"
 
 import { generateMiddleware } from "./middleware"
 import { generateServer, addFallbackHandler } from "./factory"
@@ -20,8 +23,22 @@ function getReducers() {
   }
 }
 
+function getMiddleware() {
+  return [
+    thunk,
+    createSagaMiddleware(),
+    createLogger({
+      collapsed: true
+    })
+  ]
+}
+
 function emptyEnhancer(param) {
   return param
+}
+
+function getApolloUri() {
+  return "http://localhost:9222"
 }
 
 const devTools = process.env.TARGET === "client" &&
@@ -34,9 +51,8 @@ function createApolloClient(headers, initialState)
 {
   var client = new ApolloClient({
     ssrMode: true,
-    /*
     networkInterface: createNetworkInterface({
-      uri: "localhost:9222",
+      uri: getApolloUri(),
       opts: {
         credentials: "same-origin",
 
@@ -44,7 +60,7 @@ function createApolloClient(headers, initialState)
         // Addresses this issue: https://github.com/matthew-andrews/isomorphic-fetch/issues/83
         headers: headers
       }
-    })*/
+    })
   })
 
   const rootReducer = combineReducers({
@@ -53,7 +69,10 @@ function createApolloClient(headers, initialState)
   })
 
   const enhancers = compose(
-    applyMiddleware(client.middleware()),
+    applyMiddleware(
+      client.middleware(),
+      ...getMiddleware()
+    ),
     ...getEnhancers(),
     devTools
   )

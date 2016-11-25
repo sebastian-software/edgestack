@@ -146,6 +146,8 @@
     "react-router": "4.0.0-alpha.5",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
+    "redux-logger": "^2.7.4",
+    "redux-saga": "^0.13.0",
     "redux-thunk": "^2.1.0",
     "rimraf": "^2.5.4",
     "s15e-javascript": "^0.6.0",
