@@ -6,6 +6,30 @@ import { generateMiddleware } from "./middleware"
 import { generateServer, addFallbackHandler } from "./factory"
 import App from "../demo/components/App"
 
+function emptyReducer(previousState = {}, action) {
+  return previousState
+}
+
+function getEnhancers() {
+  return []
+}
+
+function getReducers() {
+  return {
+    test: emptyReducer
+  }
+}
+
+function emptyEnhancer(param) {
+  return param
+}
+
+const devTools = process.env.TARGET === "client" &&
+  process.env.NODE_ENV === "development" &&
+  window.devToolsExtension ?
+    window.devToolsExtension() : emptyEnhancer
+
+
 function createApolloClient(headers, initialState)
 {
   var client = new ApolloClient({
@@ -24,14 +48,14 @@ function createApolloClient(headers, initialState)
   })
 
   const rootReducer = combineReducers({
-    // todos: todoReducer,
-    // users: userReducer,
+    ...getReducers(),
     apollo: client.reducer()
   })
 
   const enhancers = compose(
     applyMiddleware(client.middleware()),
-    typeof window !== "undefined" && window.devToolsExtension ? window.devToolsExtension() : (f) => f
+    ...getEnhancers(),
+    devTools
   )
 
   const store = createStore(
