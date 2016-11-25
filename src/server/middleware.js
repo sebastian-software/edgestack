@@ -24,7 +24,7 @@ function renderLight({ request, response, nonce }) {
   }
 }
 
-function renderFull({ request, response, nonce, App, apolloClient }) {
+function renderFull({ request, response, nonce, App, apolloClient, store }) {
   // First create a context for <ServerRouter>, which will allow us to
   // query for the results of the render.
   const routingContext = createServerRenderContext()
@@ -48,6 +48,9 @@ function renderFull({ request, response, nonce, App, apolloClient }) {
 
     console.log("Server: Render complete!")
 
+    const state = store.getState()
+    console.log("Server: Rendered state:", state)
+
     // Render the app to a string.
     const html = renderPage({
       // Provide the full rendered App react element.
@@ -55,7 +58,7 @@ function renderFull({ request, response, nonce, App, apolloClient }) {
 
       // Provide the redux store state, this will be bound to the window.APP_STATE
       // so that we can rehydrate the state on the client.
-      initialState: apolloClient.store.getState(),
+      initialState: state,
 
       // Nonce which allows us to safely declare inline scripts.
       nonce,
@@ -107,8 +110,8 @@ export function generateMiddleware(App, createApolloClient)
     if (process.env.DISABLE_SSR === true) {
       renderLight({ request, response, nonce })
     } else {
-      const apolloClient = createApolloClient(request.headers)
-      renderFull({ request, response, nonce, App, apolloClient })
+      const { apolloClient, store } = createApolloClient(request.headers)
+      renderFull({ request, response, nonce, App, apolloClient, store })
     }
   }
 }

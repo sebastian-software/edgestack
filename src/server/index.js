@@ -4,10 +4,17 @@ import { generateServer, addFallbackHandler } from "./factory"
 import App from "../demo/components/App"
 import ApolloClient, { createNetworkInterface } from "apollo-client"
 
-function createApolloClient(headers)
+
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+
+
+
+
+function createApolloClient(headers, initialState)
 {
-  return new ApolloClient({
+  var apolloClient = new ApolloClient({
     ssrMode: true,
+    /*
     networkInterface: createNetworkInterface({
       uri: "localhost:9222",
       opts: {
@@ -17,8 +24,31 @@ function createApolloClient(headers)
         // Addresses this issue: https://github.com/matthew-andrews/isomorphic-fetch/issues/83
         headers: headers
       }
-    })
+    })*/
   })
+
+  const enhancers = compose(
+    applyMiddleware(apolloClient.middleware()),
+    typeof window !== "undefined" && window.devToolsExtension ? window.devToolsExtension() : (f) => f
+  )
+
+  const rootReducer = combineReducers({
+    // todos: todoReducer,
+    // users: userReducer,
+    apollo: apolloClient.reducer()
+  })
+
+  const store = createStore(
+    rootReducer,
+    initialState,
+    enhancers
+  )
+
+
+  return {
+    apolloClient,
+    store
+  }
 }
 
 export function start()
