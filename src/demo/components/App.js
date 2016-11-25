@@ -8,7 +8,7 @@ import { CodeSplit } from "code-split-component"
 
 import Styles from "./App.css"
 
-const websiteDescription = "A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience."
+const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
 const websiteLanguage = "en-US"
 const websiteTitle = "Advanced Boilerplate"
 
