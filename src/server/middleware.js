@@ -39,7 +39,7 @@ function renderFull({ request, response, nonce, App, apollo }) {
   renderToStringWithData(
     <CodeSplitProvider context={codeSplitContext}>
       <ServerRouter location={request.url} context={routingContext}>
-        <ApolloProvider client={apollo.client}>
+        <ApolloProvider client={apollo.client} store={apollo.store}>
           <App />
         </ApolloProvider>
       </ServerRouter>

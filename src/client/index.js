@@ -2,6 +2,9 @@ import React from "react"
 import { render } from "react-dom"
 import { BrowserRouter } from "react-router"
 import { CodeSplitProvider, rehydrateState } from "code-split-component"
+import { ApolloProvider } from "react-apollo"
+
+import { createApolloClient } from "../universal/Data"
 
 import ReactHotLoader from "./ReactHotLoader"
 import App from "../demo/components/App"
@@ -10,23 +13,33 @@ import App from "../demo/components/App"
 const container = document.querySelector("#app")
 
 function renderApp(AppComponent) {
+
+  console.log("Client: Initialize state from server:", window.APP_STATE)
+  const apollo = createApolloClient(null, window.APP_STATE)
+
+
+  console.log("Client: Rehydrating code splitting state...")
   // Firstly we ensure that we rehydrate any code split state provided to us
   // by the server response. This state typically indicates which bundles/chunks
   // need to be registered for our application to render and the React checksum
   // to match the server response.
   // @see https://github.com/ctrlplusb/code-split-component
   rehydrateState().then((codeSplitState) =>
-    render(
+  {
+    console.log("Client: Code Splitting State:", codeSplitState)
+    return render(
       <ReactHotLoader>
         <CodeSplitProvider state={codeSplitState}>
           <BrowserRouter>
-            <AppComponent/>
+            <ApolloProvider client={apollo.client} store={apollo.store}>
+              <AppComponent/>
+            </ApolloProvider>
           </BrowserRouter>
         </CodeSplitProvider>
       </ReactHotLoader>,
       container
     )
-  )
+  })
 }
 
 // The following is needed so that we can hot reload our App.
