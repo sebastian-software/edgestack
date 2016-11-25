@@ -2,6 +2,24 @@
 import { generateMiddleware } from "./middleware"
 import { generateServer, addFallbackHandler } from "./factory"
 import App from "../demo/components/App"
+import ApolloClient, { createNetworkInterface } from "apollo-client"
+
+function createApolloClient(headers)
+{
+  return new ApolloClient({
+    ssrMode: true,
+    networkInterface: createNetworkInterface({
+      uri: "localhost:9222",
+      opts: {
+        credentials: "same-origin",
+
+        // transfer request headers to networkInterface so that they're accessible to proxy server
+        // Addresses this issue: https://github.com/matthew-andrews/isomorphic-fetch/issues/83
+        headers: headers
+      }
+    })
+  })
+}
 
 export function start()
 {
@@ -10,7 +28,7 @@ export function start()
     const server = generateServer()
 
     // Bind our universal react app middleware as the handler for all get requests.
-    server.get("*", generateMiddleware(App))
+    server.get("*", generateMiddleware(App, createApolloClient))
 
     // Add default handling for any remaining errors which are not catched by our middleware
     addFallbackHandler(server)
