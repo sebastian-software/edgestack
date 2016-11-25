@@ -1,14 +1,10 @@
 /* eslint-disable filenames/match-exported */
+import ApolloClient, { createNetworkInterface } from "apollo-client"
+import { createStore, combineReducers, applyMiddleware, compose } from "redux"
+
 import { generateMiddleware } from "./middleware"
 import { generateServer, addFallbackHandler } from "./factory"
 import App from "../demo/components/App"
-import ApolloClient, { createNetworkInterface } from "apollo-client"
-
-
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-
-
-
 
 function createApolloClient(headers, initialState)
 {
