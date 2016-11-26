@@ -4,6 +4,6 @@ export { ServerConfig }
 
 export { generateServer, addFallbackHandler } from "./server/factory"
 export { generateMiddleware } from "./server/middleware"
-export { default as render } from "./server/render"
+export { default as renderPage } from "./server/renderPage"
 
 export { default as ReactHotLoader } from "./client/ReactHotLoader"
