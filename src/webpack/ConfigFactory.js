@@ -5,7 +5,6 @@ import webpack from "webpack"
 import AssetsPlugin from "assets-webpack-plugin"
 import builtinModules from "builtin-modules"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
-import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
 
 import Dashboard from "webpack-dashboard/plugin"
 import ProgressBar from "progress-bar-webpack-plugin"
@@ -598,10 +597,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         filename: "manifest.json",
         manifestVariable: "CHUNK_MANIFEST"
       })),
-
-      // Optimize lodash bundles when importing. Works together with Babel plugin.
-      // See: https://github.com/lodash/lodash-webpack-plugin#feature-sets
-      ifProd(new LodashModuleReplacementPlugin()),
 
       // Each key passed into DefinePlugin is an identifier.
       // The values for each key will be inlined into the code replacing any
