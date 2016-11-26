@@ -392,9 +392,9 @@ autoprefixer@^6.0.0, autoprefixer@^6.3.1, autoprefixer@^6.5.3:
     postcss "^5.2.5"
     postcss-value-parser "^3.2.3"
 
-awesome-typescript-loader@^3.0.0-beta.8:
-  version "3.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/awesome-typescript-loader/-/awesome-typescript-loader-3.0.0-beta.8.tgz#2c3bf6d756cfaf0d40ae0437adcc7ec2e515b65b"
+awesome-typescript-loader@^3.0.0-beta.9:
+  version "3.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/awesome-typescript-loader/-/awesome-typescript-loader-3.0.0-beta.9.tgz#f5279ca7e440e3cda0fd149c470efcd9b1de207a"
   dependencies:
     colors "^1.1.2"
     enhanced-resolve "^2.3.0"
@@ -8279,9 +8279,9 @@ webidl-conversions@^3.0.0, webidl-conversions@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-3.0.1.tgz#24534275e2a7bc6be7bc86611cc16ae0a5654871"
 
-webpack-bundle-analyzer@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-2.0.0.tgz#24d647090185616df46714d57be75e0e4162bd55"
+webpack-bundle-analyzer@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-2.0.1.tgz#07d6140cd5725d6f9108a3ba1d7f3bb9730c438e"
   dependencies:
     acorn "^4.0.3"
     chalk "^1.1.3"
