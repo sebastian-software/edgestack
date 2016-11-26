@@ -27,7 +27,14 @@ export function getMiddlewares() {
     thunk,
     createSagaMiddleware(),
     createLogger({
-      collapsed: true
+      collapsed: true,
+      colors: {
+        title: process.env.TARGET === "server" ? false : null,
+        prevState: process.env.TARGET === "server" ? false : null,
+        action: process.env.TARGET === "server" ? false : null,
+        nextState: process.env.TARGET === "server" ? false : null,
+        error: process.env.TARGET === "server" ? false : null
+      }
     })
   ]
 }
