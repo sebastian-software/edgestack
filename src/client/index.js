@@ -25,7 +25,7 @@ function renderApp(AppComponent)
   // @see https://github.com/ctrlplusb/code-split-component
   rehydrateState().then((codeSplitState) =>
   {
-    console.log("Client: Code Splitting State:", codeSplitState)
+    console.log("Client: Code Splitting State:", codeSplitState ? codeSplitState.length : 0)
     return render(
       <ReactHotLoader>
         <CodeSplitProvider state={codeSplitState}>
