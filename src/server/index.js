@@ -7,12 +7,16 @@ import App from "../demo/components/App"
 
 export function start()
 {
+  var ssrData = {
+    apolloUri: "http://localhost:9123"
+  }
+
   return new Promise((resolve, reject) =>
   {
     const server = generateServer()
 
     // Bind our universal react app middleware as the handler for all get requests.
-    server.get("*", generateMiddleware(App, createApolloClient))
+    server.get("*", generateMiddleware(App, createApolloClient, ssrData))
 
     // Add default handling for any remaining errors which are not catched by our middleware
     addFallbackHandler(server)

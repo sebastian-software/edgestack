@@ -97,7 +97,7 @@ function renderFull({ request, response, nonce, App, apollo }) {
 /**
  * An express middleware that is capable of doing React server side rendering.
  */
-export function generateMiddleware(App, createApolloClient)
+export function generateMiddleware(App, createApolloClient, ssrData = {})
 {
   return function middleware(request, response)
   {
@@ -106,11 +106,16 @@ export function generateMiddleware(App, createApolloClient)
     }
     const nonce = response.locals.nonce
 
+    // Pass apollo uri to the client
+    const initialState = {
+      ssr: ssrData
+    }
+
     /* eslint-disable no-magic-numbers */
     if (process.env.DISABLE_SSR === true) {
       renderLight({ request, response, nonce })
     } else {
-      renderFull({ request, response, nonce, App, apollo: createApolloClient(request.headers) })
+      renderFull({ request, response, nonce, App, apollo: createApolloClient(request.headers, initialState) })
     }
   }
 }

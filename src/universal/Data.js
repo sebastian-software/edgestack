@@ -8,17 +8,21 @@ export function emptyReducer(previousState = {}, action) {
   return previousState
 }
 
+export function ssrReducer(previousState = {}, action) {
+  return previousState
+}
+
 export function getEnhancers() {
   return []
 }
 
 export function getReducers() {
   return {
-    test: emptyReducer
+    ssr: ssrReducer
   }
 }
 
-export function getMiddleware() {
+export function getMiddlewares() {
   return [
     thunk,
     createSagaMiddleware(),
@@ -26,6 +30,14 @@ export function getMiddleware() {
       collapsed: true
     })
   ]
+}
+
+export function emptyMiddleware(store) {
+  return function(next) {
+    return function(action) {
+      return next(action)
+    }
+  }
 }
 
 export function emptyEnhancer(param) {
@@ -37,35 +49,37 @@ const devTools = process.env.TARGET === "client" &&
   window.devToolsExtension ?
     window.devToolsExtension() : emptyEnhancer
 
-export function getApolloUri() {
-  return "http://localhost:9222"
-}
-
 export function createApolloClient(headers, initialState)
 {
-  var client = new ApolloClient({
-    ssrMode: true,
-    networkInterface: createNetworkInterface({
-      uri: getApolloUri(),
-      opts: {
-        credentials: "same-origin",
+  const apolloUri = initialState.ssr.apolloUri
+  console.log("Creating Apollo Client for URL: ", apolloUri)
 
-        // transfer request headers to networkInterface so that they're accessible to proxy server
-        // Addresses this issue: https://github.com/matthew-andrews/isomorphic-fetch/issues/83
-        headers: headers
-      }
+  const hasApollo = apolloUri != null
+  if (hasApollo) {
+    var client = new ApolloClient({
+      ssrMode: true,
+      networkInterface: createNetworkInterface({
+        uri: apolloUri,
+        opts: {
+          credentials: "same-origin",
+
+          // transfer request headers to networkInterface so that they're accessible to proxy server
+          // Addresses this issue: https://github.com/matthew-andrews/isomorphic-fetch/issues/83
+          headers: headers
+        }
+      })
     })
-  })
+  }
 
   const rootReducer = combineReducers({
     ...getReducers(),
-    apollo: client.reducer()
+    apollo: hasApollo ? client.reducer() : emptyReducer
   })
 
   const enhancers = compose(
     applyMiddleware(
-      client.middleware(),
-      ...getMiddleware()
+      hasApollo ? client.middleware() : emptyMiddleware,
+      ...getMiddlewares()
     ),
     ...getEnhancers(),
     devTools
