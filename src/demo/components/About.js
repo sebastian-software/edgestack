@@ -46,7 +46,7 @@ const SET_TIME = "SET_TIME"
 
 function getTime(state) {
   var time = get(state, "app.time")
-  return time ? time.toISOString() : "Loading..."
+  return time ? new Date(time).toISOString() : "Loading..."
 }
 
 function setTime(time) {
