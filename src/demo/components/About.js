@@ -1,6 +1,7 @@
 import React from "react"
 import Helmet from "react-helmet"
 import { connect } from "react-redux"
+import { get } from "lodash"
 
 import Button from "./Button"
 import Styles from "./About.css"
@@ -25,6 +26,9 @@ class About extends React.Component {
       <article>
         <Helmet title="About" />
         <p>
+          Executed at: {this.props.time}
+        </p>
+        <p>
           <Button onClick={this.handleClick}>Rehydrated Button</Button>
         </p>
         <p className={Styles.intro}>
@@ -37,6 +41,14 @@ class About extends React.Component {
 
 const SET_TIME = "SET_TIME"
 
+
+
+
+function getTime(state) {
+  var time = get(state, "app.time")
+  return time ? time.toISOString() : "Loading..."
+}
+
 function setTime(time) {
   return {
     type: SET_TIME,
@@ -46,7 +58,7 @@ function setTime(time) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    // fill me
+    time: getTime(state)
   }
 }
 

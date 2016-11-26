@@ -18,7 +18,20 @@ export function getEnhancers() {
 
 export function getReducers() {
   return {
-    ssr: ssrReducer
+    ssr: ssrReducer,
+    app: function(previousState = {}, action) {
+      switch(action.type) {
+        case "SET_TIME":
+          return {
+            ...previousState,
+            time: action.now
+          }
+          break
+
+        default:
+          return previousState
+      }
+    }
   }
 }
 
