@@ -8273,9 +8273,9 @@ webidl-conversions@^3.0.0, webidl-conversions@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-3.0.1.tgz#24534275e2a7bc6be7bc86611cc16ae0a5654871"
 
-webpack-bundle-analyzer@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-2.0.1.tgz#07d6140cd5725d6f9108a3ba1d7f3bb9730c438e"
+webpack-bundle-analyzer@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-2.1.0.tgz#1946987c36b3343f13e32beea39be6b59b0d5de7"
   dependencies:
     acorn "^4.0.3"
     chalk "^1.1.3"
