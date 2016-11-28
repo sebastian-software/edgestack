@@ -3,7 +3,7 @@ import { generateMiddleware } from "./middleware"
 import { generateServer, addFallbackHandler } from "./factory"
 import { createApolloClient } from "../universal/Data"
 
-import App from "../demo/App"
+import App from "../app/App"
 
 export function start()
 {
