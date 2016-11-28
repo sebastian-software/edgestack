@@ -1,4 +1,3 @@
-import serialize from "serialize-javascript"
 import { readFileSync } from "fs"
 import { STATE_IDENTIFIER } from "code-split-component"
 import { ABSOLUTE_ASSETSINFO_PATH, ABSOLUTE_CHUNKMANIFEST_PATH } from "./config"
@@ -117,9 +116,9 @@ export default function render({ renderedApp, initialState = {}, nonce, helmet, 
         <div id="app">${renderedApp || ""}</div>
 
         <script nonce="${nonce}">${
-          `APP_STATE=${serialize(initialState)};` +
+          `APP_STATE=${JSON.stringify(initialState)};` +
           `CHUNK_MANIFEST=${chunkManifest};` +
-          `${STATE_IDENTIFIER}=${serialize(codeSplitState)};`
+          `${STATE_IDENTIFIER}=${JSON.stringify(codeSplitState)};`
         }</script>
 
         ${scriptTags(assetsForRender.scripts)}
