@@ -34,18 +34,13 @@ export function getReducers() {
 }
 
 export function getMiddlewares() {
-  return [
-    createLogger({
-      collapsed: true,
-      colors: {
-        title: process.env.TARGET === "server" ? false : null,
-        prevState: process.env.TARGET === "server" ? false : null,
-        action: process.env.TARGET === "server" ? false : null,
-        nextState: process.env.TARGET === "server" ? false : null,
-        error: process.env.TARGET === "server" ? false : null
-      }
-    })
-  ]
+  var middlewares = []
+
+  if (process.env.TARGET === "client") {
+    middlewares.push(createLogger({ collapsed: true }))
+  }
+
+  return middlewares
 }
 
 export function emptyMiddleware(store) {

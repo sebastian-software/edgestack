@@ -43,7 +43,7 @@ function getAssetsForClientChunks(chunks) {
  *
  *
  */
-function styleTags(styles) {
+function generateLinkStyleTags(styles) {
   return styles
     .map((style) =>
       `<link href="${style}" media="screen, projection" rel="stylesheet" />`
@@ -56,7 +56,7 @@ function styleTags(styles) {
  *
  *
  */
-function scriptTags(scripts) {
+function generateScriptTags(scripts) {
   return scripts
     .map((script) =>
       `<script src="${script}"></script>`
@@ -77,7 +77,7 @@ function scriptTags(scripts) {
  *
  * @return The full HTML page in the form of a React element.
  */
-export default function render({ renderedApp, initialState = {}, nonce, helmet, codeSplitState }) {
+export default function renderPage({ renderedApp, initialState = {}, nonce, helmet, codeSplitState }) {
   // The chunks that we need to fetch the assets (js/css) for and then include
   // said assets as script/style tags within our html.
   const chunksForRender = [
@@ -109,7 +109,7 @@ export default function render({ renderedApp, initialState = {}, nonce, helmet, 
         ${helmet ? helmet.meta.toString() : ""}
         ${helmet ? helmet.link.toString() : ""}
 
-        ${styleTags(assetsForRender.styles)}
+        ${generateLinkStyleTags(assetsForRender.styles)}
         ${helmet ? helmet.style.toString() : ""}
       </head>
       <body>
@@ -121,7 +121,7 @@ export default function render({ renderedApp, initialState = {}, nonce, helmet, 
           `${STATE_IDENTIFIER}=${JSON.stringify(codeSplitState)};`
         }</script>
 
-        ${scriptTags(assetsForRender.scripts)}
+        ${generateScriptTags(assetsForRender.scripts)}
         ${helmet ? helmet.script.toString() : ""}
       </body>
     </html>`

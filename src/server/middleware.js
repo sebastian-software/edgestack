@@ -79,6 +79,8 @@ function renderFull({ request, response, nonce, App, apollo }) {
 
     console.log("Server: Sending page...")
 
+    /* eslint-disable no-magic-numbers */
+
     // Check if the render result contains a redirect, if so we need to set
     // the specific status and redirect header and end the response.
     if (renderedResult.redirect) {
@@ -106,13 +108,13 @@ export function generateMiddleware(App, createApolloClient, ssrData = {})
     }
     const nonce = response.locals.nonce
 
-    // Pass apollo uri to the client
+    // Pass object with all Server Side Rendering (SSR) related data to the client
     const initialState = {
       ssr: ssrData
     }
 
-    /* eslint-disable no-magic-numbers */
-    if (process.env.DISABLE_SSR === true) {
+    if (process.env.DISABLE_SSR)
+    {
       renderLight({ request, response, nonce })
     }
     else
