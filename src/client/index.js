@@ -7,7 +7,7 @@ import { ApolloProvider } from "react-apollo"
 import { createApolloClient } from "../universal/Data"
 
 import ReactHotLoader from "./ReactHotLoader"
-import App from "../demo/components/App"
+import App from "../demo/App"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")
@@ -50,8 +50,8 @@ if (process.env.NODE_ENV === "development" && module.hot) {
 
   // Any changes to our App will cause a hotload re-render.
   module.hot.accept(
-    "../demo/components/App",
-    () => renderApp(require("../demo/components/App").default)
+    "../demo/App",
+    () => renderApp(require("../demo/App").default)
   )
 
   // Enable Webpack hot module replacement for reducers. This is so that we
