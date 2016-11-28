@@ -1,9 +1,9 @@
-/* eslint-disable filenames/match-exported */
+// eslint-disable filenames/match-exported
 import { generateMiddleware } from "./middleware"
 import { generateServer, addFallbackHandler } from "./factory"
-import { createApolloClient } from "../universal/Data"
 
 import App from "../app/App"
+import { createApolloClient } from "../app/Data"
 
 export function start()
 {

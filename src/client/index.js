@@ -1,13 +1,13 @@
+// eslint-disable filenames/match-exported
 import React from "react"
 import { render } from "react-dom"
 import { BrowserRouter } from "react-router"
 import { CodeSplitProvider, rehydrateState } from "code-split-component"
 import { ApolloProvider } from "react-apollo"
 
-import { createApolloClient } from "../universal/Data"
-
 import ReactHotLoader from "./ReactHotLoader"
 import App from "../app/App"
+import { createApolloClient } from "../app/Data"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")
@@ -57,8 +57,8 @@ if (process.env.NODE_ENV === "development" && module.hot) {
   // Enable Webpack hot module replacement for reducers. This is so that we
   // don"t lose all of our current application state during hot reloading.
   /*
-  module.hot.accept("../universal/reducers", () => {
-    const nextRootReducer = require("../universal/reducers").default // eslint-disable-line global-require
+  module.hot.accept("../app/reducers", () => {
+    const nextRootReducer = require("../app/reducers").default // eslint-disable-line global-require
     store.replaceReducer(nextRootReducer)
   })
   */
