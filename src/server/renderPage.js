@@ -78,7 +78,7 @@ function scriptTags(scripts) {
  *
  * @return The full HTML page in the form of a React element.
  */
-export default function render({ renderedApp, initialState = {}, nonce, helmet, codeSplitState = {} }) {
+export default function render({ renderedApp, initialState = {}, nonce, helmet, codeSplitState }) {
   // The chunks that we need to fetch the assets (js/css) for and then include
   // said assets as script/style tags within our html.
   const chunksForRender = [
@@ -88,7 +88,7 @@ export default function render({ renderedApp, initialState = {}, nonce, helmet, 
     "main"
   ]
 
-  if (codeSplitState) {
+  if (codeSplitState && codeSplitState.chunks) {
     // We add all the chunks that our CodeSplitProvider tracked as being used
     // for this render.  This isn't actually required as the rehydrate function
     // of code-split-component which gets executed in our client bundle will
