@@ -1,5 +1,5 @@
 import createLogger from "redux-logger"
-import ApolloClient, { createNetworkInterface } from "apollo-client"
+import ApolloClient, { createNetworkInterface, createBatchingNetworkInterface } from "apollo-client"
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
 
 export function emptyReducer(previousState = {}, action) {
@@ -65,25 +65,41 @@ const devTools = process.env.TARGET === "client" &&
   window.devToolsExtension ?
     window.devToolsExtension() : emptyEnhancer
 
-export function createApolloClient(headers, initialState)
+export function createApolloClient({ headers, initialState, batchRequests = false, trustNetwork = true })
 {
   const apolloUri = initialState.ssr.apolloUri
   console.log("Creating Apollo Client for URL: ", apolloUri)
 
   const hasApollo = apolloUri != null
-  if (hasApollo) {
-    var client = new ApolloClient({
-      ssrMode: true,
-      networkInterface: createNetworkInterface({
-        uri: apolloUri,
-        opts: {
-          credentials: "same-origin",
+  if (hasApollo)
+  {
+    var opts = {
+      credentials: trustNetwork ? "include" : "same-origin",
 
-          // transfer request headers to networkInterface so that they're accessible to proxy server
-          // Addresses this issue: https://github.com/matthew-andrews/isomorphic-fetch/issues/83
-          headers: headers
-        }
+      // transfer request headers to networkInterface so that they're accessible to proxy server
+      // Addresses this issue: https://github.com/matthew-andrews/isomorphic-fetch/issues/83
+      headers: headers
+    }
+
+    if (batchRequests)
+    {
+      var networkInterface = createBatchingNetworkInterface({
+        uri: apolloUri,
+        batchInterval: 10,
+        opts: opts
       })
+    }
+    else
+    {
+      var networkInterface = createNetworkInterface({
+        uri: apolloUri,
+        opts: opts
+      })
+    }
+
+    var client = new ApolloClient({
+      ssrMode: process.env.TARGET === "server",
+      networkInterface: networkInterface
     })
   }
 

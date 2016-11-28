@@ -15,7 +15,7 @@ const container = document.querySelector("#app")
 function renderApp(AppComponent)
 {
   console.log("Client: Initialize state from server:", window.APP_STATE)
-  const apollo = createApolloClient(null, window.APP_STATE)
+  const apollo = createApolloClient({ initialState: window.APP_STATE })
 
   console.log("Client: Rehydrating code splitting state...")
   // Firstly we ensure that we rehydrate any code split state provided to us

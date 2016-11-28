@@ -114,8 +114,15 @@ export function generateMiddleware(App, createApolloClient, ssrData = {})
     /* eslint-disable no-magic-numbers */
     if (process.env.DISABLE_SSR === true) {
       renderLight({ request, response, nonce })
-    } else {
-      renderFull({ request, response, nonce, App, apollo: createApolloClient(request.headers, initialState) })
+    }
+    else
+    {
+      const apollo = createApolloClient({
+        headers: request.headers,
+        initialState : initialState
+      })
+
+      renderFull({ request, response, nonce, App, apollo })
     }
   }
 }
