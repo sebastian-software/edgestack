@@ -11,7 +11,7 @@ class About extends React.Component {
     if (props.updateTime) {
       console.log("Fetching data for <About>...")
       return new Promise((resolve, reject) => {
-        console.log(props.updateTime())
+        props.updateTime()
         resolve()
       })
     }
