@@ -1,5 +1,3 @@
-import thunk from "redux-thunk"
-import createSagaMiddleware from "redux-saga"
 import createLogger from "redux-logger"
 import ApolloClient, { createNetworkInterface } from "apollo-client"
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
@@ -37,8 +35,6 @@ export function getReducers() {
 
 export function getMiddlewares() {
   return [
-    thunk,
-    createSagaMiddleware(),
     createLogger({
       collapsed: true,
       colors: {
