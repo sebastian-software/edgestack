@@ -2623,9 +2623,9 @@ eslint-plugin-flowtype-errors@^1.5.0:
     shelljs "^0.7.4"
     slash "^1.0.0"
 
-eslint-plugin-flowtype@^2.25.0:
-  version "2.25.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.25.0.tgz#c462521ab20ce3d8db819f10ad3c9f1bc7f3f819"
+eslint-plugin-flowtype@^2.28.2:
+  version "2.28.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.28.2.tgz#2430ac1bf434db878e16cfde454f64b13896317b"
   dependencies:
     lodash "^4.15.0"
 
@@ -2702,9 +2702,48 @@ eslint-rule-documentation@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/eslint-rule-documentation/-/eslint-rule-documentation-1.0.2.tgz#1435cee2072bbe979257ff1c8e90a128eb132050"
 
-eslint@^3.0.0, eslint@^3.10.2:
+eslint@^3.0.0:
   version "3.10.2"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.10.2.tgz#c9a10e8bf6e9d65651204778c503341f1eac3ce7"
+  dependencies:
+    babel-code-frame "^6.16.0"
+    chalk "^1.1.3"
+    concat-stream "^1.4.6"
+    debug "^2.1.1"
+    doctrine "^1.2.2"
+    escope "^3.6.0"
+    espree "^3.3.1"
+    estraverse "^4.2.0"
+    esutils "^2.0.2"
+    file-entry-cache "^2.0.0"
+    glob "^7.0.3"
+    globals "^9.2.0"
+    ignore "^3.2.0"
+    imurmurhash "^0.1.4"
+    inquirer "^0.12.0"
+    is-my-json-valid "^2.10.0"
+    is-resolvable "^1.0.0"
+    js-yaml "^3.5.1"
+    json-stable-stringify "^1.0.0"
+    levn "^0.3.0"
+    lodash "^4.0.0"
+    mkdirp "^0.5.0"
+    natural-compare "^1.4.0"
+    optionator "^0.8.2"
+    path-is-inside "^1.0.1"
+    pluralize "^1.2.1"
+    progress "^1.1.8"
+    require-uncached "^1.0.2"
+    shelljs "^0.7.5"
+    strip-bom "^3.0.0"
+    strip-json-comments "~1.0.1"
+    table "^3.7.8"
+    text-table "~0.2.0"
+    user-home "^2.0.0"
+
+eslint@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.11.0.tgz#41d34f8b3e69949beee5c097ff4e75ad13ba2d00"
   dependencies:
     babel-code-frame "^6.16.0"
     chalk "^1.1.3"
@@ -3493,17 +3532,17 @@ gulp-eslint@^3.0.1:
     eslint "^3.0.0"
     gulp-util "^3.0.6"
 
-gulp-stylelint@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/gulp-stylelint/-/gulp-stylelint-3.4.0.tgz#4afff70e324cf38b8794d295209be9397d37469f"
+gulp-stylelint@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/gulp-stylelint/-/gulp-stylelint-3.5.0.tgz#5c37b5ef2cce5d590b2eb3e22e279aa9a6bf1036"
   dependencies:
     chalk "^1.1.3"
     deep-extend "^0.4.1"
     gulp-util "^3.0.7"
     mkdirp "^0.5.1"
     promise "^7.1.1"
-    stylelint "^7.4.2"
-    through2 "^2.0.1"
+    stylelint "^7.6.0"
+    through2 "^2.0.2"
 
 gulp-util@^3.0.0, gulp-util@^3.0.6, gulp-util@^3.0.7:
   version "3.0.7"
@@ -6912,7 +6951,7 @@ readable-stream@^1.0.27-1, readable-stream@^1.0.33, readable-stream@^1.1.13, rea
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-"readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.1.0:
+"readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.1.0, readable-stream@^2.1.5:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.2.tgz#a9e6fec3c7dda85f8bb1b3ba7028604556fc825e"
   dependencies:
@@ -7325,15 +7364,15 @@ rxjs@^5.0.0-beta.11:
   dependencies:
     symbol-observable "^1.0.1"
 
-s15e-javascript@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.6.0.tgz#ec4a50c0bb7ef6c57235990bccded752f33eeab5"
+s15e-javascript@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.6.1.tgz#c95243e2884ce659ced472a16f7c4e874345e35a"
   dependencies:
-    eslint "^3.10.2"
+    eslint "^3.11.0"
     eslint-find-rules "^1.14.3"
     eslint-formatter-pretty "^1.1.0"
     eslint-plugin-filenames "^1.1.0"
-    eslint-plugin-flowtype "^2.25.0"
+    eslint-plugin-flowtype "^2.28.2"
     eslint-plugin-flowtype-errors "^1.5.0"
     eslint-plugin-import "^2.2.0"
     eslint-plugin-jsx-a11y "^3.0.1"
@@ -7345,7 +7384,7 @@ s15e-javascript@^0.6.0:
     eslint-plugin-unicorn "^1.0.0"
     gulp "^3.9.1"
     gulp-eslint "^3.0.1"
-    gulp-stylelint "^3.4.0"
+    gulp-stylelint "^3.5.0"
     postcss "^5.2.6"
     stylefmt "^5.0.0"
     stylelint "^7.6.0"
@@ -7799,7 +7838,7 @@ stylehacks@^2.3.0:
     text-table "^0.2.0"
     write-file-stdout "0.0.2"
 
-stylelint@^7.4.2, stylelint@^7.5.0, stylelint@^7.6.0:
+stylelint@^7.5.0, stylelint@^7.6.0:
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-7.6.0.tgz#ddeb06ccc95f72c119fcde5e85439fb7e9cde4df"
   dependencies:
@@ -7953,12 +7992,19 @@ through2@^0.6.1, through2@^0.6.2, through2@^0.6.3, through2@^0.6.5, through2@~0.
     readable-stream ">=1.0.33-1 <1.1.0-0"
     xtend ">=4.0.0 <4.1.0-0"
 
-through2@^2.0.0, through2@^2.0.1:
+through2@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.1.tgz#384e75314d49f32de12eebb8136b8eb6b5d59da9"
   dependencies:
     readable-stream "~2.0.0"
     xtend "~4.0.0"
+
+through2@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.2.tgz#316d3a4f444af641496aa7f45a713be72576baf4"
+  dependencies:
+    readable-stream "^2.1.5"
+    xtend "~4.0.1"
 
 tildify@^1.0.0:
   version "1.2.0"
@@ -8499,7 +8545,7 @@ xmlhttprequest-ssl@1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/xmlhttprequest-ssl/-/xmlhttprequest-ssl-1.5.3.tgz#185a888c04eca46c3e4070d99f7b49de3528992d"
 
-xtend@^4.0.0, "xtend@>=4.0.0 <4.1.0-0", xtend@~4.0.0:
+xtend@^4.0.0, "xtend@>=4.0.0 <4.1.0-0", xtend@~4.0.0, xtend@~4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
 
