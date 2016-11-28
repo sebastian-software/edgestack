@@ -19,12 +19,12 @@ function renderApp(AppComponent)
     initialState: window.APP_STATE
   })
 
-  console.log("Client: Rehydrating code splitting state...")
   // Firstly we ensure that we rehydrate any code split state provided to us
   // by the server response. This state typically indicates which bundles/chunks
   // need to be registered for our application to render and the React checksum
   // to match the server response.
   // @see https://github.com/ctrlplusb/code-split-component
+  console.log("Client: Rehydrating code splitting state...")
   rehydrateState().then((codeSplitState) =>
   {
     console.log("Client: Code Splitting State:", codeSplitState ? codeSplitState.length : 0)
@@ -44,15 +44,13 @@ function renderApp(AppComponent)
 }
 
 // The following is needed so that we can hot reload our App.
-if (process.env.NODE_ENV === "development" && module.hot) {
+if (process.env.NODE_ENV === "development" && module.hot)
+{
   // Accept changes to this file for hot reloading.
   module.hot.accept("./index.js")
 
   // Any changes to our App will cause a hotload re-render.
-  module.hot.accept(
-    "../app/App",
-    () => renderApp(require("../app/App").default)
-  )
+  module.hot.accept("../app/App", () => renderApp(require("../app/App").default))
 
   // Enable Webpack hot module replacement for reducers. This is so that we
   // don"t lose all of our current application state during hot reloading.
