@@ -26,10 +26,15 @@ function renderToStringWithData(component) {
 
 // SSR is disabled so we will just return an empty html page and will
 // rely on the client to populate the initial react application state.
-function renderLight({ request, response, nonce }) {
+function renderLight({ request, response, nonce, initialState }) {
   /* eslint-disable no-magic-numbers */
   try {
     const html = renderPage({
+      // Provide the redux store state, this will be bound to the window.APP_STATE
+      // so that we can rehydrate the state on the client.
+      initialState,
+
+      // Nonce which allows us to safely declare inline scripts.
       nonce
     })
     response.status(200).send(html)
@@ -130,7 +135,7 @@ export default function generateMiddleware(App, createApolloClient, ssrData = {}
 
     if (process.env.DISABLE_SSR)
     {
-      renderLight({ request, response, nonce })
+      renderLight({ request, response, nonce, initialState })
     }
     else
     {
