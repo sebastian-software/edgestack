@@ -4,11 +4,25 @@ import { ServerRouter, createServerRenderContext } from "react-router"
 import { CodeSplitProvider, createRenderContext } from "code-split-component"
 import Helmet from "react-helmet"
 import { Provider } from "react-redux"
-import { renderToStringWithData } from "react-apollo/server"
+import { getDataFromTree } from "react-apollo/server"
 import { ApolloProvider } from "react-apollo"
 
 import renderPage from "./renderPage"
 
+/**
+ * Using Apollo logic to recursively resolve all queries needed for
+ * initial rendering. The convention is to use the full JSX tree,
+ * traverse it and look for all occurrences of a static `fetchData() => Promise`
+ * method which is being executed and waited for.
+ *
+ * See also:
+ * https://www.npmjs.com/package/react-redux-universal-hot-example#server-side-data-fetching
+ */
+function renderToStringWithData(component) {
+  return getDataFromTree(component).then(() => {
+    return renderToString(component)
+  })
+}
 
 // SSR is disabled so we will just return an empty html page and will
 // rely on the client to populate the initial react application state.
@@ -36,6 +50,7 @@ function renderFull({ request, response, nonce, App, apollo }) {
   console.log("Server: Rendering app with data...")
 
   // Create the application react element.
+  console.time("Server: Page Rendering")
   renderToStringWithData(
     <CodeSplitProvider context={codeSplitContext}>
       <ServerRouter location={request.url} context={routingContext}>
@@ -46,7 +61,7 @@ function renderFull({ request, response, nonce, App, apollo }) {
     </CodeSplitProvider>
   ).then((renderedApp) => {
 
-    console.log("Server: Render complete!")
+    console.timeEnd("Server: Page Rendering")
 
     const state = apollo.store.getState()
     console.log("Server: Rendered state:", state)

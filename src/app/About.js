@@ -3,7 +3,7 @@ import Helmet from "react-helmet"
 import { connect } from "react-redux"
 
 import Styles from "./About.css"
-import { setCounter, getCounter, incrementCounter } from "./CounterModule"
+import { setCounter, getCounter, decrementCounter, incrementCounter } from "./CounterModule"
 
 function About(props) {
   return (
@@ -13,7 +13,9 @@ function About(props) {
         Counter: {props.value}
       </p>
       <p>
-        <button className={Styles.button} onClick={props.increment}>Increment</button>
+        <button className={Styles.button} onClick={props.handleDecrement}>Decrement</button>
+        &#160;
+        <button className={Styles.button} onClick={props.handleIncrement}>Increment</button>
       </p>
       <p className={Styles.intro}>
         <a href="https://github.com/sebastian-software">Produced with ❤ by Sebastian Software</a>
@@ -22,12 +24,20 @@ function About(props) {
   )
 }
 
-About.fetchData = function(props, context) {
-  if (props.reset) {
-    console.log("Fetching initial counter for <About>...")
-    return new Promise((resolve, reject) => {
-      props.reset(Math.round(Math.random() * 100))
-      resolve()
+About.fetchData = function(props, context)
+{
+  // Redux' connect() add proxies for static methods, but the top-level HOC
+  // does not have our required and connected state/dispatcher props.
+  if (props.reset != null)
+  {
+    console.log("Fetching initial data for <About>...")
+    return new Promise((resolve, reject) =>
+    {
+      // Pseudo async code to simulate API latency
+      setTimeout(() => {
+        props.reset(Math.round(Math.random() * 100))
+        resolve()
+      }, 100)
     })
   }
 
@@ -36,7 +46,8 @@ About.fetchData = function(props, context) {
 
 About.propTypes = {
   value: React.PropTypes.number,
-  increment: React.PropTypes.func,
+  handleIncrement: React.PropTypes.func,
+  handleDecrement: React.PropTypes.func,
   reset: React.PropTypes.func
 }
 
@@ -45,8 +56,12 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  increment: () => {
+  handleIncrement: () => {
     dispatch(incrementCounter())
+  },
+
+  handleDecrement: () => {
+    dispatch(decrementCounter())
   },
 
   reset: (value) => {
