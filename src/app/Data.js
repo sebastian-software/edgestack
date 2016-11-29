@@ -1,10 +1,10 @@
 import createLogger from "redux-logger"
 import ApolloClient, { createNetworkInterface, createBatchingNetworkInterface } from "apollo-client"
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
+import { get } from "lodash"
 
-export function emptyReducer(previousState = {}, action) {
-  return previousState
-}
+import { emptyReducer, emptyMiddleware, emptyEnhancer } from "./Placeholder"
+import { counterReducer } from "./CounterModule"
 
 export function ssrReducer(previousState = {}, action) {
   return previousState
@@ -17,19 +17,7 @@ export function getEnhancers() {
 export function getReducers() {
   return {
     ssr: ssrReducer,
-    app: function(previousState = {}, action) {
-      switch(action.type) {
-        case "SET_TIME":
-          return {
-            ...previousState,
-            time: action.now
-          }
-          break
-
-        default:
-          return previousState
-      }
-    }
+    counter: counterReducer
   }
 }
 
@@ -43,18 +31,6 @@ export function getMiddlewares() {
   return middlewares
 }
 
-export function emptyMiddleware(store) {
-  return function(next) {
-    return function(action) {
-      return next(action)
-    }
-  }
-}
-
-export function emptyEnhancer(param) {
-  return param
-}
-
 const devTools = process.env.TARGET === "client" &&
   process.env.NODE_ENV === "development" &&
   window.devToolsExtension ?
@@ -62,7 +38,7 @@ const devTools = process.env.TARGET === "client" &&
 
 export function createApolloClient({ headers, initialState, batchRequests = false, trustNetwork = true })
 {
-  const apolloUri = initialState.ssr.apolloUri
+  const apolloUri = get(initialState, "ssr.apolloUri")
   console.log("Creating Apollo Client for URL: ", apolloUri)
 
   const hasApollo = apolloUri != null
@@ -96,6 +72,10 @@ export function createApolloClient({ headers, initialState, batchRequests = fals
       ssrMode: process.env.TARGET === "server",
       networkInterface: networkInterface
     })
+  }
+  else
+  {
+    var client = new ApolloClient()
   }
 
   const rootReducer = combineReducers({

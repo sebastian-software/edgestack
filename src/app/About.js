@@ -1,72 +1,57 @@
 import React from "react"
 import Helmet from "react-helmet"
 import { connect } from "react-redux"
-import { get } from "lodash"
 
 import Styles from "./About.css"
+import { setCounter, getCounter, incrementCounter } from "./CounterModule"
 
-class About extends React.Component {
-  static fetchData(props, context) {
-    if (props.updateTime) {
-      console.log("Fetching data for <About>...")
-      return new Promise((resolve, reject) => {
-        props.updateTime()
-        resolve()
-      })
-    }
-  }
-
-  handleClick() {
-    alert("Clicked!")
-  }
-
-  render() {
-    return (
-      <article>
-        <Helmet title="About" />
-        <p>
-          Executed at: {this.props.time}
-        </p>
-        <p>
-          <button className={Styles.button} onClick={this.handleClick}>Rehydrated button</button>
-        </p>
-        <p className={Styles.intro}>
-          Produced with ❤ by <a href="https://github.com/sebastian-software">Sebastian Software</a>
-        </p>
-      </article>
-    )
-  }
+function About(props) {
+  return (
+    <article>
+      <Helmet title="About" />
+      <p>
+        Counter: {props.value}
+      </p>
+      <p>
+        <button className={Styles.button} onClick={props.increment}>Increment</button>
+      </p>
+      <p className={Styles.intro}>
+        <a href="https://github.com/sebastian-software">Produced with ❤ by Sebastian Software</a>
+      </p>
+    </article>
+  )
 }
 
-const SET_TIME = "SET_TIME"
-
-
-
-
-function getTime(state) {
-  var time = get(state, "app.time")
-  return time ? new Date(time).toISOString() : "Loading..."
-}
-
-function setTime(time) {
-  return {
-    type: SET_TIME,
-    now: time
+About.fetchData = function(props, context) {
+  if (props.reset) {
+    console.log("Fetching initial counter for <About>...")
+    return new Promise((resolve, reject) => {
+      props.reset(Math.round(Math.random() * 100))
+      resolve()
+    })
   }
+
+  return Promise.resolve()
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    time: getTime(state)
-  }
+About.propTypes = {
+  value: React.PropTypes.number,
+  increment: React.PropTypes.func,
+  reset: React.PropTypes.func
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    updateTime: () => {
-      dispatch(setTime(new Date()))
-    }
+const mapStateToProps = (state, ownProps) => ({
+  value: getCounter(state)
+})
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  increment: () => {
+    dispatch(incrementCounter())
+  },
+
+  reset: (value) => {
+    dispatch(setCounter(value == null ? 0 : value))
   }
-}
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(About)
