@@ -2,6 +2,7 @@ import createLogger from "redux-logger"
 import ApolloClient, { createNetworkInterface, createBatchingNetworkInterface } from "apollo-client"
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
 import { get } from "lodash"
+import thunk from "redux-thunk"
 
 import { emptyReducer, emptyMiddleware, emptyEnhancer } from "./Placeholder"
 import { counterReducer } from "./CounterModule"
@@ -86,6 +87,7 @@ export function createApolloClient({ headers, initialState, batchRequests = fals
   const enhancers = compose(
     applyMiddleware(
       hasApollo ? client.middleware() : emptyMiddleware,
+      thunk,
       ...getMiddlewares()
     ),
     ...getEnhancers(),
