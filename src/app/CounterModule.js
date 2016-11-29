@@ -40,6 +40,24 @@ export function decrementCounter()
   }
 }
 
+/**
+ * This somewhat tries to emulate a asyncronous backend request
+ */
+function generateServerResponse() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(Math.round(Math.random() * 100))
+    }, 100)
+  })
+}
+
+/**
+ * Async data loading using redux-thunk
+ */
+export function loadCounter() {
+  return (dispatch) => generateServerResponse().then((value) => dispatch(setCounter(value)))
+}
+
 const initialState = {
   value: 0
 }

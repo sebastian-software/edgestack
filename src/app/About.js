@@ -3,15 +3,11 @@ import Helmet from "react-helmet"
 import { connect } from "react-redux"
 
 import Styles from "./About.css"
-import { setCounter, getCounter, decrementCounter, incrementCounter } from "./CounterModule"
-
-function generateServerResponse() {
-  return Math.round(Math.random() * 100)
-}
+import { setCounter, getCounter, decrementCounter, incrementCounter, loadCounter } from "./CounterModule"
 
 class About extends React.Component {
   componentWillMount() {
-    console.log("About component will mount: ", this)
+    console.log("WILL MOUNT:", this.props.load)
     /*this.setState({
       initialDataLoaded: true
     })*/
@@ -41,17 +37,8 @@ About.fetchData = function(props, context)
 {
   // Redux' connect() add proxies for static methods, but the top-level HOC
   // does not have our required and connected state/dispatcher props.
-  if (props.reset != null)
-  {
-    console.log("Fetching initial data for <About>...")
-    return new Promise((resolve, reject) =>
-    {
-      // Pseudo async code to simulate API latency
-      setTimeout(() => {
-        props.reset(generateServerResponse())
-        resolve()
-      }, 100)
-    })
+  if (props.load) {
+    return props.load()
   }
 
   return Promise.resolve()
@@ -69,17 +56,10 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  handleIncrement: () => {
-    dispatch(incrementCounter())
-  },
-
-  handleDecrement: () => {
-    dispatch(decrementCounter())
-  },
-
-  reset: (value) => {
-    dispatch(setCounter(value == null ? 0 : value))
-  }
+  handleIncrement: () => dispatch(incrementCounter()),
+  handleDecrement: () => dispatch(decrementCounter()),
+  load: () => dispatch(loadCounter()),
+  reset: (value) => dispatch(setCounter(value == null ? 0 : value))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(About)
