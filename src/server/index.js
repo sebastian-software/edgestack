@@ -6,7 +6,7 @@ import addFallbackHandler from "./addFallbackHandler"
 import App from "../app/App"
 import { createApolloClient } from "../app/Data"
 
-export function start()
+export function start(apolloUri)
 {
   var ssrData = {
     apolloUri: "http://localhost:9123"

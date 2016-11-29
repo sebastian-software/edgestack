@@ -7868,7 +7868,7 @@ stylehacks@^2.3.0:
     text-table "^0.2.0"
     write-file-stdout "0.0.2"
 
-stylelint@^7.5.0, stylelint@^7.6.0:
+stylelint, stylelint@^7.5.0, stylelint@^7.6.0:
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-7.6.0.tgz#ddeb06ccc95f72c119fcde5e85439fb7e9cde4df"
   dependencies:

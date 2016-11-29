@@ -3,7 +3,6 @@ import Helmet from "react-helmet"
 import { connect } from "react-redux"
 import { get } from "lodash"
 
-import Button from "./Button"
 import Styles from "./About.css"
 
 class About extends React.Component {
@@ -22,14 +21,14 @@ class About extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <article>
         <Helmet title="About" />
         <p>
           Executed at: {this.props.time}
         </p>
         <p>
-          <Button onClick={this.handleClick}>Rehydrated Button</Button>
+          <button className={Styles.button} onClick={this.handleClick}>Rehydrated button</button>
         </p>
         <p className={Styles.intro}>
           Produced with ❤ by <a href="https://github.com/sebastian-software">Sebastian Software</a>

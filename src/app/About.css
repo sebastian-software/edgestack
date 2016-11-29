@@ -1,6 +1,21 @@
+@import "./Common.css";
+
 $textColor: orange;
 
 .intro {
   display: flex;
   color: $textColor;
+}
+
+.button{
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  cursor: pointer;
+  line-height: 1.1;
+  border-radius: 2px;
+  border: none;
+  padding: 12px 18px;
+  font-size: 16px;
+  color: white;
+  background: $main-color linear-gradient(rgba(255,255,255,0.2), transparent);
 }
