@@ -7,10 +7,9 @@ import { setCounter, getCounter, decrementCounter, incrementCounter, loadCounter
 
 class About extends React.Component {
   componentWillMount() {
-    console.log("WILL MOUNT:", this.props.load)
-    /*this.setState({
-      initialDataLoaded: true
-    })*/
+    if (this.props.value == null) {
+      this.props.load()
+    }
   }
 
   render() {
