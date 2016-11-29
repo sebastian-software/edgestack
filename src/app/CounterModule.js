@@ -64,7 +64,7 @@ export function loadCounter() {
 }
 
 const initialState = {
-  value: 0
+  value: null
 }
 
 /**
