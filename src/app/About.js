@@ -5,23 +5,36 @@ import { connect } from "react-redux"
 import Styles from "./About.css"
 import { setCounter, getCounter, decrementCounter, incrementCounter } from "./CounterModule"
 
-function About(props) {
-  return (
-    <article>
-      <Helmet title="About" />
-      <p>
-        Counter: {props.value}
-      </p>
-      <p>
-        <button className={Styles.button} onClick={props.handleDecrement}>Decrement</button>
-        &#160;
-        <button className={Styles.button} onClick={props.handleIncrement}>Increment</button>
-      </p>
-      <p className={Styles.intro}>
-        <a href="https://github.com/sebastian-software">Produced with ❤ by Sebastian Software</a>
-      </p>
-    </article>
-  )
+function generateServerResponse() {
+  return Math.round(Math.random() * 100)
+}
+
+class About extends React.Component {
+  componentWillMount() {
+    console.log("About component will mount: ", this)
+    /*this.setState({
+      initialDataLoaded: true
+    })*/
+  }
+
+  render() {
+    return (
+      <article>
+        <Helmet title="About" />
+        <p>
+          Counter: {this.props.value}
+        </p>
+        <p>
+          <button className={Styles.button} onClick={this.props.handleDecrement}>Decrement</button>
+          &#160;
+          <button className={Styles.button} onClick={this.props.handleIncrement}>Increment</button>
+        </p>
+        <p className={Styles.intro}>
+          <a href="https://github.com/sebastian-software">Produced with ❤ by Sebastian Software</a>
+        </p>
+      </article>
+    )
+  }
 }
 
 About.fetchData = function(props, context)
@@ -35,7 +48,7 @@ About.fetchData = function(props, context)
     {
       // Pseudo async code to simulate API latency
       setTimeout(() => {
-        props.reset(Math.round(Math.random() * 100))
+        props.reset(generateServerResponse())
         resolve()
       }, 100)
     })
