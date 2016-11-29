@@ -54,12 +54,12 @@ if (process.env.NODE_ENV === "development" && module.hot)
 
   // Enable Webpack hot module replacement for reducers. This is so that we
   // don"t lose all of our current application state during hot reloading.
-  /*
-  module.hot.accept("../app/reducers", () => {
-    const nextRootReducer = require("../app/reducers").default // eslint-disable-line global-require
+  module.hot.accept("../app/RootReducer", () =>
+  {
+    // eslint-disable global-require
+    const nextRootReducer = require("../app/RootReducer").default
     store.replaceReducer(nextRootReducer)
   })
-  */
 }
 
 renderApp(App)
