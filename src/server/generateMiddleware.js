@@ -99,7 +99,7 @@ function renderFull({ request, response, nonce, App, apollo }) {
 /**
  * An express middleware that is capable of doing React server side rendering.
  */
-export function generateMiddleware(App, createApolloClient, ssrData = {})
+export default function generateMiddleware(App, createApolloClient, ssrData = {})
 {
   return function middleware(request, response)
   {

@@ -1,6 +1,7 @@
 // eslint-disable filenames/match-exported
-import { generateMiddleware } from "./middleware"
-import { generateServer, addFallbackHandler } from "./factory"
+import generateServer from "./generateServer"
+import generateMiddleware from "./generateMiddleware"
+import addFallbackHandler from "./addFallbackHandler"
 
 import App from "../app/App"
 import { createApolloClient } from "../app/Data"

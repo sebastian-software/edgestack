@@ -2,8 +2,9 @@
 import * as ServerConfig from "./server/config"
 export { ServerConfig }
 
-export { generateServer, addFallbackHandler } from "./server/factory"
-export { generateMiddleware } from "./server/middleware"
+export { default as generateServer } from "./server/generateServer"
+export { default as addFallbackHandler } from "./server/addFallbackHandler"
+export { default as generateMiddleware } from "./server/generateMiddleware"
 export { default as renderPage } from "./server/renderPage"
 
 export { default as ReactHotLoader } from "./client/ReactHotLoader"

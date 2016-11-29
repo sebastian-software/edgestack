@@ -37,33 +37,27 @@ function getAssetsForClientChunks(chunks) {
   }, { scripts: [], styles: [] })
 }
 
-
-
 /**
- *
- *
+ * Generates HTML link stylesheet tags from a list of stylesheet URLs.
  */
 function generateLinkStyleTags(styles) {
   return styles
-    .map((style) =>
-      `<link href="${style}" media="screen, projection" rel="stylesheet" />`
+    .map((uri) =>
+      `<link href="${uri}" media="screen, projection" rel="stylesheet" />`
     )
     .join("\n")
 }
 
-
 /**
- *
- *
+ * Generates HTML script tags from a list of script URLs.
  */
 function generateScriptTags(scripts) {
   return scripts
-    .map((script) =>
-      `<script src="${script}"></script>`
+    .map((uri) =>
+      `<script src="${uri}"></script>`
     )
     .join("\n")
 }
-
 
 /**
  * Generates a full HTML page containing the render output of the given react
