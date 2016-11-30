@@ -49,12 +49,15 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 - Support for development and optimized production configuration.
 - Easy environment configuration via `dotenv` files.
 - *Markdown* rendering for Components integrated.
-- Super modular Lodash with Babel/Webpack tooling to enable automatic tree shaking
+- Super modular Lodash with Webpack tooling to enable automatic tree shaking
 - Fetch API Polyfill integrated
-- *Serialize Javascript* Library allows us to serialize our js in a format safe for embedding in webpages.
 - *Stylelint* CSS linting
 - *ESLint* v3 integrated with sensible default configuration.
 - PostCSS *Lost Grid* integrated
+- Redux and Thunk middleware
+- Apollo Client (GraphQL)
+- Data Loading on Server Side using `fetchData` static methods where available
+
 
 ## Work in progress
 
@@ -64,10 +67,7 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 
 ## Overview
 
-Data persistence, test frameworks, and all the other bells and whistles have been explicitly excluded from this boilerplate. It's up to you to decide what technologies you would like to add to your own implementation based upon your own needs, this boilerplate simply serves as a clean base upon which to do so.
-
-This boilerplate uses Webpack 2 to produce bundles for both the client and the
-server code.
+This boilerplate uses Webpack 2 to produce bundles for both the client and the server code.
 
 The reasoning for using Webpack to bundle both the client and the server is to bring greater interop and extensibility to the table. This will for instance allowing server bundles to handle React components that introduce things like CSS or Images (as and when you add the respective loaders).
 
@@ -124,14 +124,6 @@ Executes the server. It expects you to have already built the bundles either via
 ### `npm run clean`
 
 Deletes any build output that would have originated from the other commands.
-
-
-
-## References
-
-  - __Webpack 2__ - https://gist.github.com/sokra/27b24881210b56bbaff7
-  - __React Hot Loader v3__ - https://github.com/gaearon/react-hot-boilerplate/pull/61
-  - __dotenv__ - https://github.com/bkeepers/dotenv
 
 
 ## [License](license)
