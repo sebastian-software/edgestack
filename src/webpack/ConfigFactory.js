@@ -37,6 +37,8 @@ import esModules from "./Modules"
 
 import getPostCSSConfig from "./PostCSSConfig"
 
+import { startsWith, includes } from "lodash"
+
 
 const builtInSet = new Set(builtinModules)
 
@@ -51,6 +53,124 @@ const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
 dotenv.config()
+
+
+
+class VerboseProgressPlugin {
+  constructor(options) {
+    this.options = options
+    this.cwd = process.cwd()
+  }
+
+  apply(compiler)
+  {
+    compiler.plugin("compilation", function(compilation)
+    {
+      if (compilation.compiler.isChild())
+        return
+
+      var activeModules = {}
+      var moduleCount = 0
+      var slicePathBy = process.cwd().length + 1
+
+      function now(time) {
+        return process.hrtime(time)
+      }
+
+      function moduleStart(module) {
+        moduleCount++
+        var ident = module.identifier()
+        if (ident) {
+          if (startsWith(ident, "ignored") || startsWith(ident, "external")) {
+            return
+          }
+          activeModules[ident] = now()
+        }
+      }
+
+      function moduleDone(module) {
+        var ident = module.identifier()
+        if (ident) {
+          var entry = activeModules[ident];
+          if (entry == null) {
+            return
+          }
+
+          var runtime = (now(entry)[1] / 1000000).toFixed(2)
+          if (includes(ident, "!")) {
+            var splits = ident.split("!")
+            ident = splits.pop()
+          }
+          var relative = ident.slice(slicePathBy)
+          console.log(`Module ${relative} in ${runtime}ms`)
+          if (splits) {
+            splits = null
+          }
+        }
+      }
+
+      compilation.plugin("build-module", moduleStart)
+      compilation.plugin("failed-module", moduleDone)
+      compilation.plugin("succeed-module", moduleDone)
+
+      function log(title) {
+        return function() {
+          console.log("Executing:", title)
+        }
+      }
+
+      compilation.plugin("seal", log("sealing"))
+      compilation.plugin("optimize", log("optimizing"))
+      compilation.plugin("optimize-modules-basic", log("basic module optimization"))
+      compilation.plugin("optimize-modules", log("module optimization"))
+      compilation.plugin("optimize-modules-advanced", log("advanced module optimization"))
+      compilation.plugin("optimize-chunks-basic", log("basic chunk optimization"))
+      compilation.plugin("optimize-chunks", log("chunk optimization"))
+      compilation.plugin("optimize-chunks-advanced", log("advanced chunk optimization"))
+      compilation.plugin("revive-modules", log("module reviving"))
+      compilation.plugin("optimize-module-order", log("module order optimization"))
+      compilation.plugin("optimize-module-ids", log("module id optimization"))
+      compilation.plugin("revive-chunks", log("chunk reviving"))
+      compilation.plugin("optimize-chunk-order", log("chunk order optimization"))
+      compilation.plugin("optimize-chunk-ids", log("chunk id optimization"))
+      compilation.plugin("before-hash", log("hashing"))
+      compilation.plugin("before-module-assets", log("module assets processing"))
+      compilation.plugin("before-chunk-assets", log("chunk assets processing"))
+      compilation.plugin("additional-chunk-assets", log("additional chunk assets processing"))
+      compilation.plugin("record", log("recording"))
+
+      compilation.plugin("optimize-tree", function(chunks, modules, callback) {
+        console.log("module and chunk tree optimization")
+        callback()
+      })
+
+      compilation.plugin("additional-assets", function(callback) {
+        console.log("additional asset processing")
+        callback()
+      })
+
+      compilation.plugin("optimize-chunk-assets", function(chunks, callback) {
+        console.log("chunk asset optimization")
+        callback()
+      })
+
+      compilation.plugin("optimize-assets", function(assets, callback) {
+        console.log("asset optimization")
+        callback()
+      })
+    })
+
+    compiler.plugin("emit", function(compilation, callback) {
+      console.log("Emitting...")
+      callback()
+    })
+
+    compiler.plugin("done", function() {
+      console.log("Done!")
+    })
+  }
+}
+
 
 function removeEmpty(array) {
   return array.filter((entry) => Boolean(entry))
@@ -138,7 +258,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
       // Keep transforming template literals as it keeps code smaller for the client
       // (removes multi line formatting which is allowed for literals)
-      // This is interesting for all es2015 outputs... e.g. 
+      // This is interesting for all es2015 outputs... e.g.
       // later for a client build for modern builds, too
       "transform-es2015-template-literals",
 
@@ -559,9 +679,57 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     plugins: removeEmpty([
 
+      // Adds options to all of our loaders.
+      ifDev(
+        new webpack.LoaderOptionsPlugin({
+          // Indicates to our loaders that they should minify their output
+          // if they have the capability to do so.
+          minimize: false,
+
+          // Indicates to our loaders that they should enter into debug mode
+          // should they support it.
+          debug: true,
+
+          // Pass options for PostCSS
+          options: {
+            postcss: getPostCSSConfig({}),
+            context: CWD
+          }
+        })
+      ),
+
+      // Adds options to all of our loaders.
+      ifProd(
+        new webpack.LoaderOptionsPlugin({
+          // Indicates to our loaders that they should minify their output
+          // if they have the capability to do so.
+          minimize: true,
+
+          // Indicates to our loaders that they should enter into debug mode
+          // should they support it.
+          debug: false,
+
+          // Pass options for PostCSS
+          options: {
+            postcss: getPostCSSConfig({}),
+            context: CWD
+          }
+        })
+      ),
+
+      /*
+      new webpack.ProgressPlugin(function(progress, title) {
+        console.log("- ", progress.toFixed(2), title)
+      }),
+      */
+
+      new VerboseProgressPlugin(),
+
+      /*
       ifProd(new BabiliPlugin({
         comments: false
       })),
+      */
 
       /*
       ifProdClient(new ClosureCompilerPlugin({
@@ -570,12 +738,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         }
       })),
       */
-
-      // Analyse webpack bundle
-      ifProdClient(new BundleAnalyzerPlugin({
-        openAnalyzer: false,
-        analyzerMode: "static"
-      })),
 
       new CodeSplitWebpackPlugin({
         // The code-split-component doesn't work nicely with hot module reloading,
@@ -586,8 +748,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       }),
 
       // Render Dashboard for Client Development + ProgressBar for production builds
-      ifIntegration(null, ifDevClient(new Dashboard())),
-      ifIntegration(null, ifProd(new ProgressBar())),
+      // ifIntegration(null, ifDevClient(new Dashboard())),
+      // ifIntegration(null, ifProd(new ProgressBar())),
 
       // For server bundle, you also want to use "source-map-support" which automatically sourcemaps
       // stack traces from NodeJS. We need to install it at the top of the generated file, and we
@@ -685,44 +847,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // We need this plugin to enable hot module reloading for our dev server.
       ifDevClient(new webpack.HotModuleReplacementPlugin()),
 
-      // Adds options to all of our loaders.
-      ifDev(
-        new webpack.LoaderOptionsPlugin({
-          // Indicates to our loaders that they should minify their output
-          // if they have the capability to do so.
-          minimize: false,
-
-          // Indicates to our loaders that they should enter into debug mode
-          // should they support it.
-          debug: true,
-
-          // Pass options for PostCSS
-          options: {
-            postcss: getPostCSSConfig({}),
-            context: CWD
-          }
-        })
-      ),
-
-      // Adds options to all of our loaders.
-      ifProd(
-        new webpack.LoaderOptionsPlugin({
-          // Indicates to our loaders that they should minify their output
-          // if they have the capability to do so.
-          minimize: true,
-
-          // Indicates to our loaders that they should enter into debug mode
-          // should they support it.
-          debug: false,
-
-          // Pass options for PostCSS
-          options: {
-            postcss: getPostCSSConfig({}),
-            context: CWD
-          }
-        })
-      ),
-
       // This is a production client so we will extract our CSS into
       // CSS files.
       ifProdClient(
@@ -740,7 +864,13 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           // from inside the JS file e.g. via calling some external API to load stylesheets.
           allChunks: true
         })
-      )
+      ),
+
+      // Analyse webpack bundle
+      ifProdClient(new BundleAnalyzerPlugin({
+        openAnalyzer: false,
+        analyzerMode: "static"
+      }))
     ]),
 
     module:
