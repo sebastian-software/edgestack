@@ -10,6 +10,13 @@ import Dashboard from "webpack-dashboard/plugin"
 import ProgressBar from "progress-bar-webpack-plugin"
 import CodeSplitWebpackPlugin from "code-split-component/webpack"
 
+/*
+// See also:
+// https://github.com/google/closure-compiler-js/issues/37
+import ClosureCompiler from "google-closure-compiler-js"
+const ClosureCompilerPlugin = ClosureCompiler.webpack
+*/
+
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 
 import dotenv from "dotenv"
@@ -543,6 +550,14 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     },
 
     plugins: removeEmpty([
+
+      /*
+      ifProdClient(new ClosureCompilerPlugin({
+        options: {
+          compilationLevel: "SIMPLE"
+        }
+      })),
+      */
 
       // Analyse webpack bundle
       ifProdClient(new BundleAnalyzerPlugin({
