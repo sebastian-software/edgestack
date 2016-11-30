@@ -10,6 +10,8 @@ import Dashboard from "webpack-dashboard/plugin"
 import ProgressBar from "progress-bar-webpack-plugin"
 import CodeSplitWebpackPlugin from "code-split-component/webpack"
 
+import BabiliPlugin from "babili-webpack-plugin"
+
 /*
 // See also:
 // https://github.com/google/closure-compiler-js/issues/37
@@ -133,6 +135,12 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
     [
       // Optimization for lodash imports
       "lodash",
+
+      // Keep transforming template literals as it keeps code smaller for the client
+      // (removes multi line formatting which is allowed for literals)
+      // This is interesting for all es2015 outputs... e.g. 
+      // later for a client build for modern builds, too
+      "transform-es2015-template-literals",
 
       // class { handleClick = () => { } }
       "transform-class-properties",
@@ -550,6 +558,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     },
 
     plugins: removeEmpty([
+
+      ifProd(new BabiliPlugin({
+        comments: false
+      })),
 
       /*
       ifProdClient(new ClosureCompilerPlugin({
