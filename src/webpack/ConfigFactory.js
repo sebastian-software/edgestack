@@ -96,7 +96,7 @@ class VerboseProgressPlugin {
             return
           }
 
-          var runtime = (now(entry)[1] / 1000000).toFixed(2)
+          var runtime = Math.round(now(entry)[1] / 1000000)
           if (includes(ident, "!")) {
             var splits = ident.split("!")
             ident = splits.pop()
