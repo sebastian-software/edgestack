@@ -11,6 +11,8 @@ import ProgressBar from "progress-bar-webpack-plugin"
 import CodeSplitWebpackPlugin from "code-split-component/webpack"
 
 import BabiliPlugin from "babili-webpack-plugin"
+import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
+
 
 /*
 // See also:
@@ -678,6 +680,23 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     },
 
     plugins: removeEmpty([
+      // Improve source caching in Webpack v2
+      new HardSourceWebpackPlugin({
+        // Either an absolute path or relative to output.path.
+        cacheDirectory: path.resolve(root, ".hardsource", `${target}-${mode}`),
+
+        // Either an absolute path or relative to output.path. Sets webpack's
+        // recordsPath if not already set.
+        recordsPath: path.resolve(root, ".hardsource", `${target}-${mode}`, "records.json"),
+
+        // Optional field. This field determines when to throw away the whole
+        // cache if for example npm modules were updated.
+        environmentHash: {
+          root: root,
+          directories: [ "node_modules" ],
+          files: [ "package.json", "yarn.lock" ]
+        }
+      }),
 
       // Adds options to all of our loaders.
       ifDev(

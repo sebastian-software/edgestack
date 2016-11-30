@@ -15,6 +15,10 @@ src
 .stylelint.yml
 .travis.yml
 
+.eslintcache
+.happypack
+.hardsource
+
 appveyor.yml
 gulpfile.js
 

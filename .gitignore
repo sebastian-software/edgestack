@@ -27,4 +27,4 @@ npm-debug.log
 # Cache file from ESLint, Happypack
 .eslintcache
 .happypack
-
+.hardsource
