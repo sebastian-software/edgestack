@@ -120,7 +120,7 @@ function renderFull({ request, response, nonce, App, apolloClient, reduxStore })
 /**
  * An express middleware that is capable of doing React server side rendering.
  */
-export default function createUniversalMiddleware({ App, ssrData })
+export default function createUniversalMiddleware({ App, ssrData, batchRequests = false, trustNetwork = true })
 {
   return function middleware(request, response)
   {
@@ -142,7 +142,9 @@ export default function createUniversalMiddleware({ App, ssrData })
     {
       const apolloClient = createApolloClient({
         headers: request.headers,
-        initialState : initialState
+        initialState: initialState,
+        batchRequests: batchRequests,
+        trustNetwork: trustNetwork
       })
 
       const reduxStore = createReduxStore({
