@@ -7,7 +7,7 @@ import { ApolloProvider } from "react-apollo"
 
 import ReactHotLoader from "./ReactHotLoader"
 import App from "../app/App"
-import { createApolloClient } from "../app/Data"
+import { createApolloClient, createReduxStore } from "../app/Data"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")
@@ -15,7 +15,14 @@ const container = document.querySelector("#app")
 function renderApp(AppComponent)
 {
   console.log("Client: Initialize state from server:", window.APP_STATE)
-  const apollo = createApolloClient({
+  const apolloClient = createApolloClient({
+    initialState: window.APP_STATE
+  })
+
+  const reduxStore = createReduxStore({
+    reducers: App.getReducers(),
+    enhancers: App.getEnhancers(),
+    middlewares: App.getMiddlewares(),
     initialState: window.APP_STATE
   })
 
@@ -32,7 +39,7 @@ function renderApp(AppComponent)
       <ReactHotLoader>
         <CodeSplitProvider state={codeSplitState}>
           <BrowserRouter>
-            <ApolloProvider client={apollo.client} store={apollo.store}>
+            <ApolloProvider client={apolloClient} store={reduxStore}>
               <AppComponent/>
             </ApolloProvider>
           </BrowserRouter>

@@ -8,6 +8,7 @@ import { getDataFromTree } from "react-apollo/server"
 import { ApolloProvider } from "react-apollo"
 
 import renderPage from "./renderPage"
+import { createApolloClient, createReduxStore } from "../app/Data"
 
 /**
  * Using Apollo logic to recursively resolve all queries needed for
@@ -43,7 +44,7 @@ function renderLight({ request, response, nonce, initialState }) {
   }
 }
 
-function renderFull({ request, response, nonce, App, apollo }) {
+function renderFull({ request, response, nonce, App, apolloClient, reduxStore }) {
   // First create a context for <ServerRouter>, which will allow us to
   // query for the results of the render.
   const routingContext = createServerRenderContext()
@@ -59,7 +60,7 @@ function renderFull({ request, response, nonce, App, apollo }) {
   renderToStringWithData(
     <CodeSplitProvider context={codeSplitContext}>
       <ServerRouter location={request.url} context={routingContext}>
-        <ApolloProvider client={apollo.client} store={apollo.store}>
+        <ApolloProvider client={apolloClient} store={reduxStore}>
           <App />
         </ApolloProvider>
       </ServerRouter>
@@ -68,8 +69,8 @@ function renderFull({ request, response, nonce, App, apollo }) {
 
     console.timeEnd("Server: Page Rendering")
 
-    const state = apollo.store.getState()
-    console.log("Server: Rendered state:", state)
+    const reduxState = reduxStore.getState()
+    console.log("Server: Rendered state:", reduxState)
 
     // Render the app to a string.
     const html = renderPage({
@@ -78,7 +79,7 @@ function renderFull({ request, response, nonce, App, apollo }) {
 
       // Provide the redux store state, this will be bound to the window.APP_STATE
       // so that we can rehydrate the state on the client.
-      initialState: state,
+      initialState: reduxState,
 
       // Nonce which allows us to safely declare inline scripts.
       nonce,
@@ -119,7 +120,7 @@ function renderFull({ request, response, nonce, App, apollo }) {
 /**
  * An express middleware that is capable of doing React server side rendering.
  */
-export default function generateMiddleware(App, createApolloClient, ssrData = {})
+export default function createUniversalMiddleware({ App, ssrData })
 {
   return function middleware(request, response)
   {
@@ -139,12 +140,20 @@ export default function generateMiddleware(App, createApolloClient, ssrData = {}
     }
     else
     {
-      const apollo = createApolloClient({
+      const apolloClient = createApolloClient({
         headers: request.headers,
         initialState : initialState
       })
 
-      renderFull({ request, response, nonce, App, apollo })
+      const reduxStore = createReduxStore({
+        apolloClient: apolloClient,
+        initialState : initialState,
+        reducers: App.getReducers(),
+        enhancers: App.getEnhancers(),
+        middlewares: App.getMiddlewares()
+      })
+
+      renderFull({ request, response, nonce, App, apolloClient, reduxStore })
     }
   }
 }

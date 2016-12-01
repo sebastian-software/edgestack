@@ -1,12 +1,14 @@
-import "normalize.css/normalize.css"
-import "./Fonts.css"
+import "normalize.css"
 
 import React from "react"
 import { Match, Miss, Link } from "react-router"
 import Helmet from "react-helmet"
 import { CodeSplit } from "code-split-component"
+import createLogger from "redux-logger"
 
+import "./Fonts.css"
 import Styles from "./App.css"
+import { counterReducer } from "./CounterModule"
 
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
 const websiteLanguage = "en-US"
@@ -73,6 +75,35 @@ function App({ children }) {
 
 App.propTypes = {
   children: React.PropTypes.node
+}
+
+/**
+ * Return list of Redux store enhancers to use
+ */
+App.getEnhancers = function() {
+  return []
+}
+
+/**
+ * Create mapping of reducers to use for the Redux store
+ */
+App.getReducers = function() {
+  return {
+    counter: counterReducer
+  }
+}
+
+/**
+ * Create list of Redux middleware to use.
+ */
+App.getMiddlewares = function() {
+  var middlewares = []
+
+  if (process.env.TARGET === "client") {
+    middlewares.push(createLogger({ collapsed: true }))
+  }
+
+  return middlewares
 }
 
 export default App

@@ -10,7 +10,7 @@ import {
   ABSOLUTE_PUBLIC_PATH
 } from "./config"
 
-export default function generateServer()
+export default function createExpressServer()
 {
   // Create our express based server.
   const server = express()
