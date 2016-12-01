@@ -740,11 +740,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
       new VerboseProgressPlugin(),
 
-      /*
       ifProd(new BabiliPlugin({
         comments: false
       })),
-      */
 
       /*
       ifProdClient(new ClosureCompilerPlugin({
