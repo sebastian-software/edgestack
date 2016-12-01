@@ -60,8 +60,8 @@ class VerboseProgressPlugin {
       if (compilation.compiler.isChild())
         return
 
-      var activeModules = {}
       var moduleCounter = 0
+      var activeModules = {}
       var slicePathBy = process.cwd().length + 1
 
       function now(time) {
@@ -113,14 +113,21 @@ class VerboseProgressPlugin {
         }
       }
 
-      compilation.plugin("seal", log("Sealing..."))
-      compilation.plugin("optimize", log("Optimizing..."))
+      compilation.plugin("seal", function() {
+        console.log("- Sealing " + moduleCounter + " modules...")
+      })
+      compilation.plugin("optimize", log("Optimizing modules/chunks/tree..."))
+      /*
       compilation.plugin("optimize-modules-basic", log("Basic module optimization"))
       compilation.plugin("optimize-modules", log("Module optimization"))
       compilation.plugin("optimize-modules-advanced", log("Advanced module optimization"))
       compilation.plugin("optimize-chunks-basic", log("Basic chunk optimization"))
       compilation.plugin("optimize-chunks", log("Chunk optimization"))
       compilation.plugin("optimize-chunks-advanced", log("Advanced chunk optimization"))
+      compilation.plugin("optimize-tree", function(chunks, modules, callback) {
+        console.log("- Module and chunk tree optimization")
+        callback()
+      })
       compilation.plugin("revive-modules", log("Module reviving"))
       compilation.plugin("optimize-module-order", log("Module order optimization"))
       compilation.plugin("optimize-module-ids", log("Module id optimization"))
@@ -132,35 +139,26 @@ class VerboseProgressPlugin {
       compilation.plugin("before-chunk-assets", log("Chunk assets processing"))
       compilation.plugin("additional-chunk-assets", log("Additional chunk assets processing"))
       compilation.plugin("record", log("Recording"))
-
-      compilation.plugin("optimize-tree", function(chunks, modules, callback) {
-        console.log("- Module and chunk tree optimization")
-        callback()
-      })
-
       compilation.plugin("additional-assets", function(callback) {
         console.log("- Additional asset processing")
         callback()
       })
-
+      */
       compilation.plugin("optimize-chunk-assets", function(chunks, callback) {
-        console.log("- Chunk asset optimization")
+        console.log("- Optimizing assets...")
         callback()
       })
-
+      /*
       compilation.plugin("optimize-assets", function(assets, callback) {
-        console.log("- Asset optimization")
+        console.log("- Optimizing assets...")
         callback()
       })
+      */
     })
 
     compiler.plugin("emit", function(compilation, callback) {
-      console.log("- Emitting...")
+      console.log("- Writing output files...")
       callback()
-    })
-
-    compiler.plugin("done", function() {
-      console.log("Done!")
     })
   }
 }
