@@ -157,7 +157,7 @@ class VerboseProgressPlugin {
     })
 
     compiler.plugin("emit", function(compilation, callback) {
-      console.log("- Writing output files...")
+      console.log("- Emitting output files...")
       callback()
     })
   }
