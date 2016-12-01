@@ -1,9 +1,35 @@
 import ApolloClient, { createNetworkInterface, createBatchingNetworkInterface } from "apollo-client"
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
-import { get } from "lodash"
 import thunk from "redux-thunk"
 
-import { emptyReducer, emptyMiddleware, emptyEnhancer } from "./Placeholder"
+/**
+ *
+ *
+ */
+export function emptyReducer(previousState = {}, action) {
+  return previousState
+}
+
+/**
+ *
+ *
+ */
+export function emptyMiddleware(store) {
+  return function(next) {
+    return function(action) {
+      return next(action)
+    }
+  }
+}
+
+/**
+ *
+ *
+ */
+export function emptyEnhancer(param) {
+  return param
+}
+
 
 const devTools = process.env.TARGET === "client" &&
   process.env.NODE_ENV === "development" &&
@@ -46,18 +72,6 @@ export function createReduxStore({ initialState, apolloClient, reducers = {}, mi
     initialState,
     rootEnhancers
   )
-
-  // The following is needed so that we can hot reload our App.
-  if (process.env.NODE_ENV === "development" && module.hot) {
-    // Enable Webpack hot module replacement for reducers. This is so that we
-    // don't lose all of our current application state during hot reloading.
-    /*
-    module.hot.accept("./Data", () => {
-      const nextRootReducer = require("./Data").default // eslint-disable-line global-require
-      store.replaceReducer(nextRootReducer)
-    })
-    */
-  }
 
   return store
 }
