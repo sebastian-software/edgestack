@@ -13,12 +13,10 @@
     "advanced-script": "./bin/advanced-script.js"
   },
   "scripts": {
-    "start": "npm run prescript && webpack-dashboard -- node bin/advanced-script.js start",
-    "start:plain": "npm run prescript && node bin/advanced-script.js start",
+    "start": "npm run prescript && node bin/advanced-script.js start",
     "prod": "npm run prescript && node bin/advanced-script.js build",
     "prod:start": "npm run prod && node build/server/main.js",
     "clean": "rimraf build/client/* build/server/* lib/* bin/*",
-    "nsp": "nsp check --output summary",
     "test": "npm run prepublish && npm run prod",
     "lint-staged": "lint-staged",
     "prescript": "npm run clean && rollup --config rollup.script.cfg",
