@@ -2909,7 +2909,7 @@ eslint-plugin-flowtype-errors@^1.5.0:
     shelljs "^0.7.4"
     slash "^1.0.0"
 
-eslint-plugin-flowtype@^2.28.2:
+eslint-plugin-flowtype@^2.29.0:
   version "2.29.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.29.0.tgz#bedfc346d582710adfedea6ac098dfd8174afff5"
   dependencies:
@@ -2938,7 +2938,7 @@ eslint-plugin-jsx-a11y@^3.0.1:
     jsx-ast-utils "^1.0.0"
     object-assign "^4.0.1"
 
-eslint-plugin-lodash@^2.2.0:
+eslint-plugin-lodash@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-lodash/-/eslint-plugin-lodash-2.2.1.tgz#bbea849353331eebafc963e39b9d88617669dc29"
   dependencies:
@@ -2953,7 +2953,7 @@ eslint-plugin-no-use-extend-native@^0.3.12:
     is-obj-prop "^1.0.0"
     is-proto-prop "^1.0.0"
 
-eslint-plugin-node@^3.0.4:
+eslint-plugin-node@^3.0.5:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-3.0.5.tgz#03c8e23c6011eabd240e7ebf3556ec6e50fc734e"
   dependencies:
@@ -2988,7 +2988,7 @@ eslint-rule-documentation@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/eslint-rule-documentation/-/eslint-rule-documentation-1.0.2.tgz#1435cee2072bbe979257ff1c8e90a128eb132050"
 
-eslint@^3.0.0, eslint@^3.11.0:
+eslint@^3.0.0, eslint@^3.11.1:
   version "3.11.1"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.11.1.tgz#408be581041385cba947cd8d1cd2227782b55dbf"
   dependencies:
@@ -7883,21 +7883,21 @@ rxjs@^5.0.0-beta.11:
   dependencies:
     symbol-observable "^1.0.1"
 
-s15e-javascript@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.6.1.tgz#c95243e2884ce659ced472a16f7c4e874345e35a"
+s15e-javascript@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.6.2.tgz#0c4e634c1c5658efb45345b654ad2a2b9a8072eb"
   dependencies:
-    eslint "^3.11.0"
+    eslint "^3.11.1"
     eslint-find-rules "^1.14.3"
     eslint-formatter-pretty "^1.1.0"
     eslint-plugin-filenames "^1.1.0"
-    eslint-plugin-flowtype "^2.28.2"
+    eslint-plugin-flowtype "^2.29.0"
     eslint-plugin-flowtype-errors "^1.5.0"
     eslint-plugin-import "^2.2.0"
     eslint-plugin-jsx-a11y "^3.0.1"
-    eslint-plugin-lodash "^2.2.0"
+    eslint-plugin-lodash "^2.2.1"
     eslint-plugin-no-use-extend-native "^0.3.12"
-    eslint-plugin-node "^3.0.4"
+    eslint-plugin-node "^3.0.5"
     eslint-plugin-promise "^3.4.0"
     eslint-plugin-react "^6.7.1"
     eslint-plugin-unicorn "^1.0.0"
@@ -7905,7 +7905,7 @@ s15e-javascript@^0.6.1:
     gulp-eslint "^3.0.1"
     gulp-stylelint "^3.5.0"
     postcss "^5.2.6"
-    stylefmt "^5.0.0"
+    stylefmt "^5.0.1"
     stylelint "^7.6.0"
 
 sane@~1.4.1:
@@ -8343,7 +8343,7 @@ style-search@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/style-search/-/style-search-0.1.0.tgz#7958c793e47e32e07d2b5cafe5c0bf8e12e77902"
 
-stylefmt@^5.0.0:
+stylefmt@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/stylefmt/-/stylefmt-5.0.1.tgz#079c9e910de61559491315a6a33b2c4a2c923c4c"
   dependencies:
