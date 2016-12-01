@@ -6,13 +6,9 @@ import AssetsPlugin from "assets-webpack-plugin"
 import builtinModules from "builtin-modules"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 
-import Dashboard from "webpack-dashboard/plugin"
-import ProgressBar from "progress-bar-webpack-plugin"
 import CodeSplitWebpackPlugin from "code-split-component/webpack"
-
 import BabiliPlugin from "babili-webpack-plugin"
 import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
-
 
 /*
 // See also:
@@ -765,10 +761,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // behavior on the CodeSplit instances).
         disabled: isDev
       }),
-
-      // Render Dashboard for Client Development + ProgressBar for production builds
-      // ifIntegration(null, ifDevClient(new Dashboard())),
-      // ifIntegration(null, ifProd(new ProgressBar())),
 
       // For server bundle, you also want to use "source-map-support" which automatically sourcemaps
       // stack traces from NodeJS. We need to install it at the top of the generated file, and we
