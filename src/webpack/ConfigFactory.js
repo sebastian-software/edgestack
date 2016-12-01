@@ -8,14 +8,7 @@ import ExtractTextPlugin from "extract-text-webpack-plugin"
 
 import CodeSplitWebpackPlugin from "code-split-component/webpack"
 import BabiliPlugin from "babili-webpack-plugin"
-import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
-
-/*
-// See also:
-// https://github.com/google/closure-compiler-js/issues/37
-import ClosureCompiler from "google-closure-compiler-js"
-const ClosureCompilerPlugin = ClosureCompiler.webpack
-*/
+// import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
 
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 
@@ -68,7 +61,7 @@ class VerboseProgressPlugin {
         return
 
       var activeModules = {}
-      var moduleCount = 0
+      var moduleCounter = 0
       var slicePathBy = process.cwd().length + 1
 
       function now(time) {
@@ -76,11 +69,14 @@ class VerboseProgressPlugin {
       }
 
       function moduleStart(module) {
-        moduleCount++
         var ident = module.identifier()
         if (ident) {
           if (startsWith(ident, "ignored") || startsWith(ident, "external")) {
             return
+          }
+          moduleCounter++
+          if (moduleCounter % 100 === 0) {
+            console.log("- Building module #" + moduleCounter)
           }
           activeModules[ident] = now()
         }
@@ -100,7 +96,7 @@ class VerboseProgressPlugin {
             ident = splits.pop()
           }
           var relative = ident.slice(slicePathBy)
-          console.log(`Module ${relative} in ${runtime}ms`)
+          // console.log(`Module ${relative} in ${runtime}ms`)
           if (splits) {
             splits = null
           }
@@ -113,53 +109,53 @@ class VerboseProgressPlugin {
 
       function log(title) {
         return function() {
-          console.log("Executing:", title)
+          console.log("- " + title)
         }
       }
 
-      compilation.plugin("seal", log("sealing"))
-      compilation.plugin("optimize", log("optimizing"))
-      compilation.plugin("optimize-modules-basic", log("basic module optimization"))
-      compilation.plugin("optimize-modules", log("module optimization"))
-      compilation.plugin("optimize-modules-advanced", log("advanced module optimization"))
-      compilation.plugin("optimize-chunks-basic", log("basic chunk optimization"))
-      compilation.plugin("optimize-chunks", log("chunk optimization"))
-      compilation.plugin("optimize-chunks-advanced", log("advanced chunk optimization"))
-      compilation.plugin("revive-modules", log("module reviving"))
-      compilation.plugin("optimize-module-order", log("module order optimization"))
-      compilation.plugin("optimize-module-ids", log("module id optimization"))
-      compilation.plugin("revive-chunks", log("chunk reviving"))
-      compilation.plugin("optimize-chunk-order", log("chunk order optimization"))
-      compilation.plugin("optimize-chunk-ids", log("chunk id optimization"))
-      compilation.plugin("before-hash", log("hashing"))
-      compilation.plugin("before-module-assets", log("module assets processing"))
-      compilation.plugin("before-chunk-assets", log("chunk assets processing"))
-      compilation.plugin("additional-chunk-assets", log("additional chunk assets processing"))
-      compilation.plugin("record", log("recording"))
+      compilation.plugin("seal", log("Sealing..."))
+      compilation.plugin("optimize", log("Optimizing..."))
+      compilation.plugin("optimize-modules-basic", log("Basic module optimization"))
+      compilation.plugin("optimize-modules", log("Module optimization"))
+      compilation.plugin("optimize-modules-advanced", log("Advanced module optimization"))
+      compilation.plugin("optimize-chunks-basic", log("Basic chunk optimization"))
+      compilation.plugin("optimize-chunks", log("Chunk optimization"))
+      compilation.plugin("optimize-chunks-advanced", log("Advanced chunk optimization"))
+      compilation.plugin("revive-modules", log("Module reviving"))
+      compilation.plugin("optimize-module-order", log("Module order optimization"))
+      compilation.plugin("optimize-module-ids", log("Module id optimization"))
+      compilation.plugin("revive-chunks", log("Chunk reviving"))
+      compilation.plugin("optimize-chunk-order", log("Chunk order optimization"))
+      compilation.plugin("optimize-chunk-ids", log("Chunk id optimization"))
+      compilation.plugin("before-hash", log("Hashing"))
+      compilation.plugin("before-module-assets", log("Module assets processing"))
+      compilation.plugin("before-chunk-assets", log("Chunk assets processing"))
+      compilation.plugin("additional-chunk-assets", log("Additional chunk assets processing"))
+      compilation.plugin("record", log("Recording"))
 
       compilation.plugin("optimize-tree", function(chunks, modules, callback) {
-        console.log("module and chunk tree optimization")
+        console.log("- Module and chunk tree optimization")
         callback()
       })
 
       compilation.plugin("additional-assets", function(callback) {
-        console.log("additional asset processing")
+        console.log("- Additional asset processing")
         callback()
       })
 
       compilation.plugin("optimize-chunk-assets", function(chunks, callback) {
-        console.log("chunk asset optimization")
+        console.log("- Chunk asset optimization")
         callback()
       })
 
       compilation.plugin("optimize-assets", function(assets, callback) {
-        console.log("asset optimization")
+        console.log("- Asset optimization")
         callback()
       })
     })
 
     compiler.plugin("emit", function(compilation, callback) {
-      console.log("Emitting...")
+      console.log("- Emitting...")
       callback()
     })
 
@@ -168,7 +164,6 @@ class VerboseProgressPlugin {
     })
   }
 }
-
 
 function removeEmpty(array) {
   return array.filter((entry) => Boolean(entry))
@@ -736,25 +731,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         })
       ),
 
-      /*
-      new webpack.ProgressPlugin(function(progress, title) {
-        console.log("- ", progress.toFixed(2), title)
-      }),
-      */
-
       new VerboseProgressPlugin(),
 
       ifProd(new BabiliPlugin({
         comments: false
       })),
-
-      /*
-      ifProdClient(new ClosureCompilerPlugin({
-        options: {
-          compilationLevel: "SIMPLE"
-        }
-      })),
-      */
 
       new CodeSplitWebpackPlugin({
         // The code-split-component doesn't work nicely with hot module reloading,
