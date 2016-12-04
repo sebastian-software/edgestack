@@ -163,9 +163,9 @@ anymatch@^1.3.0:
     arrify "^1.0.0"
     micromatch "^2.1.5"
 
-apollo-client@^0.5.9:
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-0.5.9.tgz#8a4ef66f9b1934bab01fbd38b6a1c1418485e1c1"
+apollo-client@^0.5.10:
+  version "0.5.10"
+  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-0.5.10.tgz#20b73e92ad40a1f2c72d9877303d17fe3083d889"
   dependencies:
     graphql-anywhere "^1.0.0"
     graphql-tag "^1.1.1"
@@ -2200,9 +2200,9 @@ css-color-names@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
 
-css-loader@^0.26.0:
-  version "0.26.0"
-  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.26.0.tgz#160d378f5b8e0fd4ff6daf4f3580e2219b33025f"
+css-loader@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.26.1.tgz#2ba7f20131b93597496b3e9bb500785a49cd29ea"
   dependencies:
     babel-code-frame "^6.11.0"
     css-selector-tokenizer "^0.7.0"
@@ -3933,9 +3933,9 @@ har-validator@~2.0.6:
     is-my-json-valid "^2.12.4"
     pinkie-promise "^2.0.0"
 
-hard-source-webpack-plugin@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/hard-source-webpack-plugin/-/hard-source-webpack-plugin-0.2.4.tgz#9731f8ac06e2685a7976815b3f5149240cd07cde"
+hard-source-webpack-plugin@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/hard-source-webpack-plugin/-/hard-source-webpack-plugin-0.2.6.tgz#578d8e5d572733171a4d1a57065b9e98fb07c490"
   dependencies:
     bluebird "^3.0.0"
     env-hash "^1.1.0"
@@ -6755,13 +6755,13 @@ postcss-load-plugins@^2.0.0:
     cosmiconfig "^2.1.0"
     object-assign "^4.1.0"
 
-postcss-loader@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/postcss-loader/-/postcss-loader-1.1.1.tgz#cbc4cb75fbdcfa6c9fc3c7ec342ae04064f1c8fb"
+postcss-loader@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/postcss-loader/-/postcss-loader-1.2.0.tgz#42f29c5526e0fafac7100a4aab4d7d4acb5143e9"
   dependencies:
     loader-utils "^0.2.16"
     object-assign "^4.1.0"
-    postcss "^5.2.5"
+    postcss "^5.2.6"
     postcss-load-config "^1.0.0"
 
 postcss-media-minmax@^2.1.2:
