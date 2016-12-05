@@ -3933,9 +3933,9 @@ har-validator@~2.0.6:
     is-my-json-valid "^2.12.4"
     pinkie-promise "^2.0.0"
 
-hard-source-webpack-plugin@^0.2.6:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/hard-source-webpack-plugin/-/hard-source-webpack-plugin-0.2.6.tgz#578d8e5d572733171a4d1a57065b9e98fb07c490"
+hard-source-webpack-plugin@^0.2.7:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/hard-source-webpack-plugin/-/hard-source-webpack-plugin-0.2.7.tgz#eb937550c3803b10f53f59034f95fd5d71dc7c55"
   dependencies:
     bluebird "^3.0.0"
     env-hash "^1.1.0"
@@ -5460,7 +5460,7 @@ lodash.kebabcase@4.0.1:
     lodash.deburr "^4.0.0"
     lodash.words "^4.0.0"
 
-lodash.keys@^3.0.0, lodash.keys@^3.1.2:
+lodash.keys@^3.0.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/lodash.keys/-/lodash.keys-3.1.2.tgz#4dbc0472b156be50a0b286855d1bd0b0c656098a"
   dependencies:
@@ -7363,15 +7363,13 @@ react-dom@^15.4.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
-react-helmet@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-3.2.2.tgz#1fc4646cbc5d26246ab45d5a84b504ed639810e6"
+react-helmet@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-3.2.3.tgz#ac81cf77e2b1075f57e1f5ef4ba281c9c9fa4c95"
   dependencies:
     deep-equal "1.0.1"
     object-assign "^4.0.1"
     react-side-effect "1.0.2"
-    shallowequal "0.2.2"
-    warning "3.0.0"
 
 react-hot-loader@^3.0.0-beta.6:
   version "3.0.0-beta.6"
@@ -7987,12 +7985,6 @@ sha.js@^2.3.6:
 sha.js@2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/sha.js/-/sha.js-2.2.6.tgz#17ddeddc5f722fb66501658895461977867315ba"
-
-shallowequal@0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-0.2.2.tgz#1e32fd5bcab6ad688a4812cb0cc04efc75c7014e"
-  dependencies:
-    lodash.keys "^3.1.2"
 
 shelljs@^0.7.4, shelljs@^0.7.5:
   version "0.7.5"
@@ -8849,7 +8841,7 @@ walker@~1.0.5:
   dependencies:
     makeerror "1.0.x"
 
-warning@^3.0.0, warning@3.0.0:
+warning@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/warning/-/warning-3.0.0.tgz#32e5377cb572de4ab04753bdf8821c01ed605b7c"
   dependencies:
