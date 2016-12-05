@@ -84,7 +84,7 @@ export function createReduxStore({ initialState, apolloClient, reducers = {}, mi
 export function createApolloClient({ headers, initialState = {}, batchRequests = false, trustNetwork = true })
 {
   const apolloUri = initialState.ssr && initialState.ssr.apolloUri
-  console.log("Creating Apollo Client for URL: ", apolloUri)
+  console.log("Creating Apollo Client for URL:", apolloUri)
 
   const hasApollo = apolloUri != null
   if (hasApollo)
