@@ -20,8 +20,17 @@ import { createApolloClient, createReduxStore } from "../app/Data"
  * https://www.npmjs.com/package/react-redux-universal-hot-example#server-side-data-fetching
  */
 function renderToStringWithData(component) {
+  var startLoading = process.hrtime()
+  var nanoToMilli = 1000000
   return getDataFromTree(component).then(() => {
-    return renderToString(component)
+    var loadingRuntime = Math.round(process.hrtime(startLoading)[1] / nanoToMilli)
+
+    var startRendering = process.hrtime()
+    var result = renderToString(component)
+    var renderingRuntime = Math.round(process.hrtime(startRendering)[1] / nanoToMilli)
+
+    console.log(`Server: Loading: ${loadingRuntime}ms Rendering: ${renderingRuntime}ms`)
+    return result
   })
 }
 
@@ -56,7 +65,6 @@ function renderFull({ request, response, nonce, App, apolloClient, reduxStore })
   console.log("Server: Rendering app with data...")
 
   // Create the application react element.
-  console.time("Server: Page Rendering")
   renderToStringWithData(
     <CodeSplitProvider context={codeSplitContext}>
       <ServerRouter location={request.url} context={routingContext}>
@@ -66,9 +74,6 @@ function renderFull({ request, response, nonce, App, apolloClient, reduxStore })
       </ServerRouter>
     </CodeSplitProvider>
   ).then((renderedApp) => {
-
-    console.timeEnd("Server: Page Rendering")
-
     const reduxState = reduxStore.getState()
     console.log("Server: Rendered state:", reduxState)
 

@@ -545,7 +545,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     // Capture timing information for each module.
     // Analyse tool: http://webpack.github.io/analyse
-    profile: false,
+    profile: isProd,
 
     // Report the first error as a hard error instead of tolerating it.
     bail: isProd,
@@ -916,8 +916,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // @see http://dev.apollodata.com/react/webpack.html
         {
           test: /\.(graphql|gql)$/,
-          exclude: /node_modules/,
-          loader: "graphql-tag/loader"
+          loader: "graphql-tag/loader",
+          exclude: excludeFromTranspilation
         }
       ])
     }
