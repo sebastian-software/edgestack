@@ -761,7 +761,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
               }
             })
           })
-        },
+        }
       },
 
       // For server bundle, you also want to use "source-map-support" which automatically sourcemaps
