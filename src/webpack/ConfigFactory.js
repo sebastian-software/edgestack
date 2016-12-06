@@ -674,7 +674,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // Improve source caching in Webpack v2
       // This thing seems to have magical effects on rebuild times. Problem is that it's
       // still unusable right now because of a range of issues.
-   new HardSourceWebpackPlugin({
+      ifDev(new HardSourceWebpackPlugin({
         // Either an absolute path or relative to output.path.
         cacheDirectory: path.resolve(root, ".hardsource", `${target}-${mode}`),
 
@@ -689,21 +689,22 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           directories: [ "node_modules" ],
           files: [ "package.json", "yarn.lock" ]
         }
-      }),
+      })),
 
+      /*
+      Proposed fix to work around issues with CodeSplit vs. HardSource plugin config
       {
         apply: function(compiler) {
           compiler.plugin('compilation', function(compilation) {
             compilation.plugin('optimize-chunk-order', function() {
               if (Array.isArray(compilation.usedChunkIds)) {
-                compilation.usedChunkIds = compilation.usedChunkIds.filter(function(usedId) {
-                  return usedId < 100000;
-                });
+                compilation.usedChunkIds = null;
               }
             });
           });
         },
       },
+      */
 
       // Adds options to all of our loaders.
       ifDev(
