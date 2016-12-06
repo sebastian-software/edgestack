@@ -254,10 +254,11 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       "transform-es2015-template-literals",
 
       // class { handleClick = () => { } }
+      // https://github.com/tc39/proposal-class-public-fields
       "transform-class-properties",
 
       // { ...todo, completed: true }
-      "transform-object-rest-spread",
+      ["transform-object-rest-spread", { useBuiltIns: true  }],
 
       // Polyfills the runtime needed
       [ "transform-runtime", { regenerator: false }],
@@ -306,10 +307,11 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       "lodash",
 
       // class { handleClick = () => { } }
+      // https://github.com/tc39/proposal-class-public-fields
       "transform-class-properties",
 
       // { ...todo, completed: true }
-      "transform-object-rest-spread",
+      ["transform-object-rest-spread", { useBuiltIns: true  }],
 
       // Polyfills the runtime needed
       [ "transform-runtime", { regenerator: false }],
