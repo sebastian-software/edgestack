@@ -9,6 +9,9 @@ console.log("Loading GraphQL queries works:", CurrentUser.kind === "Document")
 import Config from "./Config.yml"
 console.log("Loading YAML works:", Config.colors.main != null)
 
+import { format } from "date-fns"
+console.log("Today:", format(Date.now(), "DD.MM.YYYY"))
+
 function Home() {
   return (
     <article>

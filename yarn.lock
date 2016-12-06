@@ -2345,6 +2345,10 @@ dashify@^0.2.0:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/dashify/-/dashify-0.2.2.tgz#6a07415a01c91faf4a32e38d9dfba71f61cb20fe"
 
+date-fns@^1.13.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.13.0.tgz#e69a387067bdbb5a923184866ba1b699715d2b95"
+
 date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
