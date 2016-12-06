@@ -113,6 +113,28 @@ export function createApolloClient({ headers, initialState = {}, batchRequests =
       })
     }
 
+    // Via: https://github.com/apollostack/apollo-client/issues/657
+    const logErrors = {
+      applyAfterware({ response }, next)
+      {
+        if (!response.ok) {
+          response.clone().text().then((bodyText) => {
+            console.error(`Network Error: ${response.status} (${response.statusText}) - ${bodyText}`)
+            next()
+          })
+        } else {
+          response.clone().json().then(({ errors }) => {
+            if (errors) {
+              console.error("GraphQL Errors:", errors.map((err) => err.message))
+            }
+            next()
+          })
+        }
+      }
+    }
+
+    networkInterface.useAfter([ logErrors ])
+
     var client = new ApolloClient({
       ssrMode: process.env.TARGET === "server",
       networkInterface: networkInterface
