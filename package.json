@@ -7,7 +7,9 @@
   "main:es2015": "lib/index.es2015.commonjs.js",
   "module:es2015": "lib/index.es2015.esmodule.js",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=6.0.0",
+    "yarn": ">=0.18.0",
+    "npm": ">=4.0.0"
   },
   "bin": {
     "advanced-script": "./bin/advanced-script.js"
