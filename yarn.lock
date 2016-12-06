@@ -4,6 +4,10 @@
   version "2.0.34"
   resolved "https://registry.yarnpkg.com/@types/async/-/async-2.0.34.tgz#f23e1729609ccbe6cfaffc88270c5e71a6341678"
 
+"@types/chai@^3.4.32":
+  version "3.4.34"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-3.4.34.tgz#d5335792823bb09cddd5e38c3d211b709183854d"
+
 "@types/isomorphic-fetch@0.0.30":
   version "0.0.30"
   resolved "https://registry.yarnpkg.com/@types/isomorphic-fetch/-/isomorphic-fetch-0.0.30.tgz#a21717624cde9a48c2db53a4e500fc5c32a99bbc"
@@ -163,9 +167,9 @@ anymatch@^1.3.0:
     arrify "^1.0.0"
     micromatch "^2.1.5"
 
-apollo-client@^0.5.10:
-  version "0.5.10"
-  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-0.5.10.tgz#20b73e92ad40a1f2c72d9877303d17fe3083d889"
+apollo-client@^0.5.11:
+  version "0.5.11"
+  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-0.5.11.tgz#ed5d539e31e1ef30a4539d30f242199850bee3cd"
   dependencies:
     graphql-anywhere "^1.0.0"
     graphql-tag "^1.1.1"
@@ -193,12 +197,14 @@ apollo-client@^0.5.10:
     whatwg-fetch "^2.0.0"
   optionalDependencies:
     "@types/async" "^2.0.31"
+    "@types/chai" "^3.4.32"
     "@types/isomorphic-fetch" "0.0.30"
     "@types/lodash" "^4.14.34"
     "@types/node" "^6.0.38"
     "@types/promises-a-plus" "0.0.26"
     "@types/redux" "^3.5.29"
     "@types/sinon" "^1.16.29"
+    typed-graphql "1.0.2"
 
 app-name@^0.2.0:
   version "0.2.0"
@@ -2731,13 +2737,6 @@ entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
-env-hash@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/env-hash/-/env-hash-1.1.0.tgz#cc7c670dbbe5f076b39b4854937996a7c640f030"
-  dependencies:
-    imurmurhash "^0.1.4"
-    lodash "^4.5.1"
-
 errno@^0.1.3, "errno@>=0.1.1 <0.2.0-0", errno@~0.1.1:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/errno/-/errno-0.1.4.tgz#b896e23a9e5e8ba33871fc996abd3635fc9a1c7d"
@@ -3933,12 +3932,11 @@ har-validator@~2.0.6:
     is-my-json-valid "^2.12.4"
     pinkie-promise "^2.0.0"
 
-hard-source-webpack-plugin@^0.2.7:
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/hard-source-webpack-plugin/-/hard-source-webpack-plugin-0.2.7.tgz#eb937550c3803b10f53f59034f95fd5d71dc7c55"
+hard-source-webpack-plugin@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/hard-source-webpack-plugin/-/hard-source-webpack-plugin-0.3.0.tgz#86569dc2f0fe0fa3090f2ff612a48433453f8d24"
   dependencies:
     bluebird "^3.0.0"
-    env-hash "^1.1.0"
     level "^1.4.0"
     lodash "^4.15.0"
     mkdirp "^0.5.1"
@@ -5586,7 +5584,7 @@ lodash@^3.10.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.1.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.16.4, lodash@^4.17.2, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1, lodash@^4.6.1, lodash@^4.7.0:
+lodash@^4.0.0, lodash@^4.1.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.16.4, lodash@^4.17.2, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1, lodash@^4.7.0:
   version "4.17.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -8624,6 +8622,10 @@ type-is@^1.6.12, type-is@~1.6.13:
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.13"
+
+typed-graphql@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/typed-graphql/-/typed-graphql-1.0.2.tgz#4c0f788775d552df4d4ec3d73f25469252f40fb8"
 
 typedarray@~0.0.5:
   version "0.0.6"
