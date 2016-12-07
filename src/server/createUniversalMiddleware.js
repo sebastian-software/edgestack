@@ -3,7 +3,6 @@ import { renderToString } from "react-dom/server"
 import { ServerRouter, createServerRenderContext } from "react-router"
 import { CodeSplitProvider, createRenderContext } from "code-split-component"
 import Helmet from "react-helmet"
-import { Provider } from "react-redux"
 import { getDataFromTree } from "react-apollo/server"
 import { ApolloProvider } from "react-apollo"
 
@@ -98,6 +97,8 @@ function renderFull({ request, response, nonce, App, apolloClient, reduxStore })
       // html, and then the client bundle can use this data to know which chunks/
       // modules need to be rehydrated prior to the application being rendered.
       codeSplitState: codeSplitContext.getState()
+    }).catch((err) => {
+      console.error("Error during rendering:", err)
     })
 
     // Get the render result from the server render context.
@@ -154,7 +155,7 @@ export default function createUniversalMiddleware({ App, ssrData, batchRequests 
 
       const reduxStore = createReduxStore({
         apolloClient: apolloClient,
-        initialState : initialState,
+        initialState: initialState,
         reducers: App.getReducers(),
         enhancers: App.getEnhancers(),
         middlewares: App.getMiddlewares()
