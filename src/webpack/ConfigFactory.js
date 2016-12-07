@@ -11,6 +11,7 @@ import BabiliPlugin from "babili-webpack-plugin"
 import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
 
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
+import ChunkManifestPlugin from "chunk-manifest-webpack-plugin"
 
 import dotenv from "dotenv"
 
@@ -19,10 +20,6 @@ import dotenv from "dotenv"
 // This is basically a replacement of md5 with the loader-utils implementation which also supports
 // shorter generated hashes based on base62 encoding instead of hex.
 import WebpackDigestHash from "./ChunkHash"
-
-// Waiting for Pull-Request being merged:
-// https://github.com/diurnalist/chunk-manifest-webpack-plugin/pull/13
-import ChunkManifestPlugin from "./ChunkManifestPlugin"
 
 import esModules from "./Modules"
 
