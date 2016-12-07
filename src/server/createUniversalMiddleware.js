@@ -97,8 +97,6 @@ function renderFull({ request, response, nonce, App, apolloClient, reduxStore })
       // html, and then the client bundle can use this data to know which chunks/
       // modules need to be rehydrated prior to the application being rendered.
       codeSplitState: codeSplitContext.getState()
-    }).catch((err) => {
-      console.error("Error during rendering:", err)
     })
 
     // Get the render result from the server render context.
@@ -120,6 +118,8 @@ function renderFull({ request, response, nonce, App, apolloClient, reduxStore })
     // Our App component will handle the rendering of an Error404 view.
     // Otherwise everything is all good and we send a 200 OK status.
     response.status(renderedResult.missed ? 404 : 200).send(html)
+  }).catch((err) => {
+    console.error("Error during producing response:", err)
   })
 }
 

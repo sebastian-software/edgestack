@@ -15,7 +15,6 @@ import mediaMinmax from "postcss-media-minmax"
 import customMedia from "postcss-custom-media"
 import nested from "postcss-nested"
 import filters from "pleeease-filters"
-import pseudoClassAnyLink from "postcss-pseudo-class-any-link"
 import selectorMatches from "postcss-selector-matches"
 import pseudoelements from "postcss-pseudoelements"
 import autoprefixer from "autoprefixer"
@@ -132,10 +131,6 @@ export default function getConfig(variables = {})
     // Adds new pseudo-elements to inputs for easy cross-browser styling of their inner elements.
     // https://github.com/seaneking/postcss-input-style
     inputStyles,
-
-    // Use the proposed :any-link pseudo-class in CSS
-    // https://github.com/jonathantneal/postcss-pseudo-class-any-link
-    pseudoClassAnyLink,
 
     // Transform :matches() W3C CSS pseudo class to more compatible CSS (simpler selectors)
     // https://github.com/postcss/postcss-selector-matches
