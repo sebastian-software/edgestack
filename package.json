@@ -8,7 +8,7 @@
   "module:es2015": "lib/index.es2015.esmodule.js",
   "engines": {
     "node": ">=6.0.0",
-    "yarn": ">=0.18.0",
+    "yarn": ">=0.17.9",
     "npm": ">=4.0.0"
   },
   "bin": {
