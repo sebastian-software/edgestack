@@ -2345,9 +2345,9 @@ dashify@^0.2.0:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/dashify/-/dashify-0.2.2.tgz#6a07415a01c91faf4a32e38d9dfba71f61cb20fe"
 
-date-fns@^1.14.1:
-  version "1.14.1"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.14.1.tgz#7bea2b23770b7a5278d951e718b889bfbfe77391"
+date-fns@^1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.15.0.tgz#997954738d6e3b959389174378531ed45625e3a8"
 
 date-now@^0.1.4:
   version "0.1.4"
@@ -6835,13 +6835,6 @@ postcss-ordered-values@^2.1.0:
     postcss "^5.0.4"
     postcss-value-parser "^3.0.1"
 
-postcss-pseudo-class-any-link@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/postcss-pseudo-class-any-link/-/postcss-pseudo-class-any-link-3.0.0.tgz#639dec897ec122dd0b81a21cda0a612803d920c0"
-  dependencies:
-    postcss "^5.2.6"
-    postcss-selector-parser "^2.2.2"
-
 postcss-pseudoelements@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/postcss-pseudoelements/-/postcss-pseudoelements-3.0.0.tgz#6c682177c7900ba053b6df17f8c590284c7b8bbc"
@@ -6918,7 +6911,7 @@ postcss-selector-matches@^2.0.5:
     balanced-match "^0.4.2"
     postcss "^5.0.0"
 
-postcss-selector-parser@^2.0.0, postcss-selector-parser@^2.1.1, postcss-selector-parser@^2.2.2:
+postcss-selector-parser@^2.0.0, postcss-selector-parser@^2.1.1:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/postcss-selector-parser/-/postcss-selector-parser-2.2.2.tgz#3d70f5adda130da51c7c0c2fc023f56b1374fe08"
   dependencies:
