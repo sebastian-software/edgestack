@@ -27,16 +27,18 @@ import getPostCSSConfig from "./PostCSSConfig"
 
 import { startsWith, includes } from "lodash"
 
-
 const builtInSet = new Set(builtinModules)
 
+// - "intl" is included in one block with complete data. No reason for bundle everything here.
+// - "react-intl" for the same reason as "intl" - contains a ton of locale data
+// - "mime-db" database for working with mime types. Naturally pretty large stuff.
 // - "helmet" uses some look with require which are not solvable with webpack
 // - "express" also uses some dynamic requires
 // - "encoding" uses dynamic iconv loading
 // - "node-pre-gyp" native code module helper
 // - "iltorb" brotli compression wrapper for NodeJS
 // - "node-zopfli" native Zopfli implementation
-const problematicCommonJS = new Set([ "helmet", "express", "encoding", "node-pre-gyp", "iltorb", "node-zopfli" ])
+const problematicCommonJS = new Set([ "intl", "react-intl", "mime-db", "helmet", "express", "encoding", "node-pre-gyp", "iltorb", "node-zopfli" ])
 const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
@@ -729,10 +731,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       new VerboseProgressPlugin(),
 
       ifProd(new BabiliPlugin({
-        minified: true,
         comments: false,
-        passPerPreset: true,
         babili: {
+          minified: true,
+          comments: false,
           plugins: [
             "minify-dead-code-elimination",
             "minify-mangle-names",
