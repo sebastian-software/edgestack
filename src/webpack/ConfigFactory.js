@@ -729,7 +729,16 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       new VerboseProgressPlugin(),
 
       ifProd(new BabiliPlugin({
-        comments: false
+        minified: true,
+        comments: false,
+        passPerPreset: true,
+        babili: {
+          plugins: [
+            "minify-dead-code-elimination",
+            "minify-mangle-names",
+            "minify-simplify"
+          ]
+        }
       })),
 
       new CodeSplitWebpackPlugin({
