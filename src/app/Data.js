@@ -73,6 +73,20 @@ export function createReduxStore({ initialState, apolloClient, reducers = {}, mi
     rootEnhancers
   )
 
+  // Enable Webpack hot module replacement for reducers. This is so that we
+  // don"t lose all of our current application state during hot reloading.
+  if (process.env.NODE_ENV === "development" && module.hot)
+  {
+    module.hot.accept("../app/Data", () =>
+    {
+      // eslint-disable global-require
+      // const nextRootReducer = require("../app/RootReducer").default
+      // store.replaceReducer(nextRootReducer)
+
+      console.log("FIXME: Hot Update Reducers")
+    })
+  }
+
   return store
 }
 
