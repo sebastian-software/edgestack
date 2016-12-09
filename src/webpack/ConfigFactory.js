@@ -346,6 +346,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
               "transform-react-remove-prop-types"
             ]
           },
+
           development: {
             plugins: [
               // Add deprecation messages
