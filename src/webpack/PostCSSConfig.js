@@ -81,12 +81,6 @@ export default function getConfig(variables = {})
     // https://github.com/postcss/postcss-will-change
     willChange,
 
-    // Fallback for Webkit Filters property to SVG filters. Amazing stuff.
-    // It converts all 10 CSS shorthand filters:
-    // grayscale, sepia, saturate, hue-rotate, invert, opacity, brightness, contrast, blur, drop-shadow
-    // https://github.com/iamvdo/pleeease-filters
-    filters(),
-
     // Reduce calc()
     // Note: Important to keep this after mixin/variable processing
     // https://github.com/postcss/postcss-calc
@@ -128,6 +122,12 @@ export default function getConfig(variables = {})
     // Adds new pseudo-elements to inputs for easy cross-browser styling of their inner elements.
     // https://github.com/seaneking/postcss-input-style
     inputStyles,
+
+    // Fallback for Webkit Filters property to SVG filters. Amazing stuff.
+    // It converts all 10 CSS shorthand filters:
+    // grayscale, sepia, saturate, hue-rotate, invert, opacity, brightness, contrast, blur, drop-shadow
+    // https://github.com/iamvdo/pleeease-filters
+    filters(),
 
     // Transform :matches() W3C CSS pseudo class to more compatible CSS (simpler selectors)
     // https://github.com/postcss/postcss-selector-matches
