@@ -673,12 +673,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     plugins: removeEmpty([
       // Offline Plugin working on a automatic fallback based on ServiceWorker and AppCache.
-      new OfflinePlugin(),
+      ifProdClient(new OfflinePlugin()),
 
-      // Improve source caching in Webpack v2
-      // This thing seems to have magical effects on rebuild times. Problem is that it's
-      // still unusable right now because of a range of issues.
-      new HardSourceWebpackPlugin({
+      // Improve source caching in Webpack v2. Conflicts with offline plugin right now.
+      // Therefor we disable it in production and only use it to speed up development rebuilds.
+      ifDev(new HardSourceWebpackPlugin({
         // Either an absolute path or relative to output.path.
         cacheDirectory: path.resolve(root, ".hardsource", `${target}-${mode}`),
 
@@ -693,7 +692,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           directories: [ "node_modules" ],
           files: [ "package.json", "yarn.lock" ]
         }
-      }),
+      })),
 
       // Adds options to all of our loaders.
       ifDev(
