@@ -2,6 +2,13 @@ import React from "react"
 import Helmet from "react-helmet"
 import { connect } from "react-redux"
 import markdown from "markdown-in-js"
+import cookiesjs from "cookiesjs"
+
+// Clipboard handling is only supported on the client
+// Logical, but there are code limitations preventing a successful execution on server, too.
+if (process.env.TARGET === "client") {
+  var Clipboard = require("clipboard")
+}
 
 import Styles from "./About.css"
 import { getCounter, decrementCounter, incrementCounter, loadCounter } from "./CounterModule"
@@ -16,6 +23,15 @@ class About extends React.Component {
     if (this.props.value == null) {
       this.props.load()
     }
+  }
+
+  componentDidMount() {
+    cookiesjs({ test: 123 })
+    new Clipboard("[data-clipboard-target]")
+  }
+
+  showCookie() {
+    alert(cookiesjs("test"))
   }
 
   renderMarkdown() {
@@ -34,11 +50,14 @@ class About extends React.Component {
           &#160;
           <button className={Styles.button} onClick={this.props.handleIncrement}>Increment</button>
           &#160;
-          <button className={Styles.button} onClick={oldMethod}>Deprecated Test</button>
+          <button className={Styles.buttonSmall} onClick={oldMethod}>Deprecated Test</button>
+          &#160;
+          <button className={Styles.buttonSmall} onClick={this.showCookie}>Show Cookie</button>
+          &#160;
+          <input type="text" id="clipboard-source" defaultValue="some random content" />
+          <button className={Styles.buttonSmall} data-clipboard-target="#clipboard-source">Copy to Clipboard</button>
         </p>
-        <p>
-          {this.renderMarkdown()}
-        </p>
+        {this.renderMarkdown()}
         <p className={Styles.intro}>
           <a href="https://github.com/sebastian-software">Produced with ❤ by Sebastian Software</a>
         </p>
