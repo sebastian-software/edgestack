@@ -4,6 +4,7 @@ import { render } from "react-dom"
 import { BrowserRouter } from "react-router"
 import { CodeSplitProvider, rehydrateState } from "code-split-component"
 import { ApolloProvider } from "react-apollo"
+import StackTrace from "stacktrace-js"
 
 import ReactHotLoader from "./ReactHotLoader"
 import App from "../app/App"
@@ -90,3 +91,25 @@ renderApp(App)
 // Keep this as the last item, just in case the code execution failed (thanks
 // to react-boilerplate for that tip.)
 require("./addServiceWorker")
+
+{
+  function StackCallback(stackframes) {
+    console.log(stackframes.map((entry) => entry.toString()).join("\n"))
+  }
+
+  function ErrorBack(err) {
+    console.log(err)
+  }
+
+  /* eslint-disable max-params */
+  if (typeof window !== "undefined") {
+    window.onerror = function(msg, file, line, col, error) {
+      // StackCallback is called with an Array[StackFrame]
+      if (error) {
+        StackTrace.fromError(error).then(StackCallback).catch(ErrorBack)
+      } else {
+        console.error(`${msg} in ${file}@${line}`)
+      }
+    }
+  }
+}
