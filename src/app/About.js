@@ -1,6 +1,7 @@
 import React from "react"
 import Helmet from "react-helmet"
 import { connect } from "react-redux"
+import markdown from "markdown-in-js"
 
 import Styles from "./About.css"
 import { getCounter, decrementCounter, incrementCounter, loadCounter } from "./CounterModule"
@@ -17,6 +18,10 @@ class About extends React.Component {
     }
   }
 
+  renderMarkdown() {
+    return markdown`Markdown in React is **pretty useful**.`
+  }
+
   render() {
     return (
       <article>
@@ -30,6 +35,9 @@ class About extends React.Component {
           <button className={Styles.button} onClick={this.props.handleIncrement}>Increment</button>
           &#160;
           <button className={Styles.button} onClick={oldMethod}>Deprecated Test</button>
+        </p>
+        <p>
+          {this.renderMarkdown()}
         </p>
         <p className={Styles.intro}>
           <a href="https://github.com/sebastian-software">Produced with ❤ by Sebastian Software</a>

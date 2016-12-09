@@ -226,17 +226,10 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
     presets:
     [
-      // It seems to be a good idea to use the minimum required
-      // transpiling infrastructure. But unfortunately it does not
-      // seem to work for us.
-      // Warning: React.createElement: type should not be null, undefined, boolean, or number.
-      // Not sure how this is related to React, though.
-      // "babel-preset-latest-minimal",
-
-      // exponentiation
+      // Exponentiation
       "babel-preset-es2016",
 
-      // async to generators + trailing function commas
+      // Async to generators + trailing function commas
       "babel-preset-es2017",
 
       // JSX, Flow
@@ -245,7 +238,11 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
     plugins:
     [
-      // Optimization for lodash imports
+      // Transpile Markdown into React components. Super smart.
+      "markdown-in-js/babel",
+
+      // Optimization for lodash imports.
+      // Auto cherry-picking es2015 imports from path imports.
       "lodash",
 
       // Keep transforming template literals as it keeps code smaller for the client
@@ -292,10 +289,10 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       // let, const, destructuring, classes, no modules
       [ "babel-preset-es2015", { modules: false }],
 
-      // exponentiation
+      // Exponentiation
       "babel-preset-es2016",
 
-      // async to generators + trailing function commas
+      // Async to generators + trailing function commas
       "babel-preset-es2017",
 
       // JSX, Flow
@@ -304,7 +301,11 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
     plugins:
     [
-      // Optimization for lodash imports
+      // Transpile Markdown into React components. Super smart.
+      "markdown-in-js/babel",
+
+      // Optimization for lodash imports.
+      // Auto cherry-picking es2015 imports from path imports.
       "lodash",
 
       // class { handleClick = () => { } }
