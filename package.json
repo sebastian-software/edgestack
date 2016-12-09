@@ -61,7 +61,7 @@
     "assets-webpack-plugin": "^3.5.0",
     "async": "^2.1.4",
     "autoprefixer": "^6.5.3",
-    "awesome-typescript-loader": "^3.0.0-beta.9",
+    "awesome-typescript-loader": "^3.0.0-beta.10",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.20.0",
     "babel-jest": "^17.0.2",
