@@ -35,12 +35,13 @@ const autoprefixerSettings = {
 export default function getConfig(variables = {})
 {
   return [
+    /*
     devtools({
       silent: true
     }),
+    */
 
     atImport(),
-
     simpleUrl(),
     assets(),
 
