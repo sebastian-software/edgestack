@@ -3,7 +3,12 @@ import Helmet from "react-helmet"
 import { connect } from "react-redux"
 
 import Styles from "./About.css"
-import { setCounter, getCounter, decrementCounter, incrementCounter, loadCounter } from "./CounterModule"
+import { getCounter, decrementCounter, incrementCounter, loadCounter } from "./CounterModule"
+
+/**
+ * @deprecated
+ */
+function oldMethod() {}
 
 class About extends React.Component {
   componentWillMount() {
@@ -23,6 +28,8 @@ class About extends React.Component {
           <button className={Styles.button} onClick={this.props.handleDecrement}>Decrement</button>
           &#160;
           <button className={Styles.button} onClick={this.props.handleIncrement}>Increment</button>
+          &#160;
+          <button className={Styles.button} onClick={oldMethod}>Deprecated Test</button>
         </p>
         <p className={Styles.intro}>
           <a href="https://github.com/sebastian-software">Produced with ❤ by Sebastian Software</a>
@@ -45,6 +52,7 @@ About.fetchData = function(props, context)
 
 About.propTypes = {
   value: React.PropTypes.number,
+  load: React.PropTypes.func,
   handleIncrement: React.PropTypes.func,
   handleDecrement: React.PropTypes.func
 }
