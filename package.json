@@ -113,6 +113,7 @@
     "lost": "^7.1.1",
     "node-noop": "^1.0.0",
     "node-notifier": "^4.6.1",
+    "offline-plugin": "^4.5.3",
     "pleeease-filters": "^3.0.0",
     "postcss": "^5.2.6",
     "postcss-advanced-variables": "^1.2.2",

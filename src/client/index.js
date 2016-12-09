@@ -84,3 +84,9 @@ if (process.env.NODE_ENV === "development" && module.hot)
 }
 
 renderApp(App)
+
+/* eslint-disable import/no-commonjs */
+// This registers our service worker for asset caching and offline support.
+// Keep this as the last item, just in case the code execution failed (thanks
+// to react-boilerplate for that tip.)
+require("./addServiceWorker")

@@ -13,6 +13,8 @@ import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 import ChunkManifestPlugin from "chunk-manifest-webpack-plugin"
 
+import OfflinePlugin from "offline-plugin"
+
 import dotenv from "dotenv"
 
 // Using more modern approach of hashing than "webpack-md5-hash". Somehow the SHA256 version
@@ -670,6 +672,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     },
 
     plugins: removeEmpty([
+      // Offline Plugin working on a automatic fallback based on ServiceWorker and AppCache.
+      new OfflinePlugin(),
+
       // Improve source caching in Webpack v2
       // This thing seems to have magical effects on rebuild times. Problem is that it's
       // still unusable right now because of a range of issues.
