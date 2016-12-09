@@ -46,8 +46,7 @@ About.fetchData = function(props, context)
 About.propTypes = {
   value: React.PropTypes.number,
   handleIncrement: React.PropTypes.func,
-  handleDecrement: React.PropTypes.func,
-  reset: React.PropTypes.func
+  handleDecrement: React.PropTypes.func
 }
 
 const mapStateToProps = (state, ownProps) => ({
@@ -57,8 +56,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   handleIncrement: () => dispatch(incrementCounter()),
   handleDecrement: () => dispatch(decrementCounter()),
-  load: () => dispatch(loadCounter()),
-  reset: (value) => dispatch(setCounter(value == null ? 0 : value))
+  load: () => dispatch(loadCounter())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(About)
