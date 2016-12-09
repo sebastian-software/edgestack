@@ -1,6 +1,7 @@
 import { readFileSync } from "fs"
 import { STATE_IDENTIFIER } from "code-split-component"
 import { ABSOLUTE_ASSETSINFO_PATH, ABSOLUTE_CHUNKMANIFEST_PATH } from "./config"
+import serialize from "serialize-javascript"
 
 var chunkManifest = "{}"
 if (process.env.MODE === "production")
@@ -110,9 +111,9 @@ export default function renderPage({ renderedApp, initialState = {}, nonce, helm
         <div id="app">${renderedApp || ""}</div>
 
         <script nonce="${nonce}">${
-          `APP_STATE=${JSON.stringify(initialState)};` +
+          `APP_STATE=${serialize(initialState, { isJSON: true })};` +
           `CHUNK_MANIFEST=${chunkManifest};` +
-          `${STATE_IDENTIFIER}=${JSON.stringify(codeSplitState)};`
+          `${STATE_IDENTIFIER}=${serialize(codeSplitState, { isJSON: true })};`
         }</script>
 
         ${generateScriptTags(assetsForRender.scripts)}

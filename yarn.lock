@@ -172,9 +172,9 @@ anymatch@^1.3.0:
     arrify "^1.0.0"
     micromatch "^2.1.5"
 
-apollo-client@^0.5.17:
-  version "0.5.17"
-  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-0.5.17.tgz#f69354cd94306fd1df0a01e45a676fb279ce635a"
+apollo-client@^0.5.18:
+  version "0.5.18"
+  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-0.5.18.tgz#e6e8c9f19b15fabd763b4b6f51fadf35b5cc7a81"
   dependencies:
     graphql-anywhere "^1.0.0"
     graphql-tag "^1.1.1"
@@ -7896,6 +7896,10 @@ send@0.14.1:
 sequencify@~0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/sequencify/-/sequencify-0.0.7.tgz#90cff19d02e07027fd767f5ead3e7b95d1e7380c"
+
+serialize-javascript@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-1.3.0.tgz#86a4f3752f5c7e47295449b0bbb63d64ba533f05"
 
 serve-static@~1.11.1:
   version "1.11.1"
