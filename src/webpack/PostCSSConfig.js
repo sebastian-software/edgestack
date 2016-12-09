@@ -1,3 +1,4 @@
+import devtools from "postcss-devtools"
 import atImport from "postcss-smart-import"
 import simpleUrl from "postcss-simple-url"
 import discardComments from "postcss-discard-comments"
@@ -34,11 +35,9 @@ const autoprefixerSettings = {
 export default function getConfig(variables = {})
 {
   return [
-    /*
-    $css.devtools({
+    devtools({
       silent: true
     }),
-    */
 
     atImport(),
 
