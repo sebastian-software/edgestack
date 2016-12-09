@@ -259,7 +259,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       "transform-class-properties",
 
       // { ...todo, completed: true }
-      ["transform-object-rest-spread", { useBuiltIns: true  }],
+      [ "transform-object-rest-spread", { useBuiltIns: true  }],
 
       // Polyfills the runtime needed
       [ "transform-runtime", { regenerator: false }],
@@ -312,7 +312,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       "transform-class-properties",
 
       // { ...todo, completed: true }
-      ["transform-object-rest-spread", { useBuiltIns: true  }],
+      [ "transform-object-rest-spread", { useBuiltIns: true  }],
 
       // Polyfills the runtime needed
       [ "transform-runtime", { regenerator: false }],
@@ -347,7 +347,13 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
             ]
           },
           development: {
-            plugins: [ "react-hot-loader/babel" ]
+            plugins: [
+              // Add deprecation messages
+              "log-deprecated",
+
+              // React based
+              "react-hot-loader/babel"
+            ]
           }
         }
       },
