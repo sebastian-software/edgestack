@@ -26,11 +26,9 @@ import responsiveType from "postcss-responsive-type"
 import inputStyles from "postcss-input-style"
 import assets from "postcss-assets"
 
-const autoprefixerSettings =
-{
-  browsers: [ "> 2%", "IE 10", "IE 11", "last 3 Chrome versions", "last 3 Firefox versions" ],
-  cascade: false,
-  flexbox: "no-2009"
+const autoprefixerSettings = {
+  browsers: "> 3%, last 2 versions, safari > 8, ie > 10, ios > 8, android > 4.3, samsung > 3, chromeandroid > 50",
+  cascade: false
 }
 
 export default function getConfig(variables = {})
