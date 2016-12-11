@@ -111,9 +111,9 @@ export default function renderPage({ renderedApp, initialState = {}, nonce, helm
         <div id="app">${renderedApp || ""}</div>
 
         <script nonce="${nonce}">${
-          `APP_STATE=${serialize(initialState)};` +
+          `APP_STATE=${serialize(initialState, { isJSON: true })};` +
           `CHUNK_MANIFEST=${chunkManifest};` +
-          `${STATE_IDENTIFIER}=${serialize(codeSplitState)};`
+          `${STATE_IDENTIFIER}=${serialize(codeSplitState, { isJSON: true })};`
         }</script>
 
         ${generateScriptTags(assetsForRender.scripts)}

@@ -58,29 +58,12 @@ if (process.env.NODE_ENV === "development" && module.hot)
 
   // Any changes to our App will cause a hotload re-render.
   module.hot.accept("../app/App", () => renderApp(require("../app/App").default))
-
-  // Enable Webpack hot module replacement for reducers. This is so that we
-  // don"t lose all of our current application state during hot reloading.
-  /*
-  module.hot.accept("../app/RootReducer", () =>
-  {
-    // eslint-disable global-require
-    const nextRootReducer = require("../app/RootReducer").default
-    store.replaceReducer(nextRootReducer)
-  })
-  */
-
-    // The following is needed so that we can hot reload our App.
-  if (process.env.NODE_ENV === "development" && module.hot) {
-    // Enable Webpack hot module replacement for reducers. This is so that we
-    // don't lose all of our current application state during hot reloading.
-    /*
-    module.hot.accept("./Data", () => {
-      const nextRootReducer = require("./Data").default // eslint-disable-line global-require
-      store.replaceReducer(nextRootReducer)
-    })
-    */
-  }
 }
 
 renderApp(App)
+
+/* eslint-disable import/no-commonjs */
+// This registers our service worker for asset caching and offline support.
+// Keep this as the last item, just in case the code execution failed (thanks
+// to react-boilerplate for that tip.)
+require("./addServiceWorker")

@@ -3,7 +3,6 @@ import shrinkRay from "shrink-ray"
 import uuid from "uuid"
 import hpp from "hpp"
 import helmet from "helmet"
-import { resolve } from "path"
 
 import {
   ABSOLUTE_CLIENT_OUTPUT_PATH,
@@ -71,7 +70,7 @@ export default function createExpressServer()
 
       styleSrc: [ "'self'", "'unsafe-inline'", "blob:" ],
       imgSrc: [ "'self'", "data:" ],
-      fontSrc: [ "'self'" ],
+      fontSrc: [ "'self'", "data:" ],
 
       // Note: Setting this to stricter than * breaks the service worker. :(
       // I can't figure out how to get around this, so if you know of a safer
@@ -130,14 +129,6 @@ export default function createExpressServer()
 
   // Configure static serving of our "public" root http path static files.
   server.use(express.static(ABSOLUTE_PUBLIC_PATH))
-
-  // When in production mode, bind our service worker folder so that it can
-  // be served.
-  // Note: the service worker needs to be available at the http root of your
-  // application for the offline support to work.
-  if (process.env.NODE_ENV === "production") {
-    server.use(express.static(resolve(ABSOLUTE_CLIENT_OUTPUT_PATH, "./serviceWorker")))
-  }
 
   return server
 }

@@ -1,3 +1,4 @@
+import devtools from "postcss-devtools"
 import atImport from "postcss-smart-import"
 import simpleUrl from "postcss-simple-url"
 import discardComments from "postcss-discard-comments"
@@ -26,24 +27,21 @@ import responsiveType from "postcss-responsive-type"
 import inputStyles from "postcss-input-style"
 import assets from "postcss-assets"
 
-const autoprefixerSettings =
-{
-  browsers: [ "> 2%", "IE 10", "IE 11", "last 3 Chrome versions", "last 3 Firefox versions" ],
-  cascade: false,
-  flexbox: "no-2009"
+const autoprefixerSettings = {
+  browsers: "> 3%, last 2 versions, safari > 8, ie > 10, ios > 8, android > 4.3, samsung > 3, chromeandroid > 50",
+  cascade: false
 }
 
 export default function getConfig(variables = {})
 {
   return [
     /*
-    $css.devtools({
+    devtools({
       silent: true
     }),
     */
 
     atImport(),
-
     simpleUrl(),
     assets(),
 
@@ -83,12 +81,6 @@ export default function getConfig(variables = {})
     // Insert 3D hack before will-change property
     // https://github.com/postcss/postcss-will-change
     willChange,
-
-    // Fallback for Webkit Filters property to SVG filters. Amazing stuff.
-    // It converts all 10 CSS shorthand filters:
-    // grayscale, sepia, saturate, hue-rotate, invert, opacity, brightness, contrast, blur, drop-shadow
-    // https://github.com/iamvdo/pleeease-filters
-    filters(),
 
     // Reduce calc()
     // Note: Important to keep this after mixin/variable processing
@@ -131,6 +123,12 @@ export default function getConfig(variables = {})
     // Adds new pseudo-elements to inputs for easy cross-browser styling of their inner elements.
     // https://github.com/seaneking/postcss-input-style
     inputStyles,
+
+    // Fallback for Webkit Filters property to SVG filters. Amazing stuff.
+    // It converts all 10 CSS shorthand filters:
+    // grayscale, sepia, saturate, hue-rotate, invert, opacity, brightness, contrast, blur, drop-shadow
+    // https://github.com/iamvdo/pleeease-filters
+    filters(),
 
     // Transform :matches() W3C CSS pseudo class to more compatible CSS (simpler selectors)
     // https://github.com/postcss/postcss-selector-matches

@@ -13,6 +13,8 @@ import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 import ChunkManifestPlugin from "chunk-manifest-webpack-plugin"
 
+import OfflinePlugin from "offline-plugin"
+
 import dotenv from "dotenv"
 
 // Using more modern approach of hashing than "webpack-md5-hash". Somehow the SHA256 version
@@ -27,16 +29,18 @@ import getPostCSSConfig from "./PostCSSConfig"
 
 import { startsWith, includes } from "lodash"
 
-
 const builtInSet = new Set(builtinModules)
 
+// - "intl" is included in one block with complete data. No reason for bundle everything here.
+// - "react-intl" for the same reason as "intl" - contains a ton of locale data
+// - "mime-db" database for working with mime types. Naturally pretty large stuff.
 // - "helmet" uses some look with require which are not solvable with webpack
 // - "express" also uses some dynamic requires
 // - "encoding" uses dynamic iconv loading
 // - "node-pre-gyp" native code module helper
 // - "iltorb" brotli compression wrapper for NodeJS
 // - "node-zopfli" native Zopfli implementation
-const problematicCommonJS = new Set([ "helmet", "express", "encoding", "node-pre-gyp", "iltorb", "node-zopfli" ])
+const problematicCommonJS = new Set([ "intl", "react-intl", "mime-db", "helmet", "express", "encoding", "node-pre-gyp", "iltorb", "node-zopfli" ])
 const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
@@ -222,17 +226,10 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
     presets:
     [
-      // It seems to be a good idea to use the minimum required
-      // transpiling infrastructure. But unfortunately it does not
-      // seem to work for us.
-      // Warning: React.createElement: type should not be null, undefined, boolean, or number.
-      // Not sure how this is related to React, though.
-      // "babel-preset-latest-minimal",
-
-      // exponentiation
+      // Exponentiation
       "babel-preset-es2016",
 
-      // async to generators + trailing function commas
+      // Async to generators + trailing function commas
       "babel-preset-es2017",
 
       // JSX, Flow
@@ -241,7 +238,11 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
     plugins:
     [
-      // Optimization for lodash imports
+      // Transpile Markdown into React components. Super smart.
+      "markdown-in-js/babel",
+
+      // Optimization for lodash imports.
+      // Auto cherry-picking es2015 imports from path imports.
       "lodash",
 
       // Keep transforming template literals as it keeps code smaller for the client
@@ -255,7 +256,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       "transform-class-properties",
 
       // { ...todo, completed: true }
-      ["transform-object-rest-spread", { useBuiltIns: true  }],
+      [ "transform-object-rest-spread", { useBuiltIns: true  }],
 
       // Polyfills the runtime needed
       [ "transform-runtime", { regenerator: false }],
@@ -288,10 +289,10 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       // let, const, destructuring, classes, no modules
       [ "babel-preset-es2015", { modules: false }],
 
-      // exponentiation
+      // Exponentiation
       "babel-preset-es2016",
 
-      // async to generators + trailing function commas
+      // Async to generators + trailing function commas
       "babel-preset-es2017",
 
       // JSX, Flow
@@ -300,7 +301,11 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
     plugins:
     [
-      // Optimization for lodash imports
+      // Transpile Markdown into React components. Super smart.
+      "markdown-in-js/babel",
+
+      // Optimization for lodash imports.
+      // Auto cherry-picking es2015 imports from path imports.
       "lodash",
 
       // class { handleClick = () => { } }
@@ -308,7 +313,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       "transform-class-properties",
 
       // { ...todo, completed: true }
-      ["transform-object-rest-spread", { useBuiltIns: true  }],
+      [ "transform-object-rest-spread", { useBuiltIns: true }],
 
       // Polyfills the runtime needed
       [ "transform-runtime", { regenerator: false }],
@@ -342,8 +347,15 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
               "transform-react-remove-prop-types"
             ]
           },
+
           development: {
-            plugins: [ "react-hot-loader/babel" ]
+            plugins: [
+              // Add deprecation messages
+              "log-deprecated",
+
+              // React based
+              "react-hot-loader/babel"
+            ]
           }
         }
       },
@@ -668,10 +680,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     },
 
     plugins: removeEmpty([
-      // Improve source caching in Webpack v2
-      // This thing seems to have magical effects on rebuild times. Problem is that it's
-      // still unusable right now because of a range of issues.
-      new HardSourceWebpackPlugin({
+      // Offline Plugin working on a automatic fallback based on ServiceWorker and AppCache.
+      ifProdClient(new OfflinePlugin()),
+
+      // Improve source caching in Webpack v2. Conflicts with offline plugin right now.
+      // Therefor we disable it in production and only use it to speed up development rebuilds.
+      ifDev(new HardSourceWebpackPlugin({
         // Either an absolute path or relative to output.path.
         cacheDirectory: path.resolve(root, ".hardsource", `${target}-${mode}`),
 
@@ -686,7 +700,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           directories: [ "node_modules" ],
           files: [ "package.json", "yarn.lock" ]
         }
-      }),
+      })),
 
       // Adds options to all of our loaders.
       ifDev(
@@ -729,7 +743,16 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       new VerboseProgressPlugin(),
 
       ifProd(new BabiliPlugin({
-        comments: false
+        comments: false,
+        babili: {
+          minified: true,
+          comments: false,
+          plugins: [
+            "minify-dead-code-elimination",
+            "minify-mangle-names",
+            "minify-simplify"
+          ]
+        }
       })),
 
       new CodeSplitWebpackPlugin({
