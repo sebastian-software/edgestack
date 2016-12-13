@@ -136,6 +136,7 @@
     "postcss-loader": "^1.2.1",
     "postcss-media-minmax": "^2.1.2",
     "postcss-nested": "^1.0.0",
+    "postcss-nested-ancestors": "^1.0.0",
     "postcss-pseudoelements": "^3.0.0",
     "postcss-reporter": "^2.0.0",
     "postcss-responsive-type": "^0.5.0",
