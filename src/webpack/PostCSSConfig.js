@@ -14,6 +14,7 @@ import colorHexAlpha from "postcss-color-hex-alpha"
 import flexbugsFixes from "postcss-flexbugs-fixes"
 import mediaMinmax from "postcss-media-minmax"
 import customMedia from "postcss-custom-media"
+import nestedSelectors from "postcss-nested-ancestors"
 import nested from "postcss-nested"
 import filters from "pleeease-filters"
 import selectorMatches from "postcss-selector-matches"
@@ -69,6 +70,9 @@ export default function getConfig(variables = {})
     advancedVariables({
       variables
     }),
+
+    // PostCSS plugin to reference any ancestor selector in nested CSS.
+    nestedSelectors(),
 
     // Unwrap nested rules like how Sass does it.
     // https://github.com/postcss/postcss-nested

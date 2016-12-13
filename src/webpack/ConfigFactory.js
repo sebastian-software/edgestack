@@ -265,7 +265,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       [
         "code-split-component/babel", {
           disabled: isDev,
-          role: "server"
+          mode: "server"
         }
       ]
     ]
@@ -322,7 +322,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       [
         "code-split-component/babel", {
           disabled: isDev,
-          role: "client"
+          mode: "client"
         }
       ]
     ]
@@ -599,6 +599,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     // to the wrong location in these cases.
     // devtool: ifProd("source-map", "eval-source-map"),
     devtool: "source-map",
+
+    // New performance hints. Only active for production build.
+    performance: {
+      hints: isProd
+    },
 
     // Define our entry chunks for our bundle.
     entry: removeEmptyKeys(

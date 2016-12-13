@@ -1,7 +1,7 @@
+import serialize from "serialize-javascript"
 import { readFileSync } from "fs"
 import { STATE_IDENTIFIER } from "code-split-component"
 import { ABSOLUTE_ASSETSINFO_PATH, ABSOLUTE_CHUNKMANIFEST_PATH } from "./config"
-import serialize from "serialize-javascript"
 
 var chunkManifest = "{}"
 if (process.env.MODE === "production")
