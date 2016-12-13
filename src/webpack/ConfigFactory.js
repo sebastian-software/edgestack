@@ -600,6 +600,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     // devtool: ifProd("source-map", "eval-source-map"),
     devtool: "source-map",
 
+    // New performance hints. Only active for production build.
+    performance: {
+      hints: isProd
+    },
+
     // Define our entry chunks for our bundle.
     entry: removeEmptyKeys(
     {
