@@ -72,6 +72,7 @@ export default function getConfig(variables = {})
     }),
 
     // PostCSS plugin to reference any ancestor selector in nested CSS.
+    // https://github.com/toomuchdesign/postcss-nested-ancestors
     nestedSelectors(),
 
     // Unwrap nested rules like how Sass does it.
@@ -159,10 +160,7 @@ export default function getConfig(variables = {})
 
     // Log PostCSS messages to the console
     reporter({
-      clearMessages: true,
-      filter: function(message) {
-        return message.type !== "dependency"
-      }
+      clearReportedMessages: true
     })
   ]
 }
