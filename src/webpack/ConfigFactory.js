@@ -265,7 +265,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       [
         "code-split-component/babel", {
           disabled: isDev,
-          role: "server"
+          mode: "server"
         }
       ]
     ]
@@ -322,7 +322,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       [
         "code-split-component/babel", {
           disabled: isDev,
-          role: "client"
+          mode: "client"
         }
       ]
     ]
