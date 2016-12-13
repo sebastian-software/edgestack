@@ -4,8 +4,10 @@
   "description": "Universal React + PostCSS + CSS Modules + ESLint + Stylelint + ...",
   "main": "lib/index.es5.commonjs.js",
   "module": "lib/index.es5.esmodule.js",
-  "main:es2015": "lib/index.es2015.commonjs.js",
-  "module:es2015": "lib/index.es2015.esmodule.js",
+  "main:modern": "lib/index.modern.commonjs.js",
+  "module:modern": "lib/index.modern.esmodule.js",
+  "browser": "lib/browser.es5.commonjs.js",
+  "browser:modern": "lib/browser.es5.commonjs.js",
   "engines": {
     "node": ">=6.0.0",
     "yarn": ">=0.17.9",
