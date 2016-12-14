@@ -1170,9 +1170,9 @@ babel-preset-babili@^0.0.9:
     babel-plugin-transform-simplify-comparison-operators "^6.8.0"
     babel-plugin-transform-undefined-to-void "^6.8.0"
 
-babel-preset-env@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.0.2.tgz#5db2cb17030d1ceac9c78f66ed5ccd1c284949fa"
+babel-preset-env@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.1.1.tgz#f7df25886d0f7299a3dd56b408696aeea79c79e9"
   dependencies:
     babel-plugin-check-es2015-constants "^6.3.13"
     babel-plugin-syntax-trailing-function-commas "^6.13.0"
@@ -1505,9 +1505,9 @@ bser@^1.0.2:
   dependencies:
     node-int64 "^0.4.0"
 
-buble@^0.14.0:
-  version "0.14.3"
-  resolved "https://registry.yarnpkg.com/buble/-/buble-0.14.3.tgz#678cb1fc24dc90e5ada047deaa5ddc6f6da8983e"
+buble@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/buble/-/buble-0.15.0.tgz#787cf0827cd877e18a6d47dbbf700b2e3138d934"
   dependencies:
     acorn "^3.3.0"
     acorn-jsx "^3.0.1"
@@ -6488,6 +6488,13 @@ postcss-gradient-transparency-fix@^1.0.3:
     postcss "^5.0.14"
     postcss-value-parser "^3.3.0"
 
+postcss-grid-kiss@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/postcss-grid-kiss/-/postcss-grid-kiss-0.6.0.tgz#94096e948320fe896b969d299fb8f541fff5e58c"
+  dependencies:
+    postcss "^5.2.5"
+    reduce-css-calc "^1.3.0"
+
 postcss-hexrgba@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/postcss-hexrgba/-/postcss-hexrgba-0.2.1.tgz#5c61abba439c0a38e49e7fbc0b3cd936119ec225"
@@ -6906,9 +6913,9 @@ prepend-http@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
 
-prepublish-lib@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/prepublish-lib/-/prepublish-lib-0.9.0.tgz#f2670ce99a49f0a78bd85d7f902ee6ad42377f48"
+prepublish-lib@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/prepublish-lib/-/prepublish-lib-0.9.1.tgz#7004cc046020f8ba4b46c5c31007e8199d36af05"
   dependencies:
     async "^2.1.4"
     babel-plugin-closure-elimination "^1.1.14"
@@ -6921,7 +6928,7 @@ prepublish-lib@^0.9.0:
     babel-plugin-transform-react-remove-prop-types "^0.2.11"
     babel-plugin-transform-runtime "^6.15.0"
     babel-preset-babili "^0.0.9"
-    babel-preset-env "^1.0.2"
+    babel-preset-env "^1.1.1"
     babel-preset-latest "^6.16.0"
     babel-preset-react "^6.16.0"
     babel-runtime "^6.20.0"
@@ -6930,7 +6937,7 @@ prepublish-lib@^0.9.0:
     lodash "^4.17.2"
     rollup "^0.37.0"
     rollup-plugin-babel "^2.7.1"
-    rollup-plugin-buble "^0.14.0"
+    rollup-plugin-buble "^0.15.0"
     rollup-plugin-json "^2.0.2"
     rollup-plugin-node-resolve "^2.0.0"
     rollup-plugin-relink "^0.3.1"
@@ -7349,7 +7356,7 @@ redeyed@~1.0.0:
   dependencies:
     esprima "~3.0.0"
 
-reduce-css-calc@^1.2.6:
+reduce-css-calc@^1.2.6, reduce-css-calc@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/reduce-css-calc/-/reduce-css-calc-1.3.0.tgz#747c914e049614a4c9cfbba629871ad1d2927716"
   dependencies:
@@ -7551,11 +7558,11 @@ resolve-pathname@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/resolve-pathname/-/resolve-pathname-2.0.2.tgz#e55c016eb2e9df1de98e85002282bfb38c630436"
 
-resolve@1.1.7, resolve@1.1.x, resolve@^1.1.6, resolve@^1.1.7:
+resolve@1.1.7, resolve@1.1.x:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
 
-resolve@^1.2.0:
+resolve@^1.1.6, resolve@^1.1.7, resolve@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.2.0.tgz#9589c3f2f6149d1417a40becc1663db6ec6bc26c"
 
@@ -7595,11 +7602,11 @@ rollup-plugin-babel@^2.7.1:
     object-assign "^4.1.0"
     rollup-pluginutils "^1.5.0"
 
-rollup-plugin-buble@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-buble/-/rollup-plugin-buble-0.14.0.tgz#3726db55fef9b9cd37cebed559cbbd4b9b2e5bc6"
+rollup-plugin-buble@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-buble/-/rollup-plugin-buble-0.15.0.tgz#83c3e89c7fd2266c7918f41ba3980313519c7fd0"
   dependencies:
-    buble "^0.14.0"
+    buble "^0.15.0"
     rollup-pluginutils "^1.5.0"
 
 rollup-plugin-json@^2.0.2:

@@ -16,6 +16,7 @@ import mediaMinmax from "postcss-media-minmax"
 import customMedia from "postcss-custom-media"
 import nestedSelectors from "postcss-nested-ancestors"
 import nested from "postcss-nested"
+import gridKiss from "postcss-grid-kiss"
 import filters from "pleeease-filters"
 import selectorMatches from "postcss-selector-matches"
 import pseudoelements from "postcss-pseudoelements"
@@ -82,6 +83,10 @@ export default function getConfig(variables = {})
     // Fractional grid system built with calc(). Supports masonry, vertical, and waffle grids.
     // https://github.com/peterramsing/lost
     lost,
+
+    // A PostCSS plugin to keep CSS grids stupidly simple
+    // See also: https://github.com/sylvainpolletvillard/postcss-grid-kiss
+    gridKiss,
 
     // Insert 3D hack before will-change property
     // https://github.com/postcss/postcss-will-change
