@@ -86,7 +86,10 @@ export default function getConfig(variables = {})
 
     // A PostCSS plugin to keep CSS grids stupidly simple
     // See also: https://github.com/sylvainpolletvillard/postcss-grid-kiss
-    gridKiss,
+    gridKiss({
+      fallback: true,
+      screwIE: true
+    }),
 
     // Insert 3D hack before will-change property
     // https://github.com/postcss/postcss-will-change
