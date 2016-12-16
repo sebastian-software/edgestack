@@ -666,7 +666,7 @@ babel-plugin-jest-hoist@^18.0.0:
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-18.0.0.tgz#4150e70ecab560e6e7344adc849498072d34e12a"
 
-babel-plugin-lodash@^3.2.10:
+babel-plugin-lodash@^3.2.11:
   version "3.2.11"
   resolved "https://registry.yarnpkg.com/babel-plugin-lodash/-/babel-plugin-lodash-3.2.11.tgz#21c8fdec9fe1835efaa737873e3902bdd66d5701"
   dependencies:
@@ -1054,7 +1054,7 @@ babel-plugin-transform-react-jsx-self@^6.11.0:
     babel-plugin-syntax-jsx "^6.8.0"
     babel-runtime "^6.9.0"
 
-babel-plugin-transform-react-jsx-source@^6.3.13:
+babel-plugin-transform-react-jsx-source@^6.3.13, babel-plugin-transform-react-jsx-source@^6.9.0:
   version "6.9.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-jsx-source/-/babel-plugin-transform-react-jsx-source-6.9.0.tgz#af684a05c2067a86e0957d4f343295ccf5dccf00"
   dependencies:
@@ -2318,9 +2318,9 @@ dashify@^0.2.0:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/dashify/-/dashify-0.2.2.tgz#6a07415a01c91faf4a32e38d9dfba71f61cb20fe"
 
-date-fns@^1.20.1:
-  version "1.20.1"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.20.1.tgz#8cc3e1588354e65d145729d42b94f52a0f48d58d"
+date-fns@^1.21.0:
+  version "1.21.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.21.0.tgz#7183c75dd0762e101f5db7fdbe3598b5a47c09e4"
 
 date-now@^0.1.4:
   version "0.1.4"
@@ -2840,7 +2840,7 @@ eslint-plugin-import@^2.2.0:
     minimatch "^3.0.3"
     pkg-up "^1.0.0"
 
-eslint-plugin-jsx-a11y@^3.0.1:
+eslint-plugin-jsx-a11y@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-3.0.2.tgz#9f0eabcafde3d2a2600d96a66adb90d099e841fe"
   dependencies:
@@ -2848,7 +2848,7 @@ eslint-plugin-jsx-a11y@^3.0.1:
     jsx-ast-utils "^1.0.0"
     object-assign "^4.0.1"
 
-eslint-plugin-lodash@^2.2.3:
+eslint-plugin-lodash@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/eslint-plugin-lodash/-/eslint-plugin-lodash-2.2.4.tgz#2b14bc63bcf4e7f008302100bf53c84d8bf54966"
   dependencies:
@@ -2898,7 +2898,7 @@ eslint-rule-documentation@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/eslint-rule-documentation/-/eslint-rule-documentation-1.0.4.tgz#f127f59cd0264a1bcde59f4d803552fdd38cb7c2"
 
-eslint@^3.0.0, eslint@^3.12.1:
+eslint@^3.0.0, eslint@^3.12.2:
   version "3.12.2"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.12.2.tgz#6be5a9aa29658252abd7f91e9132bab1f26f3c34"
   dependencies:
@@ -3715,9 +3715,9 @@ gulp-eslint@^3.0.1:
     eslint "^3.0.0"
     gulp-util "^3.0.6"
 
-gulp-stylelint@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/gulp-stylelint/-/gulp-stylelint-3.6.0.tgz#29fdbe6fc6c4e53f2ada7e821fe22c03f876da1b"
+gulp-stylelint@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/gulp-stylelint/-/gulp-stylelint-3.6.1.tgz#a83093d2f6c982b73efb944fedf03c00bea05996"
   dependencies:
     chalk "^1.1.3"
     deep-extend "^0.4.1"
@@ -3807,9 +3807,9 @@ har-validator@~2.0.6:
     is-my-json-valid "^2.12.4"
     pinkie-promise "^2.0.0"
 
-hard-source-webpack-plugin@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/hard-source-webpack-plugin/-/hard-source-webpack-plugin-0.3.3.tgz#696caf6a2c51ad5ad3ebb1b1fc72a4eb1db17742"
+hard-source-webpack-plugin@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/hard-source-webpack-plugin/-/hard-source-webpack-plugin-0.3.4.tgz#3b9fd1c85ac48a0fdad90c840928a787a3df3f2d"
   dependencies:
     bluebird "^3.0.0"
     level "^1.4.0"
@@ -4951,7 +4951,7 @@ liftoff@^2.1.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
-lint-staged@^3.2.2, lint-staged@^3.2.3:
+lint-staged@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-3.2.3.tgz#74a72945b79ceb63ca18b984b02dc176045285cf"
   dependencies:
@@ -7597,20 +7597,20 @@ rxjs@^5.0.0-beta.11:
   dependencies:
     symbol-observable "^1.0.1"
 
-s15e-javascript@^0.7.6:
-  version "0.7.6"
-  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.7.6.tgz#2cd11b04a633d1c4b050d6105ac3b551690e3f8d"
+s15e-javascript@^0.7.8:
+  version "0.7.8"
+  resolved "https://registry.yarnpkg.com/s15e-javascript/-/s15e-javascript-0.7.8.tgz#d2cab7498842bd241808f932b2ac342977a4b5d6"
   dependencies:
     cross-spawn "^5.0.1"
-    eslint "^3.12.1"
+    eslint "^3.12.2"
     eslint-find-rules "^1.14.3"
     eslint-formatter-pretty "^1.1.0"
     eslint-plugin-filenames "^1.1.0"
     eslint-plugin-flowtype "^2.29.1"
     eslint-plugin-flowtype-errors "^2.0.1"
     eslint-plugin-import "^2.2.0"
-    eslint-plugin-jsx-a11y "^3.0.1"
-    eslint-plugin-lodash "^2.2.3"
+    eslint-plugin-jsx-a11y "^3.0.2"
+    eslint-plugin-lodash "^2.2.4"
     eslint-plugin-no-use-extend-native "^0.3.12"
     eslint-plugin-node "^3.0.5"
     eslint-plugin-promise "^3.4.0"
@@ -7619,10 +7619,10 @@ s15e-javascript@^0.7.6:
     flow-bin "^0.37.0"
     gulp "^3.9.1"
     gulp-eslint "^3.0.1"
-    gulp-stylelint "^3.6.0"
-    lint-staged "^3.2.2"
+    gulp-stylelint "^3.6.1"
+    lint-staged "^3.2.3"
     postcss "^5.2.6"
-    stylefmt "^5.0.2"
+    stylefmt "^5.0.3"
     stylelint "^7.6.0"
 
 sane@~1.4.1:
@@ -8037,7 +8037,7 @@ style-search@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/style-search/-/style-search-0.1.0.tgz#7958c793e47e32e07d2b5cafe5c0bf8e12e77902"
 
-stylefmt@^5.0.2:
+stylefmt@^5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/stylefmt/-/stylefmt-5.0.3.tgz#d46a6fd6989e1c2460ff71cb9708108e0ebcb451"
   dependencies:

@@ -256,7 +256,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       "transform-class-properties",
 
       // { ...todo, completed: true }
-      [ "transform-object-rest-spread", { useBuiltIns: true  }],
+      [ "transform-object-rest-spread", { useBuiltIns: true }],
 
       // Polyfills the runtime needed
       [ "transform-runtime", { regenerator: false }],
@@ -350,6 +350,12 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
 
           development: {
             plugins: [
+              // Adds component stack to warning messages
+              "transform-react-jsx-source",
+
+              // Adds __self attribute to JSX which React will use for some warnings
+              "transform-react-jsx-self",
+
               // Add deprecation messages
               "log-deprecated",
 
