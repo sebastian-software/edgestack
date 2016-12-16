@@ -75,7 +75,7 @@ Given that we are bundling our server code I have included the `source-map-suppo
 
 All the source code is written in ES2015, and I have explicitly kept it to the true specification (bar JSX syntax). As we are following this approach it is unnecessary for us to transpile our source code for the server into ES5, as `node` v6 has native support for almost all of the ES2015 syntax. Our client (browser) bundle is however transpiled to ES5 code for maximum browser/device support.
 
-The application configuration is supported by the `dotenv` module and it requires you to create a `.env` file in the project root (you can use the `.env_example` as a base). The `.env` file has been explicitly ignored from git as it will typically contain environment sensitive/specific information. In the usual case your continuous deployment tool of choice should configure the specific `.env` file that is needed for a target environment.
+The application configuration is supported by the `dotenv` module and it requires you to create a `.env` file in the project root (you can use the `.env.example` as a base). The `.env` file has been explicitly ignored from git as it will typically contain environment sensitive/specific information. In the usual case your continuous deployment tool of choice should configure the specific `.env` file that is needed for a target environment.
 
 
 
@@ -101,7 +101,7 @@ The application configuration is supported by the `dotenv` module and it require
 |  |- scripts // Available scripts when installed via npm
 |
 |- .babelrc // Dummy babel configuration
-|- .env_example // An example from which to create your own .env file.
+|- .env.example // An example from which to create your own .env file.
 |- rollup.script.cfg // Configuration file for bundling scripts into executable
 ```
 

@@ -843,7 +843,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         "process.env.APP_ROOT": JSON.stringify(path.resolve(root)),
 
         // All the below items match the config items in our .env file. Go
-        // to the .env_example for a description of each key.
+        // to the .env.example for a description of each key.
         "process.env.SERVER_PORT": process.env.SERVER_PORT,
         "process.env.CLIENT_DEVSERVER_PORT": process.env.CLIENT_DEVSERVER_PORT,
 
