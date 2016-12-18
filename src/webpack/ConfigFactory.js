@@ -608,7 +608,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     // New performance hints. Only active for production build.
     performance: {
-      hints: isProd && isClient
+      hints: isProd && isClient ? 'warning' : false
     },
 
     // Define our entry chunks for our bundle.
