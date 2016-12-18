@@ -5289,7 +5289,7 @@ lodash.padstart@^4.1.0:
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/lodash.padstart/-/lodash.padstart-4.6.1.tgz#d2e3eebff0d9d39ad50f5cbd1b52a7bce6bb611b"
 
-lodash.pick@^4.2.1:
+lodash.pick@^4.2.1, lodash.pick@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
 
@@ -7030,15 +7030,16 @@ rc@^1.0.3, rc@~1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
 
-react-apollo@^1.0.0-rc2:
-  version "1.0.0-rc2"
-  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-1.0.0-rc2.tgz#26da3dfd8cd9542456d7069a83a2f999f6125980"
+react-apollo@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-0.7.1.tgz#cbd51b5c4b011b55da3fa461dc0f9d7aa48d1f88"
   dependencies:
     hoist-non-react-statics "^1.2.0"
     invariant "^2.2.1"
     lodash.flatten "^4.2.0"
     lodash.isequal "^4.1.1"
     lodash.isobject "^3.0.2"
+    lodash.pick "^4.4.0"
     object-assign "^4.0.1"
 
 react-broadcast@^0.1.2:
