@@ -182,7 +182,7 @@
     "lint-staged": "^3.2.3",
     "normalize.css": "^5.0.0",
     "pre-commit": "^1.2.2",
-    "prepublish-lib": "^0.10.4",
+    "prepublish-lib": "^0.10.5",
     "rollup": "^0.37.0",
     "source-sans-pro": "^2.0.10"
   }
