@@ -2,10 +2,10 @@
   "name": "advanced-boilerplate",
   "version": "0.14.18",
   "description": "Universal React + PostCSS + CSS Modules + ESLint + Stylelint + ...",
-  "main": "lib/index.classic.commonjs.js",
-  "module": "lib/index.classic.esmodule.js",
-  "main:modern": "lib/index.modern.commonjs.js",
-  "module:modern": "lib/index.modern.esmodule.js",
+  "main": "lib/node.classic.commonjs.js",
+  "module": "lib/node.classic.esmodule.js",
+  "main:modern": "lib/node.modern.commonjs.js",
+  "module:modern": "lib/node.modern.esmodule.js",
   "browser": "lib/browser.classic.esmodule.js",
   "browser:modern": "lib/browser.classic.esmodule.js",
   "engines": {
@@ -182,7 +182,7 @@
     "lint-staged": "^3.2.3",
     "normalize.css": "^5.0.0",
     "pre-commit": "^1.2.2",
-    "prepublish-lib": "^0.10.3",
+    "prepublish-lib": "^0.10.4",
     "rollup": "^0.37.0",
     "source-sans-pro": "^2.0.10"
   }

@@ -6841,9 +6841,9 @@ prepend-http@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
 
-prepublish-lib@^0.10.3:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/prepublish-lib/-/prepublish-lib-0.10.3.tgz#19349d30150e5747a6acb9ca0ffe54017c5a6a45"
+prepublish-lib@^0.10.4:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/prepublish-lib/-/prepublish-lib-0.10.4.tgz#45de7dc290c470159e9caed2aff02b6e2dfdd11d"
   dependencies:
     async "^2.1.4"
     babel-plugin-closure-elimination "^1.1.14"
