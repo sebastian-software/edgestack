@@ -23,6 +23,7 @@ import pseudoelements from "postcss-pseudoelements"
 import autoprefixer from "autoprefixer"
 import reporter from "postcss-reporter"
 import hexrgba from "postcss-hexrgba"
+import unicodeChars from "postcss-unicode-characters"
 import zindex from "postcss-zindex"
 import warn from "postcss-at-warn"
 import responsiveType from "postcss-responsive-type"
@@ -151,6 +152,10 @@ export default function getConfig(variables = {})
     // Normalizes e.g. `::before` to `:before` for wider browser support
     // https://github.com/axa-ch/postcss-pseudoelements
     pseudoelements,
+
+    // An easier way to write unicode-range descriptors.
+    // https://github.com/ben-eb/postcss-unicode-characters
+    unicodeChars,
 
     // Reduce z-index values with PostCSS.
     // https://github.com/ben-eb/postcss-zindex
