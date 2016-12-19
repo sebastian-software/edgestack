@@ -7,7 +7,7 @@
   "main:modern": "lib/node.modern.commonjs.js",
   "module:modern": "lib/node.modern.esmodule.js",
   "browser": "lib/browser.classic.esmodule.js",
-  "browser:modern": "lib/browser.classic.esmodule.js",
+  "browser:modern": "lib/browser.modern.esmodule.js",
   "engines": {
     "node": ">=6.0.0",
     "yarn": ">=0.17.9",
