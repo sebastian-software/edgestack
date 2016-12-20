@@ -6,7 +6,7 @@ import Helmet from "react-helmet"
 import { ApolloProvider, getDataFromTree } from "react-apollo"
 
 import renderPage from "./renderPage"
-import { createApolloClient, createReduxStore } from "../app/Data"
+import { createApolloClient, createReduxStore } from "../common/Data"
 
 /**
  * Using Apollo logic to recursively resolve all queries needed for

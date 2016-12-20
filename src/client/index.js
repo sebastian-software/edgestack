@@ -7,7 +7,7 @@ import { ApolloProvider } from "react-apollo"
 
 import ReactHotLoader from "./ReactHotLoader"
 import App from "../app/App"
-import { createApolloClient, createReduxStore } from "../app/Data"
+import { createApolloClient, createReduxStore } from "../common/Data"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")

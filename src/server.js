@@ -7,6 +7,6 @@ export { default as createUniversalMiddleware } from "./server/createUniversalMi
 export { default as addFallbackHandler } from "./server/addFallbackHandler"
 export { default as renderPage } from "./server/renderPage"
 export { createReduxStore, createApolloClient,
-  emptyReducer, emptyMiddleware, emptyEnhancer } from "./app/Data"
+  emptyReducer, emptyMiddleware, emptyEnhancer } from "./common/Data"
 
-export { default as RouterConnector, routerReducer } from "./app/RouterConnector"
+export { default as RouterConnector, routerReducer } from "./common/RouterConnector"

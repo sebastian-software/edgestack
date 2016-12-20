@@ -10,7 +10,7 @@ import createLogger from "redux-logger"
 import "./Fonts.css"
 import Styles from "./App.css"
 import { counterReducer } from "./CounterModule"
-import RouterConnector, { routerReducer } from "./RouterConnector"
+import RouterConnector, { routerReducer } from "../common/RouterConnector"
 
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
 const websiteLanguage = "en-US"
