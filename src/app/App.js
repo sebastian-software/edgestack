@@ -1,4 +1,5 @@
-import "sanitize.css"
+// FIXME: waiting for relevase of fixed package.json entry. >= 4.1.0
+import "sanitize.css/sanitize.css"
 
 import React from "react"
 import { Match, Miss, Link } from "react-router"
