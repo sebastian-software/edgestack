@@ -16,7 +16,7 @@ import { getCounter, decrementCounter, incrementCounter, loadCounter } from "./C
 /**
  * @deprecated
  */
-function oldMethod() {}
+function handleOldMethodCall() {}
 
 class About extends React.Component {
   componentWillMount() {
@@ -30,7 +30,7 @@ class About extends React.Component {
     new Clipboard("[data-clipboard-target]")
   }
 
-  showCookie() {
+  handleClickCookieLink() {
     alert(cookiesjs("test"))
   }
 
@@ -50,9 +50,9 @@ class About extends React.Component {
           &#160;
           <button className={Styles.button} onClick={this.props.handleIncrement}>Increment</button>
           &#160;
-          <button className={Styles.buttonSmall} onClick={oldMethod}>Deprecated Test</button>
+          <button className={Styles.buttonSmall} onClick={handleOldMethodCall}>Deprecated Test</button>
           &#160;
-          <button className={Styles.buttonSmall} onClick={this.showCookie}>Show Cookie</button>
+          <button className={Styles.buttonSmall} onClick={this.handleClickCookieLink}>Show Cookie</button>
           &#160;
           <input type="text" id="clipboard-source" defaultValue="some random content" />
           <button className={Styles.buttonSmall} data-clipboard-target="#clipboard-source">Copy to Clipboard</button>

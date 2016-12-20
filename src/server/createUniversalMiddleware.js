@@ -147,14 +147,14 @@ export default function createUniversalMiddleware({ App, ssrData, batchRequests 
     {
       const apolloClient = createApolloClient({
         headers: request.headers,
-        initialState: initialState,
-        batchRequests: batchRequests,
-        trustNetwork: trustNetwork
+        initialState,
+        batchRequests,
+        trustNetwork
       })
 
       const reduxStore = createReduxStore({
-        apolloClient: apolloClient,
-        initialState: initialState,
+        apolloClient,
+        initialState,
         reducers: App.getReducers(),
         enhancers: App.getEnhancers(),
         middlewares: App.getMiddlewares()
