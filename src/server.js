@@ -8,3 +8,5 @@ export { default as addFallbackHandler } from "./server/addFallbackHandler"
 export { default as renderPage } from "./server/renderPage"
 export { createReduxStore, createApolloClient,
   emptyReducer, emptyMiddleware, emptyEnhancer } from "./app/Data"
+
+export { default as RouterConnector, routerReducer } from "./app/RouterConnector"
