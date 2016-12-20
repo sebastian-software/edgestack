@@ -10,6 +10,7 @@ import createLogger from "redux-logger"
 import "./Fonts.css"
 import Styles from "./App.css"
 import { counterReducer } from "./CounterModule"
+import RouterConnector, { routerReducer } from "./RouterConnector"
 
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
 const websiteLanguage = "en-US"
@@ -49,26 +50,28 @@ function App({ children }) {
       </div>
 
       <div>
-        <Match
-          exactly
-          pattern="/"
-          render={(routerProps) =>
-            <CodeSplit chunkName="home" modules={{ Home: require("./Home") }}>
-              { ({ Home }) => Home && <Home {...routerProps} /> }
-            </CodeSplit>
-          }
-        />
+        <RouterConnector>
+          <Match
+            exactly
+            pattern="/"
+            render={(routerProps) =>
+              <CodeSplit chunkName="home" modules={{ Home: require("./Home") }}>
+                { ({ Home }) => Home && <Home {...routerProps} /> }
+              </CodeSplit>
+            }
+          />
 
-        <Match
-          pattern="/about"
-          render={(routerProps) =>
-            <CodeSplit chunkName="about" modules={{ About: require("./About") }}>
-              { ({ About }) => About && <About {...routerProps} /> }
-            </CodeSplit>
-          }
-        />
+          <Match
+            pattern="/about"
+            render={(routerProps) =>
+              <CodeSplit chunkName="about" modules={{ About: require("./About") }}>
+                { ({ About }) => About && <About {...routerProps} /> }
+              </CodeSplit>
+            }
+          />
 
-        <Miss component={Error404} />
+          <Miss component={Error404} />
+        </RouterConnector>
       </div>
     </main>
   )
@@ -90,6 +93,7 @@ App.getEnhancers = function() {
  */
 App.getReducers = function() {
   return {
+    router: routerReducer,
     counter: counterReducer
   }
 }
