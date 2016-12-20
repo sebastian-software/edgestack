@@ -677,7 +677,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // Defaults: https://webpack.github.io/docs/configuration.html#resolve-packagemains
       mainFields: ifNode(
         [ "module", "jsnext:main", "main" ],
-        [ "browser", "web", "module", "jsnext:main", "main" ]
+        [ "browser", "web", "module", "jsnext:main", "style", "main" ]
       ),
 
       // These extensions are tried when resolving a file.
@@ -686,6 +686,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         ".jsx",
         ".ts",
         ".tsx",
+        ".css",
+        ".sss",
         ".json"
       ]
     },
