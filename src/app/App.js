@@ -6,11 +6,12 @@ import { Match, Miss, Link } from "react-router"
 import Helmet from "react-helmet"
 import { CodeSplit } from "code-split-component"
 import createLogger from "redux-logger"
+import RouterConnector, { routerReducer } from "../common/RouterConnector"
 
+// Application specific
 import "./Fonts.css"
 import Styles from "./App.css"
 import { counterReducer } from "./CounterModule"
-import RouterConnector, { routerReducer } from "../common/RouterConnector"
 
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
 const websiteLanguage = "en-US"
@@ -21,6 +22,7 @@ function Error404() {
 }
 
 function App({ children }) {
+  /* eslint-disable react/jsx-no-bind */
   return (
     <main>
       <Helmet
