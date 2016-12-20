@@ -1,4 +1,4 @@
-import "normalize.css"
+import "sanitize.css"
 
 import React from "react"
 import { Match, Miss, Link } from "react-router"
