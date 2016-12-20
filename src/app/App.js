@@ -1,4 +1,4 @@
-// FIXME: waiting for relevase of fixed package.json entry. >= 4.1.0
+// FIXME: waiting for release of fixed package.json entry. >= 4.1.0
 import "sanitize.css/sanitize.css"
 
 import React from "react"
