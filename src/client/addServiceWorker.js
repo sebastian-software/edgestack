@@ -1,4 +1,4 @@
-// We use the offline-plugin to generate a service worker.  See the webpack
+// We use the offline-plugin to generate a service worker. See the webpack
 // config for more details.
 //
 // We need to ensure that the runtime is installed so that the generated
