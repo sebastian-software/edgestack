@@ -73,20 +73,6 @@ export function createReduxStore({ initialState, apolloClient, reducers = {}, mi
     rootEnhancers
   )
 
-  // Enable Webpack hot module replacement for reducers. This is so that we
-  // don"t lose all of our current application state during hot reloading.
-  if (process.env.NODE_ENV === "development" && module.hot)
-  {
-    module.hot.accept("../app/Data", () =>
-    {
-      // eslint-disable global-require
-      // const nextRootReducer = require("../app/RootReducer").default
-      // store.replaceReducer(nextRootReducer)
-
-      console.log("FIXME: Hot Update Reducers")
-    })
-  }
-
   return store
 }
 
@@ -108,7 +94,7 @@ export function createApolloClient({ headers, initialState = {}, batchRequests =
 
       // transfer request headers to networkInterface so that they're accessible to proxy server
       // Addresses this issue: https://github.com/matthew-andrews/isomorphic-fetch/issues/83
-      headers: headers
+      headers
     }
 
     if (batchRequests)
@@ -116,14 +102,14 @@ export function createApolloClient({ headers, initialState = {}, batchRequests =
       var networkInterface = createBatchingNetworkInterface({
         uri: apolloUri,
         batchInterval: 10,
-        opts: opts
+        opts
       })
     }
     else
     {
       var networkInterface = createNetworkInterface({
         uri: apolloUri,
-        opts: opts
+        opts
       })
     }
 
@@ -151,7 +137,7 @@ export function createApolloClient({ headers, initialState = {}, batchRequests =
 
     var client = new ApolloClient({
       ssrMode: process.env.TARGET === "server",
-      networkInterface: networkInterface
+      networkInterface
     })
   }
   else
