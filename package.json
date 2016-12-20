@@ -180,6 +180,7 @@
     "yaml-loader": "^0.4.0"
   },
   "devDependencies": {
+    "eslint_d": "^4.2.1",
     "lint-staged": "^3.2.4",
     "normalize.css": "^5.0.0",
     "pre-commit": "^1.2.2",

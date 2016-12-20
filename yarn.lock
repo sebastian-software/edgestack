@@ -2947,6 +2947,16 @@ eslint@^3.0.0, eslint@^3.12.2:
     text-table "~0.2.0"
     user-home "^2.0.0"
 
+eslint_d@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/eslint_d/-/eslint_d-4.2.1.tgz#61e31fb2a43538338798de3a402b181bd7560aaf"
+  dependencies:
+    chalk "^1.1.1"
+    eslint "^3.0.0"
+    optionator "^0.8.1"
+    resolve "^1.1.7"
+    supports-color "^3.1.2"
+
 esmangle-evaluator@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/esmangle-evaluator/-/esmangle-evaluator-1.0.1.tgz#620d866ef4861b3311f75766d52a8572bb3c6336"
