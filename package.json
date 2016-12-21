@@ -59,7 +59,7 @@
   },
   "homepage": "https://github.com/sebastian-software/advanced-boilerplate#readme",
   "dependencies": {
-    "apollo-client": "^0.5.23",
+    "apollo-client": "^0.5.24",
     "assets-webpack-plugin": "^3.5.0",
     "async": "^2.1.4",
     "autoprefixer": "^6.5.4",
@@ -184,7 +184,7 @@
     "lint-staged": "^3.2.4",
     "pre-commit": "^1.2.2",
     "prepublish-lib": "^0.10.8",
-    "rollup": "^0.37.0",
+    "rollup": "^0.37.2",
     "sanitize.css": "^4.1.0",
     "source-sans-pro": "^2.0.10",
     "stylelint": "^7.7.0"
