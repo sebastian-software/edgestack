@@ -31,7 +31,7 @@ export function emptyEnhancer(param) {
 }
 
 
-const composeEnhancers = (process.env.TARGET === "client" &&
+const composeEnhancers = (process.env.TARGET === "web" &&
   process.env.NODE_ENV === "development" &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
 
@@ -112,7 +112,7 @@ export function createApolloClient({ headers, initialState = {}, batchRequests =
     }
 
     var client = new ApolloClient({
-      ssrMode: process.env.TARGET === "server",
+      ssrMode: process.env.TARGET === "node",
       addTypename: false,
       networkInterface
     })
