@@ -183,7 +183,7 @@
     "eslint_d": "^4.2.1",
     "lint-staged": "^3.2.4",
     "pre-commit": "^1.2.2",
-    "prepublish-lib": "^0.10.9",
+    "prepublish-lib": "^0.10.10",
     "rollup": "^0.38.0",
     "sanitize.css": "^4.1.0",
     "source-sans-pro": "^2.0.10",
