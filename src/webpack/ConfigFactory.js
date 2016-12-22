@@ -652,9 +652,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         "chunk-[name].js"
       ),
 
-      // Prefixes every line of the source in the bundle with this string.
-      sourcePrefix: "",
-
       // This is the web path under which our webpack bundled output should
       // be considered as being served from.
       publicPath: ifDev(
