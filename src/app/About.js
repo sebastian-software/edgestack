@@ -6,7 +6,7 @@ import cookiesjs from "cookiesjs"
 
 // Clipboard handling is only supported on the client
 // Logical, but there are code limitations preventing a successful execution on server, too.
-if (process.env.TARGET === "client") {
+if (process.env.TARGET === "web") {
   var Clipboard = require("clipboard")
 }
 

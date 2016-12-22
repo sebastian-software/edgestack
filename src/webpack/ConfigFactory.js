@@ -209,9 +209,9 @@ function ifIsFile(filePath) {
 }
 
 
-function getJsLoader({ isServer, isClient, isProd, isDev })
+function getJsLoader({ isNode, isWeb, isProd, isDev })
 {
-  const nodeBabel = isServer ? {
+  const nodeBabel = isNode ? {
     // Don't try to find .babelrc because we want to force this configuration.
     babelrc: false,
 
@@ -271,7 +271,7 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
     ]
   } : null
 
-  const clientBabel = isClient ? {
+  const webBabel = isWeb ? {
     // Don't try to find .babelrc because we want to force this configuration.
     babelrc: false,
 
@@ -367,17 +367,17 @@ function getJsLoader({ isServer, isClient, isProd, isDev })
       },
 
       nodeBabel,
-      clientBabel
+      webBabel
     )
   }]
 }
 
 
-function getCssLoaders({ isServer, isClient, isProd, isDev })
+function getCssLoaders({ isNode, isWeb, isProd, isDev })
 {
   // When targetting the server we fake out the style loader as the
   // server can't handle the styles and doesn't care about them either..
-  if (isServer)
+  if (isNode)
   {
     return [
       {
@@ -395,7 +395,7 @@ function getCssLoaders({ isServer, isClient, isProd, isDev })
     ]
   }
 
-  if (isClient)
+  if (isWeb)
   {
     // For a production client build we use the ExtractTextPlugin which
     // will extract our CSS into CSS files. The plugin needs to be
@@ -466,10 +466,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     console.log("Using options: ", options)
   }
 
-  if (!target || !~[ "client", "server" ].findIndex((valid) => target === valid))
+  if (!target || !~[ "web", "node" ].findIndex((valid) => target === valid))
   {
     throw new Error(
-      `You must provide a "target" (client|server) to the ConfigFactory.`
+      `You must provide a "target" (web|node) to the ConfigFactory.`
     )
   }
 
@@ -485,19 +485,17 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
   const isDev = mode === "development"
   const isProd = mode === "production"
-  const isClient = target === "client"
-  const isServer = target === "server"
-  const isNode = isServer
+  const isWeb = target === "web"
+  const isNode = target === "node"
 
   const ifDev = ifElse(isDev)
   const ifProd = ifElse(isProd)
-  const ifClient = ifElse(isClient)
-  const ifServer = ifElse(isServer)
+  const ifWeb = ifElse(isWeb)
   const ifNode = ifElse(isNode)
-  const ifDevClient = ifElse(isDev && isClient)
-  const ifDevServer = ifElse(isDev && isServer)
-  const ifProdClient = ifElse(isProd && isClient)
-  const ifProdServer = ifElse(isProd && isServer)
+  const ifDevWeb = ifElse(isDev && isWeb)
+  const ifDevNode = ifElse(isDev && isNode)
+  const ifProdWeb = ifElse(isProd && isWeb)
+  const ifProdNode = ifElse(isProd && isNode)
   const ifIntegration = ifElse(process.env.CI || false)
   const ifUniversal = ifElse(process.env.DISABLE_SSR)
 
@@ -505,15 +503,15 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   const cssLoaders = getCssLoaders({
     isProd,
     isDev,
-    isClient,
-    isServer
+    isWeb,
+    isNode
   })
 
   const jsLoaders = getJsLoader({
     isProd,
     isDev,
-    isClient,
-    isServer
+    isWeb,
+    isNode
   })
 
   const excludeFromTranspilation = [
@@ -526,7 +524,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   // of a deep self-contained bundle.
   // See also: https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/
   const useLightServerBundle = options.lightBundle == null ? isDev : options.lightBundle
-  if (useLightServerBundle && isServer) {
+  if (useLightServerBundle && isNode) {
     console.log("Using light server bundle")
   }
 
@@ -608,19 +606,19 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     // New performance hints. Only active for production build.
     performance: {
-      hints: isProd && isClient ? 'warning' : false
+      hints: isProd && isWeb ? 'warning' : false
     },
 
     // Define our entry chunks for our bundle.
     entry: removeEmptyKeys(
     {
       main: removeEmpty([
-        ifDevClient("react-hot-loader/patch"),
-        ifDevClient(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
+        ifDevWeb("react-hot-loader/patch"),
+        ifDevWeb(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
         options.entry ? options.entry : ifIsFile(`./src/${target}/index.js`),
       ]),
 
-      vendor: ifProdClient(options.vendor ? options.vendor : ifIsFile(`./src/${target}/vendor.js`))
+      vendor: ifProdWeb(options.vendor ? options.vendor : ifIsFile(`./src/${target}/vendor.js`))
     }),
 
     output:
@@ -628,11 +626,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // The dir in which our bundle should be output.
       path: path.resolve(
         root,
-        isClient ? process.env.CLIENT_BUNDLE_OUTPUT_PATH : process.env.SERVER_BUNDLE_OUTPUT_PATH
+        isWeb ? process.env.CLIENT_BUNDLE_OUTPUT_PATH : process.env.SERVER_BUNDLE_OUTPUT_PATH
       ),
 
       // The filename format for our bundle's entries.
-      filename: ifProdClient(
+      filename: ifProdWeb(
 
         // We include a hash for client caching purposes. Including a unique
         // has for every build will ensure browsers always fetch our newest
@@ -647,7 +645,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         "[name].js"
       ),
 
-      chunkFilename: ifProdClient(
+      chunkFilename: ifProdWeb(
         "chunk-[name]-[chunkhash].js",
         "chunk-[name].js"
       ),
@@ -691,7 +689,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     plugins: removeEmpty([
       // Offline Plugin working on a automatic fallback based on ServiceWorker and AppCache.
-      ifProdClient(new OfflinePlugin()),
+      ifProdWeb(new OfflinePlugin()),
 
       // Improve source caching in Webpack v2. Conflicts with offline plugin right now.
       // Therefor we disable it in production and only use it to speed up development rebuilds.
@@ -800,7 +798,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // - `raw`: true tells webpack to prepend the text as it is, not wrapping it in a comment.
       // - `entryOnly`: false adds the text to all generated files, which you might have multiple if using code splitting.
       // Via: http://jlongster.com/Backend-Apps-with-Webpack--Part-I
-      ifServer(new webpack.BannerPlugin({
+      ifNode(new webpack.BannerPlugin({
         banner: 'require("source-map-support").install();',
         raw: true,
         entryOnly: false
@@ -808,24 +806,24 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
       // Extract vendor bundle for keeping larger parts of the application code
       // delivered to users stable during development (improves positive cache hits)
-      ifProdClient(new webpack.optimize.CommonsChunkPlugin({
+      ifProdWeb(new webpack.optimize.CommonsChunkPlugin({
         name: "vendor",
         minChunks: Infinity
       })),
 
       // More aggressive chunk merging strategy. Even similar chunks are merged if the
       // total size is reduced enough.
-      ifProdClient(new webpack.optimize.AggressiveMergingPlugin()),
+      ifProdWeb(new webpack.optimize.AggressiveMergingPlugin()),
 
       // We use this so that our generated [chunkhash]'s are only different if
       // the content for our respective chunks have changed.  This optimises
       // our long term browser caching strategy for our client bundle, avoiding
       // cases where browsers end up having to download all the client chunks
       // even though 1 or 2 may have only changed.
-      ifProdClient(new WebpackDigestHash()),
+      ifProdWeb(new WebpackDigestHash()),
 
       // Extract chunk hashes into separate file
-      ifProdClient(new ChunkManifestPlugin({
+      ifProdWeb(new ChunkManifestPlugin({
         filename: "manifest.json",
         manifestVariable: "CHUNK_MANIFEST"
       })),
@@ -869,7 +867,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // our webpack bundle.  A necessisty for our server rendering process
       // as we need to interogate these files in order to know what JS/CSS
       // we need to inject into our HTML.
-      ifClient(
+      ifWeb(
         new AssetsPlugin({
           filename: process.env.CLIENT_BUNDLE_ASSETS_FILENAME,
           path: path.resolve(root, process.env.CLIENT_BUNDLE_OUTPUT_PATH),
@@ -888,11 +886,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       ifDev(new webpack.NoErrorsPlugin()),
 
       // We need this plugin to enable hot module reloading for our dev server.
-      ifDevClient(new webpack.HotModuleReplacementPlugin()),
+      ifDevWeb(new webpack.HotModuleReplacementPlugin()),
 
       // This is a production client so we will extract our CSS into
       // CSS files.
-      ifProdClient(
+      ifProdWeb(
         new ExtractTextPlugin({
           filename: "[name]-[contenthash:base62:8].css",
 
@@ -910,7 +908,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       ),
 
       // Analyse webpack bundle
-      ifProdClient(new BundleAnalyzerPlugin({
+      ifProdWeb(new BundleAnalyzerPlugin({
         openAnalyzer: false,
         analyzerMode: "static"
       }))
@@ -958,8 +956,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf|html)$/,
           loader: "file-loader",
           options: {
-            name: ifProdClient("file-[hash:base62:8].[ext]", "[name].[ext]"),
-            emitFile: isClient
+            name: ifProdWeb("file-[hash:base62:8].[ext]", "[name].[ext]"),
+            emitFile: isWeb
           }
         },
 

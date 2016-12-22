@@ -106,7 +106,7 @@ App.getReducers = function() {
 App.getMiddlewares = function() {
   var middlewares = []
 
-  if (process.env.TARGET === "client") {
+  if (process.env.TARGET === "web") {
     middlewares.push(createLogger({ collapsed: true }))
   }
 

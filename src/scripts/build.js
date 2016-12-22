@@ -28,7 +28,7 @@ export default function build()
     function(callback)
     {
       console.log("Creating a production build for client...")
-      webpack(ConfigFactory("client", "production")).run((err, stats) =>
+      webpack(ConfigFactory("web", "production")).run((err, stats) =>
       {
         if (err)
         {
@@ -53,12 +53,12 @@ export default function build()
     },
     function(callback)
     {
-      console.log("Creating a production build for server...")
-      webpack(ConfigFactory("server", "production")).run((err, stats) =>
+      console.log("Creating a production build for node...")
+      webpack(ConfigFactory("node", "production")).run((err, stats) =>
       {
         if (err)
         {
-          console.error("Failed to create a production build for client:")
+          console.error("Failed to create a production build for server:")
           console.error(err.message || err)
           process.exit(1)
         }
