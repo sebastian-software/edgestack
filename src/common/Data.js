@@ -31,10 +31,9 @@ export function emptyEnhancer(param) {
 }
 
 
-const devTools = process.env.TARGET === "client" &&
+const composeEnhancers = (process.env.TARGET === "client" &&
   process.env.NODE_ENV === "development" &&
-  window.devToolsExtension ?
-    window.devToolsExtension() : emptyEnhancer
+  typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== "undefined") || compose
 
 
 /**
@@ -57,14 +56,13 @@ export function createReduxStore({ initialState, apolloClient, reducers = {}, mi
     apollo: apolloClient ? apolloClient.reducer() : emptyReducer
   })
 
-  const rootEnhancers = compose(
+  const rootEnhancers = composeEnhancers(
     applyMiddleware(
       apolloClient ? apolloClient.middleware() : emptyMiddleware,
       thunk,
       ...middlewares
     ),
-    ...enhancers,
-    devTools
+    ...enhancers
   )
 
   const store = createStore(
