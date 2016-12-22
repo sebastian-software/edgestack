@@ -36,10 +36,10 @@ class HotServers
     try
     {
       console.log("Compiling client...")
-      this.clientCompiler = webpack(ConfigFactory("client", "development"))
+      this.clientCompiler = webpack(ConfigFactory("web", "development"))
 
       console.log("Compiling server...")
-      this.serverCompiler = webpack(ConfigFactory("server", "development"))
+      this.serverCompiler = webpack(ConfigFactory("node", "development"))
     }
     catch (err) {
       createNotification({

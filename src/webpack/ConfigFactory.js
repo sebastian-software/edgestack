@@ -375,8 +375,8 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
 
 function getCssLoaders({ isNode, isWeb, isProd, isDev })
 {
-  // When targetting the server we fake out the style loader as the
-  // server can't handle the styles and doesn't care about them either..
+  // When targetting the node we fake out the style loader as the
+  // node can't handle the styles and doesn't care about them either..
   if (isNode)
   {
     return [
@@ -500,6 +500,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   const ifUniversal = ifElse(process.env.DISABLE_SSR)
 
 
+  const folder = isWeb ? "client" : "server"
+
   const cssLoaders = getCssLoaders({
     isProd,
     isDev,
@@ -520,20 +522,20 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     path.resolve(root, process.env.SERVER_BUNDLE_OUTPUT_PATH)
   ]
 
-  // Just bundle the server files which are from the local project instead
+  // Just bundle the NodeJS files which are from the local project instead
   // of a deep self-contained bundle.
   // See also: https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/
-  const useLightServerBundle = options.lightBundle == null ? isDev : options.lightBundle
-  if (useLightServerBundle && isNode) {
-    console.log("Using light server bundle")
+  const useLightNodeBundle = options.lightBundle == null ? isDev : options.lightBundle
+  if (useLightNodeBundle && isNode) {
+    console.log("Using light node bundle")
   }
 
   return {
-    // We need to state that we are targetting "node" for our server bundle.
-    target: ifNode("node", "web"),
+    // We need to inform Webpack about our build target
+    target,
 
     // We have to set this to be able to use these items when executing a
-    // server bundle. Otherwise strangeness happens, like __dirname resolving
+    // node bundle. Otherwise strangeness happens, like __dirname resolving
     // to '/'. There is no effect on our client bundle.
     node: {
       __dirname: true,
@@ -592,21 +594,20 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           return callback()
 
         // In all other cases follow the user given preference
-        useLightServerBundle ? callback(null, "commonjs " + request) : callback()
+        useLightNodeBundle ? callback(null, "commonjs " + request) : callback()
       })
     ]),
 
     // See also: https://webpack.github.io/docs/configuration.html#devtool
     // and http://webpack.github.io/docs/build-performance.html#sourcemaps
-    // All 'module*' and 'cheap' variants do not seem to work with this kind
+    // All "module*" and "cheap" variants do not seem to work with this kind
     // of setup where we have loaders involved. Even simple console messages jump
     // to the wrong location in these cases.
-    // devtool: ifProd("source-map", "eval-source-map"),
     devtool: "source-map",
 
     // New performance hints. Only active for production build.
     performance: {
-      hints: isProd && isWeb ? 'warning' : false
+      hints: isProd && isWeb ? "warning" : false
     },
 
     // Define our entry chunks for our bundle.
@@ -615,10 +616,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       main: removeEmpty([
         ifDevWeb("react-hot-loader/patch"),
         ifDevWeb(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
-        options.entry ? options.entry : ifIsFile(`./src/${target}/index.js`),
+        options.entry ? options.entry : ifIsFile(`./src/${folder}/index.js`),
       ]),
 
-      vendor: ifProdWeb(options.vendor ? options.vendor : ifIsFile(`./src/${target}/vendor.js`))
+      vendor: ifProdWeb(options.vendor ? options.vendor : ifIsFile(`./src/${folder}/vendor.js`))
     }),
 
     output:
@@ -637,11 +638,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // bundle.
         "[name]-[chunkhash].js",
 
-        // We want a determinable file name when running our server bundles,
-        // as we need to be able to target our server start file from our
-        // npm scripts. We don't care about caching on the server anyway.
+        // We want a determinable file name when running our NodeJS bundles,
+        // as we need to be able to target our NodeJS start file from our
+        // npm scripts. We don't care about caching on the NodeJS anyway.
         // We also want our client development builds to have a determinable
-        // name for our hot reloading client bundle server.
+        // name for our hot reloading client bundle NodeJS.
         "[name].js"
       ),
 
@@ -654,7 +655,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // be considered as being served from.
       publicPath: ifDev(
 
-        // As we run a seperate server for our client and server bundles we
+        // As we run a seperate NodeJS for our client and NodeJS bundles we
         // need to use an absolute http path for our assets public path.
         `http://localhost:${process.env.CLIENT_DEVSERVER_PORT}${process.env.CLIENT_BUNDLE_HTTP_PATH}`,
 
@@ -662,7 +663,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         process.env.CLIENT_BUNDLE_HTTP_PATH
       ),
 
-      // When in server mode we will output our bundle as a commonjs2 module.
+      // When in NodeJS mode we will output our bundle as a commonjs2 module.
       libraryTarget: ifNode("commonjs2", "var")
     },
 
@@ -672,7 +673,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // Defaults: https://webpack.github.io/docs/configuration.html#resolve-packagemains
       mainFields: ifNode(
         [ "module", "jsnext:main", "main" ],
-        [ "browser", "web", "module", "jsnext:main", "style", "main" ]
+        [ "web", "browser", "style", "module", "jsnext:main", "main" ]
       ),
 
       // These extensions are tried when resolving a file.
@@ -792,7 +793,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         }
       },
 
-      // For server bundle, you also want to use "source-map-support" which automatically sourcemaps
+      // For NodeJS bundle, you also want to use "source-map-support" which automatically sourcemaps
       // stack traces from NodeJS. We need to install it at the top of the generated file, and we
       // can use the BannerPlugin to do this.
       // - `raw`: true tells webpack to prepend the text as it is, not wrapping it in a comment.
@@ -864,7 +865,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       }),
 
       // Generates a JSON file containing a map of all the output files for
-      // our webpack bundle.  A necessisty for our server rendering process
+      // our webpack bundle. A necessisty for our NodeJS rendering process
       // as we need to interogate these files in order to know what JS/CSS
       // we need to inject into our HTML.
       ifWeb(
@@ -875,17 +876,17 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         })
       ),
 
-      // Effectively fake all "file-loader" files with placeholders on server side
+      // Effectively fake all "file-loader" files with placeholders on NodeJS
       ifNode(new webpack.NormalModuleReplacementPlugin(
         /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|mp4|mp3|ogg|html|pdf)$/,
         "node-noop"
       )),
 
       // We don't want webpack errors to occur during development as it will
-      // kill our dev servers.
+      // kill our development NodeJS instances.
       ifDev(new webpack.NoErrorsPlugin()),
 
-      // We need this plugin to enable hot module reloading for our dev server.
+      // We need this plugin to enable hot module reloading for our dev NodeJS.
       ifDevWeb(new webpack.HotModuleReplacementPlugin()),
 
       // This is a production client so we will extract our CSS into
