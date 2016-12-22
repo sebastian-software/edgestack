@@ -33,7 +33,7 @@ export function emptyEnhancer(param) {
 
 const composeEnhancers = (process.env.TARGET === "client" &&
   process.env.NODE_ENV === "development" &&
-  typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== "undefined") || compose
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
 
 
 /**
