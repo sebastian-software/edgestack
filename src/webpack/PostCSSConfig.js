@@ -18,6 +18,7 @@ import nestedSelectors from "postcss-nested-ancestors"
 import nested from "postcss-nested"
 import gridKiss from "postcss-grid-kiss"
 import filters from "pleeease-filters"
+import transform from "postcss-transform-shortcut"
 import selectorMatches from "postcss-selector-matches"
 import pseudoelements from "postcss-pseudoelements"
 import autoprefixer from "autoprefixer"
@@ -143,6 +144,10 @@ export default function getConfig(variables = {})
     // grayscale, sepia, saturate, hue-rotate, invert, opacity, brightness, contrast, blur, drop-shadow
     // https://github.com/iamvdo/pleeease-filters
     filters(),
+
+    // Use shorthand transform properties in CSS
+    // https://github.com/jonathantneal/postcss-transform-shortcut
+    transform,
 
     // Transform :matches() W3C CSS pseudo class to more compatible CSS (simpler selectors)
     // https://github.com/postcss/postcss-selector-matches
