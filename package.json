@@ -24,7 +24,7 @@
     "test": "npm run prepublish && npm run prod",
     "lint-staged": "lint-staged",
     "prescript": "npm run clean && rollup --config rollup.script.cfg",
-    "prepublish": "npm run prescript && rimraf lib && prepublish-lib",
+    "prepublish": "npm run prescript && rimraf lib && prepublish",
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major"
@@ -183,7 +183,7 @@
     "eslint_d": "^4.2.1",
     "lint-staged": "^3.2.4",
     "pre-commit": "^1.2.2",
-    "prepublish-lib": "^0.11.2",
+    "prepublish": "^0.12.0",
     "rollup": "^0.38.0",
     "sanitize.css": "^4.1.0",
     "source-sans-pro": "^2.0.10",
