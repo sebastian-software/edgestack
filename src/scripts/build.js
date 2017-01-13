@@ -46,6 +46,11 @@ export default function build()
           colors: true
         }))
 
+        //fixme: remove this snippet when https://github.com/webpack/webpack/issues/2390 is fixed
+        if (stats.hasErrors()) {
+          process.exit(1)
+        }
+
         var jsonStats = stats.toJson()
         fse.writeJsonSync(path.resolve(buildFolderClient, "stats.json"), jsonStats)
         callback()
@@ -71,6 +76,11 @@ export default function build()
           chunks: false,
           colors: true
         }))
+
+        //fixme: remove this snippet when https://github.com/webpack/webpack/issues/2390 is fixed
+        if (stats.hasErrors()) {
+          process.exit(1)
+        }
 
         var jsonStats = stats.toJson()
         fse.writeJsonSync(path.resolve(buildFolderServer, "stats.json"), jsonStats)
