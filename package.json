@@ -173,7 +173,7 @@
     "source-map-support": "^0.4.8",
     "style-loader": "^0.13.1",
     "uuid": "^3.0.1",
-    "webpack": "^2.2.0-rc.3",
+    "webpack": "2.2.0-rc.3",
     "webpack-bundle-analyzer": "^2.2.1",
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "^2.15.0",
