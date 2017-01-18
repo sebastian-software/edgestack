@@ -31,8 +31,8 @@ class ListenerManager {
     })
   }
 
-  dispose(force = false) {
-    return new Promise((resolve) => {
+  _tryDispose(force = false) {
+    return new Promise((resolve, reject) => {
       if (force) {
         // Forcefully close any existing connections.
         this.killAllConnections()
@@ -40,7 +40,12 @@ class ListenerManager {
 
       // Close the listener.
       if (this.listener) {
-        this.listener.close(() => {
+        this.listener.close((err) => {
+          if (err) {
+            // reject when server is not open when it is closed
+            // see https://nodejs.org/api/net.html#net_server_close_callback
+            reject(err)
+          }
           // Ensure no straggling connections are left over.
           this.killAllConnections()
 
@@ -50,6 +55,14 @@ class ListenerManager {
         resolve()
       }
     })
+  }
+
+  dispose(force = false) {
+    return this._tryDispose(force)
+      .catch(
+        // postpone 100ms to retry
+        () => new Promise((resolve) => setTimeout(resolve, 100)).then(() => this.dispose(force))
+      )
   }
 }
 
