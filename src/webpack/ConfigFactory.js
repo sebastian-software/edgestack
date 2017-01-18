@@ -694,6 +694,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
       // Improve source caching in Webpack v2. Conflicts with offline plugin right now.
       // Therefor we disable it in production and only use it to speed up development rebuilds.
+      /*
       ifDev(new HardSourceWebpackPlugin({
         // Either an absolute path or relative to output.path.
         cacheDirectory: path.resolve(root, ".hardsource", `${target}-${mode}`),
@@ -710,6 +711,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           files: [ "package.json", "yarn.lock" ]
         }
       })),
+      */
 
       // Adds options to all of our loaders.
       ifDev(
