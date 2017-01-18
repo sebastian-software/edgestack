@@ -884,7 +884,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
       // We don't want webpack errors to occur during development as it will
       // kill our development NodeJS instances.
-      ifDev(new webpack.NoErrorsPlugin()),
+      ifDev(new webpack.NoEmitOnErrorsPlugin()),
 
       // We need this plugin to enable hot module reloading for our dev NodeJS.
       ifDevWeb(new webpack.HotModuleReplacementPlugin()),
