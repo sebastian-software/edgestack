@@ -22,4 +22,4 @@ src
 appveyor.yml
 gulpfile.js
 
-rollup.script.cfg
+rollup.config.js

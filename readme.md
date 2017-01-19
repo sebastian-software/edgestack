@@ -102,7 +102,7 @@ The application configuration is supported by the `dotenv` module and it require
 |
 |- .babelrc // Dummy babel configuration
 |- .env.example // An example from which to create your own .env file.
-|- rollup.script.cfg // Configuration file for bundling scripts into executable
+|- rollup.config.js // Configuration file for bundling scripts into executable
 ```
 
 

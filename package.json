@@ -23,7 +23,7 @@
     "clean": "rimraf build/client/* build/server/* lib/* bin/*",
     "test": "npm run prepublish && npm run prod",
     "lint-staged": "lint-staged",
-    "prescript": "npm run clean && rollup --config rollup.script.cfg",
+    "prescript": "npm run clean && rollup --config rollup.config.js",
     "prepublish": "npm run prescript && rimraf lib && prepublish",
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
