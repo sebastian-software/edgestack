@@ -58,8 +58,18 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
 
   console.log("Server: Rendering app with data...")
 
-  withAsyncComponents(AppContainer).then((wrappedResult) =>
+  var fullApp = (
+    <ServerRouter location={request.url} context={routingContext}>
+      <ApolloProvider client={apolloClient} store={reduxStore}>
+        <AppContainer/>
+      </ApolloProvider>
+    </ServerRouter>
+  )
+
+  withAsyncComponents(fullApp).then((wrappedResult) =>
   {
+    console.log("Called back: RESULT:", wrappedResult)
+
     const {
       // The result includes a decorated version of your app
       // that will have the async components initialised for
@@ -82,11 +92,7 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
 
     // Create the application react element.
     renderToStringWithData(
-      <ServerRouter location={request.url} context={routingContext}>
-        <ApolloProvider client={apolloClient} store={reduxStore}>
-          <appWithAsyncComponents/>
-        </ApolloProvider>
-      </ServerRouter>
+      appWithAsyncComponents
     ).then((renderedApp) => {
       const reduxState = reduxStore.getState()
       console.log("Server: Rendered state:", reduxState)
