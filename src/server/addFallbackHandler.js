@@ -12,10 +12,10 @@ export default function addFallbackHandler(server) {
   // Handle all other errors (i.e. 500).
   // Note: You must provide specify all 4 parameters on this callback function
   // even if they aren't used, otherwise it won't be used.
-  server.use((err, req, res, next) => {
-    if (err) {
-      console.log(err)
-      console.log(err.stack)
+  server.use((error, req, res, next) => {
+    if (error) {
+      console.log(error)
+      console.log(error.stack)
     }
 
     res.status(500).send("Sorry, an unexpected error occurred.")
