@@ -7,8 +7,8 @@ if (process.env.MODE === "production")
 {
   try {
     chunkManifest = readFileSync(ABSOLUTE_CHUNKMANIFEST_PATH, "utf-8")
-  } catch (err) {
-    console.warn("Could not parse chunkhashes from manifest.json: ", err)
+  } catch (error) {
+    console.warn("Could not parse chunkhashes from manifest.json: ", error)
   }
 }
 
@@ -23,17 +23,17 @@ const clientAssets = JSON.parse(
 // const chunks = Object.keys(clientAssets).map((key) => clientAssets[key])
 
 function getAssetsForClientChunks(chunks) {
-  return chunks.reduce((acc, chunkName) => {
+  return chunks.reduce((result, chunkName) => {
     const chunkAssets = clientAssets[chunkName]
     if (chunkAssets) {
       if (chunkAssets.js) {
-        acc.scripts.push(chunkAssets.js)
+        result.scripts.push(chunkAssets.js)
       }
       if (chunkAssets.css) {
-        acc.styles.push(chunkAssets.css)
+        result.styles.push(chunkAssets.css)
       }
     }
-    return acc
+    return result
   }, { scripts: [], styles: [] })
 }
 
@@ -71,7 +71,7 @@ function generateScriptTags(scripts) {
  *
  * @return The full HTML page in the form of a React element.
  */
-export default function renderPage({ renderedApp, initialState = {}, nonce, helmet, codeSplitState }) {
+export default function renderPage({ renderedApp, initialState = {}, nonce, helmet, codeSplitState, STATE_IDENTIFIER }) {
   // The chunks that we need to fetch the assets (js/css) for and then include
   // said assets as script/style tags within our html.
   const chunksForRender = [
@@ -81,6 +81,9 @@ export default function renderPage({ renderedApp, initialState = {}, nonce, helm
     "main"
   ]
 
+  console.log("Code Split State: ", codeSplitState)
+
+  /*
   if (codeSplitState && codeSplitState.chunks) {
     // We add all the chunks that our CodeSplitProvider tracked as being used
     // for this render.  This isn't actually required as the rehydrate function
@@ -92,6 +95,7 @@ export default function renderPage({ renderedApp, initialState = {}, nonce, helm
     // feature rather arbitrary.
     codeSplitState.chunks.forEach((chunk) => chunksForRender.push(chunk))
   }
+  */
 
   // Now we get the assets (js/css) for the chunks.
   const assetsForRender = getAssetsForClientChunks(chunksForRender)
@@ -111,8 +115,8 @@ export default function renderPage({ renderedApp, initialState = {}, nonce, helm
 
         <script nonce="${nonce}">${
           `APP_STATE=${serialize(initialState, { isJSON: true })};` +
-          `CHUNK_MANIFEST=${chunkManifest};` //+
-          //`${STATE_IDENTIFIER}=${serialize(codeSplitState, { isJSON: true })};`
+          `CHUNK_MANIFEST=${chunkManifest};` +
+          `${STATE_IDENTIFIER}=${serialize(codeSplitState, { isJSON: true })};`
         }</script>
 
         ${generateScriptTags(assetsForRender.scripts)}

@@ -68,8 +68,6 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
 
   withAsyncComponents(fullApp).then((wrappedResult) =>
   {
-    console.log("Called back: RESULT:", wrappedResult)
-
     const {
       // The result includes a decorated version of your app
       // that will have the async components initialised for
@@ -88,14 +86,11 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
       STATE_IDENTIFIER
     } = wrappedResult
 
-    console.log("XXX:", STATE_IDENTIFIER, state)
-
     // Create the application react element.
     renderToStringWithData(
       appWithAsyncComponents
     ).then((renderedApp) => {
       const reduxState = reduxStore.getState()
-      console.log("Server: Rendered state:", reduxState)
 
       // Render the app to a string.
       const html = renderPage({
@@ -105,6 +100,9 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
         // Provide the redux store state, this will be bound to the window.APP_STATE
         // so that we can rehydrate the state on the client.
         initialState: reduxState,
+
+        codeSplitState: state,
+        STATE_IDENTIFIER,
 
         // Nonce which allows us to safely declare inline scripts.
         nonce,
