@@ -5,6 +5,8 @@ import React from "react"
 import { Match, Miss, Link } from "react-router"
 import Helmet from "react-helmet"
 import createLogger from "redux-logger"
+import { createAsyncComponent } from "react-async-component"
+
 import RouterConnector, { routerReducer } from "../common/RouterConnector"
 
 // Application specific
@@ -16,8 +18,13 @@ const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing
 const websiteLanguage = "en-US"
 const websiteTitle = "Advanced Boilerplate"
 
-import Home from "./Home"
-import About from "./About"
+const HomeAsync = createAsyncComponent({
+  resolve: () => System.import("./Home")
+})
+
+const AboutAsync = createAsyncComponent({
+  resolve: () => System.import("./About")
+})
 
 function Error404() {
   return <div>Sorry, that page was not found.</div>
@@ -54,18 +61,9 @@ function AppContainer({ children }) {
 
       <div>
         <RouterConnector>
-          <Match
-            exactly
-            pattern="/"
-            component={Home}
-          />
-
-          <Match
-            pattern="/about"
-            component={About}
-          />
-
-          <Miss component={Error404} />
+          <Match exactly pattern="/" component={HomeAsync}/>
+          <Match pattern="/about" component={AboutAsync}/>
+          <Miss component={Error404}/>
         </RouterConnector>
       </div>
     </main>
