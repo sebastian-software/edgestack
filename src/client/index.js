@@ -20,9 +20,9 @@ function renderApp(AppComponent)
   })
 
   const reduxStore = createReduxStore({
-    reducers: App.getReducers(),
-    enhancers: App.getEnhancers(),
-    middlewares: App.getMiddlewares(),
+    reducers: AppComponent.getReducers(),
+    enhancers: AppComponent.getEnhancers(),
+    middlewares: AppComponent.getMiddlewares(),
     initialState: window.APP_STATE
   })
 
