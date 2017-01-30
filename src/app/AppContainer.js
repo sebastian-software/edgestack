@@ -24,7 +24,6 @@ function Error404() {
 }
 
 function AppContainer({ children }) {
-  /* eslint-disable react/jsx-no-bind */
   return (
     <main>
       <Helmet
