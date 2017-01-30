@@ -4,7 +4,6 @@ import "sanitize.css/sanitize.css"
 import React from "react"
 import { Match, Miss, Link } from "react-router"
 import Helmet from "react-helmet"
-import { CodeSplit } from "code-split-component"
 import createLogger from "redux-logger"
 import RouterConnector, { routerReducer } from "../common/RouterConnector"
 
@@ -16,6 +15,9 @@ import { counterReducer } from "./CounterModule"
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
 const websiteLanguage = "en-US"
 const websiteTitle = "Advanced Boilerplate"
+
+import Home from "./Home"
+import About from "./About"
 
 function Error404() {
   return <div>Sorry, that page was not found.</div>
@@ -56,20 +58,12 @@ function AppContainer({ children }) {
           <Match
             exactly
             pattern="/"
-            render={(routerProps) =>
-              <CodeSplit chunkName="home" modules={{ Home: require("./Home") }}>
-                { ({ Home }) => Home && <Home {...routerProps} /> }
-              </CodeSplit>
-            }
+            component={Home}
           />
 
           <Match
             pattern="/about"
-            render={(routerProps) =>
-              <CodeSplit chunkName="about" modules={{ About: require("./About") }}>
-                { ({ About }) => About && <About {...routerProps} /> }
-              </CodeSplit>
-            }
+            component={About}
           />
 
           <Miss component={Error404} />
