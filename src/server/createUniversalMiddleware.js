@@ -1,9 +1,9 @@
 import React from "react"
 import { renderToString } from "react-dom/server"
 import { ServerRouter, createServerRenderContext } from "react-router"
-import { CodeSplitProvider, createRenderContext } from "code-split-component"
 import Helmet from "react-helmet"
 import { ApolloProvider, getDataFromTree } from "react-apollo"
+import { withAsyncComponents } from "react-async-component"
 
 import renderPage from "./renderPage"
 import { createApolloClient, createReduxStore } from "../common/Data"
@@ -56,69 +56,83 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
   // query for the results of the render.
   const routingContext = createServerRenderContext()
 
-  // We also create a context for our <CodeSplitProvider> which will allow us
-  // to query which chunks/modules were used during the render process.
-  const codeSplitContext = createRenderContext()
-
   console.log("Server: Rendering app with data...")
 
-  // Create the application react element.
-  renderToStringWithData(
-    <CodeSplitProvider context={codeSplitContext}>
+  withAsyncComponents(AppContainer).then((wrappedResult) =>
+  {
+    const {
+      // The result includes a decorated version of your app
+      // that will have the async components initialised for
+      // the renderToString call.
+      appWithAsyncComponents,
+
+      // This state object represents the async components that
+      // were rendered by the server. We will need to send
+      // this back to the client, attaching it to the window
+      // object so that the client can rehydrate the application
+      // to the expected state and avoid React checksum issues.
+      state,
+
+      // This is the identifier you should use when attaching
+      // the state to the "window" object.
+      STATE_IDENTIFIER
+    } = wrappedResult
+
+    console.log("XXX:", STATE_IDENTIFIER, state)
+
+    // Create the application react element.
+    renderToStringWithData(
       <ServerRouter location={request.url} context={routingContext}>
         <ApolloProvider client={apolloClient} store={reduxStore}>
-          <AppContainer/>
+          <appWithAsyncComponents/>
         </ApolloProvider>
       </ServerRouter>
-    </CodeSplitProvider>
-  ).then((renderedApp) => {
-    const reduxState = reduxStore.getState()
-    console.log("Server: Rendered state:", reduxState)
+    ).then((renderedApp) => {
+      const reduxState = reduxStore.getState()
+      console.log("Server: Rendered state:", reduxState)
 
-    // Render the app to a string.
-    const html = renderPage({
-      // Provide the full rendered App react element.
-      renderedApp,
+      // Render the app to a string.
+      const html = renderPage({
+        // Provide the full rendered App react element.
+        renderedApp,
 
-      // Provide the redux store state, this will be bound to the window.APP_STATE
-      // so that we can rehydrate the state on the client.
-      initialState: reduxState,
+        // Provide the redux store state, this will be bound to the window.APP_STATE
+        // so that we can rehydrate the state on the client.
+        initialState: reduxState,
 
-      // Nonce which allows us to safely declare inline scripts.
-      nonce,
+        // Nonce which allows us to safely declare inline scripts.
+        nonce,
 
-      // Running this gets all the helmet properties (e.g. headers/scripts/title etc)
-      // that need to be included within our html. It's based on the rendered app.
-      // @see https://github.com/nfl/react-helmet
-      helmet: Helmet.rewind(),
+        // Running this gets all the helmet properties (e.g. headers/scripts/title etc)
+        // that need to be included within our html. It's based on the rendered app.
+        // @see https://github.com/nfl/react-helmet
+        helmet: Helmet.rewind()
+      })
 
-      // We provide our code split state so that it can be included within the
-      // html, and then the client bundle can use this data to know which chunks/
-      // modules need to be rehydrated prior to the application being rendered.
-      codeSplitState: codeSplitContext.getState()
+      // Get the render result from the server render context.
+      const renderedResult = routingContext.getResult()
+
+      console.log("Server: Sending page...")
+
+      /* eslint-disable no-magic-numbers */
+
+      // Check if the render result contains a redirect, if so we need to set
+      // the specific status and redirect header and end the response.
+      if (renderedResult.redirect) {
+        response.status(301).setHeader("Location", renderedResult.redirect.pathname)
+        response.end()
+        return
+      }
+
+      // If the renderedResult contains a "missed" match then we set a 404 code.
+      // Our App component will handle the rendering of an Error404 view.
+      // Otherwise everything is all good and we send a 200 OK status.
+      response.status(renderedResult.missed ? 404 : 200).send(html)
+    }).catch((error) => {
+      console.error("Error during producing response:", error)
     })
-
-    // Get the render result from the server render context.
-    const renderedResult = routingContext.getResult()
-
-    console.log("Server: Sending page...")
-
-    /* eslint-disable no-magic-numbers */
-
-    // Check if the render result contains a redirect, if so we need to set
-    // the specific status and redirect header and end the response.
-    if (renderedResult.redirect) {
-      response.status(301).setHeader("Location", renderedResult.redirect.pathname)
-      response.end()
-      return
-    }
-
-    // If the renderedResult contains a "missed" match then we set a 404 code.
-    // Our App component will handle the rendering of an Error404 view.
-    // Otherwise everything is all good and we send a 200 OK status.
-    response.status(renderedResult.missed ? 404 : 200).send(html)
   }).catch((error) => {
-    console.error("Error during producing response:", error)
+    console.error("Unable to wrap application container:", error)
   })
 }
 
