@@ -10,7 +10,7 @@ import RouterConnector, { routerReducer } from "../common/RouterConnector"
 
 // Application specific
 import "./Fonts.css"
-import Styles from "./App.css"
+import Styles from "./AppContainer.css"
 import { counterReducer } from "./CounterModule"
 
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
@@ -21,7 +21,7 @@ function Error404() {
   return <div>Sorry, that page was not found.</div>
 }
 
-function App({ children }) {
+function AppContainer({ children }) {
   /* eslint-disable react/jsx-no-bind */
   return (
     <main>
@@ -79,21 +79,21 @@ function App({ children }) {
   )
 }
 
-App.propTypes = {
+AppContainer.propTypes = {
   children: React.PropTypes.node
 }
 
 /**
  * Return list of Redux store enhancers to use
  */
-App.getEnhancers = function() {
+AppContainer.getEnhancers = function() {
   return []
 }
 
 /**
  * Create mapping of reducers to use for the Redux store
  */
-App.getReducers = function() {
+AppContainer.getReducers = function() {
   return {
     router: routerReducer,
     counter: counterReducer
@@ -103,7 +103,7 @@ App.getReducers = function() {
 /**
  * Create list of Redux middleware to use.
  */
-App.getMiddlewares = function() {
+AppContainer.getMiddlewares = function() {
   var middlewares = []
 
   if (process.env.TARGET === "web") {
@@ -113,4 +113,4 @@ App.getMiddlewares = function() {
   return middlewares
 }
 
-export default App
+export default AppContainer

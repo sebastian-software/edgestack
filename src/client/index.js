@@ -6,13 +6,13 @@ import { CodeSplitProvider, rehydrateState } from "code-split-component"
 import { ApolloProvider } from "react-apollo"
 
 import ReactHotLoader from "./ReactHotLoader"
-import App from "../app/App"
+import AppContainer from "../app/AppContainer"
 import { createApolloClient, createReduxStore } from "../common/Data"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")
 
-function renderApp(AppComponent)
+function renderApp(RenderContainer)
 {
   console.log("Client: Initialize state from server:", window.APP_STATE)
   const apolloClient = createApolloClient({
@@ -20,9 +20,9 @@ function renderApp(AppComponent)
   })
 
   const reduxStore = createReduxStore({
-    reducers: AppComponent.getReducers(),
-    enhancers: AppComponent.getEnhancers(),
-    middlewares: AppComponent.getMiddlewares(),
+    reducers: RenderContainer.getReducers(),
+    enhancers: RenderContainer.getEnhancers(),
+    middlewares: RenderContainer.getMiddlewares(),
     initialState: window.APP_STATE
   })
 
@@ -40,7 +40,7 @@ function renderApp(AppComponent)
         <CodeSplitProvider state={codeSplitState}>
           <BrowserRouter>
             <ApolloProvider client={apolloClient} store={reduxStore}>
-              <AppComponent/>
+              <RenderContainer/>
             </ApolloProvider>
           </BrowserRouter>
         </CodeSplitProvider>
@@ -57,13 +57,7 @@ if (process.env.NODE_ENV === "development" && module.hot)
   module.hot.accept("./index.js")
 
   // Any changes to our App will cause a hotload re-render.
-  module.hot.accept("../app/App", () => renderApp(require("../app/App").default))
+  module.hot.accept("../app/AppContainer", () => renderApp(require("../app/AppContainer").default))
 }
 
-renderApp(App)
-
-/* eslint-disable import/no-commonjs */
-// This registers our service worker for asset caching and offline support.
-// Keep this as the last item, just in case the code execution failed (thanks
-// to react-boilerplate for that tip.)
-require("./addServiceWorker")
+renderApp(AppContainer)
