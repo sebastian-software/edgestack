@@ -46,12 +46,12 @@ function renderLight({ request, response, nonce, initialState }) {
       nonce
     })
     response.status(200).send(html)
-  } catch (err) {
-    response.status(500).send(`Error during rendering: ${err}!: ${err.stack}`)
+  } catch (error) {
+    response.status(500).send(`Error during rendering: ${error}!: ${error.stack}`)
   }
 }
 
-function renderFull({ request, response, nonce, App, apolloClient, reduxStore }) {
+function renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore }) {
   // First create a context for <ServerRouter>, which will allow us to
   // query for the results of the render.
   const routingContext = createServerRenderContext()
@@ -67,7 +67,7 @@ function renderFull({ request, response, nonce, App, apolloClient, reduxStore })
     <CodeSplitProvider context={codeSplitContext}>
       <ServerRouter location={request.url} context={routingContext}>
         <ApolloProvider client={apolloClient} store={reduxStore}>
-          <App />
+          <AppContainer/>
         </ApolloProvider>
       </ServerRouter>
     </CodeSplitProvider>
@@ -117,15 +117,15 @@ function renderFull({ request, response, nonce, App, apolloClient, reduxStore })
     // Our App component will handle the rendering of an Error404 view.
     // Otherwise everything is all good and we send a 200 OK status.
     response.status(renderedResult.missed ? 404 : 200).send(html)
-  }).catch((err) => {
-    console.error("Error during producing response:", err)
+  }).catch((error) => {
+    console.error("Error during producing response:", error)
   })
 }
 
 /**
  * An express middleware that is capable of doing React server side rendering.
  */
-export default function createUniversalMiddleware({ App, ssrData, batchRequests = false, trustNetwork = true })
+export default function createUniversalMiddleware({ AppContainer, ssrData, batchRequests = false, trustNetwork = true })
 {
   return function middleware(request, response)
   {
@@ -155,12 +155,12 @@ export default function createUniversalMiddleware({ App, ssrData, batchRequests 
       const reduxStore = createReduxStore({
         apolloClient,
         initialState,
-        reducers: App.getReducers(),
-        enhancers: App.getEnhancers(),
-        middlewares: App.getMiddlewares()
+        reducers: AppContainer.getReducers(),
+        enhancers: AppContainer.getEnhancers(),
+        middlewares: AppContainer.getMiddlewares()
       })
 
-      renderFull({ request, response, nonce, App, apolloClient, reduxStore })
+      renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore })
     }
   }
 }
