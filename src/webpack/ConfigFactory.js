@@ -6,7 +6,6 @@ import AssetsPlugin from "assets-webpack-plugin"
 import builtinModules from "builtin-modules"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 
-import CodeSplitWebpackPlugin from "code-split-component/webpack"
 import BabiliPlugin from "babili-webpack-plugin"
 import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
 
@@ -257,15 +256,7 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
       [ "transform-object-rest-spread", { useBuiltIns: true }],
 
       // Polyfills the runtime needed
-      [ "transform-runtime", { regenerator: false }],
-
-      // Code Splitting by Routes
-      [
-        "code-split-component/babel", {
-          disabled: isDev,
-          mode: "server"
-        }
-      ]
+      [ "transform-runtime", { regenerator: false }]
     ]
   } : null
 
@@ -314,15 +305,7 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
       [ "transform-object-rest-spread", { useBuiltIns: true }],
 
       // Polyfills the runtime needed
-      [ "transform-runtime", { regenerator: false }],
-
-      // Code Splitting by Routes
-      [
-        "code-split-component/babel", {
-          disabled: isDev,
-          mode: "client"
-        }
-      ]
+      [ "transform-runtime", { regenerator: false }]
     ]
   } : null
 
@@ -758,35 +741,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           ]
         }
       })),
-
-      new CodeSplitWebpackPlugin({
-        // The code-split-component doesn't work nicely with hot module reloading,
-        // which we use in our development builds, so we will disable it if we
-        // are creating a development bundle (which results in synchronous loading
-        // behavior on the CodeSplit instances).
-        disabled: isDev
-      }),
-
-      // Proposed fix to work around issues with CodeSplit vs. HardSource plugin config
-      // Via: https://github.com/sebastian-software/advanced-boilerplate/compare/master...mzgoddard:code-split-records-compat
-      {
-        apply: function(compiler) {
-          var safeChunkIdMax = 100000
-          compiler.plugin("compilation", function(compilation) {
-            compilation.plugin("optimize-chunk-order", function() {
-              if (compilation.usedChunkIds) {
-                var usedChunkIds = {}
-                for (var key in compilation.usedChunkIds) {
-                  if (compilation.usedChunkIds[key] < safeChunkIdMax) {
-                    usedChunkIds[key] = compilation.usedChunkIds[key]
-                  }
-                }
-                compilation.usedChunkIds = usedChunkIds
-              }
-            })
-          })
-        }
-      },
 
       // For NodeJS bundle, you also want to use "source-map-support" which automatically sourcemaps
       // stack traces from NodeJS. We need to install it at the top of the generated file, and we
