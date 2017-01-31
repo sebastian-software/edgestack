@@ -7228,9 +7228,9 @@ react-redux@^5.0.2:
     lodash-es "^4.2.0"
     loose-envify "^1.1.0"
 
-react-router@4.0.0-beta.2:
-  version "4.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-4.0.0-beta.2.tgz#2c875b2c017e1f66532e914cfb13e52353fe1332"
+react-router@next:
+  version "4.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-4.0.0-beta.3.tgz#3deee9063401b7205f8d9cfe718787f699886975"
   dependencies:
     history "^4.5.1"
     loose-envify "^1.3.1"
