@@ -6,8 +6,8 @@ import AssetsPlugin from "assets-webpack-plugin"
 import builtinModules from "builtin-modules"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 
-import BabiliPlugin from "babili-webpack-plugin"
-import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
+// import BabiliPlugin from "babili-webpack-plugin"
+// import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
 
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 import ChunkManifestPlugin from "chunk-manifest-webpack-plugin"
@@ -37,7 +37,8 @@ const builtInSet = new Set(builtinModules)
 // - "node-pre-gyp" native code module helper
 // - "iltorb" brotli compression wrapper for NodeJS
 // - "node-zopfli" native Zopfli implementation
-const problematicCommonJS = new Set([ "intl", "react-intl", "mime-db", "helmet", "express", "encoding", "node-pre-gyp", "iltorb", "node-zopfli" ])
+const problematicCommonJS = new Set([ "intl", "react-intl", "mime-db", "helmet", "express", "encoding",
+  "node-pre-gyp", "iltorb", "node-zopfli" ])
 const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
@@ -732,6 +733,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
       new VerboseProgressPlugin(),
 
+      /*
       ifProd(new BabiliPlugin({
         comments: false,
         babili: {
@@ -744,6 +746,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           ]
         }
       })),
+      */
 
       // For NodeJS bundle, you also want to use "source-map-support" which automatically sourcemaps
       // stack traces from NodeJS. We need to install it at the top of the generated file, and we
