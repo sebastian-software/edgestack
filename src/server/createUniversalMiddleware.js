@@ -73,7 +73,7 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
     </CodeSplitProvider>
   ).then((renderedApp) => {
     const reduxState = reduxStore.getState()
-    console.log("Server: Rendered state:", reduxState)
+    // console.log("Server: Rendered state:", reduxState)
 
     // Render the app to a string.
     const html = renderPage({
