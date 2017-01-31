@@ -114,13 +114,15 @@ export function createApolloClient({ headers, initialState = {}, batchRequests =
     var client = new ApolloClient({
       ssrMode: process.env.TARGET === "node",
       addTypename: false,
+      queryDeduplication: true,
       networkInterface
     })
   }
   else
   {
     var client = new ApolloClient({
-      addTypename: false
+      addTypename: false,
+      queryDeduplication: true
     })
   }
 
