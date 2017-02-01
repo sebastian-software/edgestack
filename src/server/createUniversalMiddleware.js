@@ -4,6 +4,7 @@ import { StaticRouter } from "react-router"
 import Helmet from "react-helmet"
 import { ApolloProvider, getDataFromTree } from "react-apollo"
 import { withAsyncComponents } from "react-async-component"
+import { mark as start, stop, getEntries } from "marky"
 
 import renderPage from "./renderPage"
 import { createApolloClient, createReduxStore } from "../common/Data"
@@ -18,16 +19,14 @@ import { createApolloClient, createReduxStore } from "../common/Data"
  * https://www.npmjs.com/package/react-redux-universal-hot-example#server-side-data-fetching
  */
 function renderToStringWithData(component) {
-  var startLoading = process.hrtime()
-  var nanoToMilli = 1000000
+  start("loading-data")
   return getDataFromTree(component).then(() => {
-    var loadingRuntime = Math.round(process.hrtime(startLoading)[1] / nanoToMilli)
+    stop("loading-data")
 
-    var startRendering = process.hrtime()
+    start("rendering-react")
     var result = renderToString(component)
-    var renderingRuntime = Math.round(process.hrtime(startRendering)[1] / nanoToMilli)
+    stop("rendering-react")
 
-    console.log(`Server: Loading: ${loadingRuntime}ms Rendering: ${renderingRuntime}ms`)
     return result
   })
 }
@@ -129,10 +128,10 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
       // Otherwise everything is all good and we send a 200 OK status.
       response.status(routingContext.missed ? 404 : 200).send(html)
     }).catch((error) => {
-      console.error("Error during producing response:", error)
+      console.error("Server: Error during producing response:", error)
     })
   }).catch((error) => {
-    console.error("Unable to wrap application container:", error)
+    console.error("Server: Error wrapping application for code splitting:", error)
   })
 }
 
@@ -142,15 +141,16 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
 export default function createUniversalMiddleware({ AppContainer, ssrData, batchRequests = false, trustNetwork = true })
 {
   if (AppContainer == null) {
-    throw new Error("Universal Middleware: Missing AppContainer")
+    throw new Error("Server: Universal Middleware: Missing AppContainer!")
   }
 
   return function middleware(request, response)
   {
     if (typeof response.locals.nonce !== "string") {
-      throw new Error(`A "nonce" value has not been attached to the response`)
+      throw new Error(`Server: A "nonce" value has not been attached to the response`)
     }
     const nonce = response.locals.nonce
+
 
     // Pass object with all Server Side Rendering (SSR) related data to the client
     const initialState = {
@@ -159,17 +159,22 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
 
     if (process.env.DISABLE_SSR)
     {
+      start("render-light")
       renderLight({ request, response, nonce, initialState })
+      stop("render-light")
     }
     else
     {
+      start("create-apollo")
       const apolloClient = createApolloClient({
         headers: request.headers,
         initialState,
         batchRequests,
         trustNetwork
       })
+      stop("create-apollo")
 
+      start("create-redux")
       const reduxStore = createReduxStore({
         apolloClient,
         initialState,
@@ -177,8 +182,15 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
         enhancers: AppContainer.getEnhancers(),
         middlewares: AppContainer.getMiddlewares()
       })
+      stop("create-redux")
 
+      start("render-full")
       renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore })
+      stop("render-full")
     }
+
+    getEntries().forEach((measurement) => {
+      console.log(`- ${measurement.name}: ${measurement.duration.toFixed(2)}ms`)
+    })
   }
 }
