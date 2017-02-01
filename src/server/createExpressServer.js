@@ -1,24 +1,39 @@
 import express from "express"
 import shrinkRay from "shrink-ray"
 import uuid from "uuid"
-import hpp from "hpp"
+import parameterProtection from "hpp"
 import helmet from "helmet"
+import PrettyError from "pretty-error"
 
 import {
   ABSOLUTE_CLIENT_OUTPUT_PATH,
   ABSOLUTE_PUBLIC_PATH
 } from "./config"
 
+const pretty = new PrettyError()
+
+// this will skip events.js and http.js and similar core node files
+pretty.skipNodeFiles()
+
+// this will skip all the trace lines about express` core and sub-modules
+pretty.skipPackage("express")
+
 export default function createExpressServer()
 {
   // Create our express based server.
   const server = express()
 
-  // Attach a unique "nonce" to every response.  This allows use to declare
+  // Attach a unique "nonce" to every response. This allows use to declare
   // inline scripts as being safe for execution against our content security policy.
   // @see https://helmetjs.github.io/docs/csp/
-  server.use((req, res, next) => {
-    res.locals.nonce = uuid() // eslint-disable-line no-param-reassign
+  server.use((request, response, next) => {
+    response.locals.nonce = uuid() // eslint-disable-line no-param-reassign
+    next()
+  })
+
+  // and use it for our app's error handler:
+  server.use((error, request, response, next) => { // eslint-disable-line max-params
+    console.log(pretty.render(error))
     next()
   })
 
@@ -26,7 +41,7 @@ export default function createExpressServer()
   server.disable("x-powered-by")
 
   // Prevent HTTP Parameter pollution.
-  server.use(hpp())
+  server.use(parameterProtection())
 
   // Content Security Policy (CSP)
   //
@@ -62,7 +77,7 @@ export default function createExpressServer()
         // This is useful for guarding your application whilst allowing an inline
         // script to do data store rehydration (redux/mobx/apollo) for example.
         // @see https://helmetjs.github.io/docs/csp/
-        (req, res) => `'nonce-${res.locals.nonce}'`,
+        (request, response) => `'nonce-${response.locals.nonce}'`,
 
         // FIXME: Required for eval-source-maps (devtool in webpack)
         process.env.NODE_ENV === "development" ? "'unsafe-eval'" : ""
