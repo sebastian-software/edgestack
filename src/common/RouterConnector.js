@@ -1,13 +1,10 @@
 import React from "react"
-import { propTypes as routerTypes } from "react-router"
 import { connect } from "react-redux"
 
 export const SET_PATH = "router/SET_PATH"
 export const RECOVER_PATH = "/pingback/"
 
-const initialState = {
-
-}
+const initialState = {}
 
 /**
  * [routerReducer description]
@@ -41,26 +38,26 @@ export function setPath(path) {
  */
 class RoutingConnector extends React.Component {
   componentDidMount() {
-    this.context.history.listen(({ pathname }) => {
+    this.context.router.listen(({ pathname }) => {
       if (this.props.path !== pathname) {
         this.props.setPath(pathname)
       }
     })
 
-    if (this.context.history.location.pathname === this.props.recoverPath) {
-      this.context.history.replace(this.props.path)
+    if (this.context.router.location.pathname === this.props.recoverPath) {
+      this.context.router.replace(this.props.path)
     } else {
-      this.props.setPath(this.context.history.location.pathname)
+      this.props.setPath(this.context.router.location.pathname)
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.path && this.props.path !== nextProps.path) {
-      if (this.context.history.location.pathname !== nextProps.path) {
+      if (this.context.router.location.pathname !== nextProps.path) {
         // Will receive props means they are not yet set, so we have to wait
         // a little before updating the history. Otherwise stuff breaks.
         setTimeout(() => {
-          this.context.history.push(nextProps.path)
+          this.context.router.push(nextProps.path)
         }, 0)
       }
     }
@@ -83,7 +80,7 @@ RoutingConnector.defaultProps = {
 }
 
 RoutingConnector.contextTypes = {
-  history: routerTypes.historyContext
+  router: React.PropTypes.object
 }
 
 function mapStateToProps(state) {
