@@ -145,6 +145,10 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
  */
 export default function createUniversalMiddleware({ AppContainer, ssrData, batchRequests = false, trustNetwork = true })
 {
+  if (AppContainer == null) {
+    throw new Error("Universal Middleware: Missing AppContainer")
+  }
+
   return function middleware(request, response)
   {
     if (typeof response.locals.nonce !== "string") {
