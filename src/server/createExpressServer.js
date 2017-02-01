@@ -4,6 +4,7 @@ import uuid from "uuid"
 import parameterProtection from "hpp"
 import helmet from "helmet"
 import PrettyError from "pretty-error"
+import favicon from "serve-favicon"
 
 import {
   ABSOLUTE_CLIENT_OUTPUT_PATH,
@@ -22,6 +23,9 @@ export default function createExpressServer()
 {
   // Create our express based server.
   const server = express()
+
+  // Create new middleware to serve a favicon from the given path to a favicon file.
+  server.use(favicon(`${ABSOLUTE_PUBLIC_PATH}/favicon.ico`))
 
   // Attach a unique "nonce" to every response. This allows use to declare
   // inline scripts as being safe for execution against our content security policy.
