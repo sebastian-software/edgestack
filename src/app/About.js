@@ -66,17 +66,6 @@ class About extends React.Component {
   }
 }
 
-About.fetchData = function(props, context)
-{
-  // Redux' connect() add proxies for static methods, but the top-level HOC
-  // does not have our required and connected state/dispatcher props.
-  if (props.load) {
-    return props.load()
-  }
-
-  return Promise.resolve()
-}
-
 About.propTypes = {
   value: React.PropTypes.number,
   load: React.PropTypes.func,
@@ -94,4 +83,19 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   load: () => dispatch(loadCounter())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(About)
+const ConnectedAbout = connect(mapStateToProps, mapDispatchToProps)(About)
+
+ConnectedAbout.fetchData = function(props, context)
+{
+  console.log("Called FetchData...")
+
+  // Redux' connect() add proxies for static methods, but the top-level HOC
+  // does not have our required and connected state/dispatcher props.
+  if (props.load) {
+    return props.load()
+  }
+
+  return Promise.resolve()
+}
+
+export default ConnectedAbout
