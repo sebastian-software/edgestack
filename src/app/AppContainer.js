@@ -2,7 +2,7 @@
 import "sanitize.css/sanitize.css"
 
 import React from "react"
-import { Match, Miss, Link } from "react-router"
+import { Switch, Route, NavLink } from "react-router-dom"
 import Helmet from "react-helmet"
 import createLogger from "redux-logger"
 import { createAsyncComponent } from "react-async-component"
@@ -25,6 +25,11 @@ const HomeAsync = createAsyncComponent({
 const AboutAsync = createAsyncComponent({
   resolve: () => System.import("./About")
 })
+
+// only returns true when there is a match and isExact is true
+function activeExact(match) {
+  return Boolean(match) && match.isExact
+}
 
 function Error404() {
   return <div>Sorry, that page was not found.</div>
@@ -54,16 +59,18 @@ function AppContainer({ children }) {
       </div>
       <div>
         <ul>
-          <li><Link to="/" activeOnlyWhenExact={true} activeClassName={Styles.activeLink}>Home</Link></li>
-          <li><Link to="/about" activeOnlyWhenExact={true} activeClassName={Styles.activeLink}>About</Link></li>
+          <li><NavLink to="/" isActivexx={activeExact} activeClassName={Styles.activeLink}>Home</NavLink></li>
+          <li><NavLink to="/about" isActivexx={activeExact} activeClassName={Styles.activeLink}>About</NavLink></li>
         </ul>
       </div>
 
       <div>
         <RouterConnector>
-          <Match exactly pattern="/" component={HomeAsync}/>
-          <Match pattern="/about" component={AboutAsync}/>
-          <Miss component={Error404}/>
+          <Switch>
+            <Route exact path="/" component={HomeAsync}/>
+            <Route path="/about" component={AboutAsync}/>
+            <Route component={Error404}/>
+          </Switch>
         </RouterConnector>
       </div>
     </main>
