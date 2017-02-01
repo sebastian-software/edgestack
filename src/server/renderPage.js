@@ -100,6 +100,12 @@ export default function renderPage({ renderedApp, initialState = {}, nonce, helm
   // Now we get the assets (js/css) for the chunks.
   const assetsForRender = getAssetsForClientChunks(chunksForRender)
 
+  /* eslint-disable prefer-template */
+
+  const inlineCode = `APP_STATE=${serialize(initialState, { isJSON: true })};` +
+    `CHUNK_MANIFEST=${chunkManifest};` +
+    (STATE_IDENTIFIER != null ? `${STATE_IDENTIFIER}=${serialize(codeSplitState, { isJSON: true })};` : "")
+
   return `<!doctype html>
     <html ${helmet ? helmet.htmlAttributes.toString() : ""}>
       <head>
@@ -113,11 +119,7 @@ export default function renderPage({ renderedApp, initialState = {}, nonce, helm
       <body>
         <div id="app">${renderedApp || ""}</div>
 
-        <script nonce="${nonce}">${
-          `APP_STATE=${serialize(initialState, { isJSON: true })};` +
-          `CHUNK_MANIFEST=${chunkManifest};` +
-          `${STATE_IDENTIFIER}=${serialize(codeSplitState, { isJSON: true })};`
-        }</script>
+        <script nonce="${nonce}">${inlineCode}</script>
 
         ${generateScriptTags(assetsForRender.scripts)}
         ${helmet ? helmet.script.toString() : ""}
