@@ -1,7 +1,7 @@
 // eslint-disable filenames/match-exported
 import React from "react"
 import { render } from "react-dom"
-import { BrowserRouter } from "react-router"
+import { BrowserRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
 import { withAsyncComponents } from "react-async-component"
 
