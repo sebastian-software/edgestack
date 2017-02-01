@@ -1,2 +1,2 @@
 extends:
-  ./node_modules/s15e-javascript/.eslintrc.yml
+  ./node_modules/readable-code/.eslintrc.yml
