@@ -1,6 +1,6 @@
 import React from "react"
 import { renderToString } from "react-dom/server"
-import { ServerRouter, createServerRenderContext } from "react-router"
+import { StaticRouter } from "react-router"
 import Helmet from "react-helmet"
 import { ApolloProvider, getDataFromTree } from "react-apollo"
 import { withAsyncComponents } from "react-async-component"
@@ -52,21 +52,19 @@ function renderLight({ request, response, nonce, initialState }) {
 }
 
 function renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore }) {
-  // First create a context for <ServerRouter>, which will allow us to
-  // query for the results of the render.
-  const routingContext = createServerRenderContext()
+  const routingContext = {}
 
   console.log("Server: Rendering app with data...")
 
-  var fullApp = (
-    <ServerRouter location={request.url} context={routingContext}>
+  var WrappedAppContainer = (
+    <StaticRouter location={request.url} context={routingContext}>
       <ApolloProvider client={apolloClient} store={reduxStore}>
         <AppContainer/>
       </ApolloProvider>
-    </ServerRouter>
+    </StaticRouter>
   )
 
-  withAsyncComponents(fullApp).then((wrappedResult) =>
+  withAsyncComponents(WrappedAppContainer).then((wrappedResult) =>
   {
     const {
       // The result includes a decorated version of your app
@@ -113,17 +111,15 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
         helmet: Helmet.rewind()
       })
 
-      // Get the render result from the server render context.
-      const renderedResult = routingContext.getResult()
-
-      console.log("Server: Sending page...")
+      console.log("Server: Routing Context:", routingContext)
+      console.log("Server: Sending Page...")
 
       /* eslint-disable no-magic-numbers */
 
       // Check if the render result contains a redirect, if so we need to set
       // the specific status and redirect header and end the response.
-      if (renderedResult.redirect) {
-        response.status(301).setHeader("Location", renderedResult.redirect.pathname)
+      if (routingContext.url) {
+        response.status(302).setHeader("Location", routingContext.url)
         response.end()
         return
       }
@@ -131,7 +127,7 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
       // If the renderedResult contains a "missed" match then we set a 404 code.
       // Our App component will handle the rendering of an Error404 view.
       // Otherwise everything is all good and we send a 200 OK status.
-      response.status(renderedResult.missed ? 404 : 200).send(html)
+      response.status(routingContext.missed ? 404 : 200).send(html)
     }).catch((error) => {
       console.error("Error during producing response:", error)
     })
