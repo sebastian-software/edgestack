@@ -48,6 +48,8 @@ function renderApp(RenderContainer)
     // the server.
     const { appWithAsyncComponents } = result
     render(appWithAsyncComponents, container)
+  }).catch((error) => {
+    console.error("Client: Error wrapping application for code splitting:", error)
   })
 }
 
