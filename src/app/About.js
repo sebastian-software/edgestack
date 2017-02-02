@@ -21,13 +21,14 @@ function handleOldMethodCall() {
 }
 
 class About extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
+    // Good strategy to load relevant data: wait after rendering
+    // so that the user sees the empty state. We can't really wait
+    // in render sequence for any data coming in.
     if (this.props.value == null) {
       this.props.load()
     }
-  }
 
-  componentDidMount() {
     cookiesjs({ test: 123 })
     new Clipboard("[data-clipboard-target]")
   }
@@ -47,6 +48,7 @@ class About extends React.Component {
 
     // Redux' connect() add proxies for static methods, but the top-level HOC
     // does not have our required and connected state/dispatcher props.
+    //
     if (this.props.load) {
       return this.props.load()
     }
