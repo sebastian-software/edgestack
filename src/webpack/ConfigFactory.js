@@ -699,6 +699,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       })),
       */
 
+      // There is now actual benefit in using multiple chunks for possibly long living
+      // NodeJS applications. We can bundle everrything and that way improve startup time.
+      ifNode(new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })),
+
       // Adds options to all of our loaders.
       ifDev(
         new webpack.LoaderOptionsPlugin({
