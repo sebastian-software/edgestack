@@ -218,7 +218,20 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
               "react-intl",
 
               // Remove prop types from our code
-              "transform-react-remove-prop-types"
+              "transform-react-remove-prop-types",
+
+              // Replaces the React.createElement function with one that is
+              // more optimized for production.
+              // NOTE: Symbol needs to be polyfilled. Ensure this feature
+              // is enabled in the polyfill.io configuration.
+              "transform-react-inline-elements",
+
+              // Hoists element creation to the top level for subtrees that
+              // are fully static, which reduces call to React.createElement
+              // and the resulting allocations. More importantly, it tells
+              // React that the subtree hasn’t changed so React can completely
+              // skip it when reconciling.
+              "transform-react-constant-elements"
             ]
           },
 
