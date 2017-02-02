@@ -145,8 +145,6 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
     throw new Error("Server: Universal Middleware: Missing AppContainer!")
   }
 
-  console.log("CREATED UNIVERSAL MIDDLEWARE")
-
   return function middleware(request, response)
   {
     if (typeof response.locals.nonce !== "string") {
@@ -154,7 +152,7 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
     }
     const nonce = response.locals.nonce
 
-    console.log("Incoming URL:", request.originalUrl, process.env.DISABLE_SSR ? "[CLIENTONLY]" : "[SSR]")
+    console.log("\nIncoming URL:", request.originalUrl, process.env.DISABLE_SSR ? "[SSR:disabled]" : "[SSR:enabled]")
     let measure = new Measure()
 
     // Pass object with all Server Side Rendering (SSR) related data to the client
