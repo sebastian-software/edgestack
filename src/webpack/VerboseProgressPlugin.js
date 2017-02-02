@@ -1,5 +1,7 @@
 import { startsWith, includes } from "lodash"
 
+// const NanoToMilli = 1000000
+
 export default class VerboseProgressPlugin {
   constructor(options) {
     this.options = options
@@ -8,16 +10,16 @@ export default class VerboseProgressPlugin {
 
   apply(compiler)
   {
-    compiler.plugin("compilation", function(compilation)
-    {
+    compiler.plugin("compilation", (compilation) => {
       if (compilation.compiler.isChild())
         return
 
       var moduleCounter = 0
       var activeModules = {}
-      var slicePathBy = process.cwd().length + 1
 
-      function now(time) {
+      // var slicePathBy = process.cwd().length + 1
+
+      function getTimeStamp(time) {
         return process.hrtime(time)
       }
 
@@ -27,29 +29,31 @@ export default class VerboseProgressPlugin {
           if (startsWith(ident, "ignored") || startsWith(ident, "external")) {
             return
           }
-          moduleCounter++
+          moduleCounter += 1
           if (moduleCounter % 100 === 0) {
-            console.log("- Building module #" + moduleCounter)
+            console.log(`- Building module #${moduleCounter}`)
           }
-          activeModules[ident] = now()
+          activeModules[ident] = getTimeStamp()
         }
       }
 
       function moduleDone(module) {
         var ident = module.identifier()
         if (ident) {
-          var entry = activeModules[ident];
+          var entry = activeModules[ident]
           if (entry == null) {
             return
           }
 
-          var runtime = Math.round(now(entry)[1] / 1000000)
           if (includes(ident, "!")) {
             var splits = ident.split("!")
             ident = splits.pop()
           }
-          var relative = ident.slice(slicePathBy)
+
+          // var runtime = Math.round(getTimeStamp(entry)[1] / NanoToMilli)
+          // // var relative = ident.slice(slicePathBy)
           // console.log(`Module ${relative} in ${runtime}ms`)
+
           if (splits) {
             splits = null
           }
@@ -62,14 +66,15 @@ export default class VerboseProgressPlugin {
 
       function log(title) {
         return function() {
-          console.log("- " + title)
+          console.log(`- ${title}`)
         }
       }
 
-      compilation.plugin("seal", function() {
-        console.log("- Sealing " + moduleCounter + " modules...")
+      compilation.plugin("seal", () => {
+        console.log(`- Sealing ${moduleCounter} modules...`)
       })
       compilation.plugin("optimize", log("Optimizing modules/chunks/tree..."))
+
       /*
       compilation.plugin("optimize-modules-basic", log("Basic module optimization"))
       compilation.plugin("optimize-modules", log("Module optimization"))
@@ -97,10 +102,11 @@ export default class VerboseProgressPlugin {
         callback()
       })
       */
-      compilation.plugin("optimize-chunk-assets", function(chunks, callback) {
+      compilation.plugin("optimize-chunk-assets", (chunks, callback) => {
         console.log("- Optimizing assets...")
         callback()
       })
+
       /*
       compilation.plugin("optimize-assets", function(assets, callback) {
         console.log("- Optimizing assets...")
@@ -109,7 +115,7 @@ export default class VerboseProgressPlugin {
       */
     })
 
-    compiler.plugin("emit", function(compilation, callback) {
+    compiler.plugin("emit", (compilation, callback) => {
       console.log("- Emitting output files...")
       callback()
     })
