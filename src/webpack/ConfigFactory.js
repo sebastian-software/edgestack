@@ -11,6 +11,7 @@ import ExtractTextPlugin from "extract-text-webpack-plugin"
 
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 import ChunkManifestPlugin from "chunk-manifest-webpack-plugin"
+import ChunkNames from "webpack-async-chunk-names-plugin"
 
 import dotenv from "dotenv"
 
@@ -780,6 +781,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // More aggressive chunk merging strategy. Even similar chunks are merged if the
       // total size is reduced enough.
       ifProdWeb(new webpack.optimize.AggressiveMergingPlugin()),
+
+      //
+      new ChunkNames(),
 
       // We use this so that our generated [chunkhash]'s are only different if
       // the content for our respective chunks have changed.  This optimises
