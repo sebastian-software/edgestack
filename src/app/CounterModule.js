@@ -16,7 +16,7 @@ export function setCounter(value)
 {
   return {
     type: SET_COUNTER,
-    value: value
+    value
   }
 }
 
@@ -43,7 +43,7 @@ export function decrementCounter()
 /**
  * This somewhat tries to emulate a asyncronous backend request
  */
-function generateServerResponse() {
+function mockServerDelay() {
   console.log("Loading counter...")
   return new Promise((resolve, reject) =>
   {
@@ -60,7 +60,7 @@ function generateServerResponse() {
  * Async data loading using redux-thunk
  */
 export function loadCounter() {
-  return (dispatch) => generateServerResponse().then((value) => dispatch(setCounter(value)))
+  return (dispatch) => mockServerDelay().then((value) => dispatch(setCounter(value)))
 }
 
 const initialState = {
