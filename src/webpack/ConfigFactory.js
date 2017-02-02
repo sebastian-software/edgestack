@@ -18,11 +18,9 @@ import dotenv from "dotenv"
 // ("webpack-sha-hash") does not correctly work based (produces different hashes for same content).
 // This is basically a replacement of md5 with the loader-utils implementation which also supports
 // shorter generated hashes based on base62 encoding instead of hex.
-import WebpackDigestHash from "./ChunkHash"
-
-// import ChunkNames from "webpack-async-chunk-names-plugin"
-import ChunkNames from "./ChunkNames"
-import VerboseProgressPlugin from "./VerboseProgressPlugin"
+import WebpackDigestHash from "./plugins/ChunkHash"
+import ChunkNames from "./plugins/ChunkNames"
+import VerboseProgress from "./plugins/VerboseProgress"
 
 import esModules from "./Modules"
 
@@ -640,7 +638,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         })
       ),
 
-      new VerboseProgressPlugin(),
+      new VerboseProgress(),
 
       /*
       ifProd(new BabiliPlugin({
