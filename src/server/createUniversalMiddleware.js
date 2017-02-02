@@ -4,8 +4,8 @@ import { StaticRouter } from "react-router"
 import Helmet from "react-helmet"
 import { ApolloProvider, getDataFromTree } from "react-apollo"
 import { withAsyncComponents } from "react-async-component"
-import { mark as start, stop, getEntries } from "marky"
 
+import Measure from "./Measure"
 import renderPage from "./renderPage"
 import { createApolloClient, createReduxStore } from "../common/Data"
 
@@ -18,14 +18,14 @@ import { createApolloClient, createReduxStore } from "../common/Data"
  * See also:
  * https://www.npmjs.com/package/react-redux-universal-hot-example#server-side-data-fetching
  */
-function renderToStringWithData(component) {
-  start("loading-data")
+function renderToStringWithData(component, measure) {
+  measure.start("loading-data")
   return getDataFromTree(component).then(() => {
-    stop("loading-data")
+    measure.stop("loading-data")
 
-    start("rendering-react")
+    measure.start("rendering-react")
     var result = renderToString(component)
-    stop("rendering-react")
+    measure.stop("rendering-react")
 
     return result
   })
@@ -50,7 +50,7 @@ function renderLight({ request, response, nonce, initialState }) {
   }
 }
 
-function renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore }) {
+function renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore, measure }) {
   const routingContext = {}
 
   console.log("Server: Rendering app with data...")
@@ -85,7 +85,8 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
 
     // Create the application react element.
     renderToStringWithData(
-      appWithAsyncComponents
+      appWithAsyncComponents,
+      measure
     ).then((renderedApp) => {
       const reduxState = reduxStore.getState()
 
@@ -144,6 +145,8 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
     throw new Error("Server: Universal Middleware: Missing AppContainer!")
   }
 
+  console.log("CREATED UNIVERSAL MIDDLEWARE")
+
   return function middleware(request, response)
   {
     if (typeof response.locals.nonce !== "string") {
@@ -151,6 +154,8 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
     }
     const nonce = response.locals.nonce
 
+    console.log("Incoming URL:", request.originalUrl, process.env.DISABLE_SSR ? "[CLIENTONLY]" : "[SSR]")
+    let measure = new Measure()
 
     // Pass object with all Server Side Rendering (SSR) related data to the client
     const initialState = {
@@ -159,22 +164,22 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
 
     if (process.env.DISABLE_SSR)
     {
-      start("render-light")
+      measure.start("render-light")
       renderLight({ request, response, nonce, initialState })
-      stop("render-light")
+      measure.stop("render-light")
     }
     else
     {
-      start("create-apollo")
+      measure.start("create-apollo")
       const apolloClient = createApolloClient({
         headers: request.headers,
         initialState,
         batchRequests,
         trustNetwork
       })
-      stop("create-apollo")
+      measure.stop("create-apollo")
 
-      start("create-redux")
+      measure.start("create-redux")
       const reduxStore = createReduxStore({
         apolloClient,
         initialState,
@@ -182,15 +187,13 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
         enhancers: AppContainer.getEnhancers(),
         middlewares: AppContainer.getMiddlewares()
       })
-      stop("create-redux")
+      measure.stop("create-redux")
 
-      start("render-full")
-      renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore })
-      stop("render-full")
+      measure.start("render-full")
+      renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore, measure })
+      measure.stop("render-full")
     }
 
-    getEntries().forEach((measurement) => {
-      console.log(`- ${measurement.name}: ${measurement.duration.toFixed(2)}ms`)
-    })
+    measure.print()
   }
 }
