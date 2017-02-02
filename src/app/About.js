@@ -16,7 +16,9 @@ import { getCounter, decrementCounter, incrementCounter, loadCounter } from "./C
 /**
  * @deprecated
  */
-function handleOldMethodCall() {}
+function handleOldMethodCall() {
+  // nothing to do
+}
 
 class About extends React.Component {
   componentWillMount() {
@@ -31,11 +33,25 @@ class About extends React.Component {
   }
 
   handleClickCookieLink() {
+    /* eslint-disable no-alert */
     alert(cookiesjs("test"))
   }
 
   renderMarkdown() {
     return markdown`Markdown in React is **pretty useful**.`
+  }
+
+  fetchData()
+  {
+    console.log("Called fetchData()...")
+
+    // Redux' connect() add proxies for static methods, but the top-level HOC
+    // does not have our required and connected state/dispatcher props.
+    if (this.props.load) {
+      return this.props.load()
+    }
+
+    return Promise.resolve()
   }
 
   render() {
@@ -83,19 +99,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   load: () => dispatch(loadCounter())
 })
 
-const ConnectedAbout = connect(mapStateToProps, mapDispatchToProps)(About)
-
-ConnectedAbout.fetchData = function(props, context)
-{
-  console.log("Called FetchData...")
-
-  // Redux' connect() add proxies for static methods, but the top-level HOC
-  // does not have our required and connected state/dispatcher props.
-  if (props.load) {
-    return props.load()
-  }
-
-  return Promise.resolve()
-}
-
-export default ConnectedAbout
+export default connect(mapStateToProps, mapDispatchToProps)(About)
