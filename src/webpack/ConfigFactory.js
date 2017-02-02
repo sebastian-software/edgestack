@@ -7,7 +7,7 @@ import builtinModules from "builtin-modules"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 
 // import BabiliPlugin from "babili-webpack-plugin"
-// import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
+import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
 
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 import ChunkManifestPlugin from "chunk-manifest-webpack-plugin"
@@ -577,8 +577,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // Improve source caching in Webpack v2.
       // Therefor we disable it in production and only use it to speed up development rebuilds.
       //
-      /*
-      ifDev(new HardSourceWebpackPlugin({
+      new HardSourceWebpackPlugin({
         // Either an absolute path or relative to output.path.
         cacheDirectory: path.resolve(root, ".hardsource", `${target}-${mode}`),
 
@@ -591,10 +590,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         environmentHash: {
           root: root,
           directories: [ "node_modules" ],
-          files: [ "package.json", "yarn.lock" ]
+          files: [ "package.json", "yarn.lock", ".env" ]
         }
-      })),
-      */
+      }),
 
       // There is now actual benefit in using multiple chunks for possibly long living
       // NodeJS applications. We can bundle everrything and that way improve startup time.
