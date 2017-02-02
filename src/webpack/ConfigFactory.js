@@ -236,6 +236,9 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
 
     plugins:
     [
+      // Allow parsing of import()
+      "syntax-dynamic-import",
+
       // Transpile Markdown into React components. Super smart.
       "markdown-in-js/babel",
 
@@ -291,6 +294,9 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
 
     plugins:
     [
+      // Allow parsing of import()
+      "syntax-dynamic-import",
+
       // Transpile Markdown into React components. Super smart.
       "markdown-in-js/babel",
 

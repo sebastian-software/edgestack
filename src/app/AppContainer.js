@@ -19,11 +19,11 @@ const websiteLanguage = "en-US"
 const websiteTitle = "Advanced Boilerplate"
 
 const HomeAsync = createAsyncComponent({
-  resolve: () => System.import("./Home")
+  resolve: () => import("./Home")
 })
 
 const AboutAsync = createAsyncComponent({
-  resolve: () => System.import("./About")
+  resolve: () => import("./About")
 })
 
 // only returns true when there is a match and isExact is true
