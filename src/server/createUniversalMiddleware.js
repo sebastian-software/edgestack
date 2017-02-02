@@ -23,9 +23,9 @@ function renderToStringWithData(component, measure) {
   return getDataFromTree(component).then(() => {
     measure.stop("loading-data")
 
-    measure.start("rendering-react")
+    measure.start("render-react")
     var result = renderToString(component)
-    measure.stop("rendering-react")
+    measure.stop("render-react")
 
     return result
   })
@@ -33,9 +33,10 @@ function renderToStringWithData(component, measure) {
 
 // SSR is disabled so we will just return an empty html page and will
 // rely on the client to populate the initial react application state.
-function renderLight({ request, response, nonce, initialState }) {
+function renderLight({ request, response, nonce, initialState, measure }) {
   /* eslint-disable no-magic-numbers */
   try {
+    measure.start("render-page")
     const html = renderPage({
       // Provide the redux store state, this will be bound to the window.APP_STATE
       // so that we can rehydrate the state on the client.
@@ -44,7 +45,12 @@ function renderLight({ request, response, nonce, initialState }) {
       // Nonce which allows us to safely declare inline scripts.
       nonce
     })
+    measure.stop("render-page")
+
     response.status(200).send(html)
+
+    // Print measure results
+    measure.print()
   } catch (error) {
     response.status(500).send(`Error during rendering: ${error}!: ${error.stack}`)
   }
@@ -63,8 +69,10 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
     </StaticRouter>
   )
 
+  measure.start("wrap-async")
   withAsyncComponents(WrappedAppContainer).then((wrappedResult) =>
   {
+    measure.stop("wrap-async")
     const {
       // The result includes a decorated version of your app
       // that will have the async components initialised for
@@ -91,6 +99,7 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
       const reduxState = reduxStore.getState()
 
       // Render the app to a string.
+      measure.start("render-page")
       const html = renderPage({
         // Provide the full rendered App react element.
         renderedApp,
@@ -110,6 +119,7 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
         // @see https://github.com/nfl/react-helmet
         helmet: Helmet.rewind()
       })
+      measure.stop("render-page")
 
       console.log("Server: Routing Context:", routingContext)
       console.log("Server: Sending Page...")
@@ -128,6 +138,9 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
       // Our App component will handle the rendering of an Error404 view.
       // Otherwise everything is all good and we send a 200 OK status.
       response.status(routingContext.missed ? 404 : 200).send(html)
+
+      // Print measure results
+      measure.print()
     }).catch((error) => {
       console.error("Server: Error during producing response:", error)
     })
@@ -162,9 +175,7 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
 
     if (process.env.DISABLE_SSR)
     {
-      measure.start("render-light")
-      renderLight({ request, response, nonce, initialState })
-      measure.stop("render-light")
+      renderLight({ request, response, nonce, initialState, measure })
     }
     else
     {
@@ -187,11 +198,7 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
       })
       measure.stop("create-redux")
 
-      measure.start("render-full")
       renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore, measure })
-      measure.stop("render-full")
     }
-
-    measure.print()
   }
 }

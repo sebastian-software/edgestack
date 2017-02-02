@@ -81,8 +81,6 @@ export default function renderPage({ renderedApp, initialState = {}, nonce, helm
     "main"
   ]
 
-  console.log("Code Split State: ", codeSplitState)
-
   /*
   if (codeSplitState && codeSplitState.chunks) {
     // We add all the chunks that our CodeSplitProvider tracked as being used
