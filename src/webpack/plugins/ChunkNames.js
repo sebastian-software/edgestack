@@ -54,7 +54,7 @@ export default class ChunkNames
           module.blocks.forEach((block) => {
             if (checkConstructorNames(block)) {
               block.dependencies.forEach((dependency) => {
-                if (dependency.module.resource) {
+                if (dependency.module.resource && dependency.block) {
                   const chunkName = generateChunkName(dependency.module.resource)
                   if (chunkName) {
                     dependency.block.chunkName = chunkName
