@@ -140,13 +140,22 @@ export default function createExpressServer()
   // Parse cookies via standard express tooling
   server.use(cookieParser())
 
-  // Detect client locale
-  server.use(createLocaleMiddleware())
 
-  // parse application/x-www-form-urlencoded
+  const ALLOWED_LOCALES = [ "de_DE", "de_AT", "en_GB", "en_US", "fr_FR", "es_ES" ]
+  const DEFAULT_LOCALE = "de_DE"
+
+  // Detect client locale
+  //
+  server.use(createLocaleMiddleware({
+    priority: [ "query", "cookie", "accept-language", "default" ],
+    default: DEFAULT_LOCALE,
+    allowed: ALLOWED_LOCALES
+  }))
+
+  // Parse application/x-www-form-urlencoded
   server.use(bodyParser.urlencoded({ extended: false }))
 
-  // parse application/json
+  // Parse application/json
   server.use(bodyParser.json())
 
   // Advanced response compression using a async zopfli/brotli combination

@@ -165,8 +165,18 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
     }
     const nonce = response.locals.nonce
 
-    console.log("\nIncoming URL:", request.originalUrl, process.env.DISABLE_SSR ? "[SSR:disabled]" : "[SSR:enabled]")
+    if (!request.locale) {
+      throw new Error("Can't correctly deal with locale configuration")
+    }
+
+    const { language, region } = request.locale
+
+    console.log("\nIncoming URL:", request.originalUrl, process.env.DISABLE_SSR ? "[SSR: disabled]" : "[SSR: enabled]", `[Locale: ${language}-${region}]`)
     let measure = new Measure()
+
+    // After matching locales with configuration we send the accepted locale
+    // back to the client using a simple session cookie
+    response.cookie("locale", `${language}_${region}`)
 
     // Pass object with all Server Side Rendering (SSR) related data to the client
     const initialState = {
