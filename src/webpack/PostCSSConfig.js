@@ -1,4 +1,3 @@
-import devtools from "postcss-devtools"
 import atImport from "postcss-smart-import"
 import simpleUrl from "postcss-simple-url"
 import discardComments from "postcss-discard-comments"
@@ -25,6 +24,7 @@ import autoprefixer from "autoprefixer"
 import reporter from "postcss-reporter"
 import hexrgba from "postcss-hexrgba"
 import unicodeChars from "postcss-unicode-characters"
+import systemFont from "postcss-font-family-system-ui"
 import zindex from "postcss-zindex"
 import warn from "postcss-at-warn"
 import responsiveType from "postcss-responsive-type"
@@ -39,12 +39,6 @@ const autoprefixerSettings = {
 export default function getConfig(variables = {})
 {
   return [
-    /*
-    devtools({
-      silent: true
-    }),
-    */
-
     atImport(),
     simpleUrl(),
     assets(),
@@ -161,6 +155,10 @@ export default function getConfig(variables = {})
     // An easier way to write unicode-range descriptors.
     // https://github.com/ben-eb/postcss-unicode-characters
     unicodeChars,
+
+    // Transform W3C CSS "font-family: system-ui" to a practical font-family list
+    // https://github.com/JLHwung/postcss-font-family-system-ui
+    systemFont,
 
     // Reduce z-index values with PostCSS.
     // https://github.com/ben-eb/postcss-zindex
