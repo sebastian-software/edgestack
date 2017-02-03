@@ -31,11 +31,6 @@ import responsiveType from "postcss-responsive-type"
 import inputStyles from "postcss-input-style"
 import assets from "postcss-assets"
 
-const autoprefixerSettings = {
-  browsers: "> 3%, last 2 versions, safari > 8, ie > 10, ios > 8, android > 4.3, samsung > 3, chromeandroid > 50",
-  cascade: false
-}
-
 export default function getConfig(variables = {})
 {
   return [
@@ -172,7 +167,7 @@ export default function getConfig(variables = {})
 
     // Parse CSS and add vendor prefixes to rules by Can I Use
     // https://github.com/postcss/autoprefixer
-    autoprefixer(autoprefixerSettings),
+    autoprefixer(),
 
     // Log PostCSS messages to the console
     reporter({
