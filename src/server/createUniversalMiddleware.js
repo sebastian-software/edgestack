@@ -33,7 +33,7 @@ function renderToStringWithData(component, measure) {
 
 // SSR is disabled so we will just return an empty html page and will
 // rely on the client to populate the initial react application state.
-function renderLight({ request, response, nonce, initialState, measure }) {
+function renderLight({ request, response, nonce, initialState, language, region, measure }) {
   /* eslint-disable no-magic-numbers */
   try {
     measure.start("render-page")
@@ -43,7 +43,11 @@ function renderLight({ request, response, nonce, initialState, measure }) {
       initialState,
 
       // Nonce which allows us to safely declare inline scripts.
-      nonce
+      nonce,
+
+      // Send detected language and region for HTML tag info
+      language,
+      region
     })
     measure.stop("render-page")
 
@@ -56,7 +60,7 @@ function renderLight({ request, response, nonce, initialState, measure }) {
   }
 }
 
-function renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore, measure }) {
+function renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore, language, region, measure }) {
   const routingContext = {}
 
   console.log("Server: Rendering app with data...")
@@ -117,7 +121,11 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
         // Running this gets all the helmet properties (e.g. headers/scripts/title etc)
         // that need to be included within our html. It's based on the rendered app.
         // @see https://github.com/nfl/react-helmet
-        helmet: Helmet.rewind()
+        helmet: Helmet.rewind(),
+
+        // Send detected language and region for HTML tag info
+        language,
+        region
       })
       measure.stop("render-page")
 
@@ -185,7 +193,7 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
 
     if (process.env.DISABLE_SSR)
     {
-      renderLight({ request, response, nonce, initialState, measure })
+      renderLight({ request, response, nonce, initialState, language, region, measure })
     }
     else
     {
@@ -208,7 +216,7 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
       })
       measure.stop("create-redux")
 
-      renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore, measure })
+      renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore, language, region, measure })
     }
   }
 }

@@ -71,7 +71,8 @@ function generateScriptTags(scripts) {
  *
  * @return The full HTML page in the form of a React element.
  */
-export default function renderPage({ renderedApp, initialState = {}, nonce, helmet, codeSplitState, STATE_IDENTIFIER }) {
+export default function renderPage({ renderedApp, initialState = {},
+  nonce, helmet, codeSplitState, STATE_IDENTIFIER, language, region }) {
   // The chunks that we need to fetch the assets (js/css) for and then include
   // said assets as script/style tags within our html.
   const chunksForRender = [
@@ -104,8 +105,10 @@ export default function renderPage({ renderedApp, initialState = {}, nonce, helm
     `CHUNK_MANIFEST=${chunkManifest};` +
     (STATE_IDENTIFIER != null ? `${STATE_IDENTIFIER}=${serialize(codeSplitState, { isJSON: true })};` : "")
 
+  const langValue = region ? `${language}-${region}` : language
+
   return `<!doctype html>
-    <html ${helmet ? helmet.htmlAttributes.toString() : ""}>
+    <html lang="${langValue}" ${helmet ? helmet.htmlAttributes.toString() : ""}>
       <head>
         ${helmet ? helmet.title.toString() : ""}
         ${helmet ? helmet.meta.toString() : ""}
