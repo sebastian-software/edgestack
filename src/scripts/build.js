@@ -1,7 +1,7 @@
 import path from "path"
 import rimraf from "rimraf"
 import webpack from "webpack"
-import series from "async/series"
+import { series } from "async"
 import gutil from "gulp-util"
 import fse from "fs-extra"
 
