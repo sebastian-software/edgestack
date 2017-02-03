@@ -5,6 +5,9 @@ import parameterProtection from "hpp"
 import helmet from "helmet"
 import PrettyError from "pretty-error"
 import favicon from "serve-favicon"
+import createLocaleMiddleware from "express-locale"
+import cookieParser from "cookie-parser"
+import bodyParser from "body-parser"
 
 import {
   ABSOLUTE_CLIENT_OUTPUT_PATH,
@@ -133,6 +136,18 @@ export default function createExpressServer()
   // does this by setting the X-Content-Type-Options header to nosniff.
   // @see https://helmetjs.github.io/docs/dont-sniff-mimetype/
   server.use(helmet.noSniff())
+
+  // Parse cookies via standard express tooling
+  server.use(cookieParser())
+
+  // Detect client locale
+  server.use(createLocaleMiddleware())
+
+  // parse application/x-www-form-urlencoded
+  server.use(bodyParser.urlencoded({ extended: false }))
+
+  // parse application/json
+  server.use(bodyParser.json())
 
   // Advanced response compression using a async zopfli/brotli combination
   // https://github.com/aickin/shrink-ray
