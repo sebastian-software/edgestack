@@ -1,10 +1,16 @@
 # Browsers that we support
 
+[production]
 > 3%
 last 2 versions
-safari > 9
-ie > 10
-ios > 9
+safari >= 9
+ie >= 10
+ios >= 9
 android > 4.3
-samsung > 3
-chromeandroid > 50
+samsung >= 3
+chromeandroid >= 50
+
+[development]
+chrome >= 54
+firefox >= 50
+safari >= 10
