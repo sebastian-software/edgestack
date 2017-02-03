@@ -14,6 +14,9 @@ import {
   ABSOLUTE_PUBLIC_PATH
 } from "./config"
 
+const ALLOWED_LOCALES = [ "de_DE", "de_AT", "en_GB", "en_US", "fr_FR", "es_ES" ]
+const DEFAULT_LOCALE = "de_DE"
+
 const pretty = new PrettyError()
 
 // this will skip events.js and http.js and similar core node files
@@ -140,12 +143,7 @@ export default function createExpressServer()
   // Parse cookies via standard express tooling
   server.use(cookieParser())
 
-
-  const ALLOWED_LOCALES = [ "de_DE", "de_AT", "en_GB", "en_US", "fr_FR", "es_ES" ]
-  const DEFAULT_LOCALE = "de_DE"
-
-  // Detect client locale
-  //
+  // Detect client locale and match it with configuration
   server.use(createLocaleMiddleware({
     priority: [ "query", "cookie", "accept-language", "default" ],
     default: DEFAULT_LOCALE,
