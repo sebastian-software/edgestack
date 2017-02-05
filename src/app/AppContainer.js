@@ -6,6 +6,7 @@ import { Switch, Route, NavLink } from "react-router-dom"
 import Helmet from "react-helmet"
 import createLogger from "redux-logger"
 import { createAsyncComponent } from "react-async-component"
+import areIntlLocalesSupported from "intl-locales-supported"
 
 import RouterConnector, { routerReducer } from "../common/RouterConnector"
 
@@ -26,6 +27,43 @@ const AboutAsync = createAsyncComponent({
   resolve: () => import("./About")
 })
 
+// Chunked polyfill for browsers without Intl support
+function intlStart() {
+}
+
+function getLanguage() {
+  return typeof document !== "undefined" ? document.documentElement.lang : "de_DE" // FIXME
+}
+
+console.log("Language:", getLanguage())
+
+
+let needsPolyfill = false
+
+if (global.Intl) {
+  // Determine if the built-in `Intl` has the locale data we need.
+  if (!areIntlLocalesSupported([getLanguage().replace("_", "-")])) {
+    needsPolyfill = true
+
+    // `Intl` exists, but it doesn't have the data we need, so load the
+    // polyfill and patch the constructors we need with the polyfill's.
+    import("intl").then((IntlPolyfill) => {
+      Intl.NumberFormat = IntlPolyfill.NumberFormat
+      Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
+    })
+  }
+} else {
+  needsPolyfill = true
+
+  // No `Intl`, so use and load the polyfill.
+  import("intl").then((IntlPolyfill) => {
+    global.Intl = IntlPolyfill
+  })
+}
+
+console.log("Needs Intl Polyfill:", needsPolyfill)
+
+
 // only returns true when there is a match and isExact is true
 function activeExact(match) {
   return Boolean(match) && match.isExact
@@ -39,9 +77,6 @@ function AppContainer({ children }) {
   return (
     <main>
       <Helmet
-        htmlAttributes={{
-          lang: websiteLanguage
-        }}
         titleTemplate={`${websiteTitle} - %s`}
         defaultTitle={websiteTitle}
         meta={[
