@@ -774,7 +774,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // Analyse webpack bundle
       ifProdWeb(new BundleAnalyzerPlugin({
         openAnalyzer: false,
-        analyzerMode: "static"
+        analyzerMode: "static",
+        logLevel: "error"
       }))
     ]),
 
