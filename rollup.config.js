@@ -1,10 +1,10 @@
-import buble from "rollup-plugin-buble"
+import babel from "rollup-plugin-babel"
 import json from "rollup-plugin-json"
 import builtinModules from "builtin-modules"
 
-// eslint-disable-next-line import/no-commonjs
-var pkg = require("./package.json")
-var external = Object.keys(pkg.dependencies).concat(builtinModules)
+/* eslint-disable import/no-commonjs */
+var config = require("./package.json")
+var external = Object.keys(config.dependencies).concat(builtinModules)
 
 export default {
   entry: "src/script.js",
@@ -15,6 +15,6 @@ export default {
   banner: "#!/usr/bin/env node\n",
   plugins: [
     json(),
-    buble()
+    babel()
   ]
 }

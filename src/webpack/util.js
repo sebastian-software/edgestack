@@ -1,16 +1,31 @@
 import notifier from "node-notifier"
+import colors from "colors/safe"
 
-function createNotification(options = {})
+export function createNotification(options)
 {
-  notifier.notify({
-    title: options.title,
-    message: options.message,
-    open: options.open
-  })
+  const title = `${options.title.toUpperCase()}`
 
-  console.log(`${options.title}: ${options.message}`)
-}
+  if (options.notify) {
+    notifier.notify({
+      title,
+      message: options.message
+    })
+  }
 
-export {
-  createNotification
+  const level = options.level || "info"
+  const message = `==> ${title} -> ${options.message}`
+
+  switch (level) {
+    case "warn":
+      console.log(colors.yellow(message))
+      break
+
+    case "error":
+      console.log(colors.bgRed.white(message))
+      break
+
+    case "info":
+    default:
+      console.log(colors.green(message))
+  }
 }

@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 
 export const SET_PATH = "router/SET_PATH"
+export const REPLACE_PATH = "router/REPLACE_PATH"
 export const RECOVER_PATH = "/pingback/"
 
 const initialState = {}
@@ -15,8 +16,9 @@ const initialState = {}
 export function routerReducer(state = initialState, action) {
   switch (action.type) {
     case SET_PATH:
-      return { ...state, path: action.path }
-
+      return { ...state, path: action.path, replace: false }
+    case REPLACE_PATH:
+      return { ...state, path: action.path, replace: true }
     default:
       return state
   }
@@ -34,8 +36,16 @@ export function setPath(path) {
 }
 
 /**
- *
+ * [replacePath description]
+ * @param {[type]} path [description]
  */
+export function replacePath(path) {
+  return {
+    type: REPLACE_PATH,
+    path
+  }
+}
+
 class RoutingConnector extends React.Component {
   componentDidMount() {
     this.context.router.listen(({ pathname }) => {
@@ -57,7 +67,11 @@ class RoutingConnector extends React.Component {
         // Will receive props means they are not yet set, so we have to wait
         // a little before updating the history. Otherwise stuff breaks.
         setTimeout(() => {
-          this.context.router.push(nextProps.path)
+          if (nextProps.replace === true) {
+            this.context.router.replace(nextProps.path)
+          } else {
+            this.context.router.push(nextProps.path)
+          }
         }, 0)
       }
     }
@@ -85,7 +99,8 @@ RoutingConnector.contextTypes = {
 
 function mapStateToProps(state) {
   return {
-    path: state.router.path
+    path: state.router.path,
+    replace: state.router.replace
   }
 }
 
