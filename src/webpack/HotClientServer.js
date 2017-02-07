@@ -1,18 +1,24 @@
 import express from "express"
 import createWebpackMiddleware from "webpack-dev-middleware"
 import createWebpackHotMiddleware from "webpack-hot-middleware"
-import ListenerManager from "./listenerManager"
-import { log } from "../utils"
 
-class HotClientServer {
-  constructor(compiler) {
-    const app = express()
+import ListenerManager from "./ListenerManager"
+import { createNotification } from "./util"
+
+export default class HotClientServer
+{
+  constructor(compiler)
+  {
+    const httpServer = express()
 
     const httpPathRegex = /^https?:\/\/(.*):([\d]{1,5})/i
     const httpPath = compiler.options.output.publicPath
-    if (!httpPath.startsWith("http") && !httpPathRegex.test(httpPath)) {
+
+    if (!httpPath.startsWith("http") && !httpPathRegex.test(httpPath))
+    {
       throw new Error(
-        "You must supply an absolute public path to a development build of a web target bundle as it will be hosted on a seperate development server to any node target bundles.",
+        "You must supply an absolute public path to a development build of a web target bundle " +
+        "as it will be hosted on a seperate development server to any node target bundles."
       )
     }
 
@@ -32,32 +38,38 @@ class HotClientServer {
       publicPath: compiler.options.output.publicPath
     })
 
-    app.use(this.webpackDevMiddleware)
-    app.use(createWebpackHotMiddleware(compiler))
+    httpServer.use(this.webpackDevMiddleware)
+    httpServer.use(createWebpackHotMiddleware(compiler))
 
-    const listener = app.listen(port, host)
+    const listener = httpServer.listen(port, host)
 
     this.listenerManager = new ListenerManager(listener, "client")
 
-    compiler.plugin("compile", () => {
-      log({
+    compiler.plugin("compile", () =>
+    {
+      createNotification({
         title: "client",
         level: "info",
         message: "Building new bundle..."
       })
     })
 
-    compiler.plugin("done", (stats) => {
-      if (stats.hasErrors()) {
-        log({
+    compiler.plugin("done", (stats) =>
+    {
+      if (stats.hasErrors())
+      {
+        createNotification({
           title: "client",
           level: "error",
           message: "Build failed, please check the console for more information.",
           notify: true
         })
+
         console.error(stats.toString())
-      } else {
-        log({
+      }
+      else
+      {
+        createNotification({
           title: "client",
           level: "info",
           message: "Running with latest changes.",
@@ -67,7 +79,8 @@ class HotClientServer {
     })
   }
 
-  dispose() {
+  dispose()
+  {
     this.webpackDevMiddleware.close()
 
     return this.listenerManager ?
@@ -75,5 +88,3 @@ class HotClientServer {
       Promise.resolve()
   }
 }
-
-export default HotClientServer

@@ -1,14 +1,17 @@
-const { log } = require("../utils")
+import { createNotification } from "./util"
 
-class ListenerManager {
-  constructor(listener, name) {
+export default class ListenerManager
+{
+  constructor(listener, name)
+  {
     this.name = name || "listener"
     this.lastConnectionKey = 0
     this.connectionMap = {}
     this.listener = listener
 
     // Track all connections to our server so that we can close them when needed.
-    this.listener.on("connection", (connection) => {
+    this.listener.on("connection", (connection) =>
+    {
       // Increment the connection key.
       this.lastConnectionKey += 1
 
@@ -25,25 +28,30 @@ class ListenerManager {
     })
   }
 
-  killAllConnections() {
+  killAllConnections()
+  {
     Object.keys(this.connectionMap).forEach((connectionKey) => {
       this.connectionMap[connectionKey].destroy()
     })
   }
 
-  dispose() {
-    return new Promise((resolve) => {
-      if (this.listener) {
+  dispose()
+  {
+    return new Promise((resolve) =>
+    {
+      if (this.listener)
+      {
         this.killAllConnections()
 
-        log({
+        createNotification({
           title: this.name,
           level: "info",
           message: "Destroyed all existing connections."
         })
 
-        this.listener.close(() => {
-          log({
+        this.listener.close(() =>
+        {
+          createNotification({
             title: this.name,
             level: "info",
             message: "Closed listener."
@@ -51,11 +59,11 @@ class ListenerManager {
 
           resolve()
         })
-      } else {
+      }
+      else
+      {
         resolve()
       }
     })
   }
 }
-
-export default ListenerManager

@@ -1,24 +1,26 @@
 import path from "path"
 import appRootDir from "app-root-dir"
 import { spawn } from "child_process"
-import { log } from "../utils"
 
-class HotNodeServer {
-  constructor(compiler, clientCompiler) {
+import { createNotification } from "./util"
+
+export default class HotNodeServer
+{
+  constructor(compiler, clientCompiler)
+  {
     const compiledEntryFile = path.resolve(
       appRootDir.get(),
       compiler.options.output.path,
       `${Object.keys(compiler.options.entry)[0]}.js`,
     )
 
-    const name = "sdajjsad"
-
-    const startServer = () => {
+    const startServer = () =>
+    {
       if (this.server) {
         this.server.kill()
         this.server = null
-        log({
-          title: name,
+        createNotification({
+          title: "node-server",
           level: "info",
           message: "Restarting server..."
         })
@@ -26,35 +28,38 @@ class HotNodeServer {
 
       const newServer = spawn("node", [ compiledEntryFile ])
 
-      log({
-        title: name,
+      createNotification({
+        title: "node-server",
         level: "info",
         message: "Server running with latest changes.",
         notify: true
       })
 
-      newServer.stdout.on("data", (data) => console.log(data.toString().trim()))
+      newServer.stdout.on("data", (data) => console.createNotification(data.toString().trim()))
       newServer.stderr.on("data", (data) => {
-        log({
-          title: name,
+        createNotification({
+          title: "node-server",
           level: "error",
           message: "Error in server execution, check the console for more info."
         })
         console.error(data.toString().trim())
       })
+
       this.server = newServer
     }
 
     // We want our node server bundles to only start after a successful client
     // build.  This avoids any issues with node server bundles depending on
     // client bundle assets.
-    const waitForClientThenStartServer = () => {
+    const waitForClientThenStartServer = () =>
+    {
+      // A new server bundle is building, break this loop.
       if (this.serverCompiling) {
-        // A new server bundle is building, break this loop.
         return
       }
+
       if (this.clientCompiling) {
-        setTimeout(waitForClientThenStartServer, 50)
+        setTimeout(waitForClientThenStartServer, 100)
       } else {
         startServer()
       }
@@ -64,49 +69,58 @@ class HotNodeServer {
       this.clientCompiling = true
     })
 
-    clientCompiler.plugin("done", (stats) => {
+    clientCompiler.plugin("done", (stats) =>
+    {
       if (!stats.hasErrors()) {
         this.clientCompiling = false
       }
     })
 
-    compiler.plugin("compile", () => {
+    compiler.plugin("compile", () =>
+    {
       this.serverCompiling = true
-      log({
-        title: name,
+      createNotification({
+        title: "node-server",
         level: "info",
         message: "Building new bundle..."
       })
     })
 
-    compiler.plugin("done", (stats) => {
+    compiler.plugin("done", (stats) =>
+    {
       this.serverCompiling = false
 
       if (this.disposing) {
         return
       }
 
-      try {
-        if (stats.hasErrors()) {
-          log({
-            title: name,
+      try
+      {
+        if (stats.hasErrors())
+        {
+          createNotification({
+            title: "node-server",
             level: "error",
             message: "Build failed, check the console for more information.",
             notify: true
           })
-          console.log(stats.toString())
+
+          console.createNotification(stats.toString())
           return
         }
 
         waitForClientThenStartServer()
-      } catch (err) {
-        log({
-          title: name,
+      }
+      catch (error)
+      {
+        createNotification({
+          title: "node-server",
           level: "error",
           message: "Failed to start, please check the console for more information.",
           notify: true
         })
-        console.error(err)
+
+        console.error(error)
       }
     })
 
@@ -114,15 +128,18 @@ class HotNodeServer {
     this.watcher = compiler.watch(null, () => undefined)
   }
 
-  dispose() {
+  dispose()
+  {
     this.disposing = true
 
     const stopWatcher = new Promise((resolve) => {
       this.watcher.close(resolve)
     })
 
-    return stopWatcher.then(() => { if (this.server) this.server.kill() })
+    return stopWatcher.then(() => {
+      if (this.server) {
+        this.server.kill()
+      }
+    })
   }
 }
-
-export default HotNodeServer
