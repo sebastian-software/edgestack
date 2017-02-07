@@ -2,8 +2,8 @@ import path from "path"
 import rimraf from "rimraf"
 import webpack from "webpack"
 import { series } from "async"
-import gutil from "gulp-util"
-import fse from "fs-extra"
+import gulpUtil from "gulp-util"
+import fsExtra from "fs-extra"
 
 import ConfigFactory from "../webpack/ConfigFactory"
 
@@ -17,13 +17,13 @@ export default function build()
     {
       // Remove all content but keep the directory so that
       // if you're in it, you don't end up in Trash
-      rimraf(buildFolderClient + "/*", callback)
+      rimraf(`${buildFolderClient}/*`, callback)
     },
     function(callback)
     {
       // Remove all content but keep the directory so that
       // if you're in it, you don't end up in Trash
-      rimraf(buildFolderServer + "/*", callback)
+      rimraf(`${buildFolderServer}/*`, callback)
     },
     function(callback)
     {
@@ -40,19 +40,19 @@ export default function build()
         console.log("- Done")
         console.log("")
 
-        gutil.log(stats.toString({
+        gulpUtil.log(stats.toString({
           children: false,
           chunks: false,
           colors: true
         }))
 
-        //fixme: remove this snippet when https://github.com/webpack/webpack/issues/2390 is fixed
+        // fixme: remove this snippet when https://github.com/webpack/webpack/issues/2390 is fixed
         if (stats.hasErrors()) {
           process.exit(1)
         }
 
         var jsonStats = stats.toJson()
-        fse.writeJsonSync(path.resolve(buildFolderClient, "stats.json"), jsonStats)
+        fsExtra.writeJsonSync(path.resolve(buildFolderClient, "stats.json"), jsonStats)
         callback()
       })
     },
@@ -71,19 +71,19 @@ export default function build()
         console.log("- Done")
         console.log("")
 
-        gutil.log(stats.toString({
+        gulpUtil.log(stats.toString({
           children: false,
           chunks: false,
           colors: true
         }))
 
-        //fixme: remove this snippet when https://github.com/webpack/webpack/issues/2390 is fixed
+        // fixme: remove this snippet when https://github.com/webpack/webpack/issues/2390 is fixed
         if (stats.hasErrors()) {
           process.exit(1)
         }
 
         var jsonStats = stats.toJson()
-        fse.writeJsonSync(path.resolve(buildFolderServer, "stats.json"), jsonStats)
+        fsExtra.writeJsonSync(path.resolve(buildFolderServer, "stats.json"), jsonStats)
         callback()
       })
     }

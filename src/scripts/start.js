@@ -1,5 +1,5 @@
-import HotServers from "../webpack/HotServers"
+import HotController from "../webpack/HotController"
 
 export default function start() {
-  new HotServers().start()
+  new HotController()
 }
