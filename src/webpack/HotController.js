@@ -1,42 +1,51 @@
 import { resolve as pathResolve } from "path"
 import webpack from "webpack"
 import appRootDir from "app-root-dir"
-import { log } from "../utils"
-import HotNodeServer from "./hotNodeServer"
-import HotClientServer from "./hotClientServer"
+
+import { createNotification } from "./util"
+
+import HotNodeServer from "./HotNodeServer"
+import HotClientServer from "./HotClientServer"
+
 import createVendorDLL from "./createVendorDLL"
-import webpackConfigFactory from "../webpack/configFactory"
+import webpackConfigFactory from "./ConfigFactory"
 import getConfig from "../../config/get"
 
 const usesDevVendorDLL = (bundleConfig) =>
   bundleConfig.devVendorDLL != null && bundleConfig.devVendorDLL.enabled
 
-const vendorDLLsFailed = (err) => {
-  log({
+const vendorDLLsFailed = (error) =>
+{
+  createNotification({
     title: "vendorDLL",
     level: "error",
-    message: "Unfortunately an error occured whilst trying to build the vendor dll(s) used by the development server. Please check the console for more information.",
+    message: "Unfortunately an error occured whilst trying to build the vendor dll(s) used by " +
+      "the development server. Please check the console for more information.",
     notify: true
   })
-  if (err) {
-    console.error(err)
+
+  if (error) {
+    console.error(error)
   }
 }
 
-const initializeBundle = (name, bundleConfig) => {
-  const createCompiler = () => {
+const initializeBundle = (name, bundleConfig) =>
+{
+  const createCompiler = () =>
+  {
     try {
       const webpackConfig = webpackConfigFactory({
         target: name,
         mode: "development"
       })
 
+      /*
       // Install the vendor DLL config for the client bundle if required.
-      if (usesDevVendorDLL(bundleConfig)) {
+      if (usesDevVendorDLL(bundleConfig))
+      {
         // Install the vendor DLL plugin.
         webpackConfig.plugins.push(
           new webpack.DllReferencePlugin({
-            // $FlowFixMe
             manifest: require(
               pathResolve(
                 appRootDir.get(),
@@ -47,43 +56,51 @@ const initializeBundle = (name, bundleConfig) => {
           }),
         )
       }
+      */
+
       return webpack(webpackConfig)
-    } catch (err) {
-      log({
+    }
+    catch (error)
+    {
+      createNotification({
         title: "development",
         level: "error",
         message: "Webpack config is invalid, please check the console for more information.",
         notify: true
       })
-      console.error(err)
-      throw err
+
+      console.error(error)
+      throw error
     }
   }
-  return { name, bundleConfig, createCompiler }
+
+  return {
+    name,
+    bundleConfig,
+    createCompiler
+  }
 }
 
-class HotDevelopment {
-
-
-  constructor() {
+export default class HotController
+{
+  constructor()
+  {
     this.hotClientServer = null
-    this.hotNodeServers = []
+    this.hotNodeServer = null
 
     const clientBundle = initializeBundle("client", getConfig("bundles.client"))
-    const nodeBundles = initializeBundle("server", getConfig("bundles.server"))
+    const nodeBundle = initializeBundle("server", getConfig("bundles.server"))
 
-    Promise
-
-      // First ensure the client dev vendor DLLs is created if needed.
-      .resolve(
+    // First ensure the client dev vendor DLLs is created if needed.
+    Promise.resolve(
       usesDevVendorDLL(getConfig("bundles.client")) ?
-          createVendorDLL("client", getConfig("bundles.client")) :
-          true,
-      )
+        createVendorDLL("client", getConfig("bundles.client")) :
+        true,
+    )
 
       // Then start the client development server.
-      .then(
-      () => new Promise((resolve) => {
+      .then(() => new Promise((resolve) =>
+      {
         const { createCompiler } = clientBundle
         const compiler = createCompiler()
         compiler.plugin("done", (stats) => {
@@ -92,26 +109,20 @@ class HotDevelopment {
           }
         })
         this.hotClientServer = new HotClientServer(compiler)
-      }),
-      vendorDLLsFailed,
-      )
+      }), vendorDLLsFailed)
 
       // Then start the node development server(s).
       .then((clientCompiler) => {
-        this.hotNodeServers = new HotNodeServer(createCompiler(), clientCompiler)
+        this.hotNodeServer = new HotNodeServer(createCompiler(), clientCompiler)
       })
   }
 
-  dispose() {
+  dispose()
+  {
     const safeDisposer = (server) =>
       (server ? server.dispose() : Promise.resolve())
 
-    // First the hot client server.
-    return safeDisposer(this.hotClientServer)
-
-      // Then dispose the hot node server(s).
-      .then(() => Promise.all(this.hotNodeServers.map(safeDisposer)))
+    // First the hot client server. Then dispose the hot node server.
+    return safeDisposer(this.hotClientServer).then(() => safeDisposer(this.hotNodeServer))
   }
 }
-
-export default HotDevelopment
