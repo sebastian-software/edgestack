@@ -13,7 +13,7 @@ export function createNotification(options)
   }
 
   const level = options.level || "info"
-  const message = `==> ${title} -> ${options.message}`
+  const message = `- ${title}: ${options.message}`
 
   switch (level) {
     case "warn":
