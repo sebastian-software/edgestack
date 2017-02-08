@@ -35,7 +35,7 @@ export default class HotNodeServer
         notify: true
       })
 
-      newServer.stdout.on("data", (data) => console.createNotification(data.toString().trim()))
+      newServer.stdout.on("data", (data) => console.log(data.toString().trim()))
       newServer.stderr.on("data", (data) => {
         createNotification({
           title: "node-server",
@@ -105,7 +105,7 @@ export default class HotNodeServer
             notify: true
           })
 
-          console.createNotification(stats.toString())
+          console.log(stats.toString())
           return
         }
 
