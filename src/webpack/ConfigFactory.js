@@ -479,6 +479,13 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     )
   }
 
+  if (process.env.CLIENT_BUNDLE_OUTPUT_PATH === undefined)
+  {
+    throw new Error(
+      `No .env file found. Please provide one to your project's root. You can use ./node_modules/advanced-boilerplate/.env.example as template`
+    )
+  }
+
   process.env.NODE_ENV = options.debug ? "development" : mode
   process.env.BABEL_ENV = mode
 

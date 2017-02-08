@@ -181,11 +181,13 @@
     "yaml-loader": "^0.4.0"
   },
   "devDependencies": {
+    "eslint": "^3.15.0",
     "eslint_d": "^4.2.1",
     "lint-staged": "^3.3.0",
     "pre-commit": "^1.2.2",
     "prepublish": "^0.12.5",
     "rollup": "^0.41.4",
+    "rollup-plugin-executable": "^0.0.2",
     "sanitize.css": "^4.1.0",
     "source-sans-pro": "^2.0.10",
     "stylelint": "^7.7.1"
