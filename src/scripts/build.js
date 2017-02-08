@@ -2,11 +2,11 @@ import path from "path"
 import rimraf from "rimraf"
 import webpack from "webpack"
 import { series } from "async"
-import gulpUtil from "gulp-util"
 import fsExtra from "fs-extra"
 
 import ConfigFactory from "../webpack/ConfigFactory"
 
+/* eslint-disable no-process-exit */
 export default function build()
 {
   const buildFolderClient = path.resolve("build", "client")
@@ -38,13 +38,6 @@ export default function build()
         }
 
         console.log("- Done")
-        console.log("")
-
-        gulpUtil.log(stats.toString({
-          children: false,
-          chunks: false,
-          colors: true
-        }))
 
         // fixme: remove this snippet when https://github.com/webpack/webpack/issues/2390 is fixed
         if (stats.hasErrors()) {
@@ -69,13 +62,6 @@ export default function build()
         }
 
         console.log("- Done")
-        console.log("")
-
-        gulpUtil.log(stats.toString({
-          children: false,
-          chunks: false,
-          colors: true
-        }))
 
         // fixme: remove this snippet when https://github.com/webpack/webpack/issues/2390 is fixed
         if (stats.hasErrors()) {
