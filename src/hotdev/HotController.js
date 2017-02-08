@@ -1,4 +1,5 @@
 import webpack from "webpack"
+import chalk from "chalk"
 
 import { createNotification } from "./util"
 
@@ -15,13 +16,16 @@ function safeDisposer(server) {
 
 const getCompilerFactory = (name) =>
 {
-  return function createCompiler() {
+  return function createCompiler(label)
+  {
     try {
+      console.log(`${label} Generating Webpack Config...`)
       const webpackConfig = ConfigFactory({
         target: name === "server" ? "node" : "web",
         mode: "development"
       })
 
+      console.log(`${label} Initiating Webpack...`)
       return webpack(webpackConfig)
     }
     catch (error)
@@ -51,35 +55,47 @@ export default class HotController
 
     const createClientManager = () =>
     {
+      const label = chalk.blue("- Client Manager:")
+      console.log(`${label} Preparing...`)
+
       return new Promise((resolve) =>
       {
-        const compiler = createClientCompiler()
+        const compiler = createClientCompiler(label)
 
         compiler.plugin("done", (stats) =>
         {
+          console.log(`${label} Done`)
           if (!stats.hasErrors()) {
             resolve(compiler)
           }
         })
 
         this.hotClientServer = new HotClientManager(compiler)
+      }).catch((error) => {
+        console.error(`${label} Error`, error)
       })
     }
 
     const createServerManager = () =>
     {
+      const label = chalk.magenta("- Server Manager:")
+      console.log(`${label} Preparing...`)
+
       return new Promise((resolve) =>
       {
-        const compiler = createServerCompiler()
+        const compiler = createServerCompiler(label)
 
         compiler.plugin("done", (stats) =>
         {
+          console.log(`${label} Done`)
           if (!stats.hasErrors()) {
             resolve(compiler)
           }
         })
 
         this.hotNodeServer = new HotServerManager(compiler)
+      }).catch((error) => {
+        console.error(`${label} Error:`, error)
       })
     }
 

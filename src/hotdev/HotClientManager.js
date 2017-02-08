@@ -9,6 +9,8 @@ export default class HotClientManager
 {
   constructor(compiler)
   {
+    console.log("- Creating Hot Client Manager...")
+
     const httpServer = express()
 
     const httpPathRegex = /^https?:\/\/(.*):([\d]{1,5})/i
