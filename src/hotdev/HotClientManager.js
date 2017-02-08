@@ -16,6 +16,8 @@ export default class HotClientManager
     const httpPathRegex = /^https?:\/\/(.*):([\d]{1,5})/i
     const httpPath = compiler.options.output.publicPath
 
+    console.log("- Public Path:", httpPath)
+
     if (!httpPath.startsWith("http") && !httpPathRegex.test(httpPath))
     {
       throw new Error(
@@ -41,7 +43,9 @@ export default class HotClientManager
     })
 
     httpServer.use(this.webpackDevMiddleware)
-    httpServer.use(createWebpackHotMiddleware(compiler))
+    httpServer.use(createWebpackHotMiddleware(compiler, {
+      log: false
+    }))
 
     const listener = httpServer.listen(port, host)
 
@@ -50,7 +54,7 @@ export default class HotClientManager
     compiler.plugin("compile", () =>
     {
       createNotification({
-        title: "Client",
+        title: "Hot Client",
         level: "info",
         message: "Building new bundle..."
       })
@@ -61,7 +65,7 @@ export default class HotClientManager
       if (stats.hasErrors())
       {
         createNotification({
-          title: "Client",
+          title: "Hot Client",
           level: "error",
           message: "Build failed, please check the console for more information.",
           notify: true
@@ -72,7 +76,7 @@ export default class HotClientManager
       else
       {
         createNotification({
-          title: "Client",
+          title: "Hot Client",
           level: "info",
           message: "Running with latest changes.",
           notify: true
