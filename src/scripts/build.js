@@ -28,12 +28,12 @@ export default function build()
     function(callback)
     {
       console.log("Creating a production build for client...")
-      webpack(ConfigFactory("web", "production")).run((err, stats) =>
+      webpack(ConfigFactory({ target: "web", mode: "production" })).run((error, stats) =>
       {
-        if (err)
+        if (error)
         {
           console.error("Failed to create a production build for client:")
-          console.error(err.message || err)
+          console.error(error.message || error)
           process.exit(1)
         }
 
@@ -59,12 +59,12 @@ export default function build()
     function(callback)
     {
       console.log("Creating a production build for node...")
-      webpack(ConfigFactory("node", "production")).run((err, stats) =>
+      webpack(ConfigFactory({ target: "node", mode: "production" })).run((error, stats) =>
       {
-        if (err)
+        if (error)
         {
           console.error("Failed to create a production build for server:")
-          console.error(err.message || err)
+          console.error(error.message || error)
           process.exit(1)
         }
 

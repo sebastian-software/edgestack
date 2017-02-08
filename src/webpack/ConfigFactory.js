@@ -344,8 +344,10 @@ function getCssLoaders({ isNode, isWeb, isProd, isDev })
 const isDebug = true
 const isVerbose = true
 
-function ConfigFactory(target, mode, options = {}, root = CWD)
+function ConfigFactory({ target, mode, root = CWD, ...options })
 {
+  console.log("ConfigFactory:", target, mode, root, options)
+
   // Output custom options
   if (Object.keys(options).length > 0) {
     console.log("Using options: ", options)
