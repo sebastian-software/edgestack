@@ -574,7 +574,6 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
       // Therefor we disable it in production and only use it to speed up development rebuilds.
       //
       //
-      /*
       new HardSourceWebpackPlugin({
         // Either an absolute path or relative to output.path.
         cacheDirectory: path.resolve(root, ".hardsource", `${target}-${mode}`),
@@ -586,12 +585,11 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
         // Optional field. This field determines when to throw away the whole
         // cache if for example npm modules were updated.
         environmentHash: {
-          root: root,
+          root,
           directories: [ "node_modules" ],
           files: [ "package.json", "yarn.lock", ".env" ]
         }
       }),
-      */
 
       // There is now actual benefit in using multiple chunks for possibly long living
       // NodeJS applications. We can bundle everrything and that way improve startup time.
