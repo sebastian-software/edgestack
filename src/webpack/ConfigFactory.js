@@ -346,7 +346,7 @@ const isVerbose = true
 
 function ConfigFactory({ target, mode, root = CWD, ...options })
 {
-  console.log("ConfigFactory:", target, mode, root, options)
+  // console.log("ConfigFactory:", target, mode, root, options)
 
   // Output custom options
   if (Object.keys(options).length > 0) {
@@ -573,6 +573,8 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
       // Improve source caching in Webpack v2.
       // Therefor we disable it in production and only use it to speed up development rebuilds.
       //
+      //
+      /*
       new HardSourceWebpackPlugin({
         // Either an absolute path or relative to output.path.
         cacheDirectory: path.resolve(root, ".hardsource", `${target}-${mode}`),
@@ -589,6 +591,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
           files: [ "package.json", "yarn.lock", ".env" ]
         }
       }),
+      */
 
       // There is now actual benefit in using multiple chunks for possibly long living
       // NodeJS applications. We can bundle everrything and that way improve startup time.
