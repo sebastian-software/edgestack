@@ -99,7 +99,9 @@ export default class HotController
       })
     }
 
-    return createClientManager().then(createServerManager())
+    createClientManager().then(() => createServerManager()).catch((error) => {
+      console.error("Error during build:", error)
+    })
   }
 
   dispose()
