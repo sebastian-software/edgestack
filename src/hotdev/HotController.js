@@ -15,7 +15,7 @@ const getCompiler = (name) =>
 {
   try {
     const webpackConfig = ConfigFactory({
-      target: name,
+      target: name === "server" ? "node" : "web",
       mode: "development"
     })
 
@@ -42,14 +42,14 @@ export default class HotController
     this.hotClientServer = null
     this.hotNodeServer = null
 
-    const clientServerCompiler = getCompiler("client")
-    const nodeServerCompiler = getCompiler("node")
+    const clientCompiler = getCompiler("client")
+    const serverCompiler = getCompiler("server")
 
-    const createClientServer = () =>
+    const createClientManager = () =>
     {
       return new Promise((resolve) =>
       {
-        const compiler = clientServerCompiler()
+        const compiler = clientCompiler()
 
         compiler.plugin("done", (stats) =>
         {
@@ -62,11 +62,11 @@ export default class HotController
       })
     }
 
-    const createNodeServer = () =>
+    const createServerManager = () =>
     {
       return new Promise((resolve) =>
       {
-        const compiler = nodeServerCompiler()
+        const compiler = serverCompiler()
 
         compiler.plugin("done", (stats) =>
         {
@@ -79,7 +79,7 @@ export default class HotController
       })
     }
 
-    return createClientServer().then(createNodeServer())
+    return createClientManager().then(createServerManager())
   }
 
   dispose()
