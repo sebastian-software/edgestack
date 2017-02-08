@@ -22,7 +22,7 @@ export default class HotServerManager
         this.server.kill()
         this.server = null
         createNotification({
-          title: "node-server",
+          title: "Server",
           level: "info",
           message: "Restarting server..."
         })
@@ -31,7 +31,7 @@ export default class HotServerManager
       const newServer = spawn("node", [ compiledEntryFile ])
 
       createNotification({
-        title: "node-server",
+        title: "Server",
         level: "info",
         message: "Server running with latest changes.",
         notify: true
@@ -40,7 +40,7 @@ export default class HotServerManager
       newServer.stdout.on("data", (data) => console.log(data.toString().trim()))
       newServer.stderr.on("data", (data) => {
         createNotification({
-          title: "node-server",
+          title: "Server",
           level: "error",
           message: "Error in server execution, check the console for more info."
         })
@@ -82,7 +82,7 @@ export default class HotServerManager
     {
       this.serverCompiling = true
       createNotification({
-        title: "node-server",
+        title: "Server",
         level: "info",
         message: "Building new bundle..."
       })
@@ -101,7 +101,7 @@ export default class HotServerManager
         if (stats.hasErrors())
         {
           createNotification({
-            title: "node-server",
+            title: "Server",
             level: "error",
             message: "Build failed, check the console for more information.",
             notify: true
@@ -116,7 +116,7 @@ export default class HotServerManager
       catch (error)
       {
         createNotification({
-          title: "node-server",
+          title: "Server",
           level: "error",
           message: "Failed to start, please check the console for more information.",
           notify: true

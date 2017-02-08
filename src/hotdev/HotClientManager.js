@@ -50,7 +50,7 @@ export default class HotClientManager
     compiler.plugin("compile", () =>
     {
       createNotification({
-        title: "client",
+        title: "Client",
         level: "info",
         message: "Building new bundle..."
       })
@@ -61,7 +61,7 @@ export default class HotClientManager
       if (stats.hasErrors())
       {
         createNotification({
-          title: "client",
+          title: "Client",
           level: "error",
           message: "Build failed, please check the console for more information.",
           notify: true
@@ -72,7 +72,7 @@ export default class HotClientManager
       else
       {
         createNotification({
-          title: "client",
+          title: "Client",
           level: "info",
           message: "Running with latest changes.",
           notify: true

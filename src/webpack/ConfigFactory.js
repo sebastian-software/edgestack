@@ -350,7 +350,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
 
   // Output custom options
   if (Object.keys(options).length > 0) {
-    console.log("Using options: ", options)
+    console.log("- Webpack: Using options: ", options)
   }
 
   if (!target || ![ "web", "node" ].includes(target)) {
@@ -408,7 +408,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
   // See also: https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/
   const useLightNodeBundle = options.lightBundle == null ? isDev : options.lightBundle
   if (useLightNodeBundle && isNode) {
-    console.log("Using light node bundle")
+    console.log("- Webpack: Using light node bundle")
   }
 
   return {
