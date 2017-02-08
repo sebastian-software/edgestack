@@ -5,7 +5,7 @@ import createWebpackHotMiddleware from "webpack-hot-middleware"
 import ListenerManager from "./ListenerManager"
 import { createNotification } from "./util"
 
-export default class HotClientServer
+export default class HotClientManager
 {
   constructor(compiler)
   {

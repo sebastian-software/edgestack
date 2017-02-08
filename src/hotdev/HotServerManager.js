@@ -4,7 +4,7 @@ import { spawn } from "child_process"
 
 import { createNotification } from "./util"
 
-export default class HotNodeServer
+export default class HotServerManager
 {
   constructor(compiler, clientCompiler)
   {

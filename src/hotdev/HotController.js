@@ -2,10 +2,10 @@ import webpack from "webpack"
 
 import { createNotification } from "./util"
 
-import HotNodeServer from "./HotNodeServer"
-import HotClientServer from "./HotClientServer"
+import HotServerManager from "./HotServerManager"
+import HotClientManager from "./HotClientManager"
 
-import ConfigFactory from "./ConfigFactory"
+import ConfigFactory from "../webpack/ConfigFactory"
 
 function safeDisposer(server) {
   return server ? server.dispose() : Promise.resolve()
@@ -58,7 +58,7 @@ export default class HotController
           }
         })
 
-        this.hotClientServer = new HotClientServer(compiler)
+        this.hotClientServer = new HotClientManager(compiler)
       })
     }
 
@@ -75,7 +75,7 @@ export default class HotController
           }
         })
 
-        this.hotNodeServer = new HotNodeServer(compiler)
+        this.hotNodeServer = new HotServerManager(compiler)
       })
     }
 
