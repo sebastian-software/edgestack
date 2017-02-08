@@ -1,16 +1,15 @@
-import path from "path"
+import { resolve } from "path"
 import rimraf from "rimraf"
 import webpack from "webpack"
 import { series } from "async"
-import fsExtra from "fs-extra"
 
 import ConfigFactory from "../webpack/ConfigFactory"
 
 /* eslint-disable no-process-exit */
 export default function build()
 {
-  const buildFolderClient = path.resolve("build", "client")
-  const buildFolderServer = path.resolve("build", "server")
+  const buildFolderClient = resolve("build", "client")
+  const buildFolderServer = resolve("build", "server")
 
   series([
     function(callback)
@@ -37,21 +36,17 @@ export default function build()
           process.exit(1)
         }
 
-        console.log("- Done")
-
         // fixme: remove this snippet when https://github.com/webpack/webpack/issues/2390 is fixed
         if (stats.hasErrors()) {
           process.exit(1)
         }
 
-        var jsonStats = stats.toJson()
-        fsExtra.writeJsonSync(path.resolve(buildFolderClient, "stats.json"), jsonStats)
         callback()
       })
     },
     function(callback)
     {
-      console.log("Creating a production build for node...")
+      console.log("Creating a production build for server...")
       webpack(ConfigFactory({ target: "node", mode: "production" })).run((error, stats) =>
       {
         if (error)
@@ -61,15 +56,11 @@ export default function build()
           process.exit(1)
         }
 
-        console.log("- Done")
-
         // fixme: remove this snippet when https://github.com/webpack/webpack/issues/2390 is fixed
         if (stats.hasErrors()) {
           process.exit(1)
         }
 
-        var jsonStats = stats.toJson()
-        fsExtra.writeJsonSync(path.resolve(buildFolderServer, "stats.json"), jsonStats)
         callback()
       })
     }
