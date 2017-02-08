@@ -11,27 +11,31 @@ function safeDisposer(server) {
   return server ? server.dispose() : Promise.resolve()
 }
 
-const getCompiler = (name) =>
+/* eslint-disable arrow-body-style */
+
+const getCompilerFactory = (name) =>
 {
-  try {
-    const webpackConfig = ConfigFactory({
-      target: name === "server" ? "node" : "web",
-      mode: "development"
-    })
+  return function createCompiler() {
+    try {
+      const webpackConfig = ConfigFactory({
+        target: name === "server" ? "node" : "web",
+        mode: "development"
+      })
 
-    return webpack(webpackConfig)
-  }
-  catch (error)
-  {
-    createNotification({
-      title: "development",
-      level: "error",
-      message: "Webpack config is invalid, please check the console for more information.",
-      notify: true
-    })
+      return webpack(webpackConfig)
+    }
+    catch (error)
+    {
+      createNotification({
+        title: "development",
+        level: "error",
+        message: "Webpack config is invalid, please check the console for more information.",
+        notify: true
+      })
 
-    console.error(error)
-    throw error
+      console.error(error)
+      throw error
+    }
   }
 }
 
@@ -42,14 +46,14 @@ export default class HotController
     this.hotClientServer = null
     this.hotNodeServer = null
 
-    const clientCompiler = getCompiler("client")
-    const serverCompiler = getCompiler("server")
+    const createClientCompiler = getCompilerFactory("client")
+    const createServerCompiler = getCompilerFactory("server")
 
     const createClientManager = () =>
     {
       return new Promise((resolve) =>
       {
-        const compiler = clientCompiler()
+        const compiler = createClientCompiler()
 
         compiler.plugin("done", (stats) =>
         {
@@ -66,7 +70,7 @@ export default class HotController
     {
       return new Promise((resolve) =>
       {
-        const compiler = serverCompiler()
+        const compiler = createServerCompiler()
 
         compiler.plugin("done", (stats) =>
         {
@@ -85,6 +89,8 @@ export default class HotController
   dispose()
   {
     // First the hot client server. Then dispose the hot node server.
-    return safeDisposer(this.hotClientServer).then(() => safeDisposer(this.hotNodeServer))
+    return safeDisposer(this.hotClientServer).then(() => safeDisposer(this.hotNodeServer)).catch((error) => {
+      console.error(error)
+    })
   }
 }
