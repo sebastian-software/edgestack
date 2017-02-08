@@ -1,5 +1,5 @@
 import notifier from "node-notifier"
-import colors from "colors/safe"
+import colors from "colors"
 
 export function createNotification(options)
 {
