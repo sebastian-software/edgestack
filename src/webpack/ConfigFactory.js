@@ -353,18 +353,12 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
     console.log("Using options: ", options)
   }
 
-  if (!target || !~[ "web", "node" ].findIndex((valid) => target === valid))
-  {
-    throw new Error(
-      `You must provide a "target" (web|node) to the ConfigFactory.`
-    )
+  if (!target || ![ "web", "node" ].includes(target)) {
+    throw new Error('You must provide a "target" (web|node) to the ConfigFactory.')
   }
 
-  if (!mode || !~[ "development", "production" ].findIndex((valid) => mode === valid))
-  {
-    throw new Error(
-      `You must provide a "mode" (development|production) to the ConfigFactory.`
-    )
+  if (!mode || ![ "development", "production" ].includes(mode)) {
+    throw new Error('You must provide a "mode" (development|production) to the ConfigFactory.')
   }
 
   process.env.NODE_ENV = options.debug ? "development" : mode
