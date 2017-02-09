@@ -14,32 +14,29 @@ function safeDisposer(server) {
 
 /* eslint-disable arrow-body-style */
 
-const getCompilerFactory = (name) =>
+function createCompiler(name, label)
 {
-  return function createCompiler(label)
+  try {
+    console.log(`${label} Generating Webpack Config...`)
+    const webpackConfig = ConfigFactory({
+      target: name === "server" ? "node" : "web",
+      mode: "development"
+    })
+
+    console.log(`${label} Initiating Webpack...`)
+    return webpack(webpackConfig)
+  }
+  catch (error)
   {
-    try {
-      console.log(`${label} Generating Webpack Config...`)
-      const webpackConfig = ConfigFactory({
-        target: name === "server" ? "node" : "web",
-        mode: "development"
-      })
+    createNotification({
+      title: "development",
+      level: "error",
+      message: "Webpack config is invalid, please check the console for more information.",
+      notify: true
+    })
 
-      console.log(`${label} Initiating Webpack...`)
-      return webpack(webpackConfig)
-    }
-    catch (error)
-    {
-      createNotification({
-        title: "development",
-        level: "error",
-        message: "Webpack config is invalid, please check the console for more information.",
-        notify: true
-      })
-
-      console.error(error)
-      throw error
-    }
+    console.error(error)
+    throw error
   }
 }
 
@@ -50,9 +47,6 @@ export default class HotController
     this.hotClientManager = null
     this.hotServerManager = null
 
-    const createClientCompiler = getCompilerFactory("client")
-    const createServerCompiler = getCompilerFactory("server")
-
     const createClientManager = () =>
     {
       const label = chalk.blue("Hot Client Manager:")
@@ -60,7 +54,7 @@ export default class HotController
 
       return new Promise((resolve) =>
       {
-        const compiler = createClientCompiler(label)
+        const compiler = createCompiler("client", label)
 
         compiler.plugin("done", (stats) =>
         {
@@ -84,7 +78,7 @@ export default class HotController
 
       return new Promise((resolve) =>
       {
-        const compiler = createServerCompiler(label)
+        const compiler = createCompiler("server", label)
 
         compiler.plugin("done", (stats) =>
         {
