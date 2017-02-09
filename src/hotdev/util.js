@@ -26,6 +26,6 @@ export function createNotification(options)
 
     case "info":
     default:
-      console.log(chalk.green(message))
+      console.log(message)
   }
 }
