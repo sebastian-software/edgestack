@@ -42,7 +42,7 @@ const enableHardSource = true
 // - "node-zopfli" native Zopfli implementation
 const problematicCommonJS = new Set([ "intl", "react-intl", "mime-db", "helmet", "express", "encoding",
   "node-pre-gyp", "iltorb", "node-zopfli" ])
-const CWD = process.cwd()
+const CURRENT_WORKING_DIRECTORY = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
 dotenv.config()
@@ -86,7 +86,7 @@ function isLoaderSpecificFile(request) {
 function ifIsFile(filePath) {
   try {
     return statSync(filePath).isFile() ? filePath : ""
-  } catch (err) {
+  } catch (error) {
     // empty
   }
 
@@ -347,7 +347,7 @@ function getCssLoaders({ isNode, isWeb, isProd, isDev })
 const isDebug = true
 const isVerbose = true
 
-function ConfigFactory({ target, mode, root = CWD, ...options })
+function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...options })
 {
   // console.log("ConfigFactory:", target, mode, root, options)
 
@@ -626,7 +626,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
           // Pass options for PostCSS
           options: {
             postcss: getPostCSSConfig({}),
-            context: CWD
+            context: CURRENT_WORKING_DIRECTORY
           }
         })
       ),
@@ -645,7 +645,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
           // Pass options for PostCSS
           options: {
             postcss: getPostCSSConfig({}),
-            context: CWD
+            context: CURRENT_WORKING_DIRECTORY
           }
         })
       ),
