@@ -431,6 +431,8 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
       __filename: true
     },
 
+    recordsPath: path.resolve(root, ".recordscache"),
+
     // What information should be printed to the console
     stats: {
       colors: true,
