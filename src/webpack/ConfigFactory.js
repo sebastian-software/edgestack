@@ -497,9 +497,9 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
     devtool: "source-map",
 
     // New performance hints. Only active for production build.
-    performance: {
-      hints: isProd && isWeb ? "warning" : false
-    },
+    performance: isProd && isWeb ? {
+      hints: "warning"
+    } : false,
 
     // Define our entry chunks for our bundle.
     entry: removeEmptyKeys(
