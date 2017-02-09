@@ -35,7 +35,7 @@ function getLanguage() {
   return typeof document !== "undefined" ? document.documentElement.lang : "de_DE" // FIXME
 }
 
-console.log("Language:", getLanguage())
+// console.log("Language:", getLanguage())
 
 
 let needsPolyfill = false
@@ -61,7 +61,7 @@ if (global.Intl) {
   })
 }
 
-console.log("Needs Intl Polyfill:", needsPolyfill)
+// console.log("Needs Intl Polyfill:", needsPolyfill)
 
 
 // only returns true when there is a match and isExact is true
