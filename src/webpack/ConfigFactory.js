@@ -28,6 +28,9 @@ import getPostCSSConfig from "./PostCSSConfig"
 
 const builtInSet = new Set(builtinModules)
 
+const enableHardSource = true
+
+
 // - "intl" is included in one block with complete data. No reason for bundle everything here.
 // - "react-intl" for the same reason as "intl" - contains a ton of locale data
 // - "mime-db" database for working with mime types. Naturally pretty large stuff.
@@ -164,7 +167,7 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
     presets:
     [
       // let, const, destructuring, classes, no modules
-      [ "babel-preset-es2015", { modules: false }],
+      [ "babel-preset-es2015", enableHardSource ? {} : { modules: false }],
 
       // Exponentiation
       "babel-preset-es2016",
@@ -419,6 +422,8 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
     console.log("- Webpack: Using light node bundle")
   }
 
+
+
   return {
     // We need to inform Webpack about our build target
     target,
@@ -430,8 +435,6 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
       __dirname: true,
       __filename: true
     },
-
-    recordsPath: path.resolve(root, ".recordscache"),
 
     // What information should be printed to the console
     stats: {
@@ -466,11 +469,11 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
 
         // Externalize built-in modules
         if (builtInSet.has(basename))
-          return callback(null, "commonjs " + request)
+          return callback(null, `commonjs ${request}`)
 
         // Keep care that problematic common-js code is external
         if (problematicCommonJS.has(basename))
-          return callback(null, "commonjs " + request)
+          return callback(null, `commonjs ${request}`)
 
         // Ignore inline files
         if (basename.charAt(0) === ".")
@@ -485,7 +488,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
           return callback()
 
         // In all other cases follow the user given preference
-        useLightNodeBundle ? callback(null, "commonjs " + request) : callback()
+        useLightNodeBundle ? callback(null, `commonjs ${request}`) : callback()
       })
     ]),
 
@@ -563,8 +566,12 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
       // Enable new module/jsnext:main field for requiring files
       // Defaults: https://webpack.github.io/docs/configuration.html#resolve-packagemains
       mainFields: ifNode(
-        [ "module", "jsnext:main", "main" ],
-        [ "web", "browser", "style", "module", "jsnext:main", "main" ]
+        enableHardSource ?
+          [ "main" ] :
+          [ "module", "jsnext:main", "main" ],
+        enableHardSource ?
+          [ "web", "browser", "style", "main" ] :
+          [ "web", "browser", "style", "module", "jsnext:main", "main" ]
       ),
 
       // These extensions are tried when resolving a file.
@@ -584,7 +591,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
       // Therefor we disable it in production and only use it to speed up development rebuilds.
       //
       //
-      new HardSourceWebpackPlugin({
+      enableHardSource ? new HardSourceWebpackPlugin({
         // Either an absolute path or relative to output.path.
         cacheDirectory: path.resolve(root, ".hardsource", `${target}-${mode}`),
 
@@ -599,7 +606,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
           directories: [ "node_modules" ],
           files: [ "package.json", "yarn.lock", ".env" ]
         }
-      }),
+      }) : null,
 
       // There is now actual benefit in using multiple chunks for possibly long living
       // NodeJS applications. We can bundle everrything and that way improve startup time.

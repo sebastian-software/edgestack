@@ -8,8 +8,6 @@ export default class HotServerManager
 {
   constructor(compiler, clientCompiler)
   {
-    console.log("- Creating Hot Server Manager...")
-
     const compiledEntryFile = path.resolve(
       appRootDir.get(),
       compiler.options.output.path,
