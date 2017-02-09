@@ -721,7 +721,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
         // builds as React relies on process.env.NODE_ENV for optimizations.
         "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
 
-        "process.env.APP_ROOT": JSON.stringify(path.resolve(root)),
+        "process.env.APP_ROOT": JSON.stringify(process.env.APP_ROOT),
 
         // All the below items match the config items in our .env file. Go
         // to the .env.example for a description of each key.
