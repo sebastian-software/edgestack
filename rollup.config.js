@@ -1,5 +1,6 @@
 import babel from "rollup-plugin-babel"
 import json from "rollup-plugin-json"
+import executable from "rollup-plugin-executable"
 import builtinModules from "builtin-modules"
 
 /* eslint-disable import/no-commonjs */
@@ -34,6 +35,7 @@ export default {
         // { ...todo, completed: true }
         [ "transform-object-rest-spread", { useBuiltIns: true }]
       ]
-    })
+    }),
+    executable()
   ]
 }
