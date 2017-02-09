@@ -347,6 +347,13 @@ function getCssLoaders({ isNode, isWeb, isProd, isDev })
 const isDebug = true
 const isVerbose = true
 
+const cache = {
+  "web-production": {},
+  "web-development": {},
+  "node-production": {},
+  "node-development": {}
+}
+
 function ConfigFactory({ target, mode, root = CWD, ...options })
 {
   // console.log("ConfigFactory:", target, mode, root, options)
@@ -452,7 +459,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
     // This is not the file cache, but the runtime cache.
     // The reference is used to speed-up rebuilds in one execution e.g. via watcher
     // Note: But is has to share the same configuration as the cache is not config aware.
-    // cache: cache,
+    cache: cache[`${target}-${mode}`],
 
     // Capture timing information for each module.
     // Analyse tool: http://webpack.github.io/analyse
