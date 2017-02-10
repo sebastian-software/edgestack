@@ -94,7 +94,7 @@ function AppContainer({ children }) {
       </div>
       <div>
         <ul>
-          <li><NavLink to="/" activeClassName={Styles.activeLink}>Home</NavLink></li>
+          <li><NavLink exact to="/" activeClassName={Styles.activeLink}>Home</NavLink></li>
           <li><NavLink to="/about" activeClassName={Styles.activeLink}>About</NavLink></li>
         </ul>
       </div>
