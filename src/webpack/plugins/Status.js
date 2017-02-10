@@ -1,4 +1,4 @@
-export default class StatusPlugin
+export default class Status
 {
   constructor({ name, start, done })
   {
@@ -12,7 +12,6 @@ export default class StatusPlugin
   }
 
   checkDone = () => {
-    // console.log(">>> STATUS: Build is ready:", this.name)
     this.running = false
     this.done()
   }
@@ -31,7 +30,6 @@ export default class StatusPlugin
       }
 
       if (!this.running) {
-        // console.log(">>> STATUS: Compiling:", this.name)
         this.running = true
         this.start()
       }

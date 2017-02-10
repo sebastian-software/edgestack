@@ -2,7 +2,7 @@ import { startsWith, includes } from "lodash"
 
 // const NanoToMilli = 1000000
 
-export default class VerboseProgressPlugin {
+export default class VerboseProgress {
   constructor(options) {
     this.options = options
     this.cwd = process.cwd()

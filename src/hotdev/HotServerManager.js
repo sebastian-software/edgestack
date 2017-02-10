@@ -79,11 +79,6 @@ export default class HotServerManager
     compiler.plugin("compile", () =>
     {
       this.serverCompiling = true
-      createNotification({
-        title: "Hot Server",
-        level: "info",
-        message: "Building new bundle..."
-      })
     })
 
     compiler.plugin("done", (stats) =>
