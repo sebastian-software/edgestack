@@ -7,6 +7,7 @@ import HotServerManager from "./HotServerManager"
 import HotClientManager from "./HotClientManager"
 
 import ConfigFactory from "../webpack/ConfigFactory"
+import StatusPlugin from "../webpack/plugins/Status"
 
 function safeDisposer(server) {
   return server ? server.dispose() : Promise.resolve()
@@ -14,16 +15,18 @@ function safeDisposer(server) {
 
 /* eslint-disable arrow-body-style */
 
-function createCompiler(name, label)
+function createCompiler({ name, start, done })
 {
   try {
-    console.log(`${label} Generating Webpack Config...`)
     const webpackConfig = ConfigFactory({
       target: name === "server" ? "node" : "web",
       mode: "development"
     })
 
-    console.log(`${label} Initiating Webpack...`)
+    // Offering a special status handling until Webpack offers a proper `done()` callback
+    // See also: https://github.com/webpack/webpack/issues/4243
+    webpackConfig.plugins.push(new StatusPlugin({ name, start, done }))
+
     return webpack(webpackConfig)
   }
   catch (error)
@@ -54,12 +57,14 @@ export default class HotController
 
       return new Promise((resolve) =>
       {
-        const compiler = createCompiler("client", label)
-
-        compiler.plugin("done", (stats) =>
-        {
-          console.log(`${label} Done`)
-          if (!stats.hasErrors()) {
+        const compiler = createCompiler({
+          name: "client",
+          start: () => {
+            console.log(`${label} Start`)
+          },
+          done: () =>
+          {
+            console.log(`${label} Done`)
             resolve(compiler)
           }
         })
@@ -78,12 +83,13 @@ export default class HotController
 
       return new Promise((resolve) =>
       {
-        const compiler = createCompiler("server", label)
-
-        compiler.plugin("done", (stats) =>
-        {
-          console.log(`${label} Done`)
-          if (!stats.hasErrors()) {
+        const compiler = createCompiler({
+          name: "server",
+          start: () => {
+            console.log(`${label} Start`)
+          },
+          done: () => {
+            console.log(`${label} Done`)
             resolve(compiler)
           }
         })
