@@ -1,5 +1,4 @@
 import webpack from "webpack"
-import chalk from "chalk"
 
 import { createNotification } from "./util"
 
@@ -52,52 +51,60 @@ export default class HotController
 
     const createClientManager = () =>
     {
-      const label = chalk.blue("Hot Client Manager:")
-      console.log(`${label} Preparing...`)
-
       return new Promise((resolve) =>
       {
         const compiler = createCompiler({
           name: "client",
           start: () => {
-            console.log(`${label} Start`)
+            createNotification({
+              title: "Hot Client",
+              level: "info",
+              message: "Building new bundle..."
+            })
           },
           done: () =>
           {
-            console.log(`${label} Done`)
+            createNotification({
+              title: "Hot Client",
+              level: "info",
+              message: "Running with latest changes.",
+              notify: true
+            })
             resolve(compiler)
           }
         })
 
         this.hotClientCompiler = compiler
         this.hotClientManager = new HotClientManager(compiler)
-      }).catch((error) => {
-        console.error(`${label} Error`, error)
       })
     }
 
     const createServerManager = () =>
     {
-      const label = chalk.magenta("Hot Server Manager:")
-      console.log(`${label} Preparing...`)
-
       return new Promise((resolve) =>
       {
         const compiler = createCompiler({
           name: "server",
           start: () => {
-            console.log(`${label} Start`)
+            createNotification({
+              title: "Hot Server",
+              level: "info",
+              message: "Building new bundle..."
+            })
           },
           done: () => {
-            console.log(`${label} Done`)
+            createNotification({
+              title: "Hot Server",
+              level: "info",
+              message: "Running with latest changes.",
+              notify: true
+            })
             resolve(compiler)
           }
         })
 
         this.hotServerCompiler = compiler
         this.hotServerManager = new HotServerManager(compiler, this.hotClientCompiler)
-      }).catch((error) => {
-        console.error(`${label} Error:`, error)
       })
     }
 

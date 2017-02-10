@@ -9,8 +9,6 @@ export default class HotClientManager
 {
   constructor(compiler)
   {
-    console.log("- Creating Hot Client Manager...")
-
     const httpServer = express()
 
     const httpPathRegex = /^https?:\/\/(.*):([\d]{1,5})/i
@@ -51,15 +49,6 @@ export default class HotClientManager
 
     this.listenerManager = new ListenerManager(listener, "client")
 
-    compiler.plugin("compile", () =>
-    {
-      createNotification({
-        title: "Hot Client",
-        level: "info",
-        message: "Building new bundle..."
-      })
-    })
-
     compiler.plugin("done", (stats) =>
     {
       if (stats.hasErrors())
@@ -72,15 +61,6 @@ export default class HotClientManager
         })
 
         console.error(stats.toString())
-      }
-      else
-      {
-        createNotification({
-          title: "Hot Client",
-          level: "info",
-          message: "Running with latest changes.",
-          notify: true
-        })
       }
     })
   }
