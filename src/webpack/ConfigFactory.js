@@ -425,9 +425,10 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
   // of a deep self-contained bundle.
   // See also: https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/
   const useLightNodeBundle = options.lightBundle == null ? isDev : options.lightBundle
-  if (useLightNodeBundle && isNode) {
-    console.log("- Webpack: Using light node bundle")
-  }
+
+  // if (useLightNodeBundle && isNode) {
+  //   console.log("- Webpack: Using light node bundle")
+  // }
 
 
 

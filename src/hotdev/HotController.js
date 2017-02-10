@@ -1,4 +1,7 @@
 import webpack from "webpack"
+import { spawn } from "child_process"
+import appRootDir from "app-root-dir"
+import path from "path"
 
 import { createNotification } from "./util"
 
@@ -8,8 +11,8 @@ import HotClientManager from "./HotClientManager"
 import ConfigFactory from "../webpack/ConfigFactory"
 import StatusPlugin from "../webpack/plugins/Status"
 
-function safeDisposer(server) {
-  return server ? server.dispose() : Promise.resolve()
+function safeDisposer(manager) {
+  return manager ? manager.dispose() : Promise.resolve()
 }
 
 /* eslint-disable arrow-body-style */
@@ -49,6 +52,9 @@ export default class HotController
     this.hotClientManager = null
     this.hotServerManager = null
 
+    this.clientIsBuilding = false
+    this.serverIsBuilding = false
+
     const createClientManager = () =>
     {
       return new Promise((resolve) =>
@@ -56,6 +62,7 @@ export default class HotController
         const compiler = createCompiler({
           name: "client",
           start: () => {
+            this.clientIsBuilding = true
             createNotification({
               title: "Hot Client",
               level: "info",
@@ -64,10 +71,11 @@ export default class HotController
           },
           done: () =>
           {
+            this.clientIsBuilding = false
             createNotification({
               title: "Hot Client",
               level: "info",
-              message: "Running with latest changes.",
+              message: "Bundle is ready.",
               notify: true
             })
             resolve(compiler)
@@ -86,6 +94,7 @@ export default class HotController
         const compiler = createCompiler({
           name: "server",
           start: () => {
+            this.serverIsBuilding = true
             createNotification({
               title: "Hot Server",
               level: "info",
@@ -93,15 +102,24 @@ export default class HotController
             })
           },
           done: () => {
+            this.serverIsBuilding = false
             createNotification({
               title: "Hot Server",
               level: "info",
-              message: "Running with latest changes.",
+              message: "Bundle is ready.",
               notify: true
             })
+
+            this.tryStartServer()
             resolve(compiler)
           }
         })
+
+        this.compiledServer = path.resolve(
+          appRootDir.get(),
+          compiler.options.output.path,
+          `${Object.keys(compiler.options.entry)[0]}.js`,
+        )
 
         this.hotServerCompiler = compiler
         this.hotServerManager = new HotServerManager(compiler, this.hotClientCompiler)
@@ -111,6 +129,53 @@ export default class HotController
     createClientManager().then(createServerManager).catch((error) => {
       console.error("Error during build:", error)
     })
+  }
+
+  tryStartServer = () =>
+  {
+    if (this.clientIsBuilding) {
+      if (this.serverTryTimeout) {
+        clearTimeout(this.serverTryTimeout)
+      }
+      this.serverTryTimeout = setTimeout(this.tryStartServer())
+      return
+    }
+
+    this.startServer()
+  }
+
+  startServer = () =>
+  {
+    if (this.server) {
+      this.server.kill()
+      this.server = null
+      createNotification({
+        title: "Hot Server",
+        level: "info",
+        message: "Restarting server..."
+      })
+    }
+
+    const newServer = spawn("node", [ this.compiledServer ])
+
+    createNotification({
+      title: "Hot Server",
+      level: "info",
+      message: "Server running with latest changes.",
+      notify: true
+    })
+
+    newServer.stdout.on("data", (data) => console.log(data.toString().trim()))
+    newServer.stderr.on("data", (data) => {
+      createNotification({
+        title: "Hot Server",
+        level: "error",
+        message: "Error in server execution, check the console for more info."
+      })
+      console.error(data.toString().trim())
+    })
+
+    this.server = newServer
   }
 
   dispose()

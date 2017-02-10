@@ -54,7 +54,7 @@ export default class HotClientManager
       if (stats.hasErrors())
       {
         createNotification({
-          title: "Hot Client",
+          title: "Hot Client Manager",
           level: "error",
           message: "Build failed, please check the console for more information.",
           notify: true
