@@ -31,7 +31,12 @@ export default {
         }]
       ],
 
-      plugins: [
+      plugins:
+      [
+        // class { handleClick = () => { } }
+        // https://github.com/tc39/proposal-class-public-fields
+        "transform-class-properties",
+
         // { ...todo, completed: true }
         [ "transform-object-rest-spread", { useBuiltIns: true }]
       ]
