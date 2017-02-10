@@ -19,7 +19,7 @@ export default class StatusPlugin {
   {
     compiler.plugin("done", (stats) => {
       if (!stats.hasErrors()) {
-        this.watcher = setTimeout(this.checkDone, 50)
+        this.watcher = setTimeout(this.checkDone, 0)
       }
     })
 
