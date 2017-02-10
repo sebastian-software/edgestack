@@ -352,6 +352,13 @@ function getCssLoaders({ isNode, isWeb, isProd, isDev })
 const isDebug = true
 const isVerbose = true
 
+const cache = {
+  "web-production": {},
+  "web-development": {},
+  "node-production": {},
+  "node-development": {}
+}
+
 // eslint-disable-next-line complexity, max-statements
 function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...options })
 {
@@ -429,9 +436,10 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
   // of a deep self-contained bundle.
   // See also: https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/
   const useLightNodeBundle = options.lightBundle == null ? isDev : options.lightBundle
-  if (useLightNodeBundle && isNode) {
-    console.log("- Webpack: Using light node bundle")
-  }
+
+  // if (useLightNodeBundle && isNode) {
+  //   console.log("- Webpack: Using light node bundle")
+  // }
 
 
 
@@ -463,7 +471,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
     // This is not the file cache, but the runtime cache.
     // The reference is used to speed-up rebuilds in one execution e.g. via watcher
     // Note: But is has to share the same configuration as the cache is not config aware.
-    // cache: cache,
+    cache: cache[`${target}-${mode}`],
 
     // Capture timing information for each module.
     // Analyse tool: http://webpack.github.io/analyse
@@ -662,7 +670,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
         })
       ),
 
-      new VerboseProgress(),
+      // new VerboseProgress(),
 
       /*
       ifProd(new BabiliPlugin({
