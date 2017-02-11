@@ -23,7 +23,7 @@ function checkConstructorNames(object) {
 
 function generateChunkName(resource) {
   if (resource == null) {
-    return
+    return null
   }
 
   let relative = path.relative(WORKING_DIR, resource)
@@ -48,6 +48,7 @@ export default class ChunkNames
 {
   apply(compiler)
   {
+    /* eslint-disable max-nested-callbacks */
     compiler.plugin("compilation", (compilation) => {
       compilation.plugin("seal", () => {
         compilation.modules.forEach((module) => {

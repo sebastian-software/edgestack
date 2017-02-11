@@ -35,7 +35,7 @@ function getLanguage() {
   return typeof document !== "undefined" ? document.documentElement.lang : "de_DE" // FIXME
 }
 
-console.log("Language:", getLanguage())
+// console.log("Language:", getLanguage())
 
 
 let needsPolyfill = false
@@ -61,7 +61,7 @@ if (global.Intl) {
   })
 }
 
-console.log("Needs Intl Polyfill:", needsPolyfill)
+// console.log("Needs Intl Polyfill:", needsPolyfill)
 
 
 // only returns true when there is a match and isExact is true
@@ -94,7 +94,7 @@ function AppContainer({ children }) {
       </div>
       <div>
         <ul>
-          <li><NavLink to="/" activeClassName={Styles.activeLink}>Home</NavLink></li>
+          <li><NavLink exact to="/" activeClassName={Styles.activeLink}>Home</NavLink></li>
           <li><NavLink to="/about" activeClassName={Styles.activeLink}>About</NavLink></li>
         </ul>
       </div>

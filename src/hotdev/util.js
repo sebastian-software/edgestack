@@ -1,9 +1,9 @@
 import notifier from "node-notifier"
-import colors from "colors/safe"
+import chalk from "chalk"
 
 export function createNotification(options)
 {
-  const title = `${options.title.toUpperCase()}`
+  const title = `${options.title}`
 
   if (options.notify) {
     notifier.notify({
@@ -13,19 +13,19 @@ export function createNotification(options)
   }
 
   const level = options.level || "info"
-  const message = `==> ${title} -> ${options.message}`
+  const message = `${chalk.bold(title)}: ${options.message}`
 
   switch (level) {
     case "warn":
-      console.log(colors.yellow(message))
+      console.log(chalk.yellow(message))
       break
 
     case "error":
-      console.log(colors.bgRed.white(message))
+      console.log(chalk.bgRed.white(message))
       break
 
     case "info":
     default:
-      console.log(colors.green(message))
+      console.log(message)
   }
 }

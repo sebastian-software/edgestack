@@ -1,11 +1,11 @@
 import express from "express"
-import createWebpackMiddleware from "webpack-dev-middleware"
-import createWebpackHotMiddleware from "webpack-hot-middleware"
+import createDevMiddleware from "webpack-dev-middleware"
+import createHotMiddleware from "webpack-hot-middleware"
 
 import ListenerManager from "./ListenerManager"
 import { createNotification } from "./util"
 
-export default class HotClientServer
+export default class HotClientManager
 {
   constructor(compiler)
   {
@@ -25,7 +25,7 @@ export default class HotClientServer
     // eslint-disable-next-line no-unused-vars
     const [ _, host, port ] = httpPathRegex.exec(httpPath)
 
-    this.webpackDevMiddleware = createWebpackMiddleware(compiler, {
+    this.devMiddleware = createDevMiddleware(compiler, {
       quiet: true,
       noInfo: true,
       headers: {
@@ -38,28 +38,23 @@ export default class HotClientServer
       publicPath: compiler.options.output.publicPath
     })
 
-    httpServer.use(this.webpackDevMiddleware)
-    httpServer.use(createWebpackHotMiddleware(compiler))
+    this.hotMiddleware = createHotMiddleware(compiler, {
+      log: false
+    })
+
+    httpServer.use(this.devMiddleware)
+    httpServer.use(this.hotMiddleware)
 
     const listener = httpServer.listen(port, host)
 
     this.listenerManager = new ListenerManager(listener, "client")
-
-    compiler.plugin("compile", () =>
-    {
-      createNotification({
-        title: "client",
-        level: "info",
-        message: "Building new bundle..."
-      })
-    })
 
     compiler.plugin("done", (stats) =>
     {
       if (stats.hasErrors())
       {
         createNotification({
-          title: "client",
+          title: "Hot Client Manager",
           level: "error",
           message: "Build failed, please check the console for more information.",
           notify: true
@@ -67,21 +62,12 @@ export default class HotClientServer
 
         console.error(stats.toString())
       }
-      else
-      {
-        createNotification({
-          title: "client",
-          level: "info",
-          message: "Running with latest changes.",
-          notify: true
-        })
-      }
     })
   }
 
   dispose()
   {
-    this.webpackDevMiddleware.close()
+    this.devMiddleware.close()
 
     return this.listenerManager ?
       this.listenerManager.dispose() :

@@ -28,7 +28,5 @@ export function start()
   })
 }
 
-// Auto start server in production
-if (process.env.NODE_ENV === "production") {
-  start()
-}
+// Auto start server
+start()

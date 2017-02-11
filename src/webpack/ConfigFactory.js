@@ -28,6 +28,9 @@ import getPostCSSConfig from "./PostCSSConfig"
 
 const builtInSet = new Set(builtinModules)
 
+const enableHardSource = true
+
+
 // - "intl" is included in one block with complete data. No reason for bundle everything here.
 // - "react-intl" for the same reason as "intl" - contains a ton of locale data
 // - "mime-db" database for working with mime types. Naturally pretty large stuff.
@@ -164,7 +167,7 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
     presets:
     [
       // let, const, destructuring, classes, no modules
-      [ "babel-preset-es2015", { modules: false }],
+      [ "babel-preset-es2015", enableHardSource ? {} : { modules: false }],
 
       // Exponentiation
       "babel-preset-es2016",
@@ -344,24 +347,35 @@ function getCssLoaders({ isNode, isWeb, isProd, isDev })
 const isDebug = true
 const isVerbose = true
 
-function ConfigFactory(target, mode, options = {}, root = CWD)
+const cache = {
+  "web-production": {},
+  "web-development": {},
+  "node-production": {},
+  "node-development": {}
+}
+
+function ConfigFactory({ target, mode, root = CWD, ...options })
 {
+  // console.log("ConfigFactory:", target, mode, root, options)
+
   // Output custom options
   if (Object.keys(options).length > 0) {
-    console.log("Using options: ", options)
+    console.log("- Webpack: Using options: ", options)
   }
 
-  if (!target || !~[ "web", "node" ].findIndex((valid) => target === valid))
-  {
-    throw new Error(
-      `You must provide a "target" (web|node) to the ConfigFactory.`
-    )
+  if (!target || ![ "web", "node" ].includes(target)) {
+    throw new Error('You must provide a "target" (web|node) to the ConfigFactory.')
   }
 
-  if (!mode || !~[ "development", "production" ].findIndex((valid) => mode === valid))
+  if (!mode || ![ "development", "production" ].includes(mode)) {
+    throw new Error('You must provide a "mode" (development|production) to the ConfigFactory.')
+  }
+
+  if (process.env.CLIENT_BUNDLE_OUTPUT_PATH === undefined)
   {
     throw new Error(
-      `You must provide a "mode" (development|production) to the ConfigFactory.`
+      `No .env file found. Please provide one to your project's root. ` +
+      `You can use ./node_modules/advanced-boilerplate/.env.example as template`
     )
   }
 
@@ -411,9 +425,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   // of a deep self-contained bundle.
   // See also: https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/
   const useLightNodeBundle = options.lightBundle == null ? isDev : options.lightBundle
-  if (useLightNodeBundle && isNode) {
-    console.log("Using light node bundle")
-  }
+
+  // if (useLightNodeBundle && isNode) {
+  //   console.log("- Webpack: Using light node bundle")
+  // }
+
+
 
   return {
     // We need to inform Webpack about our build target
@@ -443,7 +460,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     // This is not the file cache, but the runtime cache.
     // The reference is used to speed-up rebuilds in one execution e.g. via watcher
     // Note: But is has to share the same configuration as the cache is not config aware.
-    // cache: cache,
+    cache: cache[`${target}-${mode}`],
 
     // Capture timing information for each module.
     // Analyse tool: http://webpack.github.io/analyse
@@ -460,11 +477,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
         // Externalize built-in modules
         if (builtInSet.has(basename))
-          return callback(null, "commonjs " + request)
+          return callback(null, `commonjs ${request}`)
 
         // Keep care that problematic common-js code is external
         if (problematicCommonJS.has(basename))
-          return callback(null, "commonjs " + request)
+          return callback(null, `commonjs ${request}`)
 
         // Ignore inline files
         if (basename.charAt(0) === ".")
@@ -479,7 +496,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
           return callback()
 
         // In all other cases follow the user given preference
-        useLightNodeBundle ? callback(null, "commonjs " + request) : callback()
+        useLightNodeBundle ? callback(null, `commonjs ${request}`) : callback()
       })
     ]),
 
@@ -491,9 +508,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     devtool: "source-map",
 
     // New performance hints. Only active for production build.
-    performance: {
-      hints: isProd && isWeb ? "warning" : false
-    },
+    performance: isProd && isWeb ? {
+      hints: "warning"
+    } : false,
 
     // Define our entry chunks for our bundle.
     entry: removeEmptyKeys(
@@ -557,8 +574,12 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // Enable new module/jsnext:main field for requiring files
       // Defaults: https://webpack.github.io/docs/configuration.html#resolve-packagemains
       mainFields: ifNode(
-        [ "module", "jsnext:main", "main" ],
-        [ "web", "browser", "style", "module", "jsnext:main", "main" ]
+        enableHardSource ?
+          [ "main" ] :
+          [ "module", "jsnext:main", "main" ],
+        enableHardSource ?
+          [ "web", "browser", "style", "main" ] :
+          [ "web", "browser", "style", "module", "jsnext:main", "main" ]
       ),
 
       // These extensions are tried when resolving a file.
@@ -577,7 +598,8 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
       // Improve source caching in Webpack v2.
       // Therefor we disable it in production and only use it to speed up development rebuilds.
       //
-      new HardSourceWebpackPlugin({
+      //
+      enableHardSource ? new HardSourceWebpackPlugin({
         // Either an absolute path or relative to output.path.
         cacheDirectory: path.resolve(root, ".hardsource", `${target}-${mode}`),
 
@@ -588,11 +610,11 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         // Optional field. This field determines when to throw away the whole
         // cache if for example npm modules were updated.
         environmentHash: {
-          root: root,
+          root,
           directories: [ "node_modules" ],
           files: [ "package.json", "yarn.lock", ".env" ]
         }
-      }),
+      }) : null,
 
       // There is now actual benefit in using multiple chunks for possibly long living
       // NodeJS applications. We can bundle everrything and that way improve startup time.
@@ -636,7 +658,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         })
       ),
 
-      new VerboseProgress(),
+      // new VerboseProgress(),
 
       /*
       ifProd(new BabiliPlugin({

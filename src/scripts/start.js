@@ -1,4 +1,4 @@
-import HotController from "../webpack/HotController"
+import HotController from "../hotdev/HotController"
 
 export default function start() {
   new HotController()

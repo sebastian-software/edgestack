@@ -27,3 +27,4 @@ npm-debug.log
 .eslintcache
 .happypack
 .hardsource
+.recordscache
