@@ -3,7 +3,7 @@ import rimraf from "rimraf"
 import webpack from "webpack"
 import { series } from "async"
 
-import colors from "colors"
+import chalk from "chalk"
 
 import ConfigFactory from "../webpack/ConfigFactory"
 
@@ -14,9 +14,9 @@ function niceStattrace(error)
   return [
     "",
     "",
-    `${colors.cyan(file)}: ${colors.red(message)}`,
+    `${chalk.cyan(file)}: ${chalk.red(message)}`,
     "",
-    ...stack.map((row) => colors.white(`\t${row}`)),
+    ...stack.map((row) => chalk.white(`\t${row}`)),
     "",
     ""
   ].join("\n")
