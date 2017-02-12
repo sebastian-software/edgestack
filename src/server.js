@@ -1,4 +1,6 @@
 // This file is just for exporting infrastructure to applications built upon this.
+
+// eslint-disable-next-line import/no-namespace
 import * as ServerConfig from "./server/config"
 export { ServerConfig }
 
