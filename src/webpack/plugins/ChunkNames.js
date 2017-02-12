@@ -46,6 +46,7 @@ function generateChunkName(resource) {
 
 export default class ChunkNames
 {
+  // eslint-disable-next-line class-methods-use-this
   apply(compiler)
   {
     /* eslint-disable max-nested-callbacks */

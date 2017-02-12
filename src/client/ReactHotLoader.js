@@ -2,13 +2,13 @@ import React from "react"
 
 // Having this contained within an if statement like this allows webpack
 // dead code elimination to take place. It's the small things. :)
-var HotLoaderContainer
+var ReactHotLoader
 if (process.env.NODE_ENV === "development") {
-  HotLoaderContainer = require("react-hot-loader").AppContainer
+  ReactHotLoader = require("react-hot-loader").AppContainer
 } else {
-  HotLoaderContainer = function({ children }) {
+  ReactHotLoader = function({ children }) {
     return React.Children.only(children)
   }
 }
 
-export default HotLoaderContainer
+export default ReactHotLoader
