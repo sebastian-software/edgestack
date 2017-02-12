@@ -176,11 +176,20 @@ function patchPackageScripts(targetPath)
       if (readError)
         return reject(readError)
 
-      const newData = { scripts: {}, ...data }
+      const newData = {
+        scripts: {},
+        devDependencies: {},
+        ...data
+      }
+
       newData.scripts.start = "advanced-script start"
-      newData.scripts.prod = "advanced-script build"
+      newData.scripts.prod = "cross-env NODE_ENV=production advanced-script build"
       newData.scripts["prod:start"] = "npm run prod && node build/server/main.js"
       newData.scripts.clean = "rimraf build/client/* build/server/*"
+
+      newData.devDependencies["normalize.css"] = "^5.0.0"
+      newData.devDependencies["sanitize.css"] = "^4.1.0"
+      newData.devDependencies["cross-env"] = "^3.1.4"
 
       return fs.writeJson(PACKAGE_JSON_FILENAME, newData, (writeError) =>
       {
