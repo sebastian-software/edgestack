@@ -42,7 +42,7 @@ const enableHardSource = true
 // - "node-zopfli" native Zopfli implementation
 const problematicCommonJS = new Set([ "intl", "react-intl", "mime-db", "helmet", "express", "encoding",
   "node-pre-gyp", "iltorb", "node-zopfli" ])
-const CWD = process.cwd()
+const CURRENT_WORKING_DIRECTORY = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
 dotenv.config()
@@ -66,6 +66,7 @@ function removeEmptyKeys(obj)
 }
 
 function ifElse(condition) {
+  // eslint-disable-next-line no-confusing-arrow
   return (then, otherwise) => (condition ? then : otherwise)
 }
 
@@ -80,13 +81,15 @@ function merge()
 }
 
 function isLoaderSpecificFile(request) {
-  return Boolean(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|ico|mp4|mp3|ogg|html|pdf|swf|css|scss|sass|sss|less)$/.exec(request))
+  return Boolean(
+    /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|ico|mp4|mp3|ogg|html|pdf|swf|css|scss|sass|sss|less)$/.exec(request)
+  )
 }
 
 function ifIsFile(filePath) {
   try {
     return statSync(filePath).isFile() ? filePath : ""
-  } catch (err) {
+  } catch (error) {
     // empty
   }
 
@@ -167,7 +170,7 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
     presets:
     [
       // let, const, destructuring, classes, no modules
-      [ "babel-preset-es2015", enableHardSource ? {} : { modules: false }],
+      [ "babel-preset-es2015", enableHardSource ? {} : { modules: false } ],
 
       // Exponentiation
       "babel-preset-es2016",
@@ -342,6 +345,8 @@ function getCssLoaders({ isNode, isWeb, isProd, isDev })
       ]
     }
   }
+
+  return []
 }
 
 const isDebug = true
@@ -354,7 +359,8 @@ const cache = {
   "node-development": {}
 }
 
-function ConfigFactory({ target, mode, root = CWD, ...options })
+// eslint-disable-next-line complexity, max-statements
+function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...options })
 {
   // console.log("ConfigFactory:", target, mode, root, options)
 
@@ -392,11 +398,16 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
   const ifWeb = ifElse(isWeb)
   const ifNode = ifElse(isNode)
   const ifDevWeb = ifElse(isDev && isWeb)
-  const ifDevNode = ifElse(isDev && isNode)
+
+  // const ifDevNode = ifElse(isDev && isNode)
+
   const ifProdWeb = ifElse(isProd && isWeb)
+
+  /*
   const ifProdNode = ifElse(isProd && isNode)
   const ifIntegration = ifElse(process.env.CI || false)
   const ifUniversal = ifElse(process.env.DISABLE_SSR)
+  */
 
 
   const folder = isWeb ? "client" : "server"
@@ -471,7 +482,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
 
     // Anything listed in externals will not be included in our bundle.
     externals: removeEmpty([
-      ifNode(function(context, request, callback)
+      ifNode((context, request, callback) =>
       {
         var basename = request.split("/")[0]
 
@@ -496,7 +507,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
           return callback()
 
         // In all other cases follow the user given preference
-        useLightNodeBundle ? callback(null, `commonjs ${request}`) : callback()
+        return useLightNodeBundle ? callback(null, `commonjs ${request}`) : callback()
       })
     ]),
 
@@ -514,15 +525,16 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
 
     // Define our entry chunks for our bundle.
     entry: removeEmptyKeys(
-    {
-      main: removeEmpty([
-        ifDevWeb("react-hot-loader/patch"),
-        ifDevWeb(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
-        options.entry ? options.entry : ifIsFile(`./src/${folder}/index.js`),
-      ]),
+      {
+        main: removeEmpty([
+          ifDevWeb("react-hot-loader/patch"),
+          ifDevWeb(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
+          options.entry ? options.entry : ifIsFile(`./src/${folder}/index.js`)
+        ]),
 
-      vendor: ifProdWeb(options.vendor ? options.vendor : ifIsFile(`./src/${folder}/vendor.js`))
-    }),
+        vendor: ifProdWeb(options.vendor ? options.vendor : ifIsFile(`./src/${folder}/vendor.js`))
+      }
+    ),
 
     output:
     {
@@ -634,7 +646,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
           // Pass options for PostCSS
           options: {
             postcss: getPostCSSConfig({}),
-            context: CWD
+            context: CURRENT_WORKING_DIRECTORY
           }
         })
       ),
@@ -653,7 +665,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
           // Pass options for PostCSS
           options: {
             postcss: getPostCSSConfig({}),
-            context: CWD
+            context: CURRENT_WORKING_DIRECTORY
           }
         })
       ),
@@ -729,7 +741,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
         // builds as React relies on process.env.NODE_ENV for optimizations.
         "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
 
-        "process.env.APP_ROOT": JSON.stringify(path.resolve(root)),
+        "process.env.APP_ROOT": JSON.stringify(process.env.APP_ROOT || "../.."),
 
         // All the below items match the config items in our .env file. Go
         // to the .env.example for a description of each key.
@@ -804,58 +816,59 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
     module:
     {
       rules: removeEmpty(
-      [
-        // JavaScript
-        {
-          test: /\.(js|jsx)$/,
-          loaders: jsLoaders,
-          exclude: excludeFromTranspilation
-        },
+        [
+          // JavaScript
+          {
+            test: /\.(js|jsx)$/,
+            loaders: jsLoaders,
+            exclude: excludeFromTranspilation
+          },
 
-        // Typescript
-        // https://github.com/s-panferov/awesome-typescript-loader
-        {
-          test: /\.(ts|tsx)$/,
-          loader: "awesome-typescript-loader",
-          exclude: excludeFromTranspilation
-        },
+          // Typescript
+          // https://github.com/s-panferov/awesome-typescript-loader
+          {
+            test: /\.(ts|tsx)$/,
+            loader: "awesome-typescript-loader",
+            exclude: excludeFromTranspilation
+          },
 
-        // CSS
-        {
-          test: /\.css$/,
-          loader: cssLoaders
-        },
+          // CSS
+          {
+            test: /\.css$/,
+            loader: cssLoaders
+          },
 
-        // JSON
-        {
-          test: /\.json$/,
-          loader: "json-loader"
-        },
+          // JSON
+          {
+            test: /\.json$/,
+            loader: "json-loader"
+          },
 
-        // YAML
-        {
-          test: /\.(yml|yaml)$/,
-          loaders: [ "json-loader", "yaml-loader" ]
-        },
+          // YAML
+          {
+            test: /\.(yml|yaml)$/,
+            loaders: [ "json-loader", "yaml-loader" ]
+          },
 
-        // References to images, fonts, movies, music, etc.
-        {
-          test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf|html)$/,
-          loader: "file-loader",
-          options: {
-            name: ifProdWeb("file-[hash:base62:8].[ext]", "[name].[ext]"),
-            emitFile: isWeb
+          // References to images, fonts, movies, music, etc.
+          {
+            test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf|html)$/,
+            loader: "file-loader",
+            options: {
+              name: ifProdWeb("file-[hash:base62:8].[ext]", "[name].[ext]"),
+              emitFile: isWeb
+            }
+          },
+
+          // GraphQL support
+          // @see http://dev.apollodata.com/react/webpack.html
+          {
+            test: /\.(graphql|gql)$/,
+            loader: "graphql-tag/loader",
+            exclude: excludeFromTranspilation
           }
-        },
-
-        // GraphQL support
-        // @see http://dev.apollodata.com/react/webpack.html
-        {
-          test: /\.(graphql|gql)$/,
-          loader: "graphql-tag/loader",
-          exclude: excludeFromTranspilation
-        }
-      ])
+        ]
+      )
     }
   }
 }
