@@ -4,25 +4,29 @@
 // These config values then become a part of the server bundle.
 
 import { resolve } from "path"
+import appRootDir from "app-root-dir"
+
+const APP_ROOT = appRootDir.get()
 
 export const ABSOLUTE_CLIENT_OUTPUT_PATH = resolve(
-  process.env.APP_ROOT,
+  APP_ROOT,
   process.env.CLIENT_BUNDLE_OUTPUT_PATH
 )
 
 export const ABSOLUTE_ASSETSINFO_PATH = resolve(
-  process.env.APP_ROOT,
+  APP_ROOT,
   process.env.CLIENT_BUNDLE_OUTPUT_PATH,
   process.env.CLIENT_BUNDLE_ASSETS_FILENAME
 )
 
 export const ABSOLUTE_CHUNKMANIFEST_PATH = resolve(
-  process.env.APP_ROOT,
+  APP_ROOT,
   process.env.CLIENT_BUNDLE_OUTPUT_PATH,
   process.env.CLIENT_BUNDLE_CHUNK_MANIFEST_FILENAME
 )
 
 export const ABSOLUTE_PUBLIC_PATH = resolve(
-  process.env.APP_ROOT,
+  APP_ROOT,
   process.env.CLIENT_PUBLIC_PATH
 )
+
