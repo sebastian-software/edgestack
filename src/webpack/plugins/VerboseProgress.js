@@ -8,6 +8,7 @@ export default class VerboseProgress {
     this.cwd = process.cwd()
   }
 
+  // eslint-disable-next-line class-methods-use-this
   apply(compiler)
   {
     compiler.plugin("compilation", (compilation) => {
@@ -64,7 +65,7 @@ export default class VerboseProgress {
       compilation.plugin("failed-module", moduleDone)
       compilation.plugin("succeed-module", moduleDone)
 
-      function log(title) {
+      function logging(title) {
         return function() {
           console.log(`- ${title}`)
         }
@@ -73,30 +74,30 @@ export default class VerboseProgress {
       compilation.plugin("seal", () => {
         console.log(`- Sealing ${moduleCounter} modules...`)
       })
-      compilation.plugin("optimize", log("Optimizing modules/chunks/tree..."))
+      compilation.plugin("optimize", logging("Optimizing modules/chunks/tree..."))
 
       /*
-      compilation.plugin("optimize-modules-basic", log("Basic module optimization"))
-      compilation.plugin("optimize-modules", log("Module optimization"))
-      compilation.plugin("optimize-modules-advanced", log("Advanced module optimization"))
-      compilation.plugin("optimize-chunks-basic", log("Basic chunk optimization"))
-      compilation.plugin("optimize-chunks", log("Chunk optimization"))
-      compilation.plugin("optimize-chunks-advanced", log("Advanced chunk optimization"))
+      compilation.plugin("optimize-modules-basic", logging("Basic module optimization"))
+      compilation.plugin("optimize-modules", logging("Module optimization"))
+      compilation.plugin("optimize-modules-advanced", logging("Advanced module optimization"))
+      compilation.plugin("optimize-chunks-basic", logging("Basic chunk optimization"))
+      compilation.plugin("optimize-chunks", logging("Chunk optimization"))
+      compilation.plugin("optimize-chunks-advanced", logging("Advanced chunk optimization"))
       compilation.plugin("optimize-tree", function(chunks, modules, callback) {
         console.log("- Module and chunk tree optimization")
         callback()
       })
-      compilation.plugin("revive-modules", log("Module reviving"))
-      compilation.plugin("optimize-module-order", log("Module order optimization"))
-      compilation.plugin("optimize-module-ids", log("Module id optimization"))
-      compilation.plugin("revive-chunks", log("Chunk reviving"))
-      compilation.plugin("optimize-chunk-order", log("Chunk order optimization"))
-      compilation.plugin("optimize-chunk-ids", log("Chunk id optimization"))
-      compilation.plugin("before-hash", log("Hashing"))
-      compilation.plugin("before-module-assets", log("Module assets processing"))
-      compilation.plugin("before-chunk-assets", log("Chunk assets processing"))
-      compilation.plugin("additional-chunk-assets", log("Additional chunk assets processing"))
-      compilation.plugin("record", log("Recording"))
+      compilation.plugin("revive-modules", logging("Module reviving"))
+      compilation.plugin("optimize-module-order", logging("Module order optimization"))
+      compilation.plugin("optimize-module-ids", logging("Module id optimization"))
+      compilation.plugin("revive-chunks", logging("Chunk reviving"))
+      compilation.plugin("optimize-chunk-order", logging("Chunk order optimization"))
+      compilation.plugin("optimize-chunk-ids", logging("Chunk id optimization"))
+      compilation.plugin("before-hash", logging("Hashing"))
+      compilation.plugin("before-module-assets", logging("Module assets processing"))
+      compilation.plugin("before-chunk-assets", logging("Chunk assets processing"))
+      compilation.plugin("additional-chunk-assets", logging("Additional chunk assets processing"))
+      compilation.plugin("record", logging("Recording"))
       compilation.plugin("additional-assets", function(callback) {
         console.log("- Additional asset processing")
         callback()

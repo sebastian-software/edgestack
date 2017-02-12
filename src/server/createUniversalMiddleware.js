@@ -169,7 +169,7 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
   return function middleware(request, response)
   {
     if (typeof response.locals.nonce !== "string") {
-      throw new Error(`Server: A "nonce" value has not been attached to the response`)
+      throw new TypeError(`Server: A "nonce" value has not been attached to the response`)
     }
     const nonce = response.locals.nonce
 
@@ -179,7 +179,12 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
 
     const { language, region } = request.locale
 
-    console.log("\nIncoming URL:", request.originalUrl, process.env.DISABLE_SSR ? "[SSR: disabled]" : "[SSR: enabled]", `[Locale: ${language}-${region}]`)
+    console.log(
+      "\nIncoming URL:",
+      request.originalUrl,
+      process.env.DISABLE_SSR ? "[SSR: disabled]" : "[SSR: enabled]",
+      `[Locale: ${language}-${region}]`
+    )
     let measure = new Measure()
 
     // After matching locales with configuration we send the accepted locale

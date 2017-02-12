@@ -31,7 +31,7 @@ import responsiveType from "postcss-responsive-type"
 import inputStyles from "postcss-input-style"
 import assets from "postcss-assets"
 
-export default function getConfig(variables = {})
+export default function PostCSSConfig(variables = {})
 {
   return [
     atImport(),

@@ -3,7 +3,7 @@ import { resolve } from "path"
 import { readJsonSync } from "fs-extra"
 
 const root = "node_modules"
-const modules = new Set()
+const Modules = new Set()
 
 const nodePackages = readdirSync(root).filter((dirname) => dirname.charAt(0) !== ".")
 
@@ -16,7 +16,7 @@ nodePackages.forEach((packageName) =>
   }
 
   if (json.module || json.style || json["jsnext:main"])
-    modules.add(packageName)
+    Modules.add(packageName)
 })
 
-export default modules
+export default Modules
