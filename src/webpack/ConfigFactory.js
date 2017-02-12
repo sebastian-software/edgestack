@@ -658,7 +658,7 @@ function ConfigFactory({ target, mode, root = CWD, ...options })
         })
       ),
 
-      // new VerboseProgress(),
+      new VerboseProgress(),
 
       /*
       ifProd(new BabiliPlugin({
