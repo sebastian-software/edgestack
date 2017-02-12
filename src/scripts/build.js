@@ -3,7 +3,24 @@ import rimraf from "rimraf"
 import webpack from "webpack"
 import { series } from "async"
 
+import colors from "colors"
+
 import ConfigFactory from "../webpack/ConfigFactory"
+
+function niceStattrace(error)
+{
+  const [ file, message, ...stack ] = error.split("\n")
+
+  return [
+    "",
+    "",
+    `${colors.cyan(file)}: ${colors.red(message)}`,
+    "",
+    ...stack.map((row) => colors.white(`\t${row}`)),
+    "",
+    ""
+  ].join("\n")
+}
 
 /* eslint-disable no-process-exit */
 export default function build()
@@ -38,6 +55,11 @@ export default function build()
 
         // fixme: remove this snippet when https://github.com/webpack/webpack/issues/2390 is fixed
         if (stats.hasErrors()) {
+          console.error("Failed to create a production build for client:")
+          stats.toJson("errors-only").errors.forEach((statError) =>
+          {
+            console.error(niceStattrace(statError))
+          })
           process.exit(1)
         }
 
