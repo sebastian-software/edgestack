@@ -39,7 +39,7 @@ export default class HotClientManager
     })
 
     this.hotMiddleware = createHotMiddleware(compiler, {
-      log: false
+      // log: false
     })
 
     httpServer.use(this.devMiddleware)
