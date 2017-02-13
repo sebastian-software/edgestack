@@ -160,10 +160,14 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
 /**
  * An express middleware that is capable of doing React server side rendering.
  */
-export default function createUniversalMiddleware({ AppContainer, ssrData, batchRequests = false, trustNetwork = true })
+export default function createUniversalMiddleware({ AppContainer, AppState, ssrData, batchRequests = false, trustNetwork = true })
 {
   if (AppContainer == null) {
     throw new Error("Server: Universal Middleware: Missing AppContainer!")
+  }
+
+  if (AppState == null) {
+    throw new Error("Server: Universal Middleware: Missing AppState!")
   }
 
   return function middleware(request, response)
@@ -215,9 +219,9 @@ export default function createUniversalMiddleware({ AppContainer, ssrData, batch
       const reduxStore = createReduxStore({
         apolloClient,
         initialState,
-        reducers: AppContainer.getReducers(),
-        enhancers: AppContainer.getEnhancers(),
-        middlewares: AppContainer.getMiddlewares()
+        reducers: AppState.getReducers(),
+        enhancers: AppState.getEnhancers(),
+        middlewares: AppState.getMiddlewares()
       })
       measure.stop("create-redux")
 

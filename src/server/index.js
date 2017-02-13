@@ -4,6 +4,7 @@ import createUniversalMiddleware from "./createUniversalMiddleware"
 import addFallbackHandler from "./addFallbackHandler"
 
 import AppContainer from "../app/AppContainer"
+import AppState from "../app/AppState"
 
 export function start()
 {
@@ -16,7 +17,7 @@ export function start()
     const server = createExpressServer()
 
     // Bind our universal react app middleware as the handler for all get requests.
-    server.get("*", createUniversalMiddleware({ AppContainer, ssrData }))
+    server.get("*", createUniversalMiddleware({ AppContainer, AppState, ssrData }))
 
     // Add default handling for any remaining errors which are not catched by our middleware
     addFallbackHandler(server)

@@ -7,7 +7,7 @@ import { withAsyncComponents } from "react-async-component"
 
 import AppContainer from "../app/AppContainer"
 import AppState from "../app/AppState"
-import { createApolloClient, createReduxStore } from "../common/Data"
+import { createApolloClient, createReduxStore, createRootReducer } from "../common/Data"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")
@@ -65,7 +65,18 @@ if (process.env.NODE_ENV === "development" && module.hot)
 
   module.hot.accept("../app/AppState", () => {
     console.log("Made changes on AppState!")
-    // renderApp(require("../app/AppContainer").default)
+    var nextAppState = require("../app/AppState").default
+    var nextAppReducers = nextAppState.getReducers()
+    var nextRootReducer = createRootReducer({
+      reducers: nextAppReducers,
+      apollo: apolloClient
+    })
+
+    console.log("Updating reducers...", nextRootReducer)
+    // reduxStore.replaceReducer(nextReducers)
+    console.log("Updating reducers... Done")
+    // renderApp(require("../app/AppState").default)
+    // replaceReducer
   })
 }
 

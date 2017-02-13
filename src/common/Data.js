@@ -45,16 +45,20 @@ export function ssrReducer(previousState = {}, action) {
 }
 
 
+export function createRootReducer(reducers = {}, apolloClient = null) {
+  return combineReducers({
+    ...reducers,
+    ssr: ssrReducer,
+    apollo: apolloClient ? apolloClient.reducer() : emptyReducer
+  })
+}
+
 /**
  *
  *
  */
 export function createReduxStore({ initialState, apolloClient, reducers = {}, middlewares = [], enhancers = [] }) {
-  const rootReducer = combineReducers({
-    ...reducers,
-    ssr: ssrReducer,
-    apollo: apolloClient ? apolloClient.reducer() : emptyReducer
-  })
+  const rootReducer = createRootReducer({ reducers, apolloClient })
 
   const rootEnhancers = composeEnhancers(
     applyMiddleware(
