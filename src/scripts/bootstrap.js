@@ -1,15 +1,15 @@
 import fs from "fs-extra"
 import pathModule from "path"
 import promptModule from "prompt"
-import colors from "colors/safe"
+import chalk from "chalk"
 import { mapKeys } from "lodash"
 import findRoot from "find-root"
 import walker from "walker"
 
 const ROOT = findRoot(require.main.filename)
 
-promptModule.message = colors.blue("> ")
-promptModule.delimiter = colors.green(" ")
+promptModule.message = chalk.blue("> ")
+promptModule.delimiter = chalk.green(" ")
 
 function exists(path)
 {
@@ -127,7 +127,7 @@ function templateWalker(startPath, targetPath, replacementCallback)
       })
       .on("error", (error, entry) =>
       {
-        console.error(colors.red(`Error ${error} on entry ${entry}`))
+        console.error(chalk.red(`Error ${error} on entry ${entry}`))
       })
       .on("end", () => Promise.all(promisedChanges)
         .then(() => resolve())
@@ -146,7 +146,7 @@ function createBoilerplate(config, targetSrcPath)
     if (key in config)
       return config[key]
 
-    console.log(colors.red(`Replacement key ${key} not found in config`))
+    console.log(chalk.red(`Replacement key ${key} not found in config`))
     return key
   })
 }
@@ -163,7 +163,7 @@ function createConfigFiles(targetPath)
       pathModule.join(ROOT, ".gitignore"),
       pathModule.join(targetPath, ".gitignore")
     )
-  ]).then(() => console.log(colors.green("You might want to change the .env file in current directory")))
+  ]).then(() => console.log(chalk.green("You might want to change the .env file in current directory")))
 }
 
 function patchPackageScripts(targetPath)
