@@ -6,6 +6,7 @@ import { ApolloProvider } from "react-apollo"
 import { withAsyncComponents } from "react-async-component"
 
 import AppContainer from "../app/AppContainer"
+import AppState from "../app/AppState"
 import { createApolloClient, createReduxStore } from "../common/Data"
 
 // Get the DOM Element that will host our React application.
@@ -15,29 +16,26 @@ const container = document.querySelector("#app")
 let apolloClient
 let reduxStore
 
-function renderDataApp(RenderContainer)
+function initState(MyAppState)
 {
-  console.log("Client: Initialize state from server:", window.APP_STATE)
   apolloClient = createApolloClient({
     initialState: window.APP_STATE
   })
 
   reduxStore = createReduxStore({
-    reducers: RenderContainer.getReducers(),
-    enhancers: RenderContainer.getEnhancers(),
-    middlewares: RenderContainer.getMiddlewares(),
+    reducers: MyAppState.getReducers(),
+    enhancers: MyAppState.getEnhancers(),
+    middlewares: MyAppState.getMiddlewares(),
     initialState: window.APP_STATE
   })
-
-  return renderApp(RenderContainer)
 }
 
-function renderApp(RenderContainer)
+function renderApp(MyAppContainer)
 {
   var fullApp = (
     <BrowserRouter>
       <ApolloProvider client={apolloClient} store={reduxStore}>
-        <RenderContainer/>
+        <MyAppContainer/>
       </ApolloProvider>
     </BrowserRouter>
   )
@@ -64,6 +62,12 @@ if (process.env.NODE_ENV === "development" && module.hot)
   module.hot.accept("../app/AppContainer", () => {
     renderApp(require("../app/AppContainer").default)
   })
+
+  module.hot.accept("../app/AppState", () => {
+    console.log("Made changes on AppState!")
+    // renderApp(require("../app/AppContainer").default)
+  })
 }
 
-renderDataApp(AppContainer)
+initState(AppState)
+renderApp(AppContainer)
