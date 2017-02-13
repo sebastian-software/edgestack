@@ -62,9 +62,7 @@ if (process.env.NODE_ENV === "development" && module.hot)
 
   // Any changes to our App will cause a hotload re-render.
   module.hot.accept("../app/AppContainer", () => {
-    let nextRoot = require("../app/AppContainer").default
-    console.log("Reloaded root container: ", nextRoot)
-    renderApp(nextRoot)
+    renderApp(require("../app/AppContainer").default)
   })
 }
 
