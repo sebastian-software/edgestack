@@ -598,6 +598,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
 
       // These extensions are tried when resolving a file.
       extensions: [
+        ".mjs",
         ".js",
         ".jsx",
         ".ts",

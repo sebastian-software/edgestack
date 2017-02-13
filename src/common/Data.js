@@ -59,6 +59,8 @@ export function createReduxStore({ initialState, apolloClient, reducers = {}, mi
   const rootEnhancers = composeEnhancers(
     applyMiddleware(
       apolloClient ? apolloClient.middleware() : emptyMiddleware,
+      process.env.NODE_ENV === "development" ?
+        require("redux-immutable-state-invariant")() : emptyMiddleware,
       thunk,
       ...middlewares
     ),
