@@ -63,12 +63,6 @@ if (global.Intl) {
 
 // console.log("Needs Intl Polyfill:", needsPolyfill)
 
-
-// only returns true when there is a match and isExact is true
-function activeExact(match) {
-  return Boolean(match) && match.isExact
-}
-
 function Error404() {
   return <div>Sorry, that page was not found.</div>
 }
