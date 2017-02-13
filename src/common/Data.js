@@ -59,6 +59,10 @@ export function createReduxStore({ initialState, apolloClient, reducers = {}, mi
   const rootEnhancers = composeEnhancers(
     applyMiddleware(
       apolloClient ? apolloClient.middleware() : emptyMiddleware,
+
+      // Redux middleware that spits an error on you when you try to mutate
+      // your state either inside a dispatch or between dispatches.
+      // https://github.com/leoasis/redux-immutable-state-invariant
       process.env.NODE_ENV === "development" ?
         require("redux-immutable-state-invariant")() : emptyMiddleware,
       thunk,
