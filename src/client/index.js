@@ -5,35 +5,41 @@ import { BrowserRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
 import { withAsyncComponents } from "react-async-component"
 
-import ReactHotLoader from "./ReactHotLoader"
 import AppContainer from "../app/AppContainer"
 import { createApolloClient, createReduxStore } from "../common/Data"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")
 
-function renderApp(RenderContainer)
+
+let apolloClient
+let reduxStore
+
+function renderDataApp(RenderContainer)
 {
   console.log("Client: Initialize state from server:", window.APP_STATE)
-  const apolloClient = createApolloClient({
+  apolloClient = createApolloClient({
     initialState: window.APP_STATE
   })
 
-  const reduxStore = createReduxStore({
+  reduxStore = createReduxStore({
     reducers: RenderContainer.getReducers(),
     enhancers: RenderContainer.getEnhancers(),
     middlewares: RenderContainer.getMiddlewares(),
     initialState: window.APP_STATE
   })
 
+  return renderApp(RenderContainer)
+}
+
+function renderApp(RenderContainer)
+{
   var fullApp = (
-    <ReactHotLoader>
-      <BrowserRouter>
-        <ApolloProvider client={apolloClient} store={reduxStore}>
-          <RenderContainer/>
-        </ApolloProvider>
-      </BrowserRouter>
-    </ReactHotLoader>
+    <BrowserRouter>
+      <ApolloProvider client={apolloClient} store={reduxStore}>
+        <RenderContainer/>
+      </ApolloProvider>
+    </BrowserRouter>
   )
 
   withAsyncComponents(fullApp).then((result) => {
@@ -55,7 +61,11 @@ if (process.env.NODE_ENV === "development" && module.hot)
   module.hot.accept("./index.js")
 
   // Any changes to our App will cause a hotload re-render.
-  // module.hot.accept("../app/AppContainer", () => renderApp(require("../app/AppContainer").default))
+  module.hot.accept("../app/AppContainer", () => {
+    let nextRoot = require("../app/AppContainer").default
+    console.log("Reloaded root container: ", nextRoot)
+    renderApp(nextRoot)
+  })
 }
 
-renderApp(AppContainer)
+renderDataApp(AppContainer)
