@@ -299,8 +299,8 @@ function getCssLoaders({ isNode, isWeb, isProd, isDev })
       // See also: https://github.com/webpack/extract-text-webpack-plugin/issues/196
       return ExtractTextPlugin.extract({
         allChunks: true,
-        fallbackLoader: "style-loader",
-        loader:
+        fallback: "style-loader",
+        use:
         [
           {
             loader: "css-loader",
