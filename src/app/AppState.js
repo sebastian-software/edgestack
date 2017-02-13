@@ -3,7 +3,7 @@ import createLogger from "redux-logger"
 import { routerReducer } from "../common/RouterConnector"
 import { counterReducer } from "./CounterModule"
 
-export const AppState = {
+export default {
   /**
    * Return list of Redux store enhancers to use
    */
