@@ -5,7 +5,6 @@ import { BrowserRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
 import { withAsyncComponents } from "react-async-component"
 
-import ReactHotLoader from "./ReactHotLoader"
 import AppContainer from "../app/AppContainer"
 import { createApolloClient, createReduxStore } from "../common/Data"
 
@@ -36,13 +35,11 @@ function renderDataApp(RenderContainer)
 function renderApp(RenderContainer)
 {
   var fullApp = (
-    <ReactHotLoader>
-      <BrowserRouter>
-        <ApolloProvider client={apolloClient} store={reduxStore}>
-          <RenderContainer/>
-        </ApolloProvider>
-      </BrowserRouter>
-    </ReactHotLoader>
+    <BrowserRouter>
+      <ApolloProvider client={apolloClient} store={reduxStore}>
+        <RenderContainer/>
+      </ApolloProvider>
+    </BrowserRouter>
   )
 
   withAsyncComponents(fullApp).then((result) => {
@@ -68,8 +65,6 @@ if (process.env.NODE_ENV === "development" && module.hot)
     let nextRoot = require("../app/AppContainer").default
     console.log("Reloaded root container: ", nextRoot)
     renderApp(nextRoot)
-
-
   })
 }
 

@@ -248,10 +248,7 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
               "transform-react-jsx-self",
 
               // Add deprecation messages
-              "log-deprecated",
-
-              // React based
-              "react-hot-loader/babel"
+              "log-deprecated"
             ]
           }
         }
@@ -529,8 +526,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
     entry: removeEmptyKeys(
       {
         main: removeEmpty([
-          ifDevWeb("react-hot-loader/patch"),
-          ifDevWeb(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
+          ifDevWeb(`webpack-hot-middleware/client?path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
           options.entry ? options.entry : ifIsFile(`./src/${folder}/index.js`)
         ]),
 
