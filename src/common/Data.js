@@ -45,7 +45,8 @@ export function ssrReducer(previousState = {}, action) {
 }
 
 
-export function createRootReducer(reducers = {}, apolloClient = null) {
+export function createRootReducer({ reducers = {}, apolloClient = null }) {
+  console.log("Create Root Reducer from: ", reducers)
   return combineReducers({
     ...reducers,
     ssr: ssrReducer,
