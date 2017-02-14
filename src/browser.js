@@ -3,8 +3,6 @@ export { createReduxStore, createApolloClient,
   emptyReducer, emptyMiddleware, emptyEnhancer,
   ssrReducer } from "./common/Data"
 
-export { default as ReactHotLoader } from "./client/ReactHotLoader"
-
 import "./client/addServiceWorker"
 
 export { default as RouterConnector, routerReducer } from "./common/RouterConnector"

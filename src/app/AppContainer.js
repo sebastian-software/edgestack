@@ -4,16 +4,15 @@ import "sanitize.css/sanitize.css"
 import React from "react"
 import { Switch, Route, NavLink } from "react-router-dom"
 import Helmet from "react-helmet"
-import createLogger from "redux-logger"
+
 import { createAsyncComponent } from "react-async-component"
 import areIntlLocalesSupported from "intl-locales-supported"
 
-import RouterConnector, { routerReducer } from "../common/RouterConnector"
+import RouterConnector from "../common/RouterConnector"
 
 // Application specific
 import "./Fonts.css"
 import Styles from "./AppContainer.css"
-import { counterReducer } from "./CounterModule"
 
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
 const websiteLanguage = "en-US"
@@ -108,36 +107,6 @@ function AppContainer({ children }) {
 
 AppContainer.propTypes = {
   children: React.PropTypes.node
-}
-
-/**
- * Return list of Redux store enhancers to use
- */
-AppContainer.getEnhancers = function() {
-  return []
-}
-
-/**
- * Create mapping of reducers to use for the Redux store
- */
-AppContainer.getReducers = function() {
-  return {
-    router: routerReducer,
-    counter: counterReducer
-  }
-}
-
-/**
- * Create list of Redux middleware to use.
- */
-AppContainer.getMiddlewares = function() {
-  var middlewares = []
-
-  if (process.env.TARGET === "web") {
-    middlewares.push(createLogger({ collapsed: true }))
-  }
-
-  return middlewares
 }
 
 export default AppContainer
