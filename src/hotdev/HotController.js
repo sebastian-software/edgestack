@@ -55,6 +55,8 @@ export default class HotController
     this.clientIsBuilding = false
     this.serverIsBuilding = false
 
+    this.timeout = 0
+
     const createClientManager = () =>
     {
       return new Promise((resolve) =>
@@ -137,11 +139,13 @@ export default class HotController
       if (this.serverTryTimeout) {
         clearTimeout(this.serverTryTimeout)
       }
-      this.serverTryTimeout = setTimeout(this.tryStartServer())
+      this.serverTryTimeout = setTimeout(this.tryStartServer(), this.timeout)
+      this.timeout += 100
       return
     }
 
     this.startServer()
+    this.timeout = 0
   }
 
   startServer = () =>
