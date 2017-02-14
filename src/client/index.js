@@ -60,11 +60,12 @@ if (process.env.NODE_ENV === "development" && module.hot)
 
   // Any changes to our App will cause a hotload re-render.
   module.hot.accept("../app/AppContainer", () => {
+    console.log("- Hot: Rendering root...")
     renderApp(require("../app/AppContainer").default)
   })
 
   module.hot.accept("../app/AppState", () => {
-    console.log("Made changes on AppState!")
+    console.log("- Hot: Updating reducers...")
     var nextAppState = require("../app/AppState").default
     var nextAppReducers = nextAppState.getReducers()
     var nextRootReducer = createRootReducer({
@@ -72,11 +73,7 @@ if (process.env.NODE_ENV === "development" && module.hot)
       apollo: apolloClient
     })
 
-    console.log("Updating reducers...", nextRootReducer)
-    // reduxStore.replaceReducer(nextReducers)
-    console.log("Updating reducers... Done")
-    // renderApp(require("../app/AppState").default)
-    // replaceReducer
+    reduxStore.replaceReducer(nextRootReducer)
   })
 }
 
