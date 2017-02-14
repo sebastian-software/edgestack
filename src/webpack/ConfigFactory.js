@@ -120,7 +120,10 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
       // Async to generators + trailing function commas
       "babel-preset-es2017",
 
-      // JSX, Flow
+      // Flow support
+      "babel-preset-flow",
+
+      // React JSX
       "babel-preset-react"
     ],
 
@@ -178,7 +181,10 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
       // Async to generators + trailing function commas
       "babel-preset-es2017",
 
-      // JSX, Flow
+      // Flow support
+      "babel-preset-flow",
+
+      // React JSX
       "babel-preset-react"
     ],
 
