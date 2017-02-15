@@ -6,7 +6,7 @@ const DEP_BLOCK_NAME = "AsyncDependenciesBlock"
 const HASH_TYPE = "sha256"
 const DIGEST_TYPE = "base62"
 const DIGEST_LENGTH = 4
-const SCRIPT_EXTENSIONS = new Set([ ".js", ".jsx", ".ts", ".tsx" ])
+const SCRIPT_EXTENSIONS = new Set([ ".mjs", ".js", ".jsx", ".ts", ".tsx" ])
 
 function checkConstructorNames(object) {
   const obj = Object.getPrototypeOf(object)
