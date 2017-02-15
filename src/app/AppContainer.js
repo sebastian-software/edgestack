@@ -46,7 +46,7 @@ if (global.Intl) {
 
     // `Intl` exists, but it doesn't have the data we need, so load the
     // polyfill and patch the constructors we need with the polyfill's.
-    import("intl").then((IntlPolyfill) => {
+    import("lean-intl").then((IntlPolyfill) => {
       Intl.NumberFormat = IntlPolyfill.NumberFormat
       Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
     })
@@ -55,7 +55,7 @@ if (global.Intl) {
   needsPolyfill = true
 
   // No `Intl`, so use and load the polyfill.
-  import("intl").then((IntlPolyfill) => {
+  import("lean-intl").then((IntlPolyfill) => {
     global.Intl = IntlPolyfill
   })
 }
