@@ -3,7 +3,7 @@ import areIntlLocalesSupported from "intl-locales-supported"
 
 // TODO: Figure out whether we can use some local mirror from e.g. public path or
 // ideally via asset handling with content hashes, etc.
-const BASE_URL = "https://unpkg.com/lean-intl/locale-data/json/"
+const BASE_URL = "//unpkg.com/lean-intl/locale-data/json/"
 const PREFER_NATIVE = false
 
 function getLanguage() {
