@@ -34,7 +34,7 @@ function initState(MyState)
 
 function renderApp(MyRoot)
 {
-  var fullApp = (
+  var WrappedRoot = (
     <BrowserRouter>
       <ApolloProvider client={apolloClient} store={reduxStore}>
         <MyRoot/>
@@ -42,7 +42,7 @@ function renderApp(MyRoot)
     </BrowserRouter>
   )
 
-  withAsyncComponents(fullApp).then((result) => {
+  withAsyncComponents(WrappedRoot).then((result) => {
     // The result will include a version of your app that is
     // built to use async components and is automatically
     // rehydrated with the async component state returned by
