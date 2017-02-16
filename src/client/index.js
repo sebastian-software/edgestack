@@ -8,7 +8,8 @@ import { ensureIntlSupport, ensureReactIntlSupport } from "../common/Intl"
 
 import Root from "../app/Root"
 import State from "../app/State"
-import { createApolloClient, createReduxStore, createRootReducer } from "../common/Data"
+import { createReduxStore, createRootReducer } from "../common/Data"
+import { createApolloClient } from "../common/Apollo"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")
@@ -67,14 +68,10 @@ if (process.env.NODE_ENV === "development" && module.hot)
 
   module.hot.accept("../app/State", () => {
     console.log("- Hot: Updating reducers...")
-    var nextState = require("../app/State").default
-    var nextAppReducers = nextState.getReducers()
-    var nextRootReducer = createRootReducer({
-      reducers: nextAppReducers,
-      apollo: apolloClient
-    })
+    const nextState = require("../app/State").default
+    const nextReducer = createRootReducer(nextState.getReducers())
 
-    reduxStore.replaceReducer(nextRootReducer)
+    reduxStore.replaceReducer(nextReducer)
   })
 }
 

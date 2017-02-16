@@ -7,7 +7,8 @@ import { withAsyncComponents } from "react-async-component"
 
 import Measure from "./Measure"
 import renderPage from "./renderPage"
-import { createApolloClient, createReduxStore } from "../common/Data"
+import { createReduxStore } from "../common/Data"
+import { createApolloClient } from "../common/Apollo"
 
 /**
  * Using Apollo logic to recursively resolve all queries needed for

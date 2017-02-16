@@ -1,21 +1,24 @@
-import ApolloClient, { createNetworkInterface, createBatchingNetworkInterface } from "apollo-client"
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
 import thunk from "redux-thunk"
 import createLogger from "redux-logger"
 
 import { routerReducer } from "./RouterConnector"
 
+const composeEnhancers = (process.env.TARGET === "web" &&
+  process.env.NODE_ENV === "development" &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
+
+
 /**
- *
- *
+ * Placeholder for a non active reducer in Redux
  */
 export function emptyReducer(previousState = {}, action) {
   return previousState
 }
 
+
 /**
- *
- *
+ * Placeholder for a non active middleware in Redux
  */
 export function emptyMiddleware(store) {
   return function(next) {
@@ -25,44 +28,44 @@ export function emptyMiddleware(store) {
   }
 }
 
+
 /**
- *
- *
+ * Placeholder for a non active enhancer in Redux
  */
 export function emptyEnhancer(param) {
   return param
 }
 
 
-const composeEnhancers = (process.env.TARGET === "web" &&
-  process.env.NODE_ENV === "development" &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
-
-
 /**
- *
- *
+ * Dummy reducer for exporting server-side data to the client-side application
  */
 export function ssrReducer(previousState = {}, action) {
   return previousState
 }
 
 
-export function createRootReducer({ reducers = {}, apolloClient = null }) {
+/**
+ * Bundles the given reducers into a root reducer for the application
+ */
+export function createRootReducer(reducers) {
   return combineReducers({
     ...reducers,
     ssr: ssrReducer,
-    router: routerReducer,
-    apollo: apolloClient ? apolloClient.reducer() : emptyReducer
+    router: routerReducer
   })
 }
+
 
 /**
  *
  *
  */
 export function createReduxStore({ initialState, apolloClient, reducers = {}, middlewares = [], enhancers = [] }) {
-  const rootReducer = createRootReducer({ reducers, apolloClient })
+  const rootReducer = apolloClient ?
+    createRootReducer({ ...reducers, apollo: apolloClient.reducer() }) :
+    createRootReducer(reducers)
+
   const rootEnhancers = composeEnhancers(
     applyMiddleware(
       apolloClient ? apolloClient.middleware() : emptyMiddleware,
@@ -73,6 +76,7 @@ export function createReduxStore({ initialState, apolloClient, reducers = {}, mi
       process.env.NODE_ENV === "development" ?
         require("redux-immutable-state-invariant")() : emptyMiddleware,
 
+      // Add automatic state change logging for client application
       process.env.TARGET === "web" ?
         createLogger({ collapsed: true }) : emptyMiddleware,
 
@@ -89,58 +93,4 @@ export function createReduxStore({ initialState, apolloClient, reducers = {}, mi
   )
 
   return store
-}
-
-
-/**
- *
- *
- */
-export function createApolloClient({ headers, initialState = {}, batchRequests = false, trustNetwork = true })
-{
-  const apolloUri = initialState.ssr && initialState.ssr.apolloUri
-
-  const hasApollo = apolloUri != null
-  if (hasApollo)
-  {
-    var opts = {
-      credentials: trustNetwork ? "include" : "same-origin",
-
-      // transfer request headers to networkInterface so that they're accessible to proxy server
-      // Addresses this issue: https://github.com/matthew-andrews/isomorphic-fetch/issues/83
-      headers
-    }
-
-    if (batchRequests)
-    {
-      var networkInterface = createBatchingNetworkInterface({
-        uri: apolloUri,
-        batchInterval: 10,
-        opts
-      })
-    }
-    else
-    {
-      var networkInterface = createNetworkInterface({
-        uri: apolloUri,
-        opts
-      })
-    }
-
-    var client = new ApolloClient({
-      ssrMode: process.env.TARGET === "node",
-      addTypename: false,
-      queryDeduplication: true,
-      networkInterface
-    })
-  }
-  else
-  {
-    var client = new ApolloClient({
-      addTypename: false,
-      queryDeduplication: true
-    })
-  }
-
-  return client
 }
