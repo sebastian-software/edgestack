@@ -14,7 +14,7 @@
     "npm": ">=4.0.0"
   },
   "bin": {
-    "advanced-script": "./bin/advanced-script.js"
+    "advanced-script": "./bin/advanced-script"
   },
   "scripts": {
     "start": "npm run prescript && node bin/advanced-script.js start",

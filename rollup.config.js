@@ -9,7 +9,7 @@ var external = Object.keys(config.dependencies).concat(builtin)
 
 export default {
   entry: "src/script.js",
-  dest: "bin/advanced-script.js",
+  dest: "bin/advanced-script",
   format: "cjs",
   sourceMap: true,
   external,
