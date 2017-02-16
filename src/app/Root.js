@@ -29,9 +29,8 @@ function Error404() {
 }
 
 function Root({ children, locale, language }) {
-  console.log("Root Component Props: LOCALE=" + locale, "LANGUAGE=" + language)
   return (
-    <IntlProvider key={locale} locale={locale} messages={rootMessages}>
+    <IntlProvider locale={locale} messages={rootMessages}>
       <main>
         <Helmet
           titleTemplate={`${websiteTitle} - %s`}
