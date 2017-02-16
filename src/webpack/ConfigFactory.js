@@ -822,7 +822,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
         [
           // JavaScript
           {
-            test: /\.(js|jsx)$/,
+            test: /\.(mjs|js|jsx)$/,
             loaders: jsLoaders,
             exclude: excludeFromTranspilation
           },
@@ -837,7 +837,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
 
           // CSS
           {
-            test: /\.css$/,
+            test: /\.(css|sss)$/,
             loader: cssLoaders
           },
 
