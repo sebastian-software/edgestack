@@ -9,7 +9,6 @@ import { createAsyncComponent } from "react-async-component"
 // Application specific
 import "./Fonts.css"
 import Styles from "./AppContainer.css"
-import { ensureIntlSupport } from "../common/Intl"
 import RouterConnector from "../common/RouterConnector"
 
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
@@ -18,11 +17,6 @@ const websiteTitle = "Advanced Boilerplate"
 
 const HomeAsync = createAsyncComponent({ resolve: () => import("./Home") })
 const AboutAsync = createAsyncComponent({ resolve: () => import("./About") })
-
-
-ensureIntlSupport().then((polyfilled) => {
-  console.log("Localization is ready! Using Polyfill:", polyfilled)
-})
 
 function Error404() {
   return <div>Sorry, that page was not found.</div>
