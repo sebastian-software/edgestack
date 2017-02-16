@@ -3,8 +3,9 @@ import areIntlLocalesSupported from "intl-locales-supported"
 
 const PREFER_NATIVE = false
 
+// FIXME
 function getFullLocale() {
-  return typeof document !== "undefined" ? document.documentElement.lang : "de-DE" // FIXME
+  return typeof document !== "undefined" ? document.documentElement.lang : "de-DE"
 }
 
 function getLanguage() {
