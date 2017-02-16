@@ -6,8 +6,8 @@ import { ApolloProvider } from "react-apollo"
 import { withAsyncComponents } from "react-async-component"
 import { ensureIntlSupport, ensureReactIntlSupport } from "../common/Intl"
 
-import AppContainer from "../app/AppContainer"
-import AppState from "../app/AppState"
+import Root from "../app/Root"
+import State from "../app/State"
 import { createApolloClient, createReduxStore, createRootReducer } from "../common/Data"
 
 // Get the DOM Element that will host our React application.
@@ -17,26 +17,26 @@ const container = document.querySelector("#app")
 let apolloClient
 let reduxStore
 
-function initState(MyAppState)
+function initState(MyState)
 {
   apolloClient = createApolloClient({
     initialState: window.APP_STATE
   })
 
   reduxStore = createReduxStore({
-    reducers: MyAppState.getReducers(),
-    enhancers: MyAppState.getEnhancers(),
-    middlewares: MyAppState.getMiddlewares(),
+    reducers: MyState.getReducers(),
+    enhancers: MyState.getEnhancers(),
+    middlewares: MyState.getMiddlewares(),
     initialState: window.APP_STATE
   })
 }
 
-function renderApp(MyAppContainer)
+function renderApp(MyRoot)
 {
   var fullApp = (
     <BrowserRouter>
       <ApolloProvider client={apolloClient} store={reduxStore}>
-        <MyAppContainer/>
+        <MyRoot/>
       </ApolloProvider>
     </BrowserRouter>
   )
@@ -60,15 +60,15 @@ if (process.env.NODE_ENV === "development" && module.hot)
   module.hot.accept("./index.js")
 
   // Any changes to our App will cause a hotload re-render.
-  module.hot.accept("../app/AppContainer", () => {
+  module.hot.accept("../app/Root", () => {
     console.log("- Hot: Rendering root...")
-    renderApp(require("../app/AppContainer").default)
+    renderApp(require("../app/Root").default)
   })
 
-  module.hot.accept("../app/AppState", () => {
+  module.hot.accept("../app/State", () => {
     console.log("- Hot: Updating reducers...")
-    var nextAppState = require("../app/AppState").default
-    var nextAppReducers = nextAppState.getReducers()
+    var nextState = require("../app/State").default
+    var nextAppReducers = nextState.getReducers()
     var nextRootReducer = createRootReducer({
       reducers: nextAppReducers,
       apollo: apolloClient
@@ -78,12 +78,12 @@ if (process.env.NODE_ENV === "development" && module.hot)
   })
 }
 
-initState(AppState)
+initState(State)
 
 Promise.all([
   ensureIntlSupport(),
   ensureReactIntlSupport()
 ]).then((results) => {
   console.log("Localization is ready! Using Polyfill:", results[0])
-  renderApp(AppContainer)
+  renderApp(Root)
 })

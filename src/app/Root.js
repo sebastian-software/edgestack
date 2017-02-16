@@ -9,7 +9,7 @@ import { IntlProvider } from "react-intl"
 
 // Application specific
 import "./Fonts.css"
-import Styles from "./AppContainer.css"
+import Styles from "./Root.css"
 import RouterConnector from "../common/RouterConnector"
 
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."

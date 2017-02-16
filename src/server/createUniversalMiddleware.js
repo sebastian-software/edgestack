@@ -60,21 +60,21 @@ function renderLight({ request, response, nonce, initialState, language, region,
   }
 }
 
-function renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore, language, region, measure }) {
+function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, language, region, measure }) {
   const routingContext = {}
 
   console.log("Server: Rendering app with data...")
 
-  var WrappedAppContainer = (
+  var WrappedRoot = (
     <StaticRouter location={request.url} context={routingContext}>
       <ApolloProvider client={apolloClient} store={reduxStore}>
-        <AppContainer/>
+        <Root/>
       </ApolloProvider>
     </StaticRouter>
   )
 
   measure.start("wrap-async")
-  withAsyncComponents(WrappedAppContainer).then((wrappedResult) =>
+  withAsyncComponents(WrappedRoot).then((wrappedResult) =>
   {
     measure.stop("wrap-async")
     const {
@@ -160,14 +160,14 @@ function renderFull({ request, response, nonce, AppContainer, apolloClient, redu
 /**
  * An express middleware that is capable of doing React server side rendering.
  */
-export default function createUniversalMiddleware({ AppContainer, AppState, ssrData, batchRequests = false, trustNetwork = true })
+export default function createUniversalMiddleware({ Root, State, ssrData, batchRequests = false, trustNetwork = true })
 {
-  if (AppContainer == null) {
-    throw new Error("Server: Universal Middleware: Missing AppContainer!")
+  if (Root == null) {
+    throw new Error("Server: Universal Middleware: Missing Root!")
   }
 
-  if (AppState == null) {
-    throw new Error("Server: Universal Middleware: Missing AppState!")
+  if (State == null) {
+    throw new Error("Server: Universal Middleware: Missing State!")
   }
 
   return function middleware(request, response)
@@ -219,13 +219,13 @@ export default function createUniversalMiddleware({ AppContainer, AppState, ssrD
       const reduxStore = createReduxStore({
         apolloClient,
         initialState,
-        reducers: AppState.getReducers(),
-        enhancers: AppState.getEnhancers(),
-        middlewares: AppState.getMiddlewares()
+        reducers: State.getReducers(),
+        enhancers: State.getEnhancers(),
+        middlewares: State.getMiddlewares()
       })
       measure.stop("create-redux")
 
-      renderFull({ request, response, nonce, AppContainer, apolloClient, reduxStore, language, region, measure })
+      renderFull({ request, response, nonce, Root, apolloClient, reduxStore, language, region, measure })
     }
   }
 }
