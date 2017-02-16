@@ -1,5 +1,2 @@
-version: 1.2
-awesome: true
-colors:
-  main: "#292223"
-  title: "#a92939"
+ALLOWED_LOCALES: de_DE, de_AT, en_GB, en_US, fr_FR, es_ES
+DEFAULT_LOCALE: de_DE

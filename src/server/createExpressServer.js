@@ -14,8 +14,7 @@ import {
   ABSOLUTE_PUBLIC_PATH
 } from "./config"
 
-const ALLOWED_LOCALES = [ "de_DE", "de_AT", "en_GB", "en_US", "fr_FR", "es_ES" ]
-const DEFAULT_LOCALE = "de_DE"
+import Config from "../app/Config.yml"
 
 const pretty = new PrettyError()
 
@@ -146,8 +145,8 @@ export default function createExpressServer()
   // Detect client locale and match it with configuration
   server.use(createLocaleMiddleware({
     priority: [ "query", "cookie", "accept-language", "default" ],
-    default: DEFAULT_LOCALE,
-    allowed: ALLOWED_LOCALES
+    default: Config.DEFAULT_LOCALE,
+    allowed: Config.ALLOWED_LOCALES
   }))
 
   // Parse application/x-www-form-urlencoded

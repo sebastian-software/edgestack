@@ -179,13 +179,13 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
     const nonce = response.locals.nonce
 
     if (!request.locale) {
-      throw new Error("Can't correctly deal with locale configuration")
+      throw new Error("Cannot correctly deal with locale configuration!")
     }
 
     const { language, region } = request.locale
 
     console.log(
-      "\nIncoming URL:",
+      "Incoming URL:",
       request.originalUrl,
       process.env.DISABLE_SSR ? "[SSR: disabled]" : "[SSR: enabled]",
       `[Locale: ${language}-${region}]`
@@ -194,7 +194,7 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
 
     // After matching locales with configuration we send the accepted locale
     // back to the client using a simple session cookie
-    response.cookie("locale", `${language}_${region}`)
+    response.cookie("locale", `${language}-${region}`)
 
     // Pass object with all Server Side Rendering (SSR) related data to the client
     const initialState = {
@@ -203,7 +203,15 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
 
     if (process.env.DISABLE_SSR)
     {
-      renderLight({ request, response, nonce, initialState, language, region, measure })
+      renderLight({
+        request,
+        response,
+        nonce,
+        initialState,
+        language,
+        region,
+        measure
+      })
     }
     else
     {
@@ -218,15 +226,25 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
 
       measure.start("create-redux")
       const reduxStore = createReduxStore({
-        apolloClient,
-        initialState,
         reducers: State.getReducers(),
         enhancers: State.getEnhancers(),
-        middlewares: State.getMiddlewares()
+        middlewares: State.getMiddlewares(),
+        apolloClient,
+        initialState
       })
       measure.stop("create-redux")
 
-      renderFull({ request, response, nonce, Root, apolloClient, reduxStore, language, region, measure })
+      renderFull({
+        request,
+        response,
+        nonce,
+        Root,
+        apolloClient,
+        reduxStore,
+        language,
+        region,
+        measure
+      })
     }
   }
 }
