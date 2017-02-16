@@ -2,6 +2,8 @@ import ApolloClient, { createNetworkInterface, createBatchingNetworkInterface } 
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
 import thunk from "redux-thunk"
 
+import { routerReducer } from "./RouterConnector"
+
 /**
  *
  *
@@ -49,6 +51,7 @@ export function createRootReducer({ reducers = {}, apolloClient = null }) {
   return combineReducers({
     ...reducers,
     ssr: ssrReducer,
+    router: routerReducer,
     apollo: apolloClient ? apolloClient.reducer() : emptyReducer
   })
 }
