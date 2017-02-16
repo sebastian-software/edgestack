@@ -21,7 +21,7 @@ const HomeAsync = createAsyncComponent({ resolve: () => import("./views/Home") }
 const AboutAsync = createAsyncComponent({ resolve: () => import("./views/About") })
 
 const rootMessages = {
-  counter: "Counter: {value}"
+  counter: "Counter: {value, number}"
 }
 
 function Error404() {
