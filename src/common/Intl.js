@@ -16,20 +16,53 @@ function getLanguage() {
 const intlUrl = require("lean-intl/locale-data/json/" + getFullLocale() + ".json")
 const reactIntlUrl = require("react-intl/locale-data/" + getLanguage() + ".js")
 
-console.log("React-Intl-Data-Url:", reactIntlUrl)
+var nonce
+
+if (process.env.TARGET === "web") {
+  nonce = document.querySelector("script[nonce]").getAttribute("nonce")
+}
+
+function injectCode({ code, url }) {
+  if (process.env.TARGET === "web") {
+    return new Promise((resolve, reject) => {
+      var result = false
+      var injectReference = document.getElementsByTagName("script")[0]
+      var scriptElem = document.createElement("script")
+
+      if (url) {
+        scriptElem.src = url
+      } else if (code) {
+        scriptElem.innerText = code
+      }
+
+      scriptElem.async = true
+      scriptElem.setAttribute("nonce", nonce)
+
+      scriptElem.onload = scriptElem.onreadystatechange = () => {
+        if (!result && (!this.readyState || this.readyState === "complete")) {
+          result = true
+          resolve(true)
+        }
+      }
+      scriptElem.onerror = scriptElem.onabort = reject
+      injectReference.parentNode.insertBefore(scriptElem, injectReference)
+    })
+  } else {
+    /* eslint-disable no-new-func */
+    new Function(code)()
+    return Promise.resolve(true)
+  }
+}
 
 
 export function ensureReactIntlSupport() {
   console.log("Loading:", reactIntlUrl)
   return fetch(reactIntlUrl).then((response) => {
-    response.text().then((text) => {
-      new Function(text)()
+    return response.text().then((code) => {
+      injectCode({ code })
     })
   })
 }
-
-ensureReactIntlSupport()
-
 
 export function ensureIntlSupport() {
   // Determine if the built-in `Intl` has the locale data we need.

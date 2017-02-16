@@ -4,7 +4,7 @@ import { render } from "react-dom"
 import { BrowserRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
 import { withAsyncComponents } from "react-async-component"
-import { ensureIntlSupport } from "../common/Intl"
+import { ensureIntlSupport, ensureReactIntlSupport } from "../common/Intl"
 
 import AppContainer from "../app/AppContainer"
 import AppState from "../app/AppState"
@@ -80,7 +80,10 @@ if (process.env.NODE_ENV === "development" && module.hot)
 
 initState(AppState)
 
-ensureIntlSupport().then((polyfilled) => {
-  console.log("Localization is ready! Using Polyfill:", polyfilled)
+Promise.all([
+  ensureIntlSupport(),
+  ensureReactIntlSupport()
+]).then((results) => {
+  console.log("Localization is ready! Using Polyfill:", results[0])
   renderApp(AppContainer)
 })
