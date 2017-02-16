@@ -820,12 +820,12 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
     {
       rules: removeEmpty(
         [
-          // Special Handling Locale Data Files
+          // Special handling locale data
           {
-            test: /lean-intl\/locale-data\/json\/.*\.json$/,
+            test: /locale-data\/.*\.(js|json)$/,
             loader: "file-loader",
             options: {
-              name: ifProdWeb("lean-intl/[name]-[hash:base62:8].[ext]", "lean-intl-[name].[ext]"),
+              name: ifProdWeb("intl/[name]-[hash:base62:8].[ext]", "intl-[name].[ext]"),
               emitFile: isWeb
             }
           },
@@ -856,7 +856,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
             test: /\.json$/,
             loader: "json-loader",
             exclude: [
-              /node_modules\/lean-intl/
+              /locale-data/
             ]
           },
 
