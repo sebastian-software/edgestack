@@ -8,7 +8,7 @@ import { ensureIntlSupport, ensureReactIntlSupport } from "../common/Intl"
 
 import Root from "../app/Root"
 import State from "../app/State"
-import { createReduxStore, createRootReducer } from "../common/Data"
+import { createReduxStore, createRootReducer } from "../common/State"
 import { createApolloClient } from "../common/Apollo"
 
 // Get the DOM Element that will host our React application.
