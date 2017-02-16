@@ -2,7 +2,8 @@ import React from "react"
 import Helmet from "react-helmet"
 import { connect } from "react-redux"
 import markdown from "markdown-in-js"
-import { FormattedDate, FormattedMessage } from "react-intl"
+import { FormattedDate, FormattedMessage, FormattedRelative } from "react-intl"
+import { addDays } from "date-fns"
 
 import Styles from "./About.css"
 import { getCounter, decrementCounter, incrementCounter, loadCounter } from "../modules/CounterModule"
@@ -50,13 +51,18 @@ class About extends React.Component {
           <FormattedMessage id="counter" values={{ value: this.props.value }}/>
         </p>
         <p>
-          Today: <FormattedDate
+          Today: <br/>
+          <FormattedDate
             value={Date.now()}
             year="numeric"
             month="long"
             day="numeric"
             weekday="long"
           />
+        </p>
+        <p>
+          Yesterday:<br/>
+          <FormattedRelative value={addDays(Date.now(), -1)}/>
         </p>
         <p>
           <button className={Styles.button} onClick={this.props.handleDecrement}>Decrement</button>
