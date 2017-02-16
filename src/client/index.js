@@ -28,7 +28,8 @@ function initState(MyState)
     reducers: MyState.getReducers(),
     enhancers: MyState.getEnhancers(),
     middlewares: MyState.getMiddlewares(),
-    initialState: window.APP_STATE
+    initialState: window.APP_STATE,
+    apolloClient
   })
 }
 
