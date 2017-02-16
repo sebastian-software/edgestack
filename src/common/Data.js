@@ -1,6 +1,7 @@
 import ApolloClient, { createNetworkInterface, createBatchingNetworkInterface } from "apollo-client"
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
 import thunk from "redux-thunk"
+import createLogger from "redux-logger"
 
 import { routerReducer } from "./RouterConnector"
 
@@ -71,6 +72,10 @@ export function createReduxStore({ initialState, apolloClient, reducers = {}, mi
       // https://github.com/leoasis/redux-immutable-state-invariant
       process.env.NODE_ENV === "development" ?
         require("redux-immutable-state-invariant")() : emptyMiddleware,
+
+      process.env.TARGET === "web" ?
+        createLogger({ collapsed: true }) : emptyMiddleware,
+
       thunk,
       ...middlewares
     ),
