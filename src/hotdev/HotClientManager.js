@@ -38,9 +38,7 @@ export default class HotClientManager
       publicPath: compiler.options.output.publicPath
     })
 
-    this.hotMiddleware = createHotMiddleware(compiler, {
-      // log: false
-    })
+    this.hotMiddleware = createHotMiddleware(compiler)
 
     httpServer.use(this.devMiddleware)
     httpServer.use(this.hotMiddleware)

@@ -30,7 +30,7 @@ function Error404() {
   return <div>Sorry, that page was not found.</div>
 }
 
-function AppContainer({ children }) {
+function Root({ children }) {
   return (
     <IntlProvider defaultLocale={DEFAULT_LOCALE} locale={CURRENT_LOCALE} messages={rootMessages}>
       <main>
@@ -71,8 +71,8 @@ function AppContainer({ children }) {
   )
 }
 
-AppContainer.propTypes = {
+Root.propTypes = {
   children: React.PropTypes.node
 }
 
-export default AppContainer
+export default Root
