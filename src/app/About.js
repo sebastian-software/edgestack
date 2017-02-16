@@ -3,6 +3,7 @@ import Helmet from "react-helmet"
 import { connect } from "react-redux"
 import markdown from "markdown-in-js"
 import cookiesjs from "cookiesjs"
+import { FormattedMessage } from "react-intl"
 
 // Clipboard handling is only supported on the client
 // Logical, but there are code limitations preventing a successful execution on server, too.
@@ -61,7 +62,7 @@ class About extends React.Component {
       <article>
         <Helmet title="About" />
         <p>
-          Counter: {this.props.value}
+          <FormattedMessage id="counter" values={{ value: this.props.value }}/>
         </p>
         <p>
           <button className={Styles.button} onClick={this.props.handleDecrement}>Decrement</button>
