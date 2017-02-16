@@ -22,7 +22,7 @@ if (process.env.TARGET === "web") {
   nonce = document.querySelector("script[nonce]").getAttribute("nonce")
 }
 
-function injectCode({ code, url }) {
+export function injectCode({ code, url }) {
   if (process.env.TARGET === "web") {
     return new Promise((resolve, reject) => {
       var result = false

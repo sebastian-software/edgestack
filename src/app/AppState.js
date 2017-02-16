@@ -1,7 +1,7 @@
 import createLogger from "redux-logger"
 
 import { routerReducer } from "../common/RouterConnector"
-import { counterReducer } from "./CounterModule"
+import { counterReducer } from "./modules/CounterModule"
 
 export default {
   /**

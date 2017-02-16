@@ -16,8 +16,8 @@ const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing
 const websiteLanguage = "en-US"
 const websiteTitle = "Advanced Boilerplate"
 
-const HomeAsync = createAsyncComponent({ resolve: () => import("./Home") })
-const AboutAsync = createAsyncComponent({ resolve: () => import("./About") })
+const HomeAsync = createAsyncComponent({ resolve: () => import("./views/Home") })
+const AboutAsync = createAsyncComponent({ resolve: () => import("./views/About") })
 
 const rootMessages = {
   counter: "Counter: {value}"

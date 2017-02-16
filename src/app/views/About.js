@@ -12,7 +12,7 @@ if (process.env.TARGET === "web") {
 }
 
 import Styles from "./About.css"
-import { getCounter, decrementCounter, incrementCounter, loadCounter } from "./CounterModule"
+import { getCounter, decrementCounter, incrementCounter, loadCounter } from "../modules/CounterModule"
 
 /**
  * @deprecated
