@@ -2,7 +2,7 @@ import "isomorphic-fetch"
 import areIntlLocalesSupported from "intl-locales-supported"
 import { addLocaleData } from "react-intl"
 
-const PREFER_NATIVE = false
+const PREFER_NATIVE = true
 
 var nonce
 
