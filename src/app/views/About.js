@@ -2,14 +2,7 @@ import React from "react"
 import Helmet from "react-helmet"
 import { connect } from "react-redux"
 import markdown from "markdown-in-js"
-import cookiesjs from "cookiesjs"
 import { FormattedDate, FormattedMessage } from "react-intl"
-
-// Clipboard handling is only supported on the client
-// Logical, but there are code limitations preventing a successful execution on server, too.
-if (process.env.TARGET === "web") {
-  var Clipboard = require("clipboard")
-}
 
 import Styles from "./About.css"
 import { getCounter, decrementCounter, incrementCounter, loadCounter } from "../modules/CounterModule"
@@ -29,14 +22,6 @@ class About extends React.Component {
     if (this.props.value == null) {
       this.props.load()
     }
-
-    cookiesjs({ test: 123 })
-    new Clipboard("[data-clipboard-target]")
-  }
-
-  handleClickCookieLink() {
-    /* eslint-disable no-alert */
-    alert(cookiesjs("test"))
   }
 
   renderMarkdown() {
@@ -78,12 +63,7 @@ class About extends React.Component {
           &#160;
           <button className={Styles.button} onClick={this.props.handleIncrement}>Increment</button>
           &#160;
-          <button className={Styles.buttonSmall} onClick={handleOldMethodCall}>Deprecated Test</button>
-          &#160;
-          <button className={Styles.buttonSmall} onClick={this.handleClickCookieLink}>Show Cookie</button>
-          &#160;
-          <input type="text" id="clipboard-source" defaultValue="some random content" />
-          <button className={Styles.buttonSmall} data-clipboard-target="#clipboard-source">Copy to Clipboard</button>
+          <button className={Styles.button} onClick={handleOldMethodCall}>Deprecated Test</button>
         </p>
         {this.renderMarkdown()}
         <p className={Styles.intro}>
