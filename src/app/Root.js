@@ -6,15 +6,16 @@ import { Switch, Route, NavLink } from "react-router-dom"
 import Helmet from "react-helmet"
 import { createAsyncComponent } from "react-async-component"
 import { IntlProvider } from "react-intl"
+import { connect } from "react-redux"
+import { getLocale, getLanguage } from "../common/State"
 
 // Application specific
 import "./Fonts.css"
 import Styles from "./Root.css"
 import RouterConnector from "../common/RouterConnector"
 
-const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
-const websiteLanguage = "en-US"
 const websiteTitle = "Advanced Boilerplate"
+const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
 
 const HomeAsync = createAsyncComponent({ resolve: () => import("./views/Home") })
 const AboutAsync = createAsyncComponent({ resolve: () => import("./views/About") })
@@ -23,16 +24,14 @@ const rootMessages = {
   counter: "Counter: {value}"
 }
 
-const CURRENT_LOCALE = "en"
-const DEFAULT_LOCALE = "en"
-
 function Error404() {
   return <div>Sorry, that page was not found.</div>
 }
 
-function Root({ children }) {
+function Root({ children, locale, language }) {
+  console.log("Root Component Props: LOCALE=" + locale, "LANGUAGE=" + language)
   return (
-    <IntlProvider defaultLocale={DEFAULT_LOCALE} locale={CURRENT_LOCALE} messages={rootMessages}>
+    <IntlProvider key={locale} locale={locale} messages={rootMessages}>
       <main>
         <Helmet
           titleTemplate={`${websiteTitle} - %s`}
@@ -41,7 +40,7 @@ function Root({ children }) {
             { name: "charset", content: "utf-8" },
             { "http-equiv": "X-UA-Compatible", "content": "IE=edge" },
             { name: "viewport", content: "width=device-width, initial-scale=1" },
-            { name: "content-language", content: websiteLanguage },
+            { name: "content-language", content: language },
             { name: "description", content: websiteDescription }
           ]}
         />
@@ -72,7 +71,14 @@ function Root({ children }) {
 }
 
 Root.propTypes = {
-  children: React.PropTypes.node
+  children: React.PropTypes.node,
+  locale: React.PropTypes.string,
+  language: React.PropTypes.string
 }
 
-export default Root
+const mapStateToProps = (state, ownProps) => ({
+  locale: getLocale(state),
+  language: getLanguage(state)
+})
+
+export default connect(mapStateToProps)(Root)

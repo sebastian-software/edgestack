@@ -198,7 +198,12 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
 
     // Pass object with all Server Side Rendering (SSR) related data to the client
     const initialState = {
-      ssr: ssrData
+      ssr: {
+        ...ssrData,
+        locale: `${language}-${region}`,
+        language,
+        region
+      }
     }
 
     if (process.env.DISABLE_SSR)

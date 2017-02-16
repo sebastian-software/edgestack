@@ -76,12 +76,14 @@ if (process.env.NODE_ENV === "development" && module.hot)
   })
 }
 
-initState(State)
+
+// console.log("SSR CLIENT DATA: ", window.APP_STATE.ssr)
 
 Promise.all([
-  ensureIntlSupport(),
-  ensureReactIntlSupport()
+  ensureIntlSupport(window.APP_STATE.ssr.locale),
+  ensureReactIntlSupport(window.APP_STATE.ssr.language)
 ]).then((results) => {
   console.log("Localization is ready! Using Polyfill:", results[0])
+  initState(State)
   renderApp(Root)
 })

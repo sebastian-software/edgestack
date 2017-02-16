@@ -145,8 +145,8 @@ export default function createExpressServer()
   // Detect client locale and match it with configuration
   server.use(createLocaleMiddleware({
     priority: [ "query", "cookie", "accept-language", "default" ],
-    default: Config.DEFAULT_LOCALE,
-    allowed: Config.ALLOWED_LOCALES
+    default: Config.DEFAULT_LOCALE.replace(/-/, "_"),
+    allowed: Config.ALLOWED_LOCALES.map((entry) => entry.replace(/-/, "_"))
   }))
 
   // Parse application/x-www-form-urlencoded

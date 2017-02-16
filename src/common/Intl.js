@@ -1,21 +1,8 @@
 import "isomorphic-fetch"
 import areIntlLocalesSupported from "intl-locales-supported"
+import { addLocaleData } from "react-intl"
 
 const PREFER_NATIVE = false
-
-// FIXME
-function getFullLocale() {
-  return typeof document !== "undefined" ? document.documentElement.lang : "de-DE"
-}
-
-function getLanguage() {
-  return getFullLocale().split(/-|_/)[0].toLowerCase()
-}
-
-
-/* eslint-disable prefer-template */
-const intlUrl = require("lean-intl/locale-data/json/" + getFullLocale() + ".json")
-const reactIntlUrl = require("react-intl/locale-data/" + getLanguage() + ".js")
 
 var nonce
 
@@ -56,23 +43,28 @@ export function injectCode({ code, url }) {
 }
 
 
-export function ensureReactIntlSupport() {
+export function ensureReactIntlSupport(language) {
+  const reactIntlUrl = require("react-intl/locale-data/" + language + ".js")
   console.log("Loading:", reactIntlUrl)
   return fetch(reactIntlUrl).then((response) => {
     return response.text().then((code) => {
+      // This stuff is crappy but it's a way to work with the UMD packages of React-Intl.
+      // See also: https://github.com/yahoo/react-intl/issues/853
       injectCode({ code })
+      addLocaleData(ReactIntlLocaleData[language])
     })
   })
 }
 
-export function ensureIntlSupport() {
+export function ensureIntlSupport(locale) {
   // Determine if the built-in `Intl` has the locale data we need.
-  if (PREFER_NATIVE && global.Intl && areIntlLocalesSupported([ getFullLocale() ])) {
+  if (PREFER_NATIVE && global.Intl && areIntlLocalesSupported([ locale ])) {
     return Promise.resolve(false)
   }
 
   // TODO: Wenn NodeJS dann meckern wenn i18n daten nicht vorhanden!!!
 
+  const intlUrl = require("lean-intl/locale-data/json/" + locale + ".json")
   console.log("Loading:", intlUrl)
 
   return import("lean-intl").then((IntlPolyfill) => {
