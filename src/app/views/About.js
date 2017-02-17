@@ -22,35 +22,6 @@ const localMessages = {
 
 
 class About extends React.Component {
-  constructor(props) {
-    super(props)
-
-    /*
-    this.state = {
-      messages: {}
-    }
-    */
-
-    /*
-    if (props.language) {
-      import("./messages/About." + props.language + ".json").then((messages) => {
-        this.setState({ messages })
-      })
-    }
-    */
-  }
-
-  componentWillReceiveProps(nextProps) {
-    /*
-    if (nextProps.language != null) {
-      console.log("Loading view specific messages:", nextProps.language)
-      import("./messages/About." + nextProps.language + ".json").then((messages) => {
-        this.setState({ messages })
-      })
-    }
-    */
-  }
-
   componentDidMount() {
     // Good strategy to load relevant data: wait after rendering
     // so that the user sees the empty state. We can't really wait
@@ -60,22 +31,17 @@ class About extends React.Component {
     }
   }
 
-  renderMarkdown() {
-    return markdown`Markdown in React is **pretty useful**.`
-  }
-
   fetchData()
   {
-    console.log("- About: fetchData()")
-
-    // Redux' connect() add proxies for static methods, but the top-level HOC
-    // does not have our required and connected state/dispatcher props.
-    //
-    if (this.props.load) {
+    // Load data on all preparation steps e.g. on SSR and also on rehydration on client
+    // when intially loading this route.
+    if (this.props.value == null) {
       return this.props.load()
     }
+  }
 
-    return Promise.resolve()
+  renderMarkdown() {
+    return markdown`Markdown in React is **pretty useful**.`
   }
 
   render() {
