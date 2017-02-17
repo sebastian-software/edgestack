@@ -2,7 +2,7 @@ import React from "react"
 import Helmet from "react-helmet"
 import { connect } from "react-redux"
 import markdown from "markdown-in-js"
-import { IntlProvider, FormattedDate, FormattedMessage, FormattedRelative } from "react-intl"
+import { FormattedDate, FormattedMessage, FormattedRelative } from "react-intl"
 import { addDays } from "date-fns"
 
 import Styles from "./About.css"
@@ -16,28 +16,19 @@ function handleOldMethodCall() {
   // nothing to do
 }
 
-const localMessages = {
-
-}
-
-
 class About extends React.Component {
   componentDidMount() {
     // Good strategy to load relevant data: wait after rendering
     // so that the user sees the empty state. We can't really wait
     // in render sequence for any data coming in.
-    if (this.props.value == null) {
-      this.props.load()
-    }
+    return this.props.value == null ? this.props.load() : null
   }
 
   fetchData()
   {
     // Load data on all preparation steps e.g. on SSR and also on rehydration on client
     // when intially loading this route.
-    if (this.props.value == null) {
-      return this.props.load()
-    }
+    return this.props.value == null ? this.props.load() : null
   }
 
   renderMarkdown() {
