@@ -14,7 +14,6 @@ import { createApolloClient } from "../common/Apollo"
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")
 
-
 let apolloClient
 let reduxStore
 
@@ -43,8 +42,7 @@ function renderApp(MyRoot)
     </BrowserRouter>
   )
 
-
-
+  /* eslint-disable no-shadow */
   function scanElement(rootElement, context = {}, skipRoot = false)
   {
     const schedule = []
@@ -73,72 +71,17 @@ function renderApp(MyRoot)
     reactTreeWalker(rootElement, visitor, context)
     console.log("- Scan result: ", schedule.length)
 
-
     const nestedPromises = schedule.map(({ resolver, element, context }) =>
       resolver.then(() => scanElement(element, context, true)),
     )
 
-    return nestedPromises.length > 0
-      ? Promise.all(nestedPromises)
-      : Promise.resolve([])
+    return nestedPromises.length > 0 ? Promise.all(nestedPromises) : Promise.resolve([])
   }
 
   scanElement(WrappedRoot).then(() => {
     console.log("FULL SCAN ROOT DONE")
     render(WrappedRoot, container)
   })
-
-
-  /*
-  var schedule = []
-
-  function visitor(element, instance, context) {
-    if (instance && instance.fetchData) {
-      var returnValue = instance.fetchData()
-      if (returnValue instanceof Promise) {
-        console.log("Scheduling wait for:", instance)
-        schedule.push(returnValue)
-      }
-    }
-  }
-
-  const context = {}
-
-  function scan() {
-    console.log("Scanning...")
-    reactTreeWalker(WrappedRoot, visitor, context)
-    console.log("- Scan result: ", schedule.length)
-    if (schedule.length > 0) {
-      return Promise.all(schedule).then((result) => {
-        // schedule.length = 0
-
-
-      })
-    }
-
-    return Promise.resolve(true)
-  }
-
-  scan().then(() => {
-    console.log("===== ALL DONE =====")
-    render(WrappedRoot, container)
-  })
-  */
-
-  /*
-  withAsyncComponents(WrappedRoot).then((result) => {
-    // The result will include a version of your app that is
-    // built to use async components and is automatically
-    // rehydrated with the async component state returned by
-    // the server.
-    const { appWithAsyncComponents } = result
-    render(appWithAsyncComponents, container)
-  }).catch((error) => {
-    console.error("Client: Error wrapping application for code splitting:", error)
-  })
-  */
-
-  // render(WrappedRoot, container)
 }
 
 // The following is needed so that we can hot reload our App.
@@ -161,9 +104,6 @@ if (process.env.NODE_ENV === "development" && module.hot)
     reduxStore.replaceReducer(nextReducer)
   })
 }
-
-
-// console.log("SSR CLIENT DATA: ", window.APP_STATE.ssr)
 
 Promise.all([
   ensureIntlSupport(window.APP_STATE.ssr.locale),
