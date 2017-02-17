@@ -4,7 +4,6 @@ import "sanitize.css/sanitize.css"
 import React from "react"
 import { Switch, Route, NavLink } from "react-router-dom"
 import Helmet from "react-helmet"
-import { createAsyncComponent } from "react-async-component"
 import { IntlProvider } from "react-intl"
 import { connect } from "react-redux"
 import { getLocale, getLanguage } from "../common/State"
@@ -17,70 +16,101 @@ import RouterConnector from "../common/RouterConnector"
 const websiteTitle = "Advanced Boilerplate"
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
 
-import HomeAsync from "./views/Home"
+function wrapAsync(loader, language)
+{
+  class AsyncComponent extends React.Component {
+    constructor(props) {
+      super(props)
 
-// const HomeAsync = createAsyncComponent({ resolve: () => import("./views/Home") })
-// const AboutAsync = createAsyncComponent({ resolve: () => import("./views/About") })
+      this.state = {
+        loading: false
+      }
+    }
 
-class AboutAsync extends React.Component {
+    componentWillMount() {
+      if (process.env.TARGET === "web") {
+        return this.fetchData()
+      } else {
+        console.log("- Async Component: componentWillMount()")
+        return null
+      }
+    }
+
+    fetchData()
+    {
+      if (this.constructor.childView) {
+        return
+      }
+
+      console.log("- Async Component: fetchData()")
+
+      this.setState({ loading: true })
+
+      return loader().then((result) =>
+      {
+        let [ View, messages ] = result
+
+        if (View && View.default) {
+          View = View.default
+        }
+
+        this.constructor.messages = messages
+        this.constructor.childView = View
+
+        this.setState({ loading: false })
+
+        console.log("- Async Component: Everything loaded!")
+      })
+    }
+
+    render() {
+      var View = this.constructor.childView
+      var messages = this.constructor.messages
+      console.log("- Async Component: render():", Boolean(View))
+
+      return View ?
+        <IntlProvider messages={messages}>
+          <View/>
+        </IntlProvider>
+      : null
+    }
+  }
+
+  return AsyncComponent
+}
+
+
+
+
+
+
+
+class AsyncRoute extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      loading: false
-    }
-  }
-
-  fetchData()
-  {
-    if (this.constructor.childView) {
-      return
-    }
-
-    console.log("- About Async: fetchData()")
-
-    this.setState({ loading: true })
-
-    return Promise.all([
-      import("./views/About"),
-      import("./views/messages/About.de.json")
-    ]).then((result) => {
-
-      let [ View, messages ] = result
-
-      if (View.default) {
-        View = View.default
-      }
-
-      this.constructor.messages = messages
-      this.constructor.childView = View
-
-      this.setState({ loading: false })
-
-      console.log("- About Async: Everything loaded!")
-    })
-  }
-
-  componentWillMount() {
-    if (process.env.TARGET === "web") {
-      return this.fetchData()
-    } else {
-      console.log("- About Async: componentWillMount()")
-    }
+    const { language, load } = props
+    this.component = wrapAsync(() => Promise.all(load(language)), language)
   }
 
   render() {
-    var View = this.constructor.childView
-    var messages = this.constructor.messages
-    console.log("- About Async: render():", Boolean(View))
-
-    return View ?
-      <IntlProvider messages={messages}>
-        <View></View>
-      </IntlProvider>
-    : null
+    return <Route component={this.component} {...this.props}/>
   }
 }
+
+AsyncRoute.propTypes = {
+  load: React.PropTypes.func,
+  locale: React.PropTypes.string,
+  language: React.PropTypes.string
+}
+
+AsyncRoute = connect((state, ownProps) => ({
+  locale: getLocale(state),
+  language: getLanguage(state)
+}))(AsyncRoute)
+
+
+
 
 
 
@@ -121,8 +151,8 @@ function Root({ children, locale, language }) {
         <div>
           <RouterConnector>
             <Switch>
-              <Route exact path="/" component={HomeAsync}/>
-              <Route path="/about" component={AboutAsync}/>
+              <AsyncRoute exact path="/" load={(language) => [ import("./views/Home") ]}/>
+              <AsyncRoute path="/about" load={(language) => [ import("./views/About"), import("./views/messages/About." + language + ".json") ]}/>
               <Route component={Error404}/>
             </Switch>
           </RouterConnector>
