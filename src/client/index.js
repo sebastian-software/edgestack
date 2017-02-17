@@ -45,29 +45,32 @@ function renderApp(MyRoot)
 
 
 
-  function scanElement(elem, context={}, skipRoot) {
+  function scanElement(rootElement, context = {}, skipRoot = false)
+  {
     const schedule = []
 
-    function visitor(element, instance, context) {
-      if (elem === element && skipRoot) {
+    function visitor(element, instance, context)
+    {
+      if (rootElement === element && skipRoot) {
         return
       }
 
-      if (instance && instance.fetchData) {
+      if (instance && instance.fetchData)
+      {
         var returnValue = instance.fetchData()
-        if (returnValue instanceof Promise) {
-          console.log("Scheduling wait for:", instance)
+        if (returnValue instanceof Promise)
+        {
           schedule.push({
             resolver: returnValue,
-            element: element,
-            context: context
+            element,
+            context
           })
         }
       }
     }
 
     console.log("Scanning...")
-    reactTreeWalker(elem, visitor, context)
+    reactTreeWalker(rootElement, visitor, context)
     console.log("- Scan result: ", schedule.length)
 
 

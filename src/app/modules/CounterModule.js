@@ -43,7 +43,8 @@ export function decrementCounter()
 /**
  * This somewhat tries to emulate a asyncronous backend request
  */
-function mockServerDelay() {
+function mockServerDelay()
+{
   console.log("Loading counter...")
   return new Promise((resolve, reject) =>
   {
