@@ -20,6 +20,27 @@ const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing
 const HomeAsync = createAsyncComponent({ resolve: () => import("./views/Home") })
 const AboutAsync = createAsyncComponent({ resolve: () => import("./views/About") })
 
+/*
+const AboutAsync = createAsyncComponent({
+  resolve: () =>
+  {
+    console.log(this)
+    return new Promise((resolve, reject) => {
+
+      var results = Promise.all([
+        import("./views/About")
+        // import("./views/About." + language + )
+      ]).then((results) => {
+
+        resolve(results[0])
+      })
+
+    })
+  }
+})
+*/
+
+
 const rootMessages = {
   counter: "Counter: {value, number}"
 }

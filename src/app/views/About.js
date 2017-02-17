@@ -2,11 +2,12 @@ import React from "react"
 import Helmet from "react-helmet"
 import { connect } from "react-redux"
 import markdown from "markdown-in-js"
-import { FormattedDate, FormattedMessage, FormattedRelative } from "react-intl"
+import { IntlProvider, FormattedDate, FormattedMessage, FormattedRelative } from "react-intl"
 import { addDays } from "date-fns"
 
 import Styles from "./About.css"
 import { getCounter, decrementCounter, incrementCounter, loadCounter } from "../modules/CounterModule"
+import { getLanguage } from "../../common/State"
 
 /**
  * @deprecated
@@ -15,7 +16,38 @@ function handleOldMethodCall() {
   // nothing to do
 }
 
+const localMessages = {
+
+}
+
+
 class About extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      messages: {}
+    }
+
+    /*
+    if (props.language) {
+      import("./messages/About." + props.language + ".json").then((messages) => {
+        this.setState({ messages })
+      })
+    }
+    */
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.language != null) {
+      console.log("Loading view specific messages:", nextProps.language)
+      import("./messages/About." + nextProps.language + ".json").then((messages) => {
+        this.setState({ messages })
+      })
+    }
+
+  }
+
   componentDidMount() {
     // Good strategy to load relevant data: wait after rendering
     // so that the user sees the empty state. We can't really wait
@@ -45,10 +77,14 @@ class About extends React.Component {
 
   render() {
     return (
+      <IntlProvider messages={this.state.messages}>
       <article>
         <Helmet title="About" />
         <p>
           <FormattedMessage id="counter" values={{ value: this.props.value }}/>
+        </p>
+        <p>
+          <FormattedMessage id="localTest" values={{ pi: 3.14 }}/>
         </p>
         <p>
           Today: <br/>
@@ -76,6 +112,7 @@ class About extends React.Component {
           <a href="https://github.com/sebastian-software">Produced with ❤ by Sebastian Software</a>
         </p>
       </article>
+      </IntlProvider>
     )
   }
 }
@@ -88,6 +125,7 @@ About.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  language: getLanguage(state),
   value: getCounter(state)
 })
 
