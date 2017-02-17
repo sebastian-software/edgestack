@@ -17,28 +17,71 @@ import RouterConnector from "../common/RouterConnector"
 const websiteTitle = "Advanced Boilerplate"
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
 
-const HomeAsync = createAsyncComponent({ resolve: () => import("./views/Home") })
-const AboutAsync = createAsyncComponent({ resolve: () => import("./views/About") })
+import HomeAsync from "./views/Home"
 
-/*
-const AboutAsync = createAsyncComponent({
-  resolve: () =>
+// const HomeAsync = createAsyncComponent({ resolve: () => import("./views/Home") })
+// const AboutAsync = createAsyncComponent({ resolve: () => import("./views/About") })
+
+class AboutAsync extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      loading: false
+    }
+  }
+
+  fetchData()
   {
-    console.log(this)
-    return new Promise((resolve, reject) => {
+    if (this.constructor.childView) {
+      return
+    }
 
-      var results = Promise.all([
-        import("./views/About")
-        // import("./views/About." + language + )
-      ]).then((results) => {
+    console.log("- About Async: fetchData()")
 
-        resolve(results[0])
-      })
+    this.setState({ loading: true })
 
+    return Promise.all([
+      import("./views/About"),
+      import("./views/messages/About.de.json")
+    ]).then((result) => {
+
+      let [ View, messages ] = result
+
+      if (View.default) {
+        View = View.default
+      }
+
+      this.constructor.messages = messages
+      this.constructor.childView = View
+
+      this.setState({ loading: false })
+
+      console.log("- About Async: Everything loaded!")
     })
   }
-})
-*/
+
+  componentWillMount() {
+    if (process.env.TARGET === "web") {
+      return this.fetchData()
+    } else {
+      console.log("- About Async: componentWillMount()")
+    }
+  }
+
+  render() {
+    var View = this.constructor.childView
+    var messages = this.constructor.messages
+    console.log("- About Async: render():", Boolean(View))
+
+    return View ?
+      <IntlProvider messages={messages}>
+        <View></View>
+      </IntlProvider>
+    : null
+  }
+}
+
 
 
 const rootMessages = {

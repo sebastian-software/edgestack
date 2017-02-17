@@ -3,7 +3,7 @@ import { renderToString } from "react-dom/server"
 import { StaticRouter } from "react-router"
 import Helmet from "react-helmet"
 import { ApolloProvider, getDataFromTree } from "react-apollo"
-import { withAsyncComponents } from "react-async-component"
+// import { withAsyncComponents } from "react-async-component"
 
 import Measure from "./Measure"
 import renderPage from "./renderPage"
@@ -74,7 +74,7 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
     </StaticRouter>
   )
 
-  measure.start("wrap-async")
+  /*measure.start("wrap-async")
   withAsyncComponents(WrappedRoot).then((wrappedResult) =>
   {
     measure.stop("wrap-async")
@@ -95,6 +95,9 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
       // the state to the "window" object.
       STATE_IDENTIFIER
     } = wrappedResult
+    */
+
+    var appWithAsyncComponents = WrappedRoot
 
     // Create the application react element.
     renderToStringWithData(
@@ -113,8 +116,8 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
         // so that we can rehydrate the state on the client.
         initialState: reduxState,
 
-        codeSplitState: state,
-        STATE_IDENTIFIER,
+        // codeSplitState: state,
+        //STATE_IDENTIFIER,
 
         // Nonce which allows us to safely declare inline scripts.
         nonce,
@@ -149,13 +152,16 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
       response.status(routingContext.missed ? 404 : 200).send(html)
 
       // Print measure results
-      measure.print()
+      // measure.print()
     }).catch((error) => {
       console.error("Server: Error during producing response:", error)
     })
+
+    /*
   }).catch((error) => {
     console.error("Server: Error wrapping application for code splitting:", error)
   })
+  */
 }
 
 /**

@@ -3,7 +3,7 @@ import React from "react"
 import { render } from "react-dom"
 import { BrowserRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
-import { withAsyncComponents } from "react-async-component"
+import reactTreeWalker from "react-tree-walker"
 import { ensureIntlSupport, ensureReactIntlSupport } from "../common/Intl"
 
 import Root from "../app/Root"
@@ -43,6 +43,41 @@ function renderApp(MyRoot)
     </BrowserRouter>
   )
 
+  var schedule = []
+
+  function visitor(element, instance, context) {
+    if (instance && instance.fetchData) {
+      var returnValue = instance.fetchData()
+      if (returnValue instanceof Promise) {
+        console.log("Scheduling wait for:", instance)
+        schedule.push(returnValue)
+      }
+    }
+  }
+
+  const context = {}
+
+  function scan() {
+    console.log("Scanning...")
+    reactTreeWalker(WrappedRoot, visitor, context)
+    console.log("- Scan result: ", schedule.length)
+    if (schedule.length > 0) {
+      return Promise.all(schedule).then((result) => {
+        // schedule.length = 0
+
+
+      })
+    }
+
+    return Promise.resolve(true)
+  }
+
+  scan().then(() => {
+    console.log("===== ALL DONE =====")
+    render(WrappedRoot, container)
+  })
+
+  /*
   withAsyncComponents(WrappedRoot).then((result) => {
     // The result will include a version of your app that is
     // built to use async components and is automatically
@@ -53,6 +88,9 @@ function renderApp(MyRoot)
   }).catch((error) => {
     console.error("Client: Error wrapping application for code splitting:", error)
   })
+  */
+
+  // render(WrappedRoot, container)
 }
 
 // The following is needed so that we can hot reload our App.

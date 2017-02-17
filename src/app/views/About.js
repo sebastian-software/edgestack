@@ -25,9 +25,11 @@ class About extends React.Component {
   constructor(props) {
     super(props)
 
+    /*
     this.state = {
       messages: {}
     }
+    */
 
     /*
     if (props.language) {
@@ -39,13 +41,14 @@ class About extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    /*
     if (nextProps.language != null) {
       console.log("Loading view specific messages:", nextProps.language)
       import("./messages/About." + nextProps.language + ".json").then((messages) => {
         this.setState({ messages })
       })
     }
-
+    */
   }
 
   componentDidMount() {
@@ -63,7 +66,7 @@ class About extends React.Component {
 
   fetchData()
   {
-    console.log("Called fetchData()...")
+    console.log("- About: fetchData()")
 
     // Redux' connect() add proxies for static methods, but the top-level HOC
     // does not have our required and connected state/dispatcher props.
@@ -76,8 +79,8 @@ class About extends React.Component {
   }
 
   render() {
+    console.log("- About: render()")
     return (
-      <IntlProvider messages={this.state.messages}>
       <article>
         <Helmet title="About" />
         <p>
@@ -112,7 +115,6 @@ class About extends React.Component {
           <a href="https://github.com/sebastian-software">Produced with ❤ by Sebastian Software</a>
         </p>
       </article>
-      </IntlProvider>
     )
   }
 }
