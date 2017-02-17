@@ -43,6 +43,50 @@ function renderApp(MyRoot)
     </BrowserRouter>
   )
 
+
+
+  function scanElement(elem, context={}, skipRoot) {
+    const schedule = []
+
+    function visitor(element, instance, context) {
+      if (elem === element && skipRoot) {
+        return
+      }
+
+      if (instance && instance.fetchData) {
+        var returnValue = instance.fetchData()
+        if (returnValue instanceof Promise) {
+          console.log("Scheduling wait for:", instance)
+          schedule.push({
+            resolver: returnValue,
+            element: element,
+            context: context
+          })
+        }
+      }
+    }
+
+    console.log("Scanning...")
+    reactTreeWalker(elem, visitor, context)
+    console.log("- Scan result: ", schedule.length)
+
+
+    const nestedPromises = schedule.map(({ resolver, element, context }) =>
+      resolver.then(() => scanElement(element, context, true)),
+    )
+
+    return nestedPromises.length > 0
+      ? Promise.all(nestedPromises)
+      : Promise.resolve([])
+  }
+
+  scanElement(WrappedRoot).then(() => {
+    console.log("FULL SCAN ROOT DONE")
+    render(WrappedRoot, container)
+  })
+
+
+  /*
   var schedule = []
 
   function visitor(element, instance, context) {
@@ -76,6 +120,7 @@ function renderApp(MyRoot)
     console.log("===== ALL DONE =====")
     render(WrappedRoot, container)
   })
+  */
 
   /*
   withAsyncComponents(WrappedRoot).then((result) => {
