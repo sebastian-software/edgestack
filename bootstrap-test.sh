@@ -7,6 +7,8 @@ mkdir -p ${TESTPATH}
 cd "${TESTPATH}"
 echo '{ "name":"test","version":"1.0.0", "devDependencies": { "cross-env": "^3.1.4"}, "scripts":{"prod":"cross-env NODE_ENV=production advanced-script build"} }' > package.json
 
+# yarn link seems to have problems with linking and installing
+# so use npm here
 npm install
 npm link ..
 npm install ..
