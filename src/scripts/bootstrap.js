@@ -114,6 +114,19 @@ function copyFile(source, dest, replacementCallback)
   })
 }
 
+function writeFile(dest, content)
+{
+  return new Promise(
+    (resolve, reject) => fs.outputFile(dest, content, (writeError) =>
+    {
+      if (writeError)
+        return reject(writeError)
+
+      return resolve()
+    })
+  )
+}
+
 function templateWalker(startPath, targetPath, replacementCallback)
 {
   const promisedChanges = []
@@ -161,8 +174,44 @@ function createConfigFiles(targetPath)
     ),
 
     copyFile(
-      pathModule.join(ROOT, ".gitignore"),
-      pathModule.join(targetPath, ".gitignore")
+      pathModule.join(ROOT, "public", "favicon.ico"),
+      pathModule.join(targetPath, "public", "favicon.ico")
+    ),
+
+    writeFile(
+      pathModule.join(targetPath, ".gitignore"),
+      `
+# Environment Configuration
+.env
+
+# Build output folders
+build/
+dist/
+lib/
+bin/
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Dependency directory
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
+node_modules
+
+# Debug log from npm
+npm-debug.log
+
+# Cache file from ESLint, Happypack
+.eslintcache
+.happypack
+.hardsource
+.recordscache
+      `
     )
   ]).then(() => console.log(chalk.green("You might want to change the .env file in current directory")))
 }
