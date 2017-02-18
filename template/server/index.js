@@ -2,6 +2,7 @@
 import { createExpressServer, createUniversalMiddleware, addFallbackHandler } from "advanced-boilerplate"
 
 import AppContainer from "../app/AppContainer"
+import AppState from "../app/AppState"
 
 export function start()
 {
@@ -14,7 +15,7 @@ export function start()
     const server = createExpressServer()
 
     // Bind our universal react app middleware as the handler for all get requests.
-    server.get("*", createUniversalMiddleware({ AppContainer, ssrData }))
+    server.get("*", createUniversalMiddleware({ AppContainer, AppState, ssrData }))
 
     // Add default handling for any remaining errors which are not catched by our middleware
     addFallbackHandler(server)
@@ -26,7 +27,6 @@ export function start()
   })
 }
 
-// Auto start server in production
-if (process.env.NODE_ENV === "production") {
-  start()
-}
+// Auto start server
+start()
+

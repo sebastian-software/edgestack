@@ -4,35 +4,40 @@ import { render } from "react-dom"
 import { BrowserRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
 import { withAsyncComponents } from "react-async-component"
-import { ReactHotLoader, createApolloClient, createReduxStore } from "advanced-boilerplate"
 
 import AppContainer from "../app/AppContainer"
+import AppState from "../app/AppState"
+import { createApolloClient, createReduxStore, createRootReducer } from "advanced-boilerplate"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")
 
-function renderApp(RenderContainer)
+
+let apolloClient
+let reduxStore
+
+function initState(MyAppState)
 {
-  console.log("Client: Initialize state from server:", window.APP_STATE)
-  const apolloClient = createApolloClient({
+  apolloClient = createApolloClient({
     initialState: window.APP_STATE
   })
 
-  const reduxStore = createReduxStore({
-    reducers: RenderContainer.getReducers(),
-    enhancers: RenderContainer.getEnhancers(),
-    middlewares: RenderContainer.getMiddlewares(),
+  reduxStore = createReduxStore({
+    reducers: MyAppState.getReducers(),
+    enhancers: MyAppState.getEnhancers(),
+    middlewares: MyAppState.getMiddlewares(),
     initialState: window.APP_STATE
   })
+}
 
+function renderApp(MyAppContainer)
+{
   var fullApp = (
-    <ReactHotLoader>
-      <BrowserRouter>
-        <ApolloProvider client={apolloClient} store={reduxStore}>
-          <RenderContainer/>
-        </ApolloProvider>
-      </BrowserRouter>
-    </ReactHotLoader>
+    <BrowserRouter>
+      <ApolloProvider client={apolloClient} store={reduxStore}>
+        <MyAppContainer/>
+      </ApolloProvider>
+    </BrowserRouter>
   )
 
   withAsyncComponents(fullApp).then((result) => {
@@ -54,7 +59,23 @@ if (process.env.NODE_ENV === "development" && module.hot)
   module.hot.accept("./index.js")
 
   // Any changes to our App will cause a hotload re-render.
-  // module.hot.accept("../app/AppContainer", () => renderApp(require("../app/AppContainer").default))
+  module.hot.accept("../app/AppContainer", () => {
+    console.log("- Hot: Rendering root...")
+    renderApp(require("../app/AppContainer").default)
+  })
+
+  module.hot.accept("../app/AppState", () => {
+    console.log("- Hot: Updating reducers...")
+    var nextAppState = require("../app/AppState").default
+    var nextAppReducers = nextAppState.getReducers()
+    var nextRootReducer = createRootReducer({
+      reducers: nextAppReducers,
+      apollo: apolloClient
+    })
+
+    reduxStore.replaceReducer(nextRootReducer)
+  })
 }
 
+initState(AppState)
 renderApp(AppContainer)
