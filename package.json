@@ -198,6 +198,7 @@
   "devDependencies": {
     "eslint": "^3.15.0",
     "lint-staged": "^3.3.0",
+    "minimist": "^1.2.0",
     "pre-commit": "^1.2.2",
     "prepublish": "^0.13.2",
     "rollup": "^0.41.4",

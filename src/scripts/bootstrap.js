@@ -5,6 +5,7 @@ import chalk from "chalk"
 import { mapKeys } from "lodash"
 import findRoot from "find-root"
 import walker from "walker"
+import minimist from "minimist"
 
 const ROOT = findRoot(require.main.filename)
 
@@ -202,7 +203,10 @@ function patchPackageScripts(targetPath)
   })
 }
 
-export default function bootstrap() {
+export default function bootstrap(args) {
+  const argv = minimist(args)
+  promptModule.override = argv
+
   const CURRENT_WORKING_DIR = process.cwd()
   const SRC_PATH = pathModule.join(CURRENT_WORKING_DIR, "src")
 
