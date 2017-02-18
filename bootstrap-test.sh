@@ -2,7 +2,7 @@
 set -x
 
 CWD=$(pwd)
-TESTPATH="${CWD}/test_boilerplate"
+TESTPATH="${CWD}/test_bootstrap"
 
 mkdir -p ${TESTPATH}
 cd "${TESTPATH}"
