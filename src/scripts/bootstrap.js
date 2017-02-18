@@ -237,9 +237,14 @@ function patchPackageScripts(targetPath)
       newData.scripts["prod:start"] = "npm run prod && node build/server/main.js"
       newData.scripts.clean = "rimraf build/client/* build/server/*"
 
-      newData.devDependencies["normalize.css"] = "^5.0.0"
-      newData.devDependencies["sanitize.css"] = "^4.1.0"
-      newData.devDependencies["cross-env"] = "^3.1.4"
+      newData.devDependencies = {
+        "cross-env": "^3.1.4",
+        "intl": "^1.2.5",
+        "isomorphic-fetch": "^2.2.1",
+        "react": "^15.4.2",
+        "react-dom": "^15.4.2",
+        "react-intl": "^2.2.3"
+      }
 
       return fs.writeJson(PACKAGE_JSON_FILENAME, newData, (writeError) =>
       {
