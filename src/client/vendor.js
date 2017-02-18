@@ -1,4 +1,3 @@
-import "intl"
 import "isomorphic-fetch"
 
 import "react"

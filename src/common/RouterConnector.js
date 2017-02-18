@@ -85,6 +85,7 @@ class RoutingConnector extends React.Component {
 RoutingConnector.propTypes = {
   children: React.PropTypes.node,
   path: React.PropTypes.string,
+  replace: React.PropTypes.bool,
   setPath: React.PropTypes.func,
   recoverPath: React.PropTypes.string
 }

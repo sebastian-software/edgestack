@@ -139,7 +139,7 @@ export default class HotController
       if (this.serverTryTimeout) {
         clearTimeout(this.serverTryTimeout)
       }
-      this.serverTryTimeout = setTimeout(this.tryStartServer(), this.timeout)
+      this.serverTryTimeout = setTimeout(this.tryStartServer, this.timeout)
       this.timeout += 100
       return
     }

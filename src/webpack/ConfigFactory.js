@@ -820,9 +820,19 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
     {
       rules: removeEmpty(
         [
+          // Special handling locale data
+          {
+            test: /locale-data\/.*\.(js|json)$/,
+            loader: "file-loader",
+            options: {
+              name: ifProdWeb("locale/[name]-[hash:base62:8].[ext]", "locale-[name].[ext]"),
+              emitFile: isWeb
+            }
+          },
+
           // JavaScript
           {
-            test: /\.(js|jsx)$/,
+            test: /\.(mjs|js|jsx)$/,
             loaders: jsLoaders,
             exclude: excludeFromTranspilation
           },
@@ -837,14 +847,17 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
 
           // CSS
           {
-            test: /\.css$/,
+            test: /\.(css|sss)$/,
             loader: cssLoaders
           },
 
           // JSON
           {
             test: /\.json$/,
-            loader: "json-loader"
+            loader: "json-loader",
+            exclude: [
+              /locale-data/
+            ]
           },
 
           // YAML

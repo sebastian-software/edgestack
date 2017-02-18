@@ -1,15 +1,15 @@
 import babel from "rollup-plugin-babel"
 import json from "rollup-plugin-json"
 import executable from "rollup-plugin-executable"
-import builtinModules from "builtin-modules"
+import builtin from "builtin-modules"
 
 /* eslint-disable import/no-commonjs */
 var config = require("./package.json")
-var external = Object.keys(config.dependencies).concat(builtinModules)
+var external = Object.keys(config.dependencies).concat(builtin)
 
 export default {
   entry: "src/script.js",
-  dest: "bin/advanced-script.js",
+  dest: "bin/advanced-script",
   format: "cjs",
   sourceMap: true,
   external,

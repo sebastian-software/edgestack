@@ -17,7 +17,7 @@ const clientAssets = JSON.parse(
 )
 
 // Convert the assets json it into an object that contains all the paths to our
-// javascript and css files.  Doing this is required as for production
+// javascript and css files. Doing this is required as for production
 // configurations we add a hash to our filenames, therefore we won't know the
 // paths of the output by webpack unless we read them from the assets.json file.
 // const chunks = Object.keys(clientAssets).map((key) => clientAssets[key])
@@ -85,7 +85,7 @@ export default function renderPage({ renderedApp, initialState = {},
   /*
   if (codeSplitState && codeSplitState.chunks) {
     // We add all the chunks that our CodeSplitProvider tracked as being used
-    // for this render.  This isn't actually required as the rehydrate function
+    // for this render. This isn't actually required as the rehydrate function
     // of code-split-component which gets executed in our client bundle will
     // ensure all our required chunks are loaded, but its a nice optimisation as
     // it means the browser can start fetching the required files before it's
