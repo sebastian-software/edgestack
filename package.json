@@ -155,7 +155,7 @@
     "postcss-sassy-mixins": "^2.0.0",
     "postcss-selector-matches": "^2.0.5",
     "postcss-simple-url": "^0.1.6",
-    "postcss-smart-import": "^0.6.7",
+    "postcss-smart-import": "^0.6.8",
     "postcss-transform-shortcut": "^2.0.1",
     "postcss-unicode-characters": "^1.0.0",
     "postcss-url": "^5.1.2",
@@ -173,7 +173,7 @@
     "react-router": "next",
     "react-router-dom": "next",
     "react-tap-event-plugin": "^2.0.1",
-    "readable-code": "^0.9.5",
+    "readable-code": "^0.9.6",
     "redux": "^3.6.0",
     "redux-immutable-state-invariant": "^1.2.4",
     "redux-logger": "^2.8.1",
@@ -196,11 +196,11 @@
     "eslint": "^3.15.0",
     "lint-staged": "^3.3.0",
     "pre-commit": "^1.2.2",
-    "prepublish": "^0.13.2",
+    "prepublish": "^0.13.3",
     "rollup": "^0.41.4",
     "rollup-plugin-executable": "^1.0.0",
     "sanitize.css": "^4.1.0",
     "source-sans-pro": "^2.0.10",
-    "stylelint": "^7.8.0"
+    "stylelint": "^7.9.0"
   }
 }
