@@ -22,10 +22,11 @@ sleep 2
 
 IS_RUNNING=$(ps -p $TEST_PID -o pid=)
 
+kill -9 $TEST_PID
+
 if [ -n "$IS_RUNNING" ]; then
   exit 0
 else
   exit 1
 fi
 
-kill -9 $TEST_PID
