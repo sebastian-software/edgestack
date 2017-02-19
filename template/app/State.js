@@ -1,6 +1,4 @@
-import createLogger from "redux-logger"
-
-import { routerReducer } from "advanced-boilerplate"
+import { counterReducer } from "./modules/CounterModule"
 
 export default {
   /**
@@ -15,7 +13,7 @@ export default {
    */
   getReducers() {
     return {
-      router: routerReducer
+      counter: counterReducer
     }
   },
 
@@ -23,12 +21,6 @@ export default {
    * Create list of Redux middleware to use.
    */
   getMiddlewares() {
-    var middlewares = []
-
-    if (process.env.TARGET === "web") {
-      middlewares.push(createLogger({ collapsed: true }))
-    }
-
-    return middlewares
+    return []
   }
 }

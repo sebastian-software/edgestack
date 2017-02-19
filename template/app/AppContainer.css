@@ -1,9 +1,0 @@
-@import "./Common.css";
-
-.activeLink {
-  background: #ffffe0;
-}
-
-body {
-  color: $main-color;
-}

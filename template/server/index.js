@@ -1,13 +1,15 @@
 // eslint-disable filenames/match-exported
 import { createExpressServer, createUniversalMiddleware, addFallbackHandler } from "advanced-boilerplate"
 
-import AppContainer from "../app/AppContainer"
-import AppState from "../app/AppState"
+import Root from "../app/Root"
+import State from "../app/State"
+import Config from "../app/Config.yml"
 
 export function start()
 {
   var ssrData = {
-    apolloUri: "http://localhost:9123"
+    apolloUri: "http://localhost:9123",
+    defaultLocale: Config.DEFAULT_LOCALE
   }
 
   return new Promise((resolve, reject) =>
@@ -15,7 +17,7 @@ export function start()
     const server = createExpressServer()
 
     // Bind our universal react app middleware as the handler for all get requests.
-    server.get("*", createUniversalMiddleware({ AppContainer, AppState, ssrData }))
+    server.get("*", createUniversalMiddleware({ Root, State, ssrData }))
 
     // Add default handling for any remaining errors which are not catched by our middleware
     addFallbackHandler(server)
@@ -29,4 +31,3 @@ export function start()
 
 // Auto start server
 start()
-
