@@ -17,8 +17,8 @@
     "advanced-script": "./bin/advanced-script"
   },
   "scripts": {
-    "start": "npm run prescript && bin/advanced-script start",
-    "prod": "npm run prescript && bin/advanced-script build",
+    "start": "npm run prescript && cross-env bin/advanced-script start",
+    "prod": "npm run prescript && cross-env bin/advanced-script build",
     "prod:start": "npm run prod && node build/server/main.js",
     "clean": "rimraf build/client/* build/server/* lib/* bin/*",
     "test": "npm run prepublish && npm run prod",
