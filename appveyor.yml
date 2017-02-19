@@ -22,7 +22,7 @@ install:
   - ps: Copy-Item .env.example .env
   - IF "%platform%" == "x64" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" amd64
   - IF "%platform%" == "x86" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" x86
-  - yarn install
+  - yarn --force install
 
 test_script:
   - npm test
