@@ -2,10 +2,12 @@ import React from "react"
 import Helmet from "react-helmet"
 import { connect } from "react-redux"
 import markdown from "markdown-in-js"
-import { FormattedDate, FormattedMessage } from "react-intl"
+import { FormattedDate, FormattedMessage, FormattedRelative } from "react-intl"
+import { addDays } from "date-fns"
 
 import Styles from "./About.css"
 import { getCounter, decrementCounter, incrementCounter, loadCounter } from "../modules/CounterModule"
+import { getLanguage } from "../../common/State"
 
 /**
  * @deprecated
@@ -19,30 +21,22 @@ class About extends React.Component {
     // Good strategy to load relevant data: wait after rendering
     // so that the user sees the empty state. We can't really wait
     // in render sequence for any data coming in.
-    if (this.props.value == null) {
-      this.props.load()
-    }
+    return this.props.value == null ? this.props.load() : null
+  }
+
+  fetchData()
+  {
+    // Load data on all preparation steps e.g. on SSR and also on rehydration on client
+    // when intially loading this route.
+    return this.props.value == null ? this.props.load() : null
   }
 
   renderMarkdown() {
     return markdown`Markdown in React is **pretty useful**.`
   }
 
-  fetchData()
-  {
-    console.log("Called fetchData()...")
-
-    // Redux' connect() add proxies for static methods, but the top-level HOC
-    // does not have our required and connected state/dispatcher props.
-    //
-    if (this.props.load) {
-      return this.props.load()
-    }
-
-    return Promise.resolve()
-  }
-
   render() {
+    console.log("- About: render()")
     return (
       <article>
         <Helmet title="About" />
@@ -50,13 +44,21 @@ class About extends React.Component {
           <FormattedMessage id="counter" values={{ value: this.props.value }}/>
         </p>
         <p>
-          Today: <FormattedDate
+          <FormattedMessage id="localTest" values={{ pi: 3.14 }}/>
+        </p>
+        <p>
+          Today: <br/>
+          <FormattedDate
             value={Date.now()}
             year="numeric"
             month="long"
             day="numeric"
             weekday="long"
           />
+        </p>
+        <p>
+          Yesterday:<br/>
+          <FormattedRelative value={addDays(Date.now(), -1)}/>
         </p>
         <p>
           <button className={Styles.button} onClick={this.props.handleDecrement}>Decrement</button>
@@ -82,6 +84,7 @@ About.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  language: getLanguage(state),
   value: getCounter(state)
 })
 

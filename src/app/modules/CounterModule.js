@@ -43,13 +43,14 @@ export function decrementCounter()
 /**
  * This somewhat tries to emulate a asyncronous backend request
  */
-function mockServerDelay() {
+function mockServerDelay()
+{
   console.log("Loading counter...")
   return new Promise((resolve, reject) =>
   {
     setTimeout(() =>
     {
-      let value = Math.round(Math.random() * 100)
+      let value = 1000 + Math.round(Math.random() * 8999)
       console.log("Received counter:", value)
       resolve(value)
     }, 100)

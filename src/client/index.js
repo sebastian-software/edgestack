@@ -3,7 +3,7 @@ import React from "react"
 import { render } from "react-dom"
 import { BrowserRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
-import { withAsyncComponents } from "react-async-component"
+import reactTreeWalker from "react-tree-walker"
 import { ensureIntlSupport, ensureReactIntlSupport } from "../common/Intl"
 
 import Root from "../app/Root"
@@ -13,7 +13,6 @@ import { createApolloClient } from "../common/Apollo"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")
-
 
 let apolloClient
 let reduxStore
@@ -43,15 +42,45 @@ function renderApp(MyRoot)
     </BrowserRouter>
   )
 
-  withAsyncComponents(WrappedRoot).then((result) => {
-    // The result will include a version of your app that is
-    // built to use async components and is automatically
-    // rehydrated with the async component state returned by
-    // the server.
-    const { appWithAsyncComponents } = result
-    render(appWithAsyncComponents, container)
-  }).catch((error) => {
-    console.error("Client: Error wrapping application for code splitting:", error)
+  /* eslint-disable no-shadow */
+  function scanElement(rootElement, context = {}, skipRoot = false)
+  {
+    const schedule = []
+
+    function visitor(element, instance, context)
+    {
+      if (rootElement === element && skipRoot) {
+        return
+      }
+
+      if (instance && instance.fetchData)
+      {
+        var returnValue = instance.fetchData()
+        if (returnValue instanceof Promise)
+        {
+          schedule.push({
+            resolver: returnValue,
+            element,
+            context
+          })
+        }
+      }
+    }
+
+    console.log("Scanning...")
+    reactTreeWalker(rootElement, visitor, context)
+    console.log("- Scan result: ", schedule.length)
+
+    const nestedPromises = schedule.map(({ resolver, element, context }) =>
+      resolver.then(() => scanElement(element, context, true)),
+    )
+
+    return nestedPromises.length > 0 ? Promise.all(nestedPromises) : Promise.resolve([])
+  }
+
+  scanElement(WrappedRoot).then(() => {
+    console.log("FULL SCAN ROOT DONE")
+    render(WrappedRoot, container)
   })
 }
 
@@ -75,9 +104,6 @@ if (process.env.NODE_ENV === "development" && module.hot)
     reduxStore.replaceReducer(nextReducer)
   })
 }
-
-
-// console.log("SSR CLIENT DATA: ", window.APP_STATE.ssr)
 
 Promise.all([
   ensureIntlSupport(window.APP_STATE.ssr.locale),

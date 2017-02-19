@@ -3,7 +3,6 @@ import { renderToString } from "react-dom/server"
 import { StaticRouter } from "react-router"
 import Helmet from "react-helmet"
 import { ApolloProvider, getDataFromTree } from "react-apollo"
-import { withAsyncComponents } from "react-async-component"
 
 import Measure from "./Measure"
 import renderPage from "./renderPage"
@@ -74,87 +73,59 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
     </StaticRouter>
   )
 
-  measure.start("wrap-async")
-  withAsyncComponents(WrappedRoot).then((wrappedResult) =>
-  {
-    measure.stop("wrap-async")
-    const {
-      // The result includes a decorated version of your app
-      // that will have the async components initialised for
-      // the renderToString call.
-      appWithAsyncComponents,
+  // Create the application react element.
+  renderToStringWithData(
+    WrappedRoot,
+    measure
+  ).then((renderedApp) => {
+    const reduxState = reduxStore.getState()
 
-      // This state object represents the async components that
-      // were rendered by the server. We will need to send
-      // this back to the client, attaching it to the window
-      // object so that the client can rehydrate the application
-      // to the expected state and avoid React checksum issues.
-      state,
+    // Render the app to a string.
+    measure.start("render-page")
+    const html = renderPage({
+      // Provide the full rendered App react element.
+      renderedApp,
 
-      // This is the identifier you should use when attaching
-      // the state to the "window" object.
-      STATE_IDENTIFIER
-    } = wrappedResult
+      // Provide the redux store state, this will be bound to the window.APP_STATE
+      // so that we can rehydrate the state on the client.
+      initialState: reduxState,
 
-    // Create the application react element.
-    renderToStringWithData(
-      appWithAsyncComponents,
-      measure
-    ).then((renderedApp) => {
-      const reduxState = reduxStore.getState()
+      // Nonce which allows us to safely declare inline scripts.
+      nonce,
 
-      // Render the app to a string.
-      measure.start("render-page")
-      const html = renderPage({
-        // Provide the full rendered App react element.
-        renderedApp,
+      // Running this gets all the helmet properties (e.g. headers/scripts/title etc)
+      // that need to be included within our html. It's based on the rendered app.
+      // @see https://github.com/nfl/react-helmet
+      helmet: Helmet.rewind(),
 
-        // Provide the redux store state, this will be bound to the window.APP_STATE
-        // so that we can rehydrate the state on the client.
-        initialState: reduxState,
-
-        codeSplitState: state,
-        STATE_IDENTIFIER,
-
-        // Nonce which allows us to safely declare inline scripts.
-        nonce,
-
-        // Running this gets all the helmet properties (e.g. headers/scripts/title etc)
-        // that need to be included within our html. It's based on the rendered app.
-        // @see https://github.com/nfl/react-helmet
-        helmet: Helmet.rewind(),
-
-        // Send detected language and region for HTML tag info
-        language,
-        region
-      })
-      measure.stop("render-page")
-
-      console.log("Server: Routing Context:", routingContext)
-      console.log("Server: Sending Page...")
-
-      /* eslint-disable no-magic-numbers */
-
-      // Check if the render result contains a redirect, if so we need to set
-      // the specific status and redirect header and end the response.
-      if (routingContext.url) {
-        response.status(302).setHeader("Location", routingContext.url)
-        response.end()
-        return
-      }
-
-      // If the renderedResult contains a "missed" match then we set a 404 code.
-      // Our App component will handle the rendering of an Error404 view.
-      // Otherwise everything is all good and we send a 200 OK status.
-      response.status(routingContext.missed ? 404 : 200).send(html)
-
-      // Print measure results
-      measure.print()
-    }).catch((error) => {
-      console.error("Server: Error during producing response:", error)
+      // Send detected language and region for HTML tag info
+      language,
+      region
     })
+    measure.stop("render-page")
+
+    console.log("Server: Routing Context:", routingContext)
+    console.log("Server: Sending Page...")
+
+    /* eslint-disable no-magic-numbers */
+
+    // Check if the render result contains a redirect, if so we need to set
+    // the specific status and redirect header and end the response.
+    if (routingContext.url) {
+      response.status(302).setHeader("Location", routingContext.url)
+      response.end()
+      return
+    }
+
+    // If the renderedResult contains a "missed" match then we set a 404 code.
+    // Our App component will handle the rendering of an Error404 view.
+    // Otherwise everything is all good and we send a 200 OK status.
+    response.status(routingContext.missed ? 404 : 200).send(html)
+
+    // Print measure results
+    // measure.print()
   }).catch((error) => {
-    console.error("Server: Error wrapping application for code splitting:", error)
+    console.error("Server: Error during producing response:", error)
   })
 }
 

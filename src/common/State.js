@@ -100,12 +100,14 @@ export function createReduxStore({ reducers = {}, middlewares = [], enhancers = 
       process.env.NODE_ENV === "development" ?
         require("redux-immutable-state-invariant")() : emptyMiddleware,
 
-      // Add automatic state change logging for client application
-      process.env.TARGET === "web" ?
-        createLogger({ collapsed: true }) : emptyMiddleware,
-
       thunk,
-      ...middlewares
+      ...middlewares,
+
+      // Add automatic state change logging for client application
+      // Note: Logger must be the last middleware in chain, otherwise it will log thunk and
+      // promise, not actual actions (https://github.com/evgenyrodionov/redux-logger/issues/20).
+      process.env.TARGET === "web" ?
+        createLogger({ collapsed: true }) : emptyMiddleware
     ),
     ...enhancers
   )
