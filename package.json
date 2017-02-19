@@ -17,8 +17,8 @@
     "advanced-script": "./bin/advanced-script"
   },
   "scripts": {
-    "start": "npm run prescript && advanced-script start",
-    "prod": "npm run prescript && advanced-script build",
+    "start": "npm run prescript && cross-env bin/advanced-script start",
+    "prod": "npm run prescript && cross-env bin/advanced-script build",
     "prod:start": "npm run prod && node build/server/main.js",
     "clean": "rimraf build lib bin",
     "test": "npm run prepublish && npm run prod",
@@ -97,7 +97,6 @@
     "clipboard": "^1.6.0",
     "cookie-parser": "^1.4.3",
     "cookiesjs": "^1.4.2",
-    "cross-env": "^3.1.4",
     "css-loader": "^0.26.1",
     "date-fns": "^1.27.2",
     "dotenv": "^4.0.0",
@@ -197,6 +196,7 @@
     "yaml-loader": "^0.4.0"
   },
   "devDependencies": {
+    "cross-env": "^3.1.4",
     "eslint": "^3.15.0",
     "lint-staged": "^3.3.0",
     "pre-commit": "^1.2.2",
