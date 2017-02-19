@@ -20,7 +20,7 @@
     "start": "npm run prescript && bin/advanced-script start",
     "prod": "npm run prescript && bin/advanced-script build",
     "prod:start": "npm run prod && node build/server/main.js",
-    "clean": "rimraf 'build/client/*' 'build/server/*' 'lib/*' 'bin/*'",
+    "clean": "rimraf build lib bin",
     "test": "npm run prepublish && npm run prod",
     "lint-staged": "lint-staged",
     "prescript": "npm run clean && rollup --config rollup.config.js",
