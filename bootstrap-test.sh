@@ -22,7 +22,14 @@ sleep 2
 
 IS_RUNNING=$(ps -p $TEST_PID -o pid=)
 
+curl -f http://localhost:1339
+CURL_EXITCODE=$?
+
 kill -9 $TEST_PID
+
+if [ $CURL_EXITCODE -ne 0 ]; then
+  exit 2
+fi
 
 if [ -n "$IS_RUNNING" ]; then
   exit 0
