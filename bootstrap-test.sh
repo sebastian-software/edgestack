@@ -6,11 +6,11 @@ TESTPATH="${CWD}/test_bootstrap"
 
 mkdir -p ${TESTPATH}
 cd "${TESTPATH}"
-echo '{ "name":"test","version":"1.0.0", "devDependencies": { "cross-env": "^3.1.4"}, "scripts":{"prod":"cross-env NODE_ENV=production advanced-script build"} }' > package.json
+echo '{ "name":"test","version":"1.0.0", "devDependencies": { "cross-env": "^3.1.4"}, "scripts":{"prod":"cross-env NODE_ENV=production edge build"} }' > package.json
 
 npm -q install ..
 
-node_modules/.bin/advanced-script bootstrap --title="Test" --description="Test" --language="de-DE"
+node_modules/.bin/edge bootstrap --title="Test" --description="Test" --language="de-DE"
 npm -q install
 
 npm run prod
