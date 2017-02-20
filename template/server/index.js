@@ -1,5 +1,6 @@
 // eslint-disable filenames/match-exported
-import { createExpressServer, createUniversalMiddleware, addFallbackHandler } from "advanced-boilerplate"
+// eslint-disable-next-line import/no-unresolved
+import { createExpressServer, createUniversalMiddleware, addFallbackHandler } from "edgestack"
 
 import Root from "../app/Root"
 import State from "../app/State"

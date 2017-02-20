@@ -4,11 +4,12 @@ import { render } from "react-dom"
 import { BrowserRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
 import { withAsyncComponents } from "react-async-component"
-// import { ensureIntlSupport, ensureReactIntlSupport } from "../common/Intl"
 
 import Root from "../app/Root"
 import State from "../app/State"
-import { ensureIntlSupport, ensureReactIntlSupport, createApolloClient, createReduxStore, createRootReducer } from "advanced-boilerplate"
+
+// eslint-disable-next-line import/no-unresolved
+import { ensureIntlSupport, ensureReactIntlSupport, createApolloClient, createReduxStore, createRootReducer } from "edgestack"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")

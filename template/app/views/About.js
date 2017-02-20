@@ -7,7 +7,9 @@ import { addDays } from "date-fns"
 
 import Styles from "./About.css"
 import { getCounter, decrementCounter, incrementCounter, loadCounter } from "../modules/CounterModule"
-import { getLanguage } from "advanced-boilerplate"
+
+// eslint-disable-next-line import/no-unresolved
+import { getLanguage } from "edgestack"
 
 /**
  * @deprecated
