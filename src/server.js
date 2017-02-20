@@ -10,5 +10,4 @@ export { default as RouterConnector } from "./common/RouterConnector"
 
 export * from "./common/State"
 export * from "./common/Apollo"
-export * from "./common/Intl"
 export * from "./common/RouterConnector"

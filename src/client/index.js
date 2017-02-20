@@ -5,12 +5,15 @@ import { BrowserRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
 import reactTreeWalker from "react-tree-walker"
 import {
-  ensureIntlSupport,
-  ensureReactIntlSupport,
   createReduxStore,
   createRootReducer,
   createApolloClient
 } from "../server"
+
+import {
+  ensureIntlSupport,
+  ensureReactIntlSupport
+} from "../common/Intl"
 
 import Root from "../app/Root"
 import State from "../app/State"
