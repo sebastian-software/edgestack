@@ -17,6 +17,7 @@ import nestedSelectors from "postcss-nested-ancestors"
 import nested from "postcss-nested"
 import gridKiss from "postcss-grid-kiss"
 import filters from "pleeease-filters"
+import magicAnimations from "postcss-magic-animations"
 import transform from "postcss-transform-shortcut"
 import selectorMatches from "postcss-selector-matches"
 import pseudoelements from "postcss-pseudoelements"
@@ -81,6 +82,10 @@ export default function PostCSSConfig(variables = {})
       fallback: true,
       screwIE: true
     }),
+
+    // Adds @keyframes from Magic Animations
+    // https://github.com/nucliweb/postcss-magic-animations
+    magicAnimations,
 
     // Insert 3D hack before will-change property
     // https://github.com/postcss/postcss-will-change
