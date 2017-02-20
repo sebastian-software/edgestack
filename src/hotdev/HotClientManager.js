@@ -26,8 +26,11 @@ export default class HotClientManager
     const [ _, host, port ] = httpPathRegex.exec(httpPath)
 
     this.devMiddleware = createDevMiddleware(compiler, {
-      quiet: true,
+      quiet: false,
       noInfo: true,
+      stats: {
+        colors: true
+      },
       headers: {
         "Access-Control-Allow-Origin": "*"
       },

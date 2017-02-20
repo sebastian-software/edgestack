@@ -532,7 +532,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
     entry: removeEmptyKeys(
       {
         main: removeEmpty([
-          ifDevWeb(`webpack-hot-middleware/client?overlay=false&noInfo=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
+          ifDevWeb(`webpack-hot-middleware/client?overlay=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
           options.entry ? options.entry : ifIsFile(`./src/${folder}/index.js`)
         ]),
 
