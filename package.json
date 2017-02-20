@@ -1,5 +1,5 @@
 {
-  "name": "advanced-boilerplate",
+  "name": "edgestack",
   "version": "0.15.4",
   "description": "Universal React + PostCSS + CSS Modules + ESLint + Stylelint + ...",
   "main": "lib/node.classic.commonjs.js",
@@ -14,11 +14,11 @@
     "npm": ">=4.0.0"
   },
   "bin": {
-    "advanced-script": "./bin/advanced-script"
+    "edge": "./bin/edge"
   },
   "scripts": {
-    "start": "npm run prescript && bin/advanced-script start",
-    "prod": "npm run prescript && bin/advanced-script build",
+    "start": "npm run prescript && bin/edge start",
+    "prod": "npm run prescript && bin/edge build",
     "prod:start": "npm run prod && node build/server/main.js",
     "clean": "rimraf build/client/* build/server/* lib/* bin/*",
     "test": "npm run prepublish && npm run prod",
@@ -36,7 +36,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sebastian-software/advanced-boilerplate.git"
+    "url": "git+https://github.com/sebastian-software/edgestack.git"
   },
   "keywords": [
     "react",
@@ -55,9 +55,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sebastian-software/advanced-boilerplate/issues"
+    "url": "https://github.com/sebastian-software/edgestack/issues"
   },
-  "homepage": "https://github.com/sebastian-software/advanced-boilerplate#readme",
+  "homepage": "https://github.com/sebastian-software/edgestack#readme",
   "dependencies": {
     "apollo-client": "^0.8.7",
     "app-root-dir": "^1.0.2",
