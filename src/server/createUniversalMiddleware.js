@@ -6,8 +6,7 @@ import { ApolloProvider, getDataFromTree } from "react-apollo"
 
 import Measure from "./Measure"
 import renderPage from "./renderPage"
-import { createReduxStore } from "../common/State"
-import { createApolloClient } from "../common/Apollo"
+import { createReduxStore, createApolloClient } from "../server"
 
 /**
  * Using Apollo logic to recursively resolve all queries needed for

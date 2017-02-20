@@ -4,12 +4,16 @@ import { render } from "react-dom"
 import { BrowserRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
 import reactTreeWalker from "react-tree-walker"
-import { ensureIntlSupport, ensureReactIntlSupport } from "../common/Intl"
+import {
+  ensureIntlSupport,
+  ensureReactIntlSupport,
+  createReduxStore,
+  createRootReducer,
+  createApolloClient
+} from "../server"
 
 import Root from "../app/Root"
 import State from "../app/State"
-import { createReduxStore, createRootReducer } from "../common/State"
-import { createApolloClient } from "../common/Apollo"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")

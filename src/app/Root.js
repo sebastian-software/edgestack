@@ -6,12 +6,11 @@ import { Switch, Route, NavLink } from "react-router-dom"
 import Helmet from "react-helmet"
 import { IntlProvider } from "react-intl"
 import { connect } from "react-redux"
-import { getLocale, getLanguage } from "../common/State"
+import { getLocale, getLanguage, RouterConnector } from "../server"
 
 // Application specific
 import "./Fonts.css"
 import Styles from "./Root.css"
-import RouterConnector from "../common/RouterConnector"
 
 const websiteTitle = "Edge Stack"
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
