@@ -232,8 +232,8 @@ function patchPackageScripts(targetPath)
         ...data
       }
 
-      newData.scripts.start = "advanced-script start"
-      newData.scripts.prod = "cross-env NODE_ENV=production advanced-script build"
+      newData.scripts.start = "edge start"
+      newData.scripts.prod = "cross-env NODE_ENV=production edge build"
       newData.scripts["prod:start"] = "npm run prod && node build/server/main.js"
       newData.scripts.clean = "rimraf build/client/* build/server/*"
 
