@@ -6,13 +6,15 @@ import { Switch, Route, NavLink } from "react-router-dom"
 import Helmet from "react-helmet"
 import { IntlProvider } from "react-intl"
 import { connect } from "react-redux"
-import { getLocale, getLanguage, RouterConnector } from "../server"
+
+// eslint-disable-next-line import/no-unresolved
+import { getLocale, getLanguage, RouterConnector } from "edgestack"
 
 // Application specific
 import "./Fonts.css"
 import Styles from "./Root.css"
 
-const websiteTitle = "Edge Stack"
+const websiteTitle = "Advanced Boilerplate"
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
 
 function wrapAsync(loader, language)

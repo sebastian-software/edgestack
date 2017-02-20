@@ -28,3 +28,6 @@ npm-debug.log
 .happypack
 .hardsource
 .recordscache
+
+# Test path
+test_bootstrap/

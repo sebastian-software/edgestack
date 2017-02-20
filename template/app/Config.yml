@@ -1,0 +1,2 @@
+ALLOWED_LOCALES: [ de-DE, de-AT, en-GB, en-US, fr-FR, es-ES ]
+DEFAULT_LOCALE: de-DE
