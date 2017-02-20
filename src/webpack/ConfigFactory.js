@@ -384,7 +384,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
   {
     throw new Error(
       `No .env file found. Please provide one to your project's root. ` +
-      `You can use ./node_modules/advanced-boilerplate/.env.example as template`
+      `You can use ./node_modules/edgestack/.env.example as template`
     )
   }
 
