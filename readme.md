@@ -13,7 +13,7 @@
 [appveyor]: https://ci.appveyor.com/project/swernerx/edgestack/branch/master
 
 
-A NodeJS v6 Universal React Stack with tons of recent technologies bundled into an easy to use and adapt solution.
+A Universal React Stack with tons of recent technologies like Express, Apollo, React Router v4, Code Splitting, React-Intl, NodeJS v6, Webpack v2 + HMR etc. bundled into an easy to use package.
 
 
 ## TOC
@@ -24,11 +24,6 @@ A NodeJS v6 Universal React Stack with tons of recent technologies bundled into 
  - [Project Structure](https://github.com/sebastian-software/edgestack#project-structure)
  - [NPM Commands](https://github.com/sebastian-software/edgestack#npm-script-commands)
  - [References](https://github.com/sebastian-software/edgestack#references)
-
-
-## About
-
-This stack contains an absolutely minimal set of dependencies in order to get you up and running with a universal react project as quickly as possible. It provides you with a great development experience that includes hot reloading of everything.
 
 
 
