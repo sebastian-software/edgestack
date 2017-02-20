@@ -6694,9 +6694,9 @@ postcss-simple-vars@^1.2.0:
   dependencies:
     postcss "^5.0.13"
 
-postcss-smart-import@^0.6.8:
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/postcss-smart-import/-/postcss-smart-import-0.6.8.tgz#5886ed2a6b41633f576c9141b4e31094edaa1d5e"
+postcss-smart-import@^0.6.8, postcss-smart-import@^0.6.9:
+  version "0.6.9"
+  resolved "https://registry.yarnpkg.com/postcss-smart-import/-/postcss-smart-import-0.6.9.tgz#cf3fb0bef10acd993624f9f67fc13d643cd4489c"
   dependencies:
     babel-runtime "^6.23.0"
     lodash "^4.17.4"
@@ -7309,8 +7309,8 @@ rechoir@^0.6.2:
     resolve "^1.1.6"
 
 redbox-react@^1.2.5:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/redbox-react/-/redbox-react-1.3.3.tgz#63ec9c2cb9c620c46e2b9f8543b4898f1b787e41"
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/redbox-react/-/redbox-react-1.3.4.tgz#3d882bb62cc7c8f6256279d12f05c6a5a96d24c6"
   dependencies:
     error-stack-parser "^1.3.6"
     object-assign "^4.0.1"

@@ -157,7 +157,7 @@
     "postcss-sassy-mixins": "^2.0.0",
     "postcss-selector-matches": "^2.0.5",
     "postcss-simple-url": "^0.1.6",
-    "postcss-smart-import": "^0.6.8",
+    "postcss-smart-import": "^0.6.9",
     "postcss-transform-shortcut": "^2.0.1",
     "postcss-unicode-characters": "^1.0.0",
     "postcss-url": "^5.1.2",
