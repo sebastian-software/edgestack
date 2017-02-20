@@ -1,34 +1,29 @@
-# Advanced Boilerplate<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Dependencies][deps-img]][deps]
+# Edge Stack<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Dependencies][deps-img]][deps]
 
 [sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
 [sponsor]: https://www.sebastian-software.de
-[deps]: https://david-dm.org/sebastian-software/advanced-boilerplate
-[deps-img]: https://david-dm.org/sebastian-software/advanced-boilerplate.svg
-[npm]: https://www.npmjs.com/package/advanced-boilerplate
-[npm-downloads-img]: https://img.shields.io/npm/dm/advanced-boilerplate.svg
-[npm-version-img]: https://img.shields.io/npm/v/advanced-boilerplate.svg
-[travis-img]: https://img.shields.io/travis/sebastian-software/advanced-boilerplate/master.svg?branch=master&label=unix%20build
-[appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/advanced-boilerplate/master.svg?label=windows%20build
-[travis]: https://travis-ci.org/sebastian-software/advanced-boilerplate
-[appveyor]: https://ci.appveyor.com/project/swernerx/advanced-boilerplate/branch/master
+[deps]: https://david-dm.org/sebastian-software/edgestack
+[deps-img]: https://david-dm.org/sebastian-software/edgestack.svg
+[npm]: https://www.npmjs.com/package/edgestack
+[npm-downloads-img]: https://img.shields.io/npm/dm/edgestack.svg
+[npm-version-img]: https://img.shields.io/npm/v/edgestack.svg
+[travis-img]: https://img.shields.io/travis/sebastian-software/edgestack/master.svg?branch=master&label=unix%20build
+[appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/edgestack/master.svg?label=windows%20build
+[travis]: https://travis-ci.org/sebastian-software/edgestack
+[appveyor]: https://ci.appveyor.com/project/swernerx/edgestack/branch/master
 
 
-A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience.
+A Universal React Stack with tons of recent technologies like Express, Apollo, React Router v4, Code Splitting, React-Intl, NodeJS v6, Webpack v2 + HMR etc. bundled into an easy to use package.
 
 
 ## TOC
 
- - [About](https://github.com/sebastian-software/advanced-boilerplate#about)
- - [Features](https://github.com/sebastian-software/advanced-boilerplate#features)
- - [Overview](https://github.com/sebastian-software/advanced-boilerplate#overview)
- - [Project Structure](https://github.com/sebastian-software/advanced-boilerplate#project-structure)
- - [NPM Commands](https://github.com/sebastian-software/advanced-boilerplate#npm-script-commands)
- - [References](https://github.com/sebastian-software/advanced-boilerplate#references)
-
-
-## About
-
-This boilerplate contains an absolutely minimal set of dependencies in order to get you up and running with a universal react project as quickly as possible. It provides you with a great development experience that includes hot reloading of everything.
+ - [About](https://github.com/sebastian-software/edgestack#about)
+ - [Features](https://github.com/sebastian-software/edgestack#features)
+ - [Overview](https://github.com/sebastian-software/edgestack#overview)
+ - [Project Structure](https://github.com/sebastian-software/edgestack#project-structure)
+ - [NPM Commands](https://github.com/sebastian-software/edgestack#npm-script-commands)
+ - [References](https://github.com/sebastian-software/edgestack#references)
 
 
 
@@ -67,7 +62,7 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 
 ## Overview
 
-This boilerplate uses Webpack 2 to produce bundles for both the client and the server code.
+This solution uses Webpack 2 to produce bundles for both the client and the server code.
 
 The reasoning for using Webpack to bundle both the client and the server is to bring greater interop and extensibility to the table. This will for instance allowing server bundles to handle React components that introduce things like CSS or Images (as and when you add the respective loaders).
 

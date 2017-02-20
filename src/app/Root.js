@@ -13,7 +13,7 @@ import "./Fonts.css"
 import Styles from "./Root.css"
 import RouterConnector from "../common/RouterConnector"
 
-const websiteTitle = "Advanced Boilerplate"
+const websiteTitle = "Edge Stack"
 const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
 
 function wrapAsync(loader, language)
