@@ -1,8 +1,11 @@
 import React from "react"
 import { IntlProvider } from "react-intl"
 
-export default function wrapAsync(loader, language)
+export default function wrapAsync(loader, locale)
 {
+  let View = null
+  let messages = null
+
   class AsyncComponent extends React.Component {
     constructor(props) {
       super(props)
@@ -23,41 +26,40 @@ export default function wrapAsync(loader, language)
 
     fetchData()
     {
-      if (this.constructor.childView) {
-        return
+      if (View != null) {
+        return null
       }
 
       console.log("- Async Component: fetchData()")
 
-      this.setState({ loading: true })
+      this.setState({
+        loading: true
+      })
 
       return loader().then((result) =>
       {
-        let [ View, messages ] = result
+        View = result[0]
+        messages = result[1]
 
         if (View && View.default) {
           View = View.default
         }
 
-        this.constructor.messages = messages
-        this.constructor.childView = View
-
-        this.setState({ loading: false })
+        this.setState({
+          loading: false
+        })
 
         console.log("- Async Component: Everything loaded!")
       })
     }
 
     render() {
-      var View = this.constructor.childView
-      var messages = this.constructor.messages
       console.log("- Async Component: render():", Boolean(View))
 
       return View ?
-        <IntlProvider messages={messages}>
+        <IntlProvider locale={locale} messages={messages}>
           <View/>
-        </IntlProvider>
-      : null
+        </IntlProvider> : null
     }
   }
 

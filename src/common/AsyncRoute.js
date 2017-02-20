@@ -9,8 +9,8 @@ class AsyncRoute extends React.Component {
   constructor(props) {
     super(props)
 
-    const { language, load } = props
-    this.component = wrapAsync(() => Promise.all(load(language)), language)
+    const { locale, language, load } = props
+    this.component = wrapAsync(() => Promise.all(load(language)), locale)
   }
 
   render() {
