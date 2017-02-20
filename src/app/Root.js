@@ -6,7 +6,9 @@ import { Switch, Route, NavLink } from "react-router-dom"
 import Helmet from "react-helmet"
 import { IntlProvider } from "react-intl"
 import { connect } from "react-redux"
+
 import { getLocale, getLanguage } from "../common/State"
+import AsyncRoute from "../common/AsyncRoute"
 
 // Application specific
 import "./Fonts.css"
@@ -14,105 +16,7 @@ import Styles from "./Root.css"
 import RouterConnector from "../common/RouterConnector"
 
 const websiteTitle = "Edge Stack"
-const websiteDescription = "A Universal Apollo React Boilerplate with an Amazing Developer Experience."
-
-function wrapAsync(loader, language)
-{
-  class AsyncComponent extends React.Component {
-    constructor(props) {
-      super(props)
-
-      this.state = {
-        loading: false
-      }
-    }
-
-    componentWillMount() {
-      if (process.env.TARGET === "web") {
-        return this.fetchData()
-      } else {
-        console.log("- Async Component: componentWillMount()")
-        return null
-      }
-    }
-
-    fetchData()
-    {
-      if (this.constructor.childView) {
-        return
-      }
-
-      console.log("- Async Component: fetchData()")
-
-      this.setState({ loading: true })
-
-      return loader().then((result) =>
-      {
-        let [ View, messages ] = result
-
-        if (View && View.default) {
-          View = View.default
-        }
-
-        this.constructor.messages = messages
-        this.constructor.childView = View
-
-        this.setState({ loading: false })
-
-        console.log("- Async Component: Everything loaded!")
-      })
-    }
-
-    render() {
-      var View = this.constructor.childView
-      var messages = this.constructor.messages
-      console.log("- Async Component: render():", Boolean(View))
-
-      return View ?
-        <IntlProvider messages={messages}>
-          <View/>
-        </IntlProvider>
-      : null
-    }
-  }
-
-  return AsyncComponent
-}
-
-
-
-
-
-
-
-class AsyncRoute extends React.Component {
-  constructor(props) {
-    super(props)
-
-    const { language, load } = props
-    this.component = wrapAsync(() => Promise.all(load(language)), language)
-  }
-
-  render() {
-    return <Route component={this.component} {...this.props}/>
-  }
-}
-
-AsyncRoute.propTypes = {
-  load: React.PropTypes.func,
-  locale: React.PropTypes.string,
-  language: React.PropTypes.string
-}
-
-AsyncRoute = connect((state, ownProps) => ({
-  locale: getLocale(state),
-  language: getLanguage(state)
-}))(AsyncRoute)
-
-
-
-
-
+const websiteDescription = "A Universal React Stack with tons of recent technologies like Express, Apollo, React Router v4, Code Splitting, React-Intl, NodeJS v6, Webpack v2 + HMR etc. bundled into an easy to use package."
 
 const rootMessages = {
   counter: "Counter: {value, number}"
