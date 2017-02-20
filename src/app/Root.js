@@ -16,7 +16,8 @@ import Styles from "./Root.css"
 import RouterConnector from "../common/RouterConnector"
 
 const websiteTitle = "Edge Stack"
-const websiteDescription = "A Universal React Stack with tons of recent technologies like Express, Apollo, React Router v4, Code Splitting, React-Intl, NodeJS v6, Webpack v2 + HMR etc. bundled into an easy to use package."
+const websiteDescription = "A Universal React Stack with tons of recent technologies like Express, Apollo, React Router v4, " +
+  "Code Splitting, React-Intl, NodeJS v6, Webpack v2 + HMR etc. bundled into an easy to use package."
 
 const rootMessages = {
   counter: "Counter: {value, number}"
@@ -55,8 +56,18 @@ function Root({ children, locale, language }) {
         <div>
           <RouterConnector>
             <Switch>
-              <AsyncRoute exact path="/" load={(language) => [ import("./views/Home") ]}/>
-              <AsyncRoute path="/about" load={(language) => [ import("./views/About"), import("./views/messages/About." + language + ".json") ]}/>
+              <AsyncRoute exact path="/"
+                load={(lang) => [
+                  import("./views/Home")
+                ]}
+              />
+              <AsyncRoute path="/about"
+                load={(lang) => [
+                  /* eslint-disable prefer-template */
+                  import("./views/About"),
+                  import("./views/messages/About." + lang + ".json")
+                ]}
+              />
               <Route component={Error404}/>
             </Switch>
           </RouterConnector>
