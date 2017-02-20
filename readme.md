@@ -13,7 +13,7 @@
 [appveyor]: https://ci.appveyor.com/project/swernerx/edgestack/branch/master
 
 
-A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience.
+A NodeJS v6 Universal React Stack with tons of recent technologies bundled into an easy to use and adapt solution.
 
 
 ## TOC
@@ -28,7 +28,7 @@ A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience.
 
 ## About
 
-This boilerplate contains an absolutely minimal set of dependencies in order to get you up and running with a universal react project as quickly as possible. It provides you with a great development experience that includes hot reloading of everything.
+This stack contains an absolutely minimal set of dependencies in order to get you up and running with a universal react project as quickly as possible. It provides you with a great development experience that includes hot reloading of everything.
 
 
 
@@ -67,7 +67,7 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 
 ## Overview
 
-This boilerplate uses Webpack 2 to produce bundles for both the client and the server code.
+This solution uses Webpack 2 to produce bundles for both the client and the server code.
 
 The reasoning for using Webpack to bundle both the client and the server is to bring greater interop and extensibility to the table. This will for instance allowing server bundles to handle React components that introduce things like CSS or Images (as and when you add the respective loaders).
 
