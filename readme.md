@@ -28,9 +28,9 @@ A Universal React Stack with tons of recent technologies like Express, Apollo, R
 
 ## Key Benefits
 
-- No Boilerplate. Just another dependency to include. Easy updates/maintan
-- Route based Code Splitting with Hot Module Reloading
-- Ready for Localization using React-Intl pre-configured and easy to use.
+- No Boilerplate. Just another dependency to include. Easy future updates & maintenance.
+- Route based Code Splitting with Hot Module Reloading (HMR).
+- Ready for Localization using React-Intl pre-configured + polyfilled.
 
 
 ## Features
