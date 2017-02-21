@@ -1,4 +1,4 @@
 {
-  "localTest": "XX German Foo {pi, number}",
-  "counter": "Dyn loaded: {value}"
+  "localTest": "German Foo {pi, number}",
+  "counter": "Dyn geladen: {value}"
 }
