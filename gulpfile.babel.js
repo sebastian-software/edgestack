@@ -1,1 +1,1 @@
-import "readable-code/gulpfile.babel"
+import "readable-code"
