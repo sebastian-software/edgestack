@@ -26,6 +26,12 @@ A Universal React Stack with tons of recent technologies like Express, Apollo, R
  - [References](https://github.com/sebastian-software/edgestack#references)
 
 
+## Key Benefits
+
+- No Boilerplate. Just another dependency to include. Easy updates/maintan
+- Route based Code Splitting with Hot Module Reloading
+- Ready for Localization using React-Intl pre-configured and easy to use.
+
 
 ## Features
 
@@ -33,13 +39,13 @@ A Universal React Stack with tons of recent technologies like Express, Apollo, R
 - Extreme live development - hot reloading of client/server source with high level of error tolerance.
 - Express server with a basic security configuration using *hpp* and *helmet*.
 - *ReactJS* as the view layer.
-- React Router as the router.
+- React Router v4 as the router.
 - *React Helmet* allowing control of the page title/meta/styles/scripts from within your components. Direct control for your SEO needs.
 - CSS Support with CSS modules and additional flexible full PostCSS chain for advanced transformations e.g. autoprefixer
 - Fully integrated asset support for referencing files in CSS and JavaScript.
 - Full ES2015 support, using *Babel* to transpile where needed.
 - Bundling of both client and server using *Webpack* v2. See also: [The Cost of Small Modules](https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/)
-- Client bundle is automatically split by routes and uses tree-shaking for smallest possible builds.
+- Client bundle is automatically split by routes.
 - Long term caching of the client bundle works out of the box.
 - Support for development and optimized production configuration.
 - Easy environment configuration via `dotenv` files.
@@ -52,7 +58,7 @@ A Universal React Stack with tons of recent technologies like Express, Apollo, R
 - Redux and Thunk middleware
 - Apollo Client (GraphQL)
 - Data Loading on Server Side using `fetchData` static methods where available
-
+- HardSource pre-configured for unseen rebuild performance.
 
 ## Work in progress
 
