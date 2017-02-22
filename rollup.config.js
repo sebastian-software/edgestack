@@ -22,17 +22,8 @@ export default {
 
       // Nobody needs the original comments when having source maps
       comments: false,
-
-      presets:
-      [
-        [ "env", {
-          targets: { node: 6 },
-          modules: false
-        }]
-      ],
-
-      plugins:
-      [
+      presets: [ [ "env", { targets: { node: 6 }, modules: false }] ],
+      plugins: [
         // class { handleClick = () => { } }
         // https://github.com/tc39/proposal-class-public-fields
         "transform-class-properties",
