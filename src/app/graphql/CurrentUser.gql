@@ -1,6 +1,17 @@
-query CurrentUserForLayout {
-  currentUser {
-    login
-    avatar_url
+{
+  twitter {
+    user (identifier: name, identity: "sebastiansoft") {
+      created_at
+      description
+      id
+      screen_name
+      name
+      tweets_count
+      followers_count
+      tweets(limit: 10) {
+        id
+        text
+      }
+    }
   }
 }
