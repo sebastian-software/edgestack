@@ -107,6 +107,7 @@
     "file-loader": "^0.10.0",
     "fs-extra": "^2.0.0",
     "graphql-tag": "^1.2.4",
+    "gulp": "^3.9.1",
     "gulp-util": "^3.0.8",
     "hard-source-webpack-plugin": "^0.3.11",
     "helmet": "^3.4.0",
