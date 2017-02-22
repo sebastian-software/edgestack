@@ -195,14 +195,18 @@
     "yaml-loader": "^0.4.0"
   },
   "devDependencies": {
-    "eslint": "^3.16.0",
+    "eslint": "^3.16.1",
+    "find-root": "^1.0.0",
     "lint-staged": "^3.3.1",
+    "minimist": "^1.2.0",
     "pre-commit": "^1.2.2",
     "prepublish": "^0.13.3",
+    "prompt": "^1.0.0",
     "rollup": "^0.41.4",
     "rollup-plugin-executable": "^1.0.0",
     "sanitize.css": "^4.1.0",
     "source-sans-pro": "^2.0.10",
-    "stylelint": "^7.9.0"
+    "stylelint": "^7.9.0",
+    "walker": "^1.0.7"
   }
 }
