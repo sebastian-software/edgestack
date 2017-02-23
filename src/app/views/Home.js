@@ -3,8 +3,8 @@ import Helmet from "react-helmet"
 
 import Styles from "./Home.css"
 
-import CurrentUser from "../graphql/CurrentUser.gql"
-console.log("Loading GraphQL queries works:", CurrentUser.kind === "Document")
+import Tweets from "../graphql/Tweets.gql"
+console.log("Loading GraphQL queries works:", Tweets.kind === "Document")
 
 import { format } from "date-fns"
 console.log("Today:", format(Date.now(), "DD.MM.YYYY"))
