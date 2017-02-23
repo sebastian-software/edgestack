@@ -63,7 +63,8 @@ writeFileSync(
 exec(`yarn add file:${CWD}`, TARGET_EXEC)
 exec("yarn link edgestack", TARGET_EXEC)
 
-exec('node_modules/.bin/edge bootstrap --title="Test" --description="Test" --language="de-DE"', TARGET_EXEC)
+const edgeCommand = path.join("node_modules", ".bin", "edge")
+exec(`${edgeCommand} bootstrap --title="Test" --description="Test" --language="de-DE"`, TARGET_EXEC)
 
 exec("yarn install", TARGET_EXEC)
 exec("yarn run prod", TARGET_EXEC)
