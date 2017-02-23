@@ -1,4 +1,4 @@
-/* eslint max-params: off, no-console: off */
+/* eslint-disable max-params, no-console */
 import fs from "fs-extra"
 import pathModule from "path"
 import promptModule from "prompt"
