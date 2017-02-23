@@ -49,9 +49,9 @@ if (platform() !== "win32")
 }
 */
 
-log("Write package.json")
+log(`Write package.json to ${TESTPATH}`)
 writeFileSync(
-  path.join(TESTPATH, "package,json"),
+  path.join(TESTPATH, "package.json"),
   JSON.stringify({
     "name":"test",
     "version":"1.0.0",
