@@ -33,17 +33,21 @@ function exec(cmd, options)
   return execSync(cmd, options)
 }
 
-try
-{
-  exec("yarn unlink", SRC_EXEC)
-}
-catch (error)
-{
-  // ignore unlink failure
-}
-
+/*
 if (platform() !== "win32")
+{
+  try
+  {
+    exec("yarn unlink", SRC_EXEC)
+  }
+  catch (error)
+  {
+    // ignore unlink failure
+  }
+
   exec("yarn link", SRC_EXEC)
+}
+*/
 
 log("Write package.json")
 writeFileSync(
@@ -61,15 +65,18 @@ writeFileSync(
   "utf8"
 )
 
-exec(`yarn add file:${CWD}`, TARGET_EXEC)
+// exec(`yarn add file:${CWD}`, TARGET_EXEC)
+exec(`npm install ${CWD}`, TARGET_EXEC)
+/*
 if (platform() !== "win32")
   exec("yarn link edgestack", TARGET_EXEC)
+*/
 
 const edgeCommand = path.join("node_modules", ".bin", "edge")
 exec(`${edgeCommand} bootstrap --title="Test" --description="Test" --language="de-DE"`, TARGET_EXEC)
 
-exec("yarn install", TARGET_EXEC)
-exec("yarn run prod", TARGET_EXEC)
+exec("npm install", TARGET_EXEC)
+exec("npm run prod", TARGET_EXEC)
 
 const serverProcess = fork(path.join(TESTPATH, "build", "server", "main.js"), [], {
   cwd: TESTPATH,
