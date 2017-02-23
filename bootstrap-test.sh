@@ -30,8 +30,7 @@ curl -f http://localhost:1339
 CURL_EXITCODE=$?
 
 kill -9 $TEST_PID
-# rm -fr "${TESTPATH}"
-echo "rm ${TESTPATH}"
+rm -fr "${TESTPATH}"
 
 if [ $CURL_EXITCODE -ne 0 ]; then
   exit 2
