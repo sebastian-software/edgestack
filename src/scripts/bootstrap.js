@@ -231,6 +231,7 @@ function patchPackageScripts(targetPath)
       const newData = {
         scripts: {},
         devDependencies: {},
+        browserslist: [ "last 2 versions", "not ie <= 9" ],
         ...data
       }
 
@@ -241,11 +242,13 @@ function patchPackageScripts(targetPath)
 
       newData.devDependencies = {
         "cross-env": "^3.1.4",
+        "eslint": "^3.16.1",
         "intl": "^1.2.5",
         "isomorphic-fetch": "^2.2.1",
         "react": "^15.4.2",
         "react-dom": "^15.4.2",
-        "react-intl": "^2.2.3"
+        "react-intl": "^2.2.3",
+        "readable-code": "^1.3.3"
       }
 
       return fs.writeJson(PACKAGE_JSON_FILENAME, newData, (writeError) =>
