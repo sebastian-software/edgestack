@@ -30,7 +30,7 @@ install:
   - yarn
 
 test:
-  - ./bootstrap-test.sh
+  - node test/bootstrap-test.js
 
 addons:
   apt:

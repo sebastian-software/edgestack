@@ -26,6 +26,7 @@ install:
 
 test_script:
   - npm test
+  - node test/bootstrap-test.js
 
 cache:
   - node_modules
