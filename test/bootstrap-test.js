@@ -4,7 +4,7 @@
 const appRootDir = require("app-root-dir").get
 const { mkdtempSync, writeFileSync } = require("fs")
 const path = require("path")
-const { tmpdir } = require("os")
+const { tmpdir, platform } = require("os")
 const { execSync, fork } = require("child_process")
 const { request } = require("http")
 const chalk = require("chalk")
@@ -42,7 +42,8 @@ catch (error)
   // ignore unlink failure
 }
 
-exec("yarn link", SRC_EXEC)
+if (platform() !== "win32")
+  exec("yarn link", SRC_EXEC)
 
 log("Write package.json")
 writeFileSync(
@@ -61,7 +62,8 @@ writeFileSync(
 )
 
 exec(`yarn add file:${CWD}`, TARGET_EXEC)
-exec("yarn link edgestack", TARGET_EXEC)
+if (platform() !== "win32")
+  exec("yarn link edgestack", TARGET_EXEC)
 
 const edgeCommand = path.join("node_modules", ".bin", "edge")
 exec(`${edgeCommand} bootstrap --title="Test" --description="Test" --language="de-DE"`, TARGET_EXEC)
