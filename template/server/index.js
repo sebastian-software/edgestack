@@ -1,5 +1,10 @@
 /* eslint-disable no-console */
-import { createExpressServer, createUniversalMiddleware, addFallbackHandler } from "edgestack"
+import {
+  createExpressServer,
+  createUniversalMiddleware,
+  addFallbackHandler,
+  generateStacktrace
+} from "edgestack"
 
 import Root from "../app/Root"
 import State from "../app/State"
@@ -24,6 +29,11 @@ export function server()
     console.log(`Started React Server (Port: ${process.env.SERVER_PORT})`)
     resolve(listener)
   })
+    .catch(async (error) =>
+    {
+      const message = await generateStacktrace(error)
+      console.error(message)
+    })
 }
 
 // Auto start server
