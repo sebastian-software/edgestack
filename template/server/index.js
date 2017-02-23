@@ -1,14 +1,12 @@
+/* eslint-disable no-console */
 import { createExpressServer, createUniversalMiddleware, addFallbackHandler } from "edgestack"
 
 import Root from "../app/Root"
 import State from "../app/State"
-import Config from "../app/Config.yml"
 
 export function server()
 {
   var ssrData = {
-    apolloUri: "http://localhost:9123",
-    defaultLocale: Config.DEFAULT_LOCALE
   }
 
   return new Promise((resolve, reject) =>
