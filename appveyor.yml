@@ -13,6 +13,9 @@ environment:
     - nodejs_version: 7
       platform: x86
 
+matrix:
+  fast_finish: true
+
 version: "{build}"
 build: off
 deploy: off
