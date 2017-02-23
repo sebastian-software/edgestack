@@ -29,7 +29,7 @@ import getPostCSSConfig from "./PostCSSConfig"
 
 const builtInSet = new Set(builtinModules)
 
-const enableHardSource = true
+const enableHardSource = !process.env.DISABLE_HARDSOURCE
 
 
 // - "intl" is included in one block with complete data. No reason for bundle everything here.

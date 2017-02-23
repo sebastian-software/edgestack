@@ -236,7 +236,7 @@ function patchPackageScripts(targetPath)
       }
 
       newData.scripts.start = "edge start"
-      newData.scripts.prod = "cross-env NODE_ENV=production edge build"
+      newData.scripts.prod = "cross-env DISABLE_HARDSOURCE=true NODE_ENV=production edge build"
       newData.scripts["prod:start"] = "npm run prod && node build/server/main.js"
       newData.scripts.clean = "rimraf build/client/* build/server/*"
 
