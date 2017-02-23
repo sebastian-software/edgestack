@@ -28,6 +28,8 @@ before_install:
 
 install:
   - yarn
+
+test:
   - ./bootstrap-test.sh
 
 addons:
