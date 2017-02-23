@@ -248,7 +248,8 @@ function patchPackageScripts(targetPath)
         "react": "^15.4.2",
         "react-dom": "^15.4.2",
         "react-intl": "^2.2.3",
-        "readable-code": "^1.3.3"
+        "readable-code": "^1.3.3",
+        "rimraf": "^2.6.0"
       }
 
       return fs.writeJson(PACKAGE_JSON_FILENAME, newData, (writeError) =>
