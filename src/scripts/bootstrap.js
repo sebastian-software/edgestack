@@ -252,6 +252,7 @@ function patchPackageScripts(targetPath)
         "rimraf": "^2.6.0"
       }
 
+      console.log(`Write ${PACKAGE_JSON_FILENAME}`)
       return fs.writeJson(PACKAGE_JSON_FILENAME, newData, (writeError) =>
       {
         if (writeError)
