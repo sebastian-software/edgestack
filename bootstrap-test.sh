@@ -4,16 +4,20 @@ set -x
 CWD=$(pwd)
 TESTPATH="$(mktemp -d)"
 
+yarn unlink || /usr/bin/true
+yarn link
+
 mkdir -p ${TESTPATH}
 cd "${TESTPATH}"
 echo '{ "name":"test","version":"1.0.0", "devDependencies": { "cross-env": "^3.1.4" }, "scripts":{"prod":"cross-env NODE_ENV=production edge build"} }' > package.json
 
-npm -q install ${CWD}
+yarn add file:${CWD}
+yarn link edgestack
 
 node_modules/.bin/edge bootstrap --title="Test" --description="Test" --language="de-DE"
-npm -q install
+yarn install
 
-npm run prod
+yarn run prod
 
 node build/server/main.js &
 TEST_PID=$!
@@ -26,7 +30,8 @@ curl -f http://localhost:1339
 CURL_EXITCODE=$?
 
 kill -9 $TEST_PID
-rm -fr "${TESTPATH}"
+# rm -fr "${TESTPATH}"
+echo "rm ${TESTPATH}"
 
 if [ $CURL_EXITCODE -ne 0 ]; then
   exit 2
