@@ -143,7 +143,10 @@ function templateWalker(startPath, targetPath, replacementCallback)
       {
         console.error(chalk.red(`Error ${error} on entry ${entry}`))
       })
-      .on("end", async () => await Promise.all(promisedChanges))
+      .on("end", async () => {
+        await Promise.all(promisedChanges)
+        resolve()
+      })
   })
 }
 
@@ -264,7 +267,6 @@ export default async function bootstrap(args) {
   const SRC_PATH = pathModule.join(CURRENT_WORKING_DIR, "src")
 
   const outputOkay = await checkOutputPath(SRC_PATH)
-
   if (!outputOkay)
     throw new Error(
       "Cannot savely write bootstrap files as a src " +
