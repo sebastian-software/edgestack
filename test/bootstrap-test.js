@@ -7,10 +7,17 @@ const path = require("path")
 const { tmpdir } = require("os")
 const { execSync, fork } = require("child_process")
 const { request } = require("http")
+const chalk = require("chalk")
+
+function log(message)
+{
+  console.log(chalk.cyan(`+ ${message}`))
+}
 
 const CWD = appRootDir()
+log(`Source path: ${CWD}`)
 const TESTPATH = mkdtempSync(path.join(tmpdir(), "edge-"))
-console.log(`Temp path: ${TESTPATH}`)
+log(`Temp path:   ${TESTPATH}`)
 
 const SRC_EXEC = {
   cwd: CWD
@@ -21,7 +28,8 @@ const TARGET_EXEC = {
 
 function exec(cmd, options)
 {
-  console.log("Execute ", cmd)
+  log(`Execute: ${cmd}`)
+  options.stdio = "inherit"
   return execSync(cmd, options)
 }
 
@@ -36,7 +44,7 @@ catch (error)
 
 exec("yarn link", SRC_EXEC)
 
-console.log("Write package.json")
+log("Write package.json")
 writeFileSync(
   path.join(TESTPATH, "package,json"),
   JSON.stringify({
@@ -61,7 +69,8 @@ exec("yarn install", TARGET_EXEC)
 exec("yarn run prod", TARGET_EXEC)
 
 const serverProcess = fork(path.join(TESTPATH, "build", "server", "main.js"), [], {
-  cwd: TESTPATH
+  cwd: TESTPATH,
+  stdio: "inherit"
 })
 serverProcess.on("exit", (code) =>
 {
@@ -71,7 +80,9 @@ serverProcess.on("exit", (code) =>
 
 function quitProcess(exitCode)
 {
-  serverProcess.kill(9)
+  log(`Output path: ${TESTPATH}`)
+  log(`Exit code:   ${exitCode}`)
+  serverProcess.kill("SIGKILL")
   process.exit(exitCode)
 }
 
@@ -90,8 +101,6 @@ function check()
       if (res.statusCode !== 200)
         quitProcess(1)
 
-      res.setEncoding('utf8')
-
       const chunks = []
       res.on("data", (chunk) =>
       {
@@ -102,9 +111,13 @@ function check()
         console.log(
           Buffer.concat(chunks).toString("utf8")
         )
-      })
 
-      quitProcess(0)
+        quitProcess(0)
+      })
+      res.on('error', () =>
+      {
+        quitProcess(3)
+      })
     }
   )
 
