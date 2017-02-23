@@ -28,8 +28,6 @@ before_install:
 
 install:
   - yarn
-
-test:
   - node test/bootstrap-test.js
 
 addons:
