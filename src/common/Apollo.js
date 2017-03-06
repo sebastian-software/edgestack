@@ -9,6 +9,8 @@ export function createApolloClient({ headers, initialState = {}, batchRequests =
   const apolloUri = initialState.ssr && initialState.ssr.apolloUri
 
   const hasApollo = apolloUri != null
+  var client
+
   if (hasApollo)
   {
     var opts = {
@@ -19,9 +21,11 @@ export function createApolloClient({ headers, initialState = {}, batchRequests =
       headers
     }
 
+    var networkInterface
+
     if (batchRequests)
     {
-      var networkInterface = createBatchingNetworkInterface({
+      networkInterface = createBatchingNetworkInterface({
         uri: apolloUri,
         batchInterval: 10,
         opts
@@ -29,13 +33,13 @@ export function createApolloClient({ headers, initialState = {}, batchRequests =
     }
     else
     {
-      var networkInterface = createNetworkInterface({
+      networkInterface = createNetworkInterface({
         uri: apolloUri,
         opts
       })
     }
 
-    var client = new ApolloClient({
+    client = new ApolloClient({
       ssrMode: process.env.TARGET === "node",
       addTypename: false,
       queryDeduplication: true,
@@ -44,7 +48,7 @@ export function createApolloClient({ headers, initialState = {}, batchRequests =
   }
   else
   {
-    var client = new ApolloClient({
+    client = new ApolloClient({
       addTypename: false,
       queryDeduplication: true
     })

@@ -3,6 +3,7 @@ import { renderToString } from "react-dom/server"
 import { StaticRouter } from "react-router"
 import Helmet from "react-helmet"
 import { ApolloProvider, getDataFromTree } from "react-apollo"
+import { IntlProvider } from "react-intl"
 
 import Measure from "./Measure"
 import renderPage from "./renderPage"
@@ -65,10 +66,17 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
 
   console.log("Server: Rendering app with data...")
 
+  var currentLocale = `${language}-${region}`
+
+  // FIXME: so kann das ja njicht gehen... hier braucht man das echte Objekt.
+  var messages = import("../app/messages/" + currentLocale + ".json")
+
   var WrappedRoot = (
     <StaticRouter location={request.url} context={routingContext}>
       <ApolloProvider client={apolloClient} store={reduxStore}>
-        <Root/>
+        <IntlProvider locale={currentLocale} messages={messages}>
+          <Root/>
+        </IntlProvider>
       </ApolloProvider>
     </StaticRouter>
   )

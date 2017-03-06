@@ -446,7 +446,10 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
   //   console.log("- Webpack: Using light node bundle")
   // }
 
-
+  // Loader-Utils are changing their API:
+  // https://github.com/webpack/loader-utils/issues/56
+  // Currently affected: BabelLoader, CSSLoader + FileLoader
+  // process.traceDeprecation = true
 
   return {
     // We need to inform Webpack about our build target
