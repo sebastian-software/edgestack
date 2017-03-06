@@ -69,7 +69,8 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
   var currentLocale = `${language}-${region}`
 
   // FIXME: so kann das ja njicht gehen... hier braucht man das echte Objekt.
-  var messages = import("../app/messages/" + currentLocale + ".json")
+  // var messages = import("../app/messages/" + currentLocale + ".json")
+  var messages = {}
 
   var WrappedRoot = (
     <StaticRouter location={request.url} context={routingContext}>
