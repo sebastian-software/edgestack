@@ -41,6 +41,7 @@ function Root({ children, locale, language, intl }) {
         <ul>
           <li><NavLink exact to="/" activeClassName={Styles.activeLink}>Home</NavLink></li>
           <li><NavLink to="/about" activeClassName={Styles.activeLink}>About</NavLink></li>
+          <li><NavLink to="/missing" activeClassName={Styles.activeLink}>Missing</NavLink></li>
         </ul>
       </div>
 
@@ -70,7 +71,8 @@ function Root({ children, locale, language, intl }) {
 Root.propTypes = {
   children: React.PropTypes.node,
   locale: React.PropTypes.string,
-  language: React.PropTypes.string
+  language: React.PropTypes.string,
+  intl: React.PropTypes.object
 }
 
 const mapStateToProps = (state, ownProps) => ({
