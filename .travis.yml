@@ -28,6 +28,7 @@ before_install:
 
 install:
   - yarn
+  - node test/bootstrap-test.js
 
 addons:
   apt:
