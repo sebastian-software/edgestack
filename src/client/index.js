@@ -84,9 +84,9 @@ function renderApp(MyRoot)
       }
     }
 
-    console.log("Scanning...")
+    // console.log("Scanning...")
     reactTreeWalker(rootElement, visitor, context)
-    console.log("- Scan result: ", schedule.length)
+    // console.log("- Scan result: ", schedule.length)
 
     const nestedPromises = schedule.map(({ resolver, element, context }) =>
       resolver.then(() => scanElement(element, context, true)),
@@ -96,7 +96,6 @@ function renderApp(MyRoot)
   }
 
   scanElement(WrappedRoot).then(() => {
-    console.log("FULL SCAN ROOT DONE")
     render(WrappedRoot, container)
   })
 }
@@ -109,12 +108,10 @@ if (process.env.NODE_ENV === "development" && module.hot)
 
   // Any changes to our App will cause a hotload re-render.
   module.hot.accept("../app/Root", () => {
-    console.log("- Hot: Rendering root...")
     renderApp(require("../app/Root").default)
   })
 
   module.hot.accept("../app/State", () => {
-    console.log("- Hot: Updating reducers...")
     const nextState = require("../app/State").default
     const nextReducer = createRootReducer(nextState.getReducers())
 
@@ -126,7 +123,7 @@ Promise.all([
   ensureIntlSupport(window.APP_STATE.ssr.locale),
   ensureReactIntlSupport(window.APP_STATE.ssr.language)
 ]).then((results) => {
-  console.log("Localization is ready! Using Polyfill:", results[0])
+  // console.log("Localization is ready! Using Polyfill:", results[0])
   initState(State)
   renderApp(Root)
 })

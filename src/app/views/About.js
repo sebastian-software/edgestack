@@ -36,7 +36,6 @@ class About extends React.Component {
   }
 
   render() {
-    console.log("- About: render()")
     return (
       <article>
         <Helmet title="About" />
