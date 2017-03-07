@@ -47,16 +47,15 @@ function getConfirmation(message, callback) {
 function renderApp(MyRoot)
 {
   var MyRoutedRoot = withRouter(MyRoot)
-  var RoutedApolloProvider = withRouter(ApolloProvider)
   var RoutedIntlProvider = withRouter(IntlProvider)
 
   var WrappedRoot = (
     <BrowserRouter getUserConfirmation={getConfirmation}>
-      <RoutedApolloProvider client={apolloClient} store={reduxStore}>
+      <ApolloProvider client={apolloClient} store={reduxStore}>
         <RoutedIntlProvider locale={currentLocale} messages={messages}>
           <MyRoutedRoot/>
         </RoutedIntlProvider>
-      </RoutedApolloProvider>
+      </ApolloProvider>
     </BrowserRouter>
   )
 

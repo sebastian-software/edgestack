@@ -15,6 +15,9 @@ import "./Fonts.css"
 import Styles from "./Root.css"
 import RouterConnector from "../common/RouterConnector"
 
+import HomeComponent from "./views/Home"
+import AboutComponent from "./views/About"
+
 function Error404() {
   return <div>Sorry, that page was not found.</div>
 }
@@ -22,9 +25,6 @@ function Error404() {
 function Root({ children, locale, language, intl }) {
   return (
     <main>
-      <Route exact path="/" component={() => { console.log("HOME-in-ROOT"); return null }} />
-      <Route path="/about" component={() => { console.log("ABOUT-in-ROOT"); return null }} />
-
       <Helmet
         titleTemplate={`${intl.formatMessage({ id: "app.title" })} - %s`}
         defaultTitle={intl.formatMessage({ id: "app.title" })}
@@ -50,10 +50,11 @@ function Root({ children, locale, language, intl }) {
 
       <div>
         <RouterConnector>
-          <Route exact path="/" component={() => { console.log("HOME-in-ROOT-DEEP"); return null }} />
-          <Route path="/about" component={() => { console.log("ABOUT-in-ROOT-DEEP"); return null }} />
-
           <Switch>
+            <Route exact path="/" component={HomeComponent} />
+            <Route path="/about" component={AboutComponent} />
+
+            {/*
             <AsyncRoute exact path="/"
               load={(lang) => [
                 import("./views/Home")
@@ -65,6 +66,8 @@ function Root({ children, locale, language, intl }) {
                 import("./views/messages/About." + lang + ".json")
               ]}
             />
+            */}
+
             <Route component={Error404}/>
           </Switch>
         </RouterConnector>
