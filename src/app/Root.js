@@ -50,6 +50,9 @@ function Root({ children, locale, language, intl }) {
 
       <div>
         <RouterConnector>
+          <Route exact path="/" component={() => { console.log("HOME-in-ROOT-DEEP"); return null }} />
+          <Route path="/about" component={() => { console.log("ABOUT-in-ROOT-DEEP"); return null }} />
+
           <Switch>
             <AsyncRoute exact path="/"
               load={(lang) => [
@@ -58,7 +61,6 @@ function Root({ children, locale, language, intl }) {
             />
             <AsyncRoute path="/about"
               load={(lang) => [
-                /* eslint-disable prefer-template */
                 import("./views/About"),
                 import("./views/messages/About." + lang + ".json")
               ]}

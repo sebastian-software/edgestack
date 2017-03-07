@@ -1,5 +1,5 @@
 import React from "react"
-import { Route } from "react-router-dom"
+import { Route, withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 import { getLocale, getLanguage } from "./State"
@@ -10,6 +10,9 @@ class AsyncRoute extends React.Component {
     super(props)
 
     const { locale, language, load } = props
+
+    console.log("INIT ASYNC ROUTE: ", props.path)
+
     this.component = wrapAsync(() => Promise.all(load(language)), locale)
   }
 
@@ -24,7 +27,7 @@ AsyncRoute.propTypes = {
   language: React.PropTypes.string
 }
 
-export default connect((state, ownProps) => ({
+export default withRouter(connect((state, ownProps) => ({
   locale: getLocale(state),
   language: getLanguage(state)
-}))(AsyncRoute)
+}))(AsyncRoute))

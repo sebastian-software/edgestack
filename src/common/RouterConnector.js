@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import { withRouter } from "react-router-dom"
 
 export const SET_PATH = "router/SET_PATH"
 export const REPLACE_PATH = "router/REPLACE_PATH"
@@ -111,4 +112,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoutingConnector)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RoutingConnector))

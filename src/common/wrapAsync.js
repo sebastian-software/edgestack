@@ -1,9 +1,13 @@
 import React from "react"
 import { IntlProvider } from "react-intl"
+import { withRouter } from "react-router-dom"
+
+var RoutedIntlProvider = withRouter(IntlProvider)
 
 export default function wrapAsync(loader, locale)
 {
   let View = null
+  let RoutedView = null
   let messages = null
 
   class AsyncComponent extends React.Component {
@@ -45,6 +49,8 @@ export default function wrapAsync(loader, locale)
           View = View.default
         }
 
+        RoutedView = withRouter(View)
+
         this.setState({
           loading: false
         })
@@ -56,12 +62,14 @@ export default function wrapAsync(loader, locale)
     render() {
       console.log("- Async Component: render():", Boolean(View))
 
-      return View ?
-        <IntlProvider locale={locale} messages={messages}>
-          <View/>
-        </IntlProvider> : null
+      return View ? <RoutedView/> : null
+
+      /*
+        <RoutedIntlProvider locale={locale} messages={messages}>
+          <RoutedView/>
+        </RoutedIntlProvider> : null*/
     }
   }
 
-  return AsyncComponent
+  return withRouter(AsyncComponent)
 }
