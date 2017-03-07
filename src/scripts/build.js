@@ -22,26 +22,26 @@ function niceStattrace(error)
   ].join("\n")
 }
 
-/* eslint-disable no-process-exit */
+/* eslint-disable no-process-exit, no-console */
 export default function build()
 {
   const buildFolderClient = resolve("build", "client")
   const buildFolderServer = resolve("build", "server")
 
   series([
-    function(callback)
+    (callback) =>
     {
       // Remove all content but keep the directory so that
       // if you're in it, you don't end up in Trash
       rimraf(`${buildFolderClient}/*`, callback)
     },
-    function(callback)
+    (callback) =>
     {
       // Remove all content but keep the directory so that
       // if you're in it, you don't end up in Trash
       rimraf(`${buildFolderServer}/*`, callback)
     },
-    function(callback)
+    (callback) =>
     {
       console.log("Creating a production build for client...")
       webpack(ConfigFactory({ target: "web", mode: "production" })).run((error, stats) =>
@@ -66,7 +66,7 @@ export default function build()
         callback()
       })
     },
-    function(callback)
+    (callback) =>
     {
       console.log("Creating a production build for server...")
       webpack(ConfigFactory({ target: "node", mode: "production" })).run((error, stats) =>
