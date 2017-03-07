@@ -176,7 +176,7 @@
     "react-router": "next",
     "react-router-dom": "next",
     "react-tap-event-plugin": "^2.0.1",
-    "readable-code": "^1.4.1",
+    "readable-code": "^1.4.2",
     "redux": "^3.6.0",
     "redux-immutable-state-invariant": "^1.2.4",
     "redux-logger": "^2.8.2",
@@ -196,10 +196,10 @@
     "yaml-loader": "^0.4.0"
   },
   "devDependencies": {
-    "eslint": "^3.17.0",
+    "eslint": "^3.17.1",
     "lint-staged": "^3.3.1",
     "pre-commit": "^1.2.2",
-    "prepublish": "^0.13.5",
+    "prepublish": "^0.14.1",
     "rollup": "^0.41.4",
     "rollup-plugin-executable": "^1.0.0",
     "sanitize.css": "^5.0.0",
