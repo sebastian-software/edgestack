@@ -22,6 +22,9 @@ function Error404() {
 function Root({ children, locale, language, intl }) {
   return (
     <main>
+      <Route exact path="/" component={() => { console.log("HOME-in-ROOT"); return null }} />
+      <Route path="/about" component={() => { console.log("ABOUT-in-ROOT"); return null }} />
+
       <Helmet
         titleTemplate={`${intl.formatMessage({ id: "app.title" })} - %s`}
         defaultTitle={intl.formatMessage({ id: "app.title" })}

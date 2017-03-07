@@ -1,7 +1,7 @@
 // eslint-disable filenames/match-exported
 import React from "react"
 import { render } from "react-dom"
-import { BrowserRouter } from "react-router-dom"
+import { BrowserRouter, withRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
 import reactTreeWalker from "react-tree-walker"
 import { IntlProvider } from "react-intl"
@@ -46,13 +46,17 @@ function getConfirmation(message, callback) {
 
 function renderApp(MyRoot)
 {
+  var MyRoutedRoot = withRouter(MyRoot)
+  var RoutedApolloProvider = withRouter(ApolloProvider)
+  var RoutedIntlProvider = withRouter(IntlProvider)
+
   var WrappedRoot = (
     <BrowserRouter getUserConfirmation={getConfirmation}>
-      <ApolloProvider client={apolloClient} store={reduxStore}>
-        <IntlProvider locale={currentLocale} messages={messages}>
-          <MyRoot/>
-        </IntlProvider>
-      </ApolloProvider>
+      <RoutedApolloProvider client={apolloClient} store={reduxStore}>
+        <RoutedIntlProvider locale={currentLocale} messages={messages}>
+          <MyRoutedRoot/>
+        </RoutedIntlProvider>
+      </RoutedApolloProvider>
     </BrowserRouter>
   )
 
