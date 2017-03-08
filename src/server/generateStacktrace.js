@@ -37,7 +37,7 @@ function getSourceContent({
 {
   return readFile(filename).then((wholeFileContent) => {
     const result = [
-      chalk.cyan(`Error in file ${filename} (${col} / ${line})\n`)
+      chalk.cyan(`Error in file ${filename} (${line}:${col})\n`)
     ]
     const nullLine = line - 1
     const fileContent = wholeFileContent.split("\n")
