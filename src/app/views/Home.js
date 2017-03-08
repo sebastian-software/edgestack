@@ -9,16 +9,20 @@ console.log("Loading GraphQL queries works:", Tweets.kind === "Document")
 import { format } from "date-fns"
 console.log("Today:", format(Date.now(), "DD.MM.YYYY"))
 
-function Home() {
+function Home({ intl }) {
   return (
     <article>
-      <Helmet title="Home" />
+      <Helmet title={intl.formatMessage({ id: "title" })}/>
       <div className={Styles.preloader} />
       <p>
         Home Component
       </p>
     </article>
   )
+}
+
+Home.propTypes = {
+  intl: React.PropTypes.object
 }
 
 export default Home
