@@ -50,13 +50,12 @@ function HomeComponent() {
 
 
 
-const AboutComponent = (() =>
-{
+function createLazyComponent(options) {
   var LazyLoading = false
   var LazyComponent = null
   var LazyMessages = null
 
-  class AboutComponent extends React.Component {
+  class LazyComponentWrapper extends React.Component {
     constructor(props, context) {
       super(props)
 
@@ -67,28 +66,21 @@ const AboutComponent = (() =>
       }
     }
 
-    load(language) {
-      return Promise.all([
-        import("./views/About"),
-        import("./views/messages/About." + language + ".json")
-      ])
-    }
-
     fetchData() {
       if (LazyLoading === true || LazyComponent != null) {
         return Promise.resolve()
       }
 
-      console.log("AboutComponent: Loading...")
+      console.log("LazyComponentWrapper: Loading...")
       this.setState({
         loading: true
       })
 
       LazyLoading = true
 
-      return this.load("de").then((result) => {
-        console.log("AboutComponent: Loading done!")
-        console.log("AboutComponent: Result:", result)
+      return Promise.all(options.load(this.props.language)).then((result) => {
+        console.log("LazyComponentWrapper: Loading done!")
+        console.log("LazyComponentWrapper: Result:", result)
 
         LazyComponent = result[0].default
         LazyMessages = result[1]
@@ -100,12 +92,11 @@ const AboutComponent = (() =>
           messages: LazyMessages
         })
 
-        console.log("AboutComponent: Final State...", this.state)
+        console.log("LazyComponentWrapper: Final State...", this.state)
       })
     }
 
     componentDidMount() {
-      console.log("AboutComponent: Mounting...", this.state)
       if (!LazyComponent) {
         this.fetchData()
       }
@@ -119,7 +110,7 @@ const AboutComponent = (() =>
     }
   }
 
-  AboutComponent.propTypes = {
+  LazyComponentWrapper.propTypes = {
     children: React.PropTypes.node,
     locale: React.PropTypes.string,
     language: React.PropTypes.string,
@@ -131,8 +122,17 @@ const AboutComponent = (() =>
     language: getLanguage(state)
   })
 
-  return connect(mapStateToProps)(AboutComponent)
-})()
+  return connect(mapStateToProps)(LazyComponentWrapper)
+}
+
+const AboutComponent = createLazyComponent({
+  load: (language) => {
+    return [
+      import("./views/About"),
+      import("./views/messages/About." + language + ".json")
+    ]
+  }
+})
 
 
 
