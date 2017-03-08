@@ -4,7 +4,7 @@ import "sanitize.css/sanitize.css"
 import React from "react"
 import { Switch, Route, NavLink } from "react-router-dom"
 import Helmet from "react-helmet"
-import { injectIntl, FormattedMessage } from "react-intl"
+import { injectIntl, FormattedMessage, IntlProvider } from "react-intl"
 import { connect } from "react-redux"
 
 import { getLocale, getLanguage } from "../common/State"
@@ -15,16 +15,15 @@ import "./Fonts.css"
 import Styles from "./Root.css"
 import RouterConnector from "../common/RouterConnector"
 
-import HomeComponent from "./views/Home"
-import AboutComponent from "./views/About"
+import messages from "./messages/en.json"
 
 function Error404() {
   return <div>Sorry, that page was not found.</div>
 }
 
-function Root({ children, locale, language, intl }) {
+function Header({ intl }) {
   return (
-    <main>
+    <header id="site-header">
       <Helmet
         titleTemplate={`${intl.formatMessage({ id: "app.title" })} - %s`}
         defaultTitle={intl.formatMessage({ id: "app.title" })}
@@ -36,10 +35,21 @@ function Root({ children, locale, language, intl }) {
         ]}
       />
 
-      <div>
-        <h1 className={Styles.title}><FormattedMessage id="app.title"/></h1>
-        <strong><FormattedMessage id="app.description"/></strong>
-      </div>
+      <h1 className={Styles.title}><FormattedMessage id="app.title"/></h1>
+      <strong><FormattedMessage id="app.description"/></strong>
+    </header>
+  )
+}
+
+Header = injectIntl(Header)
+
+function Root({ children, locale, language, intl }) {
+  return (
+    <IntlProvider locale={locale} messages={messages}>
+
+    <main>
+      <Header/>
+
       <div>
         <ul>
           <li><NavLink exact to="/" activeClassName={Styles.activeLink}>Home</NavLink></li>
@@ -51,10 +61,11 @@ function Root({ children, locale, language, intl }) {
       <div>
         <RouterConnector>
           <Switch>
+            {/*
             <Route exact path="/" component={HomeComponent} />
             <Route path="/about" component={AboutComponent} />
+            */}
 
-            {/*
             <AsyncRoute exact path="/"
               load={(lang) => [
                 import("./views/Home")
@@ -66,13 +77,13 @@ function Root({ children, locale, language, intl }) {
                 import("./views/messages/About." + lang + ".json")
               ]}
             />
-            */}
 
             <Route component={Error404}/>
           </Switch>
         </RouterConnector>
       </div>
     </main>
+    </IntlProvider>
   )
 }
 
@@ -88,4 +99,4 @@ const mapStateToProps = (state, ownProps) => ({
   language: getLanguage(state)
 })
 
-export default connect(mapStateToProps)(injectIntl(Root))
+export default connect(mapStateToProps)(Root)

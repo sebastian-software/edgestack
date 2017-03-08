@@ -4,13 +4,11 @@ import { render } from "react-dom"
 import { BrowserRouter, withRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
 import reactTreeWalker from "react-tree-walker"
-import { IntlProvider } from "react-intl"
 
 import { ensureIntlSupport, ensureReactIntlSupport } from "../common/Intl"
 
 import Root from "../app/Root"
 import State from "../app/State"
-import messages from "../app/messages/en.json"
 
 import { createReduxStore, createRootReducer } from "../common/State"
 import { createApolloClient } from "../common/Apollo"
@@ -20,9 +18,6 @@ const container = document.querySelector("#app")
 
 let apolloClient
 let reduxStore
-
-// FIXME
-let currentLocale = "en-US"
 
 function initState(MyState)
 {
@@ -47,14 +42,11 @@ function getConfirmation(message, callback) {
 function renderApp(MyRoot)
 {
   var MyRoutedRoot = withRouter(MyRoot)
-  var RoutedIntlProvider = withRouter(IntlProvider)
 
   var WrappedRoot = (
     <BrowserRouter getUserConfirmation={getConfirmation}>
       <ApolloProvider client={apolloClient} store={reduxStore}>
-        <RoutedIntlProvider locale={currentLocale} messages={messages}>
-          <MyRoutedRoot/>
-        </RoutedIntlProvider>
+        <MyRoutedRoot/>
       </ApolloProvider>
     </BrowserRouter>
   )
