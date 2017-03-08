@@ -52,6 +52,7 @@ function HomeComponent() {
 
 function createLazyComponent(options) {
   var LazyLoading = false
+  var LazyPromise = null
   var LazyComponent = null
   var LazyMessages = null
 
@@ -68,7 +69,7 @@ function createLazyComponent(options) {
 
     fetchData() {
       if (LazyLoading === true || LazyComponent != null) {
-        return Promise.resolve()
+        return LazyPromise
       }
 
       console.log("LazyComponentWrapper: Loading...")
@@ -77,8 +78,7 @@ function createLazyComponent(options) {
       })
 
       LazyLoading = true
-
-      return Promise.all(options.load(this.props.language)).then((result) => {
+      LazyPromise = Promise.all(options.load(this.props.language)).then((result) => {
         console.log("LazyComponentWrapper: Loading done!")
         console.log("LazyComponentWrapper: Result:", result)
 
@@ -94,6 +94,8 @@ function createLazyComponent(options) {
 
         console.log("LazyComponentWrapper: Final State...", this.state)
       })
+
+      return LazyPromise
     }
 
     componentDidMount() {
