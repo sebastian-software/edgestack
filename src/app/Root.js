@@ -43,6 +43,76 @@ function Header({ intl }) {
 
 Header = injectIntl(Header)
 
+
+function HomeComponent() {
+  return <b>Home</b>
+}
+
+console.log("DEFINE ABOUT COMPONENT")
+
+var LazyAboutLoading = false
+var LazyAboutComponent = null
+var LazyAboutMessages = null
+
+class AboutComponent extends React.Component {
+  constructor(props, context) {
+    super(props)
+
+    this.state = {
+      loading: LazyAboutLoading,
+      component: LazyAboutComponent,
+      messages: LazyAboutMessages
+    }
+  }
+
+  load(language) {
+    return Promise.all([
+      import("./views/About"),
+      import("./views/messages/About." + language + ".json")
+    ])
+  }
+
+  componentWillMount() {
+    console.log("AboutComponent: Mounting...", this.state)
+    if (this.state.loading === true || this.state.component != null) {
+      return
+    }
+
+    console.log("AboutComponent: Loading...")
+    this.setState({
+      loading: true
+    })
+
+    LazyAboutLoading = true
+
+    this.load("de").then((result) => {
+      console.log("AboutComponent: Loading done!")
+      console.log("AboutComponent: Result:", result)
+
+      LazyAboutComponent = result[0].default
+      LazyAboutMessages = result[1]
+      LazyAboutLoading = false
+
+      this.setState({
+        loading: LazyAboutLoading,
+        component: LazyAboutComponent,
+        messages: LazyAboutMessages
+      })
+
+      console.log("AboutComponent: Final State...", this.state)
+    })
+  }
+
+  render() {
+    let Component = this.state.component
+    let { load, ...props } = this.props
+
+    return Component ? <Component {...props} /> : null
+  }
+}
+
+
+
 function Root({ children, locale, language, intl }) {
   return (
     <IntlProvider locale={locale} messages={messages}>
@@ -61,22 +131,22 @@ function Root({ children, locale, language, intl }) {
       <div>
         <RouterConnector>
           <Switch>
-            {/*
             <Route exact path="/" component={HomeComponent} />
             <Route path="/about" component={AboutComponent} />
-            */}
 
+            {/*
             <AsyncRoute exact path="/"
-              load={(lang) => [
+              load={(language) => [
                 import("./views/Home")
               ]}
             />
             <AsyncRoute path="/about"
-              load={(lang) => [
-                import("./views/About"),
-                import("./views/messages/About." + lang + ".json")
+              load={(language) => [
+                import("./views/About"),nbvmbmnbmnbmnbmnmnbnnbmnbmn
+                import("./views/messages/About." + language + ".json")
               ]}
             />
+            */}
 
             <Route component={Error404}/>
           </Switch>
