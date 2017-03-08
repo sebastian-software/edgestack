@@ -57,7 +57,6 @@ class RoutingConnector extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    return
     if (nextProps.path === nextProps.location.pathname) {
       return
     }

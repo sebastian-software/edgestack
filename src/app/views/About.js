@@ -43,7 +43,7 @@ class About extends React.Component {
           <FormattedMessage id="counter" values={{ value: this.props.value }}/>
         </p>
         <p>
-          <FormattedMessage id="localTest" values={{ pi: 3.14 }}/>
+          <FormattedMessage id="infoPi" values={{ pi: 3.14 }}/>
         </p>
         <p>
           Today: <br/>

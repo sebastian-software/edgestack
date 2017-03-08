@@ -1,4 +1,4 @@
 {
-  "localTest": "XX English Foo {pi, number}",
-  "counter": "Dyn loaded: {value}"
+  "infoPi": "PI in English {pi, number}",
+  "counter": "Dynamic Counter: {value}"
 }

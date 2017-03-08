@@ -45,8 +45,6 @@ Header = injectIntl(Header)
 
 
 
-
-
 function createLazyComponent(options)
 {
   var LazyLoading = false
@@ -70,14 +68,14 @@ function createLazyComponent(options)
         return LazyPromise
       }
 
-      console.log("LazyComponentWrapper: Loading...", options.id)
+      console.log("LazyComponent: Loading...", options.id)
       this.setState({
         loading: true
       })
 
       LazyLoading = true
       LazyPromise = Promise.all(options.load(this.props.language)).then((result) => {
-        console.log("LazyComponentWrapper: Loading done!", options.id)
+        console.log("LazyComponent: Done!", options.id)
 
         LazyComponent = result[0].default
         LazyMessages = result[1]
@@ -94,16 +92,25 @@ function createLazyComponent(options)
     }
 
     componentDidMount() {
-      if (!LazyComponent) {
+      if (!LazyPromise) {
         this.fetchData()
       }
     }
 
     render() {
-      let Component = LazyComponent
-      let { load, ...props } = this.props
+      if (!LazyComponent) {
+        return null
+      }
 
-      return Component ? <Component {...props} /> : null
+      const { locale, ...props } = this.props
+
+      var WrappedComponent = (
+        <IntlProvider locale={locale} messages={LazyMessages}>
+          <LazyComponent {...props} />
+        </IntlProvider>
+      )
+
+      return WrappedComponent
     }
   }
 
