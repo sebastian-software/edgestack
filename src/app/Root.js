@@ -77,7 +77,7 @@ function createLazyComponent(options)
       LazyPromise = Promise.all(options.load(this.props.language)).then((result) => {
         console.log("LazyComponent: Done!", options.id)
 
-        LazyComponent = result[0].default
+        LazyComponent = injectIntl(result[0].default)
         LazyMessages = result[1]
         LazyLoading = false
 
