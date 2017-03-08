@@ -5,6 +5,7 @@ import { startsWith } from "lodash"
 import appRootDir from "app-root-dir"
 
 const LINES_AROUND_STACK_POSITION = 5
+const SHOW_EXTENDED_STACKTRACE = false
 
 function readFile(filename)
 {
@@ -78,6 +79,8 @@ function frameToString(frame, rootDir)
 
   if (isCompiled)
     sourceFile = `.${sourceFilePointer.split(":")[1]}`
+  else if (!SHOW_EXTENDED_STACKTRACE)
+    return null
 
   const toParsed = () => ({
     name,
@@ -105,6 +108,9 @@ function frameToString(frame, rootDir)
     }
   }
 
+  if (!SHOW_EXTENDED_STACKTRACE)
+    return null
+
   return {
     ...wrappedFrame,
     toParsed,
@@ -116,7 +122,7 @@ function enableWebpackServerStacktrace()
 {
   const rootDir = appRootDir.get()
   Error.prepareStackTrace = function prepareStackTrace(error, stack) {
-    const wrappedStack = stack.map((frame) => frameToString(frame, rootDir))
+    const wrappedStack = stack.map((frame) => frameToString(frame, rootDir)).filter((item) => Boolean(item))
     const toString = error + wrappedStack.map((frame) =>
     {
       return `\n    at ${frame}`
