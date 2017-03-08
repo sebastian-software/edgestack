@@ -31,20 +31,19 @@ class About extends React.Component {
     return this.props.value == null ? this.props.load() : null
   }
 
-  renderMarkdown() {
-    return markdown`Markdown in React is **pretty useful**.`
-  }
-
   render() {
+    const { intl } = this.props
+
     return (
       <article>
-        <Helmet title="About" />
+        <Helmet title={intl.formatMessage({ id: "title" })}/>
         <p>
           <FormattedMessage id="counter" values={{ value: this.props.value }}/>
         </p>
         <p>
-          <FormattedMessage id="infoPi" values={{ pi: 3.14 }}/>
+          <FormattedMessage id="infoPi" values={{ pi: 3.14159265359 }}/>
         </p>
+
         <p>
           Today: <br/>
           <FormattedDate
@@ -59,6 +58,7 @@ class About extends React.Component {
           Yesterday:<br/>
           <FormattedRelative value={addDays(Date.now(), -1)}/>
         </p>
+
         <p>
           <button className={Styles.button} onClick={this.props.handleDecrement}>Decrement</button>
           &#160;
@@ -66,7 +66,9 @@ class About extends React.Component {
           &#160;
           <button className={Styles.button} onClick={handleOldMethodCall}>Deprecated Test</button>
         </p>
-        {this.renderMarkdown()}
+
+        {markdown`Markdown in React is **pretty useful**.`}
+
         <p className={Styles.intro}>
           <a href="https://github.com/sebastian-software">Produced with ❤ by Sebastian Software</a>
         </p>
@@ -76,6 +78,7 @@ class About extends React.Component {
 }
 
 About.propTypes = {
+  intl: React.PropTypes.object,
   value: React.PropTypes.number,
   load: React.PropTypes.func,
   handleIncrement: React.PropTypes.func,
