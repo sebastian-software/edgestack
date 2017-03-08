@@ -4,7 +4,7 @@ import "sanitize.css/sanitize.css"
 import React from "react"
 import { Switch, Route, NavLink } from "react-router-dom"
 import Helmet from "react-helmet"
-import { injectIntl, FormattedMessage } from "react-intl"
+import { injectIntl, FormattedMessage, IntlProvider } from "react-intl"
 import { connect } from "react-redux"
 
 import { getLocale, getLanguage } from "../common/State"
@@ -15,16 +15,15 @@ import "./Fonts.css"
 import Styles from "./Root.css"
 import RouterConnector from "../common/RouterConnector"
 
-import HomeComponent from "./views/Home"
-import AboutComponent from "./views/About"
+import messages from "./messages/en.json"
 
 function Error404() {
   return <div>Sorry, that page was not found.</div>
 }
 
-function Root({ children, locale, language, intl }) {
+function Header({ intl }) {
   return (
-    <main>
+    <header id="site-header">
       <Helmet
         titleTemplate={`${intl.formatMessage({ id: "app.title" })} - %s`}
         defaultTitle={intl.formatMessage({ id: "app.title" })}
@@ -36,43 +35,149 @@ function Root({ children, locale, language, intl }) {
         ]}
       />
 
-      <div>
-        <h1 className={Styles.title}><FormattedMessage id="app.title"/></h1>
-        <strong><FormattedMessage id="app.description"/></strong>
-      </div>
-      <div>
-        <ul>
-          <li><NavLink exact to="/" activeClassName={Styles.activeLink}>Home</NavLink></li>
-          <li><NavLink to="/about" activeClassName={Styles.activeLink}>About</NavLink></li>
-          <li><NavLink to="/missing" activeClassName={Styles.activeLink}>Missing</NavLink></li>
-        </ul>
-      </div>
+      <h1 className={Styles.title}><FormattedMessage id="app.title"/></h1>
+      <strong><FormattedMessage id="app.description"/></strong>
+    </header>
+  )
+}
 
-      <div>
-        <RouterConnector>
-          <Switch>
-            <Route exact path="/" component={HomeComponent} />
-            <Route path="/about" component={AboutComponent} />
+Header = injectIntl(Header)
 
-            {/*
-            <AsyncRoute exact path="/"
-              load={(lang) => [
-                import("./views/Home")
-              ]}
-            />
-            <AsyncRoute path="/about"
-              load={(lang) => [
-                import("./views/About"),
-                import("./views/messages/About." + lang + ".json")
-              ]}
-            />
-            */}
 
-            <Route component={Error404}/>
-          </Switch>
-        </RouterConnector>
-      </div>
-    </main>
+
+function createLazyComponent(options)
+{
+  var LazyLoading = false
+  var LazyPromise = null
+  var LazyComponent = null
+  var LazyMessages = null
+
+  class LazyComponentWrapper extends React.Component {
+    constructor(props, context) {
+      super(props)
+
+      this.state = {
+        loading: LazyLoading,
+        component: LazyComponent,
+        messages: LazyMessages
+      }
+    }
+
+    fetchData() {
+      if (LazyLoading === true || LazyComponent != null) {
+        return LazyPromise
+      }
+
+      console.log("LazyComponent: Loading...", options.id)
+      this.setState({
+        loading: true
+      })
+
+      LazyLoading = true
+      LazyPromise = Promise.all(options.load(this.props.language)).then((result) => {
+        console.log("LazyComponent: Done!", options.id)
+
+        LazyComponent = injectIntl(result[0].default)
+        LazyMessages = result[1]
+        LazyLoading = false
+
+        this.setState({
+          loading: LazyLoading,
+          component: LazyComponent,
+          messages: LazyMessages
+        })
+      })
+
+      return LazyPromise
+    }
+
+    componentDidMount() {
+      if (!LazyPromise) {
+        this.fetchData()
+      }
+    }
+
+    render() {
+      if (!LazyComponent) {
+        return null
+      }
+
+      const { locale, ...props } = this.props
+
+      var WrappedComponent = (
+        <IntlProvider locale={locale} messages={LazyMessages}>
+          <LazyComponent {...props} />
+        </IntlProvider>
+      )
+
+      return WrappedComponent
+    }
+  }
+
+  LazyComponentWrapper.propTypes = {
+    children: React.PropTypes.node,
+    locale: React.PropTypes.string,
+    language: React.PropTypes.string,
+    intl: React.PropTypes.object
+  }
+
+  const mapStateToProps = (state, ownProps) => ({
+    locale: getLocale(state),
+    language: getLanguage(state)
+  })
+
+  return connect(mapStateToProps)(LazyComponentWrapper)
+}
+
+
+
+const HomeComponent = createLazyComponent({
+  id: "home",
+  load: (language) => {
+    return [
+      import("./views/Home")
+    ]
+  }
+})
+
+const AboutComponent = createLazyComponent({
+  id: "about",
+  load: (language) => {
+    return [
+      import("./views/About"),
+      import("./views/messages/About." + language + ".json")
+    ]
+  }
+})
+
+
+
+
+function Root({ children, locale, language, intl }) {
+  return (
+    <IntlProvider locale={locale} messages={messages}>
+      <main>
+        <Header/>
+
+        <div>
+          <ul>
+            <li><NavLink exact to="/" activeClassName={Styles.activeLink}>Home</NavLink></li>
+            <li><NavLink to="/about" activeClassName={Styles.activeLink}>About</NavLink></li>
+            <li><NavLink to="/missing" activeClassName={Styles.activeLink}>Missing</NavLink></li>
+          </ul>
+        </div>
+
+        <div>
+          <RouterConnector>
+            <Switch>
+              <Route exact path="/" component={HomeComponent} />
+              <Route path="/about" component={AboutComponent} />
+              <Route component={Error404}/>
+            </Switch>
+          </RouterConnector>
+        </div>
+      </main>
+    </IntlProvider>
   )
 }
 
@@ -88,4 +193,4 @@ const mapStateToProps = (state, ownProps) => ({
   language: getLanguage(state)
 })
 
-export default connect(mapStateToProps)(injectIntl(Root))
+export default connect(mapStateToProps)(Root)

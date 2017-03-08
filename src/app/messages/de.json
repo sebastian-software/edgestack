@@ -1,0 +1,5 @@
+{
+  "app.title": "Edge Stack [DE]",
+  "app.description": "A Universal React Stack with tons of recent technologies like Express, Apollo, React Router v4, Code Splitting, React-Intl, NodeJS v6, Webpack v2 + HMR etc. bundled into an easy to use package.",
+  "counter": "Counter: {value, number}"
+}

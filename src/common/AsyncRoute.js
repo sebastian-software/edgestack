@@ -3,21 +3,54 @@ import { Route, withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 import { getLocale, getLanguage } from "./State"
-import wrapAsync from "./wrapAsync"
+// import wrapAsync from "./wrapAsync"
 
 class AsyncRoute extends React.Component {
-  constructor(props) {
-    super(props)
+  state = {
+    component: null,
+    loading: false
+  }
 
-    const { locale, language, load } = props
+  /*
+  componentWillMount() {
+    if (this.state.component == null && this.state.loading === false) {
+      let { locale, language, load, path } = this.props
+      console.log("Mount async route component for: ", path)
 
-    console.log("INIT ASYNC ROUTE: ", props.path)
+      // this.setState({
+      //   component: () => {return <b>{this.props.path}</b>} //wrapAsync(() => Promise.all(load(language)), locale)
+      // })
 
-    this.component = wrapAsync(() => Promise.all(load(language)), locale)
+      this.setState({ loading: true })
+
+      Promise.all(load(language)).then((result) => {
+        console.log("Loaded async route for: ", path)
+        console.log(result)
+      })
+
+    }
+  }
+  */
+
+  componentWillMount() {
+    console.log("AsyncRoute: WillMount:", this.props.path)
+    if (process.env.TARGET === "web") {
+      this.fetchData()
+    }
+  }
+
+  fetchData()
+  {
+    if (this.state.component != null || this.state.loading === true) {
+      return
+    }
+
+    console.log("AsyncRoute: Fetch:", this.props.path)
   }
 
   render() {
-    return <Route component={this.component} {...this.props}/>
+    console.log("AsyncRoute: Render:", this.props.path)
+    return <Route component={this.state.component} {...this.props}/>
   }
 }
 

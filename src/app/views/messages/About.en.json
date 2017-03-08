@@ -1,4 +1,5 @@
 {
-  "localTest": "XX English Foo {pi, number}",
-  "counter": "Dyn loaded: {value}"
+  "title": "About Edge Stack",
+  "infoPi": "PI in English {pi, number}",
+  "counter": "Dynamic Counter: {value}"
 }
