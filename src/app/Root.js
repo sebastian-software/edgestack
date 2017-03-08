@@ -44,13 +44,11 @@ function Header({ intl }) {
 Header = injectIntl(Header)
 
 
-function HomeComponent() {
-  return <b>Home</b>
-}
 
 
 
-function createLazyComponent(options) {
+function createLazyComponent(options)
+{
   var LazyLoading = false
   var LazyPromise = null
   var LazyComponent = null
@@ -126,6 +124,16 @@ function createLazyComponent(options) {
 
   return connect(mapStateToProps)(LazyComponentWrapper)
 }
+
+
+
+const HomeComponent = createLazyComponent({
+  load: (language) => {
+    return [
+      import("./views/Home")
+    ]
+  }
+})
 
 const AboutComponent = createLazyComponent({
   load: (language) => {
