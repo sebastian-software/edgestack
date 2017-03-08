@@ -49,32 +49,30 @@ export function replacePath(path) {
 
 class RoutingConnector extends React.Component {
   componentDidMount() {
-    this.context.history.listen(({ pathname }) => {
-      if (this.props.path !== pathname) {
-        this.props.setPath(pathname)
-      }
-    })
-
     if (this.context.history.location.pathname === this.props.recoverPath) {
       this.context.history.replace(this.props.path)
     } else {
-      this.props.setPath(this.context.history.location.pathname)
+      this.props.setPath(this.props.location.pathname)
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.path && this.props.path !== nextProps.path) {
-      if (this.context.history.location.pathname !== nextProps.path) {
-        // Will receive props means they are not yet set, so we have to wait
-        // a little before updating the history. Otherwise stuff breaks.
-        setTimeout(() => {
-          if (nextProps.replace === true) {
-            this.context.history.replace(nextProps.path)
-          } else {
-            this.context.history.push(nextProps.path)
-          }
-        }, 0)
+    if (nextProps.path === nextProps.location.pathname) {
+      return
+    }
+
+    // Sync from Redux
+    if (nextProps.path !== this.props.path) {
+      if (nextProps.replace === true) {
+        this.context.history.replace(nextProps.path)
+      } else {
+        this.context.history.push(nextProps.path)
       }
+    }
+
+    // Sync to Redux
+    if (nextProps.location !== this.props.location) {
+      this.props.setPath(nextProps.location.pathname)
     }
   }
 
@@ -84,6 +82,7 @@ class RoutingConnector extends React.Component {
 }
 
 RoutingConnector.propTypes = {
+  location: React.PropTypes.object,
   children: React.PropTypes.node,
   path: React.PropTypes.string,
   replace: React.PropTypes.bool,
