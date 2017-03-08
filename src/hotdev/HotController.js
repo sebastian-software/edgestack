@@ -15,7 +15,7 @@ function safeDisposer(manager) {
   return manager ? manager.dispose() : Promise.resolve()
 }
 
-/* eslint-disable arrow-body-style */
+/* eslint-disable arrow-body-style, no-console */
 
 function createCompiler({ name, start, done })
 {
@@ -160,7 +160,9 @@ export default class HotController
       })
     }
 
-    const newServer = spawn("node", [ this.compiledServer ])
+    const newServer = spawn("node", [ this.compiledServer, "--colors" ], {
+      stdio: [ process.stdin, process.stdout, "pipe" ]
+    })
 
     createNotification({
       title: "Hot Server",
@@ -169,14 +171,13 @@ export default class HotController
       notify: true
     })
 
-    newServer.stdout.on("data", (data) => console.log(data.toString().trim()))
     newServer.stderr.on("data", (data) => {
       createNotification({
         title: "Hot Server",
         level: "error",
         message: "Error in server execution, check the console for more info."
       })
-      console.error(data.toString().trim())
+      process.stderr.write(data)
     })
 
     this.server = newServer
