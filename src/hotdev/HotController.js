@@ -177,7 +177,9 @@ export default class HotController
         level: "error",
         message: "Error in server execution, check the console for more info."
       })
+      process.stderr.write("\n")
       process.stderr.write(data)
+      process.stderr.write("\n")
     })
 
     this.server = newServer
