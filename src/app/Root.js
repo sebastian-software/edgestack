@@ -70,15 +70,14 @@ function createLazyComponent(options)
         return LazyPromise
       }
 
-      console.log("LazyComponentWrapper: Loading...")
+      console.log("LazyComponentWrapper: Loading...", options.id)
       this.setState({
         loading: true
       })
 
       LazyLoading = true
       LazyPromise = Promise.all(options.load(this.props.language)).then((result) => {
-        console.log("LazyComponentWrapper: Loading done!")
-        console.log("LazyComponentWrapper: Result:", result)
+        console.log("LazyComponentWrapper: Loading done!", options.id)
 
         LazyComponent = result[0].default
         LazyMessages = result[1]
@@ -89,8 +88,6 @@ function createLazyComponent(options)
           component: LazyComponent,
           messages: LazyMessages
         })
-
-        console.log("LazyComponentWrapper: Final State...", this.state)
       })
 
       return LazyPromise
@@ -128,6 +125,7 @@ function createLazyComponent(options)
 
 
 const HomeComponent = createLazyComponent({
+  id: "home",
   load: (language) => {
     return [
       import("./views/Home")
@@ -136,6 +134,7 @@ const HomeComponent = createLazyComponent({
 })
 
 const AboutComponent = createLazyComponent({
+  id: "about",
   load: (language) => {
     return [
       import("./views/About"),
