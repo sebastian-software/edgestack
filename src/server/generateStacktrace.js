@@ -117,11 +117,15 @@ function enableWebpackServerStacktrace()
   const rootDir = appRootDir.get()
   Error.prepareStackTrace = function prepareStackTrace(error, stack) {
     const wrappedStack = stack.map((frame) => frameToString(frame, rootDir))
-    error.getStacktrace = () => wrappedStack
-    return error + wrappedStack.map((frame) =>
+    const toString = error + wrappedStack.map((frame) =>
     {
       return `\n    at ${frame}`
     }).join("")
+
+    return {
+      toString: () => toString,
+      rawStack: () => wrappedStack
+    }
   }
 }
 
@@ -129,13 +133,13 @@ enableWebpackServerStacktrace()
 
 export default async function generateStacktrace(error)
 {
-  if (!error || !error.getStacktrace)
+  if (!error || !error.stack || !error.stack.rawStack)
     return error
 
-  const parsedStackRoot = error.getStacktrace()[0].toParsed()
+  const parsedStackRoot = error.stack.rawStack()[0].toParsed()
 
   return await getSourceContent({
-    filename: `.${parsedStackRoot.fileName}`,
+    filename: parsedStackRoot.sourceFile,
     line: parsedStackRoot.lineNumber,
     col: parsedStackRoot.columnNumber,
     errorMessage: error.message,
