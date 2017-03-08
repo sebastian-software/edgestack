@@ -21,8 +21,8 @@ export function emptyReducer(previousState = {}, action) {
  * Placeholder for a non active middleware in Redux
  */
 export function emptyMiddleware(store) {
-  return function(next) {
-    return function(action) {
+  return (next) => {
+    return (action) => {
       return next(action)
     }
   }
@@ -98,7 +98,7 @@ export function createReduxStore({ reducers = {}, middlewares = [], enhancers = 
       // your state either inside a dispatch or between dispatches.
       // https://github.com/leoasis/redux-immutable-state-invariant
       process.env.NODE_ENV === "development" ?
-        require("redux-immutable-state-invariant")() : emptyMiddleware,
+        require("redux-immutable-state-invariant").default() : emptyMiddleware,
 
       thunk,
       ...middlewares,
