@@ -8,7 +8,6 @@ import { injectIntl, FormattedMessage, IntlProvider } from "react-intl"
 import { connect } from "react-redux"
 
 import { getLocale, getLanguage } from "../common/State"
-import AsyncRoute from "../common/AsyncRoute"
 
 // Application specific
 import "./Fonts.css"
