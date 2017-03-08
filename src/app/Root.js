@@ -50,73 +50,90 @@ function HomeComponent() {
 
 
 
+const AboutComponent = (() =>
+{
+  var LazyLoading = false
+  var LazyComponent = null
+  var LazyMessages = null
 
-var LazyLoading = false
-var LazyComponent = null
-var LazyMessages = null
+  class AboutComponent extends React.Component {
+    constructor(props, context) {
+      super(props)
 
-class AboutComponent extends React.Component {
-  constructor(props, context) {
-    super(props)
-
-    this.state = {
-      loading: LazyLoading,
-      component: LazyComponent,
-      messages: LazyMessages
-    }
-  }
-
-  load(language) {
-    return Promise.all([
-      import("./views/About"),
-      import("./views/messages/About." + language + ".json")
-    ])
-  }
-
-  fetchData() {
-    if (LazyLoading === true || LazyComponent != null) {
-      return Promise.resolve()
-    }
-
-    console.log("AboutComponent: Loading...")
-    this.setState({
-      loading: true
-    })
-
-    LazyLoading = true
-
-    return this.load("de").then((result) => {
-      console.log("AboutComponent: Loading done!")
-      console.log("AboutComponent: Result:", result)
-
-      LazyComponent = result[0].default
-      LazyMessages = result[1]
-      LazyLoading = false
-
-      this.setState({
+      this.state = {
         loading: LazyLoading,
         component: LazyComponent,
         messages: LazyMessages
+      }
+    }
+
+    load(language) {
+      return Promise.all([
+        import("./views/About"),
+        import("./views/messages/About." + language + ".json")
+      ])
+    }
+
+    fetchData() {
+      if (LazyLoading === true || LazyComponent != null) {
+        return Promise.resolve()
+      }
+
+      console.log("AboutComponent: Loading...")
+      this.setState({
+        loading: true
       })
 
-      console.log("AboutComponent: Final State...", this.state)
-    })
-  }
+      LazyLoading = true
 
-  componentDidMount() {
-    console.log("AboutComponent: Mounting...", this.state)
-    if (!LazyComponent) {
-      this.fetchData()
+      return this.load("de").then((result) => {
+        console.log("AboutComponent: Loading done!")
+        console.log("AboutComponent: Result:", result)
+
+        LazyComponent = result[0].default
+        LazyMessages = result[1]
+        LazyLoading = false
+
+        this.setState({
+          loading: LazyLoading,
+          component: LazyComponent,
+          messages: LazyMessages
+        })
+
+        console.log("AboutComponent: Final State...", this.state)
+      })
+    }
+
+    componentDidMount() {
+      console.log("AboutComponent: Mounting...", this.state)
+      if (!LazyComponent) {
+        this.fetchData()
+      }
+    }
+
+    render() {
+      let Component = LazyComponent
+      let { load, ...props } = this.props
+
+      return Component ? <Component {...props} /> : null
     }
   }
 
-  render() {
-    let Component = LazyComponent
-    let { load, ...props } = this.props
-
-    return Component ? <Component {...props} /> : null
+  AboutComponent.propTypes = {
+    children: React.PropTypes.node,
+    locale: React.PropTypes.string,
+    language: React.PropTypes.string,
+    intl: React.PropTypes.object
   }
-}
+
+  const mapStateToProps = (state, ownProps) => ({
+    locale: getLocale(state),
+    language: getLanguage(state)
+  })
+
+  return connect(mapStateToProps)(AboutComponent)
+})()
+
 
 
 
