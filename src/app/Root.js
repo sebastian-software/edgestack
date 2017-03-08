@@ -48,20 +48,21 @@ function HomeComponent() {
   return <b>Home</b>
 }
 
-console.log("DEFINE ABOUT COMPONENT")
 
-var LazyAboutLoading = false
-var LazyAboutComponent = null
-var LazyAboutMessages = null
+
+
+var LazyLoading = false
+var LazyComponent = null
+var LazyMessages = null
 
 class AboutComponent extends React.Component {
   constructor(props, context) {
     super(props)
 
     this.state = {
-      loading: LazyAboutLoading,
-      component: LazyAboutComponent,
-      messages: LazyAboutMessages
+      loading: LazyLoading,
+      component: LazyComponent,
+      messages: LazyMessages
     }
   }
 
@@ -72,10 +73,9 @@ class AboutComponent extends React.Component {
     ])
   }
 
-  componentWillMount() {
-    console.log("AboutComponent: Mounting...", this.state)
-    if (this.state.loading === true || this.state.component != null) {
-      return
+  fetchData() {
+    if (LazyLoading === true || LazyComponent != null) {
+      return Promise.resolve()
     }
 
     console.log("AboutComponent: Loading...")
@@ -83,28 +83,35 @@ class AboutComponent extends React.Component {
       loading: true
     })
 
-    LazyAboutLoading = true
+    LazyLoading = true
 
-    this.load("de").then((result) => {
+    return this.load("de").then((result) => {
       console.log("AboutComponent: Loading done!")
       console.log("AboutComponent: Result:", result)
 
-      LazyAboutComponent = result[0].default
-      LazyAboutMessages = result[1]
-      LazyAboutLoading = false
+      LazyComponent = result[0].default
+      LazyMessages = result[1]
+      LazyLoading = false
 
       this.setState({
-        loading: LazyAboutLoading,
-        component: LazyAboutComponent,
-        messages: LazyAboutMessages
+        loading: LazyLoading,
+        component: LazyComponent,
+        messages: LazyMessages
       })
 
       console.log("AboutComponent: Final State...", this.state)
     })
   }
 
+  componentDidMount() {
+    console.log("AboutComponent: Mounting...", this.state)
+    if (!LazyComponent) {
+      this.fetchData()
+    }
+  }
+
   render() {
-    let Component = this.state.component
+    let Component = LazyComponent
     let { load, ...props } = this.props
 
     return Component ? <Component {...props} /> : null
@@ -116,43 +123,27 @@ class AboutComponent extends React.Component {
 function Root({ children, locale, language, intl }) {
   return (
     <IntlProvider locale={locale} messages={messages}>
+      <main>
+        <Header/>
 
-    <main>
-      <Header/>
+        <div>
+          <ul>
+            <li><NavLink exact to="/" activeClassName={Styles.activeLink}>Home</NavLink></li>
+            <li><NavLink to="/about" activeClassName={Styles.activeLink}>About</NavLink></li>
+            <li><NavLink to="/missing" activeClassName={Styles.activeLink}>Missing</NavLink></li>
+          </ul>
+        </div>
 
-      <div>
-        <ul>
-          <li><NavLink exact to="/" activeClassName={Styles.activeLink}>Home</NavLink></li>
-          <li><NavLink to="/about" activeClassName={Styles.activeLink}>About</NavLink></li>
-          <li><NavLink to="/missing" activeClassName={Styles.activeLink}>Missing</NavLink></li>
-        </ul>
-      </div>
-
-      <div>
-        <RouterConnector>
-          <Switch>
-            <Route exact path="/" component={HomeComponent} />
-            <Route path="/about" component={AboutComponent} />
-
-            {/*
-            <AsyncRoute exact path="/"
-              load={(language) => [
-                import("./views/Home")
-              ]}
-            />
-            <AsyncRoute path="/about"
-              load={(language) => [
-                import("./views/About"),nbvmbmnbmnbmnbmnmnbnnbmnbmn
-                import("./views/messages/About." + language + ".json")
-              ]}
-            />
-            */}
-
-            <Route component={Error404}/>
-          </Switch>
-        </RouterConnector>
-      </div>
-    </main>
+        <div>
+          <RouterConnector>
+            <Switch>
+              <Route exact path="/" component={HomeComponent} />
+              <Route path="/about" component={AboutComponent} />
+              <Route component={Error404}/>
+            </Switch>
+          </RouterConnector>
+        </div>
+      </main>
     </IntlProvider>
   )
 }
