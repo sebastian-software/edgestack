@@ -2174,9 +2174,9 @@ css-color-names@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
 
-css-loader@^0.26.2:
-  version "0.26.2"
-  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.26.2.tgz#a9cd4c2b1a559b45d8efc04fc311ab5d2aaccb9d"
+css-loader@^0.26.4:
+  version "0.26.4"
+  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.26.4.tgz#b61e9e30db94303e6ffc892f10ecd09ad025a1fd"
   dependencies:
     babel-code-frame "^6.11.0"
     css-selector-tokenizer "^0.7.0"
@@ -2626,8 +2626,8 @@ ejs@^2.3.4, ejs@^2.5.5:
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.6.tgz#479636bfa3fe3b1debd52087f0acb204b4f19c88"
 
 electron-to-chromium@^1.1.0, electron-to-chromium@^1.2.3, electron-to-chromium@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.2.5.tgz#d373727228843dfd8466c276089f13b40927a952"
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.2.6.tgz#f38ad51d1919b06bc07275c62629db803ddca05a"
 
 elegant-spinner@^1.0.1:
   version "1.0.1"
@@ -3264,8 +3264,8 @@ file-entry-cache@^2.0.0:
     object-assign "^4.0.1"
 
 file-exists@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/file-exists/-/file-exists-3.0.1.tgz#aaf6cd50cd2370233252f4fcb48a1a521965b22e"
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/file-exists/-/file-exists-3.0.2.tgz#1d6b3c197810b43f85892e7eed478a637b1ab614"
 
 file-loader@^0.10.1:
   version "0.10.1"

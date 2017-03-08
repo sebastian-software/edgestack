@@ -99,7 +99,7 @@
     "cookie-parser": "^1.4.3",
     "cookiesjs": "^1.4.2",
     "cross-env": "^3.2.3",
-    "css-loader": "^0.26.2",
+    "css-loader": "^0.26.4",
     "date-fns": "^1.28.0",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
