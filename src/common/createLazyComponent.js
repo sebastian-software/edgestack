@@ -57,9 +57,12 @@ export default function createLazyComponent(options)
         // Store the messages of the given language for later access
         LazyMessages = result[1]
 
-        this.setState({
+        // Stop loading indicator
+        this.setState(() => ({
           loading: LazyLoading
-        })
+        }))
+
+        return true
       })
 
       return LazyPromise
