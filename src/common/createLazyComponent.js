@@ -16,26 +16,37 @@ export default function createLazyComponent(options)
       super(props)
 
       this.state = {
-        loading: LazyLoading,
-        component: LazyComponent,
-        messages: LazyMessages
+        loading: LazyLoading
       }
     }
 
-    fetchData() {
-      if (LazyLoading === true || LazyComponent != null) {
+    componentDidMount()
+    {
+      // This callback is only executed on the client side
+      // We have to manually call fetchData there as this is our own infrastructure for
+      // loading data and typically not being executed on the client by the normal React render flow.
+      if (!LazyPromise) {
+        this.fetchData()
+      }
+    }
+
+    fetchData()
+    {
+      if (this.state.loading === false && LazyComponent == null)
+      {
+        // Toggle loading state even when this is not the initating instance
+        this.setState(() => ({
+          loading: true
+        }))
+      }
+
+      // Return existing promise from some other initiator... or when called two times in a row.
+      if (LazyPromise != null) {
         return LazyPromise
       }
 
-      console.log("LazyComponent: Loading...", options.id)
-      this.setState({
-        loading: true
-      })
-
       LazyLoading = true
       LazyPromise = Promise.all(options.load(this.props.language)).then((result) => {
-        console.log("LazyComponent: Done!", options.id)
-
         LazyLoading = false
 
         // Map component. We have to use the default export, because import() does not
@@ -47,25 +58,15 @@ export default function createLazyComponent(options)
         LazyMessages = result[1]
 
         this.setState({
-          loading: LazyLoading,
-          component: LazyComponent,
-          messages: LazyMessages
+          loading: LazyLoading
         })
       })
 
       return LazyPromise
     }
 
-    componentDidMount() {
-      // This callback is only executed on the client side
-      // We have to manually call fetchData there as this is our own infrastructure for
-      // loading data and typically not being executed on the client by the normal React render flow.
-      if (!LazyPromise) {
-        this.fetchData()
-      }
-    }
-
-    render() {
+    render()
+    {
       if (!LazyComponent) {
         return null
       }
@@ -82,7 +83,8 @@ export default function createLazyComponent(options)
     }
   }
 
-  LazyComponentWrapper.propTypes = {
+  LazyComponentWrapper.propTypes =
+  {
     children: React.PropTypes.node,
     locale: React.PropTypes.string,
     language: React.PropTypes.string,
