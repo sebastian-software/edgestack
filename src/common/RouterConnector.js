@@ -49,8 +49,8 @@ export function replacePath(path) {
 
 class RoutingConnector extends React.Component {
   componentDidMount() {
-    if (this.context.history.location.pathname === this.props.recoverPath) {
-      this.context.history.replace(this.props.path)
+    if (this.context.router.history.location.pathname === this.props.recoverPath) {
+      this.context.router.history.replace(this.props.path)
     } else {
       this.props.setPath(this.props.location.pathname)
     }
@@ -64,9 +64,9 @@ class RoutingConnector extends React.Component {
     // Sync from Redux
     if (nextProps.path !== this.props.path) {
       if (nextProps.replace === true) {
-        this.context.history.replace(nextProps.path)
+        this.context.router.history.replace(nextProps.path)
       } else {
-        this.context.history.push(nextProps.path)
+        this.context.router.history.push(nextProps.path)
       }
     }
 
@@ -95,7 +95,7 @@ RoutingConnector.defaultProps = {
 }
 
 RoutingConnector.contextTypes = {
-  history: React.PropTypes.object
+  router: React.PropTypes.object
 }
 
 function mapStateToProps(state) {
