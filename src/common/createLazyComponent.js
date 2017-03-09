@@ -36,9 +36,15 @@ export default function createLazyComponent(options)
       LazyPromise = Promise.all(options.load(this.props.language)).then((result) => {
         console.log("LazyComponent: Done!", options.id)
 
-        LazyComponent = injectIntl(result[0].default)
-        LazyMessages = result[1]
         LazyLoading = false
+
+        // Map component. We have to use the default export, because import() does not
+        // do this automatically. We also directly inject the intl object for easy
+        // message translation via API.
+        LazyComponent = injectIntl(result[0].default)
+
+        // Store the messages of the given language for later access
+        LazyMessages = result[1]
 
         this.setState({
           loading: LazyLoading,
@@ -51,6 +57,9 @@ export default function createLazyComponent(options)
     }
 
     componentDidMount() {
+      // This callback is only executed on the client side
+      // We have to manually call fetchData there as this is our own infrastructure for
+      // loading data and typically not being executed on the client by the normal React render flow.
       if (!LazyPromise) {
         this.fetchData()
       }
@@ -63,13 +72,13 @@ export default function createLazyComponent(options)
 
       const { locale, ...props } = this.props
 
-      var WrappedComponent = (
+      var IntlWrappedComponent = (
         <IntlProvider locale={locale} messages={LazyMessages}>
           <LazyComponent {...props} />
         </IntlProvider>
       )
 
-      return WrappedComponent
+      return IntlWrappedComponent
     }
   }
 
