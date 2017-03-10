@@ -29,31 +29,3 @@
   font-weight: 500;
   font-style: normal;
 }
-
-/* stylelint-disable selector-no-type */
-html {
-  padding: 2em 2.5em;
-
-  font-family: Source Sans Pro;
-  line-height: 1.4;
-  font-size: 20px;
-}
-
-h1,
-h2 {
-  font-weight: 200;
-
-  &:first-child {
-    margin-top: 0;
-  }
-}
-
-p,
-ul,
-ol {
-  font-weight: 300;
-}
-
-strong {
-  font-weight: 400;
-}

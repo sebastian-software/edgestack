@@ -1,3 +1,23 @@
-.activeLink {
-  background: lightyellow;
+.list {
+  list-style: none;
+  background: #1e2023;
+  background-image: linear-gradient(rgba(#fff, 0.2), transparent);
+  padding: 0 12px;
+  display: flex;
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+  a{
+    display: block;
+    text-decoration: none;
+    padding: 6px 12px;
+    color: #d9d9d4;
+
+    &.activeLink {
+      color: #0098DB;
+    }
+  }
 }

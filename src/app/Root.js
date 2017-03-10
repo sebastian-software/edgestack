@@ -1,5 +1,7 @@
-// FIXME: waiting for release of fixed package.json entry. >= 4.1.0
-import "sanitize.css/sanitize.css"
+// Core Styles
+import "sanitize.css"
+import "./Fonts.css"
+import Styles from "./Root.css"
 
 import React from "react"
 import { Switch, Route } from "react-router-dom"
@@ -8,9 +10,6 @@ import { connect } from "react-redux"
 
 import { getLocale, getLanguage } from "../common/State"
 import createLazyComponent from "../common/createLazyComponent"
-
-// Application specific
-import "./Fonts.css"
 
 import messages from "./messages/en.json"
 
@@ -45,7 +44,7 @@ const MissingView = createLazyComponent({
 function Root({ children, locale, language, intl }) {
   return (
     <IntlProvider locale={locale} messages={messages}>
-      <main>
+      <div className={Styles.container}>
         <Header/>
         <Navigation/>
         <Switch>
@@ -53,7 +52,7 @@ function Root({ children, locale, language, intl }) {
           <Route path="/about" component={AboutView} />
           <Route component={MissingView}/>
         </Switch>
-      </main>
+      </div>
     </IntlProvider>
   )
 }
