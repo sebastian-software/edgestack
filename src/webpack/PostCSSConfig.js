@@ -24,6 +24,7 @@ import pseudoelements from "postcss-pseudoelements"
 import autoprefixer from "autoprefixer"
 import reporter from "postcss-reporter"
 import hexrgba from "postcss-hexrgba"
+import clearfix from "postcss-clearfix"
 import unicodeChars from "postcss-unicode-characters"
 import systemFont from "postcss-font-family-system-ui"
 import zindex from "postcss-zindex"
@@ -107,6 +108,10 @@ export default function PostCSSConfig(variables = {})
     // Adds shorthand hex methods to rbga() values.
     // https://github.com/seaneking/postcss-hexrgba
     hexrgba,
+
+    // Adds fix and fix-legacy attributes to the clear property, for self-clearing of children.
+    // https://github.com/seaneking/postcss-clearfix
+    clearfix,
 
     // Transform W3C CSS color function to more compatible CSS
     // https://github.com/postcss/postcss-color-function

@@ -137,6 +137,7 @@
     "postcss-assets": "^4.1.0",
     "postcss-at-warn": "^1.0.0",
     "postcss-calc": "^5.3.1",
+    "postcss-clearfix": "^1.0.0",
     "postcss-color-function": "^3.0.0",
     "postcss-color-hex-alpha": "^2.0.0",
     "postcss-custom-media": "^5.0.1",
