@@ -97,10 +97,6 @@ export default function PostCSSConfig(variables = {})
     // https://github.com/postcss/postcss-calc
     calc,
 
-    // Fix up CSS gradients with transparency for older browsers
-    // https://github.com/gilmoreorless/postcss-gradient-transparency-fix
-    gradientTransparencyFix,
-
     // Replace easing names from http://easings.net to `cubic-bezier()`.
     // https://github.com/postcss/postcss-easings
     easings,
@@ -120,6 +116,10 @@ export default function PostCSSConfig(variables = {})
     // Transform RGBA hexadecimal notations (#RRGGBBAA or #RGBA) to more compatible CSS (rgba())
     // https://github.com/postcss/postcss-color-hex-alpha
     colorHexAlpha,
+
+    // Fix up CSS gradients with transparency for older browsers
+    // https://github.com/gilmoreorless/postcss-gradient-transparency-fix
+    gradientTransparencyFix,
 
     // Tries to fix all of flexbug's issues
     // https://github.com/luisrudge/postcss-flexbugs-fixes
