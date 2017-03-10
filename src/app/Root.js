@@ -12,7 +12,6 @@ import { getLocale, getLanguage } from "../common/State"
 // Application specific
 import "./Fonts.css"
 import Styles from "./Root.css"
-import RouterConnector from "../common/RouterConnector"
 import createLazyComponent from "../common/createLazyComponent"
 
 import messages from "./messages/en.json"
@@ -82,13 +81,11 @@ function Root({ children, locale, language, intl }) {
         </div>
 
         <div>
-          <RouterConnector>
-            <Switch>
-              <Route exact path="/" component={HomeComponent} />
-              <Route path="/about" component={AboutComponent} />
-              <Route component={Error404}/>
-            </Switch>
-          </RouterConnector>
+          <Switch>
+            <Route exact path="/" component={HomeComponent} />
+            <Route path="/about" component={AboutComponent} />
+            <Route component={Error404}/>
+          </Switch>
         </div>
       </main>
     </IntlProvider>

@@ -6,6 +6,7 @@ import { ApolloProvider } from "react-apollo"
 import reactTreeWalker from "react-tree-walker"
 
 import { ensureIntlSupport, ensureReactIntlSupport } from "../common/Intl"
+import RouterConnector from "../common/RouterConnector"
 
 import Root from "../app/Root"
 import State from "../app/State"
@@ -46,7 +47,9 @@ function renderApp(MyRoot)
   var WrappedRoot = (
     <BrowserRouter getUserConfirmation={getConfirmation}>
       <ApolloProvider client={apolloClient} store={reduxStore}>
-        <MyRoutedRoot/>
+        <RouterConnector>
+          <MyRoutedRoot/>
+        </RouterConnector>
       </ApolloProvider>
     </BrowserRouter>
   )
