@@ -2,63 +2,22 @@
 import "sanitize.css/sanitize.css"
 
 import React from "react"
-import { Switch, Route, NavLink } from "react-router-dom"
-import Helmet from "react-helmet"
-import { injectIntl, FormattedMessage, IntlProvider } from "react-intl"
+import { Switch, Route } from "react-router-dom"
+import { IntlProvider } from "react-intl"
 import { connect } from "react-redux"
 
 import { getLocale, getLanguage } from "../common/State"
+import createLazyComponent from "../common/createLazyComponent"
 
 // Application specific
 import "./Fonts.css"
-import Styles from "./Root.css"
-import createLazyComponent from "../common/createLazyComponent"
 
 import messages from "./messages/en.json"
 
-function Error404() {
-  return <div>Sorry, that page was not found.</div>
-}
+import Header from "./components/Header"
+import Navigation from "./components/Navigation"
 
-function Header({ intl }) {
-  return (
-    <header id="site-header">
-      <Helmet
-        titleTemplate={`${intl.formatMessage({ id: "app.title" })} - %s`}
-        defaultTitle={intl.formatMessage({ id: "app.title" })}
-        meta={[
-          { name: "charset", content: "utf-8" },
-          { "http-equiv": "X-UA-Compatible", "content": "IE=edge" },
-          { name: "viewport", content: "width=device-width, initial-scale=1" },
-          { name: "description", content: intl.formatMessage({ id: "app.description" }) }
-        ]}
-      />
-
-      <h1 className={Styles.title}><FormattedMessage id="app.title"/></h1>
-      <strong><FormattedMessage id="app.description"/></strong>
-    </header>
-  )
-}
-
-Header = injectIntl(Header)
-
-
-function Navigation({ intl }) {
-  return (
-    <ul>
-      <li><NavLink exact to="/" activeClassName={Styles.activeLink}>Home</NavLink></li>
-      <li><NavLink to="/about" activeClassName={Styles.activeLink}>About</NavLink></li>
-      <li><NavLink to="/missing" activeClassName={Styles.activeLink}>Missing</NavLink></li>
-    </ul>
-  )
-}
-
-Navigation = injectIntl(Navigation)
-
-
-
-const HomeComponent = createLazyComponent({
-  id: "home",
+const HomeView = createLazyComponent({
   load: (language) => {
     return [
       import("./views/Home")
@@ -66,8 +25,7 @@ const HomeComponent = createLazyComponent({
   }
 })
 
-const AboutComponent = createLazyComponent({
-  id: "about",
+const AboutView = createLazyComponent({
   load: (language) => {
     return [
       import("./views/About"),
@@ -76,8 +34,13 @@ const AboutComponent = createLazyComponent({
   }
 })
 
-
-
+const MissingView = createLazyComponent({
+  load: (language) => {
+    return [
+      import("./views/Missing")
+    ]
+  }
+})
 
 function Root({ children, locale, language, intl }) {
   return (
@@ -86,9 +49,9 @@ function Root({ children, locale, language, intl }) {
         <Header/>
         <Navigation/>
         <Switch>
-          <Route exact path="/" component={HomeComponent} />
-          <Route path="/about" component={AboutComponent} />
-          <Route component={Error404}/>
+          <Route exact path="/" component={HomeView} />
+          <Route path="/about" component={AboutView} />
+          <Route component={MissingView}/>
         </Switch>
       </main>
     </IntlProvider>
