@@ -43,6 +43,19 @@ function Header({ intl }) {
 Header = injectIntl(Header)
 
 
+function Navigation({ intl }) {
+  return (
+    <ul>
+      <li><NavLink exact to="/" activeClassName={Styles.activeLink}>Home</NavLink></li>
+      <li><NavLink to="/about" activeClassName={Styles.activeLink}>About</NavLink></li>
+      <li><NavLink to="/missing" activeClassName={Styles.activeLink}>Missing</NavLink></li>
+    </ul>
+  )
+}
+
+Navigation = injectIntl(Navigation)
+
+
 
 const HomeComponent = createLazyComponent({
   id: "home",
@@ -71,22 +84,12 @@ function Root({ children, locale, language, intl }) {
     <IntlProvider locale={locale} messages={messages}>
       <main>
         <Header/>
-
-        <div>
-          <ul>
-            <li><NavLink exact to="/" activeClassName={Styles.activeLink}>Home</NavLink></li>
-            <li><NavLink to="/about" activeClassName={Styles.activeLink}>About</NavLink></li>
-            <li><NavLink to="/missing" activeClassName={Styles.activeLink}>Missing</NavLink></li>
-          </ul>
-        </div>
-
-        <div>
-          <Switch>
-            <Route exact path="/" component={HomeComponent} />
-            <Route path="/about" component={AboutComponent} />
-            <Route component={Error404}/>
-          </Switch>
-        </div>
+        <Navigation/>
+        <Switch>
+          <Route exact path="/" component={HomeComponent} />
+          <Route path="/about" component={AboutComponent} />
+          <Route component={Error404}/>
+        </Switch>
       </main>
     </IntlProvider>
   )
