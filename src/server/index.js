@@ -2,6 +2,7 @@
 import createExpressServer from "./createExpressServer"
 import createUniversalMiddleware from "./createUniversalMiddleware"
 import addFallbackHandler from "./addFallbackHandler"
+import generateStacktrace from "./generateStacktrace"
 
 import Root from "../app/Root"
 import State from "../app/State"
@@ -29,6 +30,11 @@ export function start()
     console.log(`Started React Server (Port: ${process.env.SERVER_PORT})`)
     resolve(listener)
   })
+    .catch(async (error) =>
+    {
+      const message = await generateStacktrace(error)
+      console.error(message)
+    })
 }
 
 // Auto start server
