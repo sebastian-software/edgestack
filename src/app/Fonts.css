@@ -1,5 +1,6 @@
 @font-face {
   src: url("source-sans-pro/WOFF/OTF/SourceSansPro-ExtraLight.otf.woff") format("woff");
+
   font-family: Source Sans Pro;
   font-weight: 200;
   font-style: normal;
@@ -7,6 +8,7 @@
 
 @font-face {
   src: url("source-sans-pro/WOFF/OTF/SourceSansPro-Light.otf.woff") format("woff");
+
   font-family: Source Sans Pro;
   font-weight: 300;
   font-style: normal;
@@ -14,6 +16,7 @@
 
 @font-face {
   src: url("source-sans-pro/WOFF/OTF/SourceSansPro-Regular.otf.woff") format("woff");
+
   font-family: Source Sans Pro;
   font-weight: 400;
   font-style: normal;
@@ -21,6 +24,7 @@
 
 @font-face {
   src: url("source-sans-pro/WOFF/OTF/SourceSansPro-Semibold.otf.woff") format("woff");
+
   font-family: Source Sans Pro;
   font-weight: 500;
   font-style: normal;
@@ -29,6 +33,7 @@
 /* stylelint-disable selector-no-type */
 html {
   padding: 2em 2.5em;
+
   font-family: Source Sans Pro;
   line-height: 1.4;
   font-size: 20px;
