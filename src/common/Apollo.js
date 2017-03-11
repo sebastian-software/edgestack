@@ -1,4 +1,4 @@
-import ApolloClient, { createNetworkInterface, createBatchingNetworkInterface } from "apollo-client"
+import { ApolloClient, createNetworkInterface, createBatchingNetworkInterface } from "react-apollo"
 
 /**
  *
