@@ -153,7 +153,7 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
       [ "transform-object-rest-spread", { useBuiltIns: true }],
 
       // Polyfills the runtime needed
-      [ "transform-runtime", { regenerator: false }]
+      [ "transform-runtime", { regenerator: false, polyfill: false }]
     ]
   } : null
 
@@ -208,7 +208,7 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
       [ "transform-object-rest-spread", { useBuiltIns: true }],
 
       // Polyfills the runtime needed
-      [ "transform-runtime", { regenerator: false }]
+      [ "transform-runtime", { regenerator: false, polyfill: false }]
     ]
   } : null
 
