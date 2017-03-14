@@ -2,7 +2,7 @@
 import createExpressServer from "./createExpressServer"
 import createUniversalMiddleware from "./createUniversalMiddleware"
 import addFallbackHandler from "./addFallbackHandler"
-import { prepareStackTrace } from "./debug"
+import { enableEnhancedStackTraces } from "./debug"
 
 import Root from "../app/Root"
 import State from "../app/State"
@@ -36,8 +36,8 @@ export function start()
   })
 }
 
-// Enable enhanced stack traces
-Error.prepareStackTrace = prepareStackTrace
+// We want improved stack traces for NodeJS in both development and production
+enableEnhancedStackTraces()
 
 // Auto start server
 start()

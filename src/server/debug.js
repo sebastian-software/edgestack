@@ -13,6 +13,7 @@ import { wrapCallSite } from "source-map-support"
 const filterFunctionNames = [ /__webpack_require__/ ]
 const filterSourceFiles = [ /\/webpack\/bootstrap/ ]
 const clearFunctionNames = [ /__webpack_exports__/ ]
+const clearTypeNames = [ /^Object$/ ]
 
 export function frameToString(frame)
 {
@@ -56,6 +57,11 @@ export function frameToString(frame)
     functionName = ""
   }
 
+  // Filter out configured type names
+  if (clearTypeNames.some((regexp) => regexp.test(typeName))) {
+    typeName = ""
+  }
+
   // Stack frames are displayed in the following format:
   //   at FunctionName (<Fully-qualified name/URL>:<line number>:<column number>)
   // Via: https://docs.microsoft.com/en-us/scripting/javascript/reference/stack-property-error-javascript
@@ -67,4 +73,9 @@ export function prepareStackTrace(error, structuredStackTrace)
   return structuredStackTrace.map((frame) => frameToString(frame))
     .filter((item) => item != null)
     .join("\n")
+}
+
+export function enableEnhancedStackTraces() {
+  // Enable enhanced stack traces
+  Error.prepareStackTrace = prepareStackTrace
 }
