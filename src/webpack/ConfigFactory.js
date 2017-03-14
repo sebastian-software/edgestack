@@ -701,11 +701,11 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
       // - `raw`: true tells webpack to prepend the text as it is, not wrapping it in a comment.
       // - `entryOnly`: false adds the text to all generated files, which you might have multiple if using code splitting.
       // Via: http://jlongster.com/Backend-Apps-with-Webpack--Part-I
-      ifNode(new webpack.BannerPlugin({
-        banner: 'require("source-map-support").install();',
-        raw: true,
-        entryOnly: false
-      })),
+      // ifNode(new webpack.BannerPlugin({
+      //   banner: 'require("source-map-support").install();',
+      //   raw: true,
+      //   entryOnly: false
+      // })),
 
       // Extract vendor bundle for keeping larger parts of the application code
       // delivered to users stable during development (improves positive cache hits)

@@ -2,7 +2,7 @@
 import createExpressServer from "./createExpressServer"
 import createUniversalMiddleware from "./createUniversalMiddleware"
 import addFallbackHandler from "./addFallbackHandler"
-import generateStacktrace from "./generateStacktrace"
+import { prepareStackTrace } from "./debug"
 
 import Root from "../app/Root"
 import State from "../app/State"
@@ -19,6 +19,10 @@ export function start()
   {
     const server = createExpressServer()
 
+    new Promise((res, rej) => {
+      groal++
+    })
+
     // Bind our universal react app middleware as the handler for all get requests.
     server.get("*", createUniversalMiddleware({ Root, State, ssrData }))
 
@@ -30,12 +34,10 @@ export function start()
     console.log(`Started React Server (Port: ${process.env.SERVER_PORT})`)
     resolve(listener)
   })
-    .catch(async (error) =>
-    {
-      const message = await generateStacktrace(error)
-      console.error(message)
-    })
 }
+
+// Enable enhanced stack traces
+Error.prepareStackTrace = prepareStackTrace
 
 // Auto start server
 start()
