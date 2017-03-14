@@ -40,16 +40,6 @@ export function frameToString(frame)
     return null
   }
 
-  // Retrieve source file locations
-  const lineNumber = wrappedFrame.getLineNumber()
-  const columnNumber = wrappedFrame.getColumnNumber()
-
-  // Strip out generated filename part from source field
-  sourceFile = sourceFile.split(":")[1] || sourceFile
-  if (sourceFile.charAt(0) === "/") {
-    sourceFile = sourceFile.slice(1)
-  }
-
   // Ignore some cryptic function names which typically are just function calls
   if (clearFunctionNames.some((regexp) => regexp.test(functionName))) {
     functionName = ""
@@ -59,6 +49,16 @@ export function frameToString(frame)
   if (clearTypeNames.some((regexp) => regexp.test(typeName))) {
     typeName = ""
   }
+
+  // Strip out generated filename part from source field
+  sourceFile = sourceFile.split(":")[1] || sourceFile
+  if (sourceFile.charAt(0) === "/") {
+    sourceFile = sourceFile.slice(1)
+  }
+
+  // Retrieve source file locations
+  const lineNumber = wrappedFrame.getLineNumber()
+  const columnNumber = wrappedFrame.getColumnNumber()
 
   // Stack frames are displayed in the following format:
   //   at FunctionName (<Fully-qualified name/URL>:<line number>:<column number>)
