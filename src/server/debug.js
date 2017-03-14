@@ -1,13 +1,3 @@
-// Override native Promise API with faster and more developerr friendly bluebird
-global.Promise = require("bluebird")
-Promise.config({ longStackTraces: true })
-
-// Override Promise in Polyfill API
-// require("babel-runtime/core-js/promise").default = require("bluebird")
-
-import StackTrace from "stack-trace"
-import cleanStack from "clean-stack"
-import StackUtils from "stack-utils"
 import { wrapCallSite } from "source-map-support"
 
 const filterFunctionNames = [ /__webpack_require__/ ]
@@ -15,6 +5,14 @@ const filterSourceFiles = [ /\/webpack\/bootstrap/ ]
 const clearFunctionNames = [ /__webpack_exports__/ ]
 const clearTypeNames = [ /^Object$/ ]
 
+
+/**
+ * Processes a single CallSite entry to filter out build tool related or internal APIs.
+ * During this process the method also uses source maps to figure out the original source location.
+ * The CallSite API is documented in here: https://github.com/v8/v8/wiki/Stack-Trace-API#customizing-stack-traces
+ * @param {CallSite} The current CallSite object to process.
+ * @return {String} Stringified CallSite object with usage of source maps to refer source location
+ */
 export function frameToString(frame)
 {
   const wrappedFrame = wrapCallSite(frame)
@@ -68,6 +66,14 @@ export function frameToString(frame)
   return `at ${functionName || typeName}@${sourceFile}:${lineNumber}:${columnNumber}`
 }
 
+
+/**
+ * Build the stack property for V8 as V8 is documented to use whatever this call returns
+ * as the value of the stack property.
+ * @param {Error} error the error object
+ * @param {CallSite[]} structuredStackTrace a structured representation of the stack
+ * @return {String} Generated `stack` property for error object
+ */
 export function prepareStackTrace(error, structuredStackTrace)
 {
   return structuredStackTrace.map((frame) => frameToString(frame))
@@ -75,7 +81,20 @@ export function prepareStackTrace(error, structuredStackTrace)
     .join("\n")
 }
 
+
+/**
+ * Enable enhanced stack traces
+ */
 export function enableEnhancedStackTraces() {
-  // Enable enhanced stack traces
+  // Override native Promise API with faster and more developerr friendly bluebird
+  global.Promise = require("bluebird")
+
+  /* eslint-disable no-use-extend-native/no-use-extend-native */
+  Promise.config({
+    longStackTraces: true
+  })
+
+  // Enable by hooking into V8 Stacktrace API integration
+  // https://github.com/v8/v8/wiki/Stack-Trace-API
   Error.prepareStackTrace = prepareStackTrace
 }
