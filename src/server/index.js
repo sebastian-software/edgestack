@@ -15,25 +15,19 @@ export function start()
     defaultLocale: Config.DEFAULT_LOCALE
   }
 
-  return new Promise((resolve, reject) =>
-  {
-    const server = createExpressServer()
+  const server = createExpressServer()
 
-    new Promise((res, rej) => {
-      groal++
-    })
+  // Bind our universal react app middleware as the handler for all get requests.
+  server.get("*", createUniversalMiddleware({ Root, State, ssrData }))
 
-    // Bind our universal react app middleware as the handler for all get requests.
-    server.get("*", createUniversalMiddleware({ Root, State, ssrData }))
+  // Add default handling for any remaining errors which are not catched by our middleware
+  addFallbackHandler(server)
 
-    // Add default handling for any remaining errors which are not catched by our middleware
-    addFallbackHandler(server)
+  // Create an http listener for our express app.
+  server.listen(process.env.SERVER_PORT)
 
-    // Create an http listener for our express app.
-    var listener = server.listen(process.env.SERVER_PORT)
-    console.log(`Started React Server (Port: ${process.env.SERVER_PORT})`)
-    resolve(listener)
-  })
+  /* eslint-disable no-console */
+  console.log(`Started React Server (Port: ${process.env.SERVER_PORT})`)
 }
 
 // We want improved stack traces for NodeJS in both development and production
