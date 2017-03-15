@@ -35,17 +35,12 @@ function initState(MyState)
   })
 }
 
-function getConfirmation(message, callback) {
-  console.log("BrowserRouter getConfirmation():", message)
-  callback()
-}
-
 function renderApp(MyRoot)
 {
   var MyRoutedRoot = withRouter(MyRoot)
 
   var WrappedRoot = (
-    <BrowserRouter getUserConfirmation={getConfirmation}>
+    <BrowserRouter>
       <ApolloProvider client={apolloClient} store={reduxStore}>
         <RouterConnector>
           <MyRoutedRoot/>
