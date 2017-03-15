@@ -14,8 +14,6 @@ import {
   ABSOLUTE_PUBLIC_PATH
 } from "./config"
 
-import Config from "../app/Config.yml"
-
 const pretty = new PrettyError()
 
 // this will skip events.js and http.js and similar core node files
@@ -24,7 +22,7 @@ pretty.skipNodeFiles()
 // this will skip all the trace lines about express` core and sub-modules
 pretty.skipPackage("express")
 
-export default function createExpressServer()
+export default function createExpressServer(config)
 {
   // Create our express based server.
   const server = express()
@@ -145,8 +143,8 @@ export default function createExpressServer()
   // Detect client locale and match it with configuration
   server.use(createLocaleMiddleware({
     priority: [ "query", "cookie", "accept-language", "default" ],
-    default: Config.DEFAULT_LOCALE.replace(/-/, "_"),
-    allowed: Config.ALLOWED_LOCALES.map((entry) => entry.replace(/-/, "_"))
+    default: config.DEFAULT_LOCALE.replace(/-/, "_"),
+    allowed: config.ALLOWED_LOCALES.map((entry) => entry.replace(/-/, "_"))
   }))
 
   // Parse application/x-www-form-urlencoded

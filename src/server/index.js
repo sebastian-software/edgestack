@@ -27,7 +27,7 @@ var ssrData = {
 }
 
 // Create express server instance
-const server = createExpressServer()
+const server = createExpressServer(Config)
 
 // Bind our universal middleware as the handler for all get requests.
 server.get("*", createUniversalMiddleware({ Root, State, ssrData }))
