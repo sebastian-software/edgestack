@@ -40,6 +40,40 @@ function getConfirmation(message, callback) {
   callback()
 }
 
+/* eslint-disable no-shadow */
+function scanElement(rootElement, context = {}, skipRoot = false)
+{
+  const schedule = []
+
+  function visitor(element, instance, context)
+  {
+    if (rootElement === element && skipRoot) {
+      return
+    }
+
+    if (instance && instance.fetchData)
+    {
+      var returnValue = instance.fetchData()
+      if (returnValue instanceof Promise)
+      {
+        schedule.push({
+          resolver: returnValue,
+          element,
+          context
+        })
+      }
+    }
+  }
+
+  reactTreeWalker(rootElement, visitor, context)
+
+  const nestedPromises = schedule.map(({ resolver, element, context }) =>
+    resolver.then(() => scanElement(element, context, true)),
+  )
+
+  return nestedPromises.length > 0 ? Promise.all(nestedPromises) : Promise.resolve([])
+}
+
 function renderApp(MyRoot)
 {
   var MyRoutedRoot = withRouter(MyRoot)
@@ -54,44 +88,8 @@ function renderApp(MyRoot)
     </BrowserRouter>
   )
 
-  /* eslint-disable no-shadow */
-  function scanElement(rootElement, context = {}, skipRoot = false)
-  {
-    const schedule = []
-
-    function visitor(element, instance, context)
-    {
-      if (rootElement === element && skipRoot) {
-        return
-      }
-
-      if (instance && instance.fetchData)
-      {
-        var returnValue = instance.fetchData()
-        if (returnValue instanceof Promise)
-        {
-          schedule.push({
-            resolver: returnValue,
-            element,
-            context
-          })
-        }
-      }
-    }
-
-    // console.log("Scanning...")
-    reactTreeWalker(rootElement, visitor, context)
-    // console.log("- Scan result: ", schedule.length)
-
-    const nestedPromises = schedule.map(({ resolver, element, context }) =>
-      resolver.then(() => scanElement(element, context, true)),
-    )
-
-    return nestedPromises.length > 0 ? Promise.all(nestedPromises) : Promise.resolve([])
-  }
-
-  scanElement(WrappedRoot).then(() => {
-    render(WrappedRoot, container)
+  return scanElement(WrappedRoot).then(() => {
+    return render(WrappedRoot, container)
   })
 }
 
