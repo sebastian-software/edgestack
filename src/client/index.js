@@ -9,29 +9,51 @@ import renderApp from "./renderApp"
 import Root from "../app/Root"
 import State from "../app/State"
 
+
+
+/*
+==================================================================
+   APPLICATION ENTRY POINT
+==================================================================
+*/
+
 let apolloClient
 let reduxStore
 
-function initState(AppState)
-{
-  apolloClient = createApolloClient({
-    initialState: window.APP_STATE
+Promise.all([
+  ensureIntlSupport(window.APP_STATE.ssr.locale),
+  ensureReactIntlSupport(window.APP_STATE.ssr.language)
+])
+  .then((results) =>
+  {
+    apolloClient = createApolloClient({
+      initialState: window.APP_STATE
+    })
+
+    reduxStore = createReduxStore({
+      reducers: State.getReducers(),
+      enhancers: State.getEnhancers(),
+      middlewares: State.getMiddlewares(),
+      initialState: window.APP_STATE,
+      apolloClient
+    })
+
+    renderApp(Root, { apolloClient, reduxStore })
   })
 
-  reduxStore = createReduxStore({
-    reducers: AppState.getReducers(),
-    enhancers: AppState.getEnhancers(),
-    middlewares: AppState.getMiddlewares(),
-    initialState: window.APP_STATE,
-    apolloClient
-  })
-}
+
+
+/*
+==================================================================
+   APPLICATION HOT LOADING
+==================================================================
+*/
 
 // The following is needed so that we can hot reload our App.
 if (process.env.NODE_ENV === "development" && module.hot)
 {
   // Accept changes to this file for hot reloading.
-  module.hot.accept("./index.js")
+  module.hot.accept("./index")
 
   // Any changes to our App will cause a hotload re-render.
   module.hot.accept("../app/Root", () =>
@@ -43,16 +65,8 @@ if (process.env.NODE_ENV === "development" && module.hot)
   module.hot.accept("../app/State", () =>
   {
     const nextState = require("../app/State").default
-    const nextReducer = createRootReducer(nextState.getReducers())
+    const nextRootReducer = createRootReducer(nextState.getReducers())
 
-    reduxStore.replaceReducer(nextReducer)
+    reduxStore.replaceReducer(nextRootReducer)
   })
 }
-
-Promise.all([
-  ensureIntlSupport(window.APP_STATE.ssr.locale),
-  ensureReactIntlSupport(window.APP_STATE.ssr.language)
-]).then((results) => {
-  initState(State)
-  renderApp(Root, { apolloClient, reduxStore })
-})
