@@ -3,11 +3,11 @@ export {
   createReduxStore, createRootReducer,
   emptyReducer, emptyMiddleware, emptyEnhancer,
   ssrReducer
-} from "./common/State"
+} from "./api/common/State"
 
-export { createApolloClient } from "./common/Apollo"
-export { default as RouterConnector, routerReducer } from "./common/RouterConnector"
-export { ensureIntlSupport, ensureReactIntlSupport } from "./common/Intl"
+export { createApolloClient } from "./api/common/Apollo"
+export { default as RouterConnector, routerReducer } from "./api/common/RouterConnector"
+export { ensureIntlSupport, ensureReactIntlSupport } from "./api/common/Intl"
 
-export { default as deepFetch } from "./client/deepFetch"
-export { default as renderApp } from "./client/renderApp"
+export { default as deepFetch } from "./api/client/deepFetch"
+export { default as renderApp } from "./api/client/renderApp"
