@@ -1,6 +1,5 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
 import thunk from "redux-thunk"
-import createLogger from "redux-logger"
 
 import { routerReducer } from "./RouterConnector"
 
@@ -107,7 +106,7 @@ export function createReduxStore({ reducers = {}, middlewares = [], enhancers = 
       // Note: Logger must be the last middleware in chain, otherwise it will log thunk and
       // promise, not actual actions (https://github.com/evgenyrodionov/redux-logger/issues/20).
       process.env.TARGET === "web" ?
-        createLogger({ collapsed: true }) : emptyMiddleware
+        require("redux-logger")({ collapsed: true }) : emptyMiddleware
     ),
     ...enhancers
   )
