@@ -13,4 +13,4 @@ export { createApolloClient } from "./common/Apollo"
 
 export { default as RouterConnector, routerReducer } from "./common/RouterConnector"
 
-export { default as generateStacktrace } from "./server/generateStacktrace"
+export { enableEnhancedStackTraces, logError } from "./server/debug"
