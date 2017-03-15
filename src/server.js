@@ -8,9 +8,8 @@ export { default as createExpressServer } from "./server/createExpressServer"
 export { default as createUniversalMiddleware } from "./server/createUniversalMiddleware"
 export { default as addFallbackHandler } from "./server/addFallbackHandler"
 export { default as renderPage } from "./server/renderPage"
+export { enableEnhancedStackTraces, logError } from "./server/debug"
+
 export { createReduxStore, createRootReducer, emptyReducer, emptyMiddleware, emptyEnhancer } from "./common/State"
 export { createApolloClient } from "./common/Apollo"
-
 export { default as RouterConnector, routerReducer } from "./common/RouterConnector"
-
-export { enableEnhancedStackTraces, logError } from "./server/debug"
