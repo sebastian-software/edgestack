@@ -1,40 +1,38 @@
-/* eslint-disable no-console */
 import {
   createExpressServer,
   createUniversalMiddleware,
   addFallbackHandler,
-  generateStacktrace
+  enableEnhancedStackTraces
 } from "edgestack"
 
-import Root from "../app/Root"
-import State from "../app/State"
+import Root from "../Root"
+import State from "../State"
+import Config from "../Config.yml"
 
-export function server()
-{
-  var ssrData = {
-  }
 
-  return new Promise((resolve, reject) =>
-  {
-    const expressServer = createExpressServer()
+/*
+==================================================================
+  SERVER :: APPLICATION BOOTING SEQUENCE
+==================================================================
+*/
 
-    // Bind our universal react app middleware as the handler for all get requests.
-    expressServer.get("*", createUniversalMiddleware({ Root, State, ssrData }))
+// We want improved stack traces for NodeJS in both development and production
+enableEnhancedStackTraces()
 
-    // Add default handling for any remaining errors which are not catched by our middleware
-    addFallbackHandler(expressServer)
-
-    // Create an http listener for our express app.
-    var listener = expressServer.listen(process.env.SERVER_PORT)
-    console.log(`Started React Server (Port: ${process.env.SERVER_PORT})`)
-    resolve(listener)
-  })
-    .catch(async (error) =>
-    {
-      const message = await generateStacktrace(error)
-      console.error(message)
-    })
+// Data to move from server to client
+var ssrData = {
+  apolloUri: null,
+  defaultLocale: Config.DEFAULT_LOCALE
 }
 
-// Auto start server
-server()
+// Create express server instance
+const server = createExpressServer(Config)
+
+// Bind our universal middleware as the handler for all get requests.
+server.get("*", createUniversalMiddleware({ Root, State, ssrData }))
+
+// Add default handling for any remaining requests which are not catched by our middleware
+addFallbackHandler(server)
+
+// Start listening
+server.listen(process.env.SERVER_PORT)

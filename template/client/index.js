@@ -1,68 +1,71 @@
-/* eslint-disable no-console */
-import React from "react"
-import { render } from "react-dom"
-import { withAsyncComponents } from "react-async-component"
+import {
+  ensureIntlSupport, ensureReactIntlSupport,
+  createReduxStore, createRootReducer,
+  createApolloClient,
+  renderApp
+} from "edgestack"
 
-import Root from "../app/Root"
-import State from "../app/State"
-
-// eslint-disable-next-line import/no-unresolved
-import { createReduxStore, createRootReducer } from "edgestack"
-
-// Get the DOM Element that will host our React application.
-const container = document.querySelector("#app")
+import Root from "../Root"
+import State from "../State"
 
 
+
+/*
+==================================================================
+  CLIENT :: APPLICATION ENTRY POINT
+==================================================================
+*/
+
+let apolloClient
 let reduxStore
 
-function initState(MyState)
-{
-  reduxStore = createReduxStore({
-    reducers: MyState.getReducers(),
-    enhancers: MyState.getEnhancers(),
-    middlewares: MyState.getMiddlewares(),
-    initialState: window.APP_STATE
+Promise.all([
+  ensureIntlSupport(window.APP_STATE.ssr.locale),
+  ensureReactIntlSupport(window.APP_STATE.ssr.language)
+])
+  .then((results) =>
+  {
+    apolloClient = createApolloClient({
+      initialState: window.APP_STATE
+    })
+
+    reduxStore = createReduxStore({
+      reducers: State.getReducers(),
+      enhancers: State.getEnhancers(),
+      middlewares: State.getMiddlewares(),
+      initialState: window.APP_STATE,
+      apolloClient
+    })
+
+    renderApp(Root, { apolloClient, reduxStore })
   })
-}
 
-async function renderApp(MyRoot)
-{
-  var WrappedRoot = (
-    <MyRoot/>
-  )
 
-  try
-  {
-    const result = await withAsyncComponents(WrappedRoot)
-    const { appWithAsyncComponents } = result
-    render(appWithAsyncComponents, container)
-  }
-  catch (error)
-  {
-    console.error("Client: Error wrapping application for code splitting:", error)
-  }
-}
+
+/*
+==================================================================
+  CLIENT :: APPLICATION HOT LOADING
+==================================================================
+*/
 
 // The following is needed so that we can hot reload our App.
 if (process.env.NODE_ENV === "development" && module.hot)
 {
   // Accept changes to this file for hot reloading.
-  module.hot.accept("./index.js")
+  module.hot.accept("./index")
 
   // Any changes to our App will cause a hotload re-render.
-  module.hot.accept("../app/Root", () => {
-    console.log("- Hot: Rendering root...")
-    renderApp(require("../app/Root").default)
+  module.hot.accept("../Root", () =>
+  {
+    const nextRoot = require("../Root").default
+    renderApp(nextRoot, { apolloClient, reduxStore })
   })
 
-  module.hot.accept("../app/State", () => {
-    console.log("- Hot: Updating reducers...")
-    const nextState = require("../app/State").default
-    const nextReducer = createRootReducer(nextState.getReducers())
+  module.hot.accept("../State", () =>
+  {
+    const nextState = require("../State").default
+    const nextRootReducer = createRootReducer(nextState.getReducers())
 
-    reduxStore.replaceReducer(nextReducer)
+    reduxStore.replaceReducer(nextRootReducer)
   })
 }
-
-initState(State)
-renderApp(Root)
