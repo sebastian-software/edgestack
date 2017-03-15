@@ -3,7 +3,6 @@
 
 # Build output folders
 build/
-dist/
 lib/
 bin/
 
@@ -23,8 +22,6 @@ node_modules
 # Debug log from npm
 npm-debug.log
 
-# Cache file from ESLint, Happypack
+# Cache file from ESLint, HardSource
 .eslintcache
-.happypack
 .hardsource
-.recordscache

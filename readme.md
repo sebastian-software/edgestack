@@ -52,8 +52,6 @@ A Universal React Stack with tons of recent technologies like Express, Apollo, R
 - *Markdown* rendering for Components integrated.
 - Super modular Lodash with Webpack tooling to enable automatic tree shaking
 - Fetch API Polyfill integrated
-- *Stylelint* CSS linting
-- *ESLint* v3 integrated with sensible default configuration.
 - PostCSS *Lost Grid* integrated
 - Redux and Thunk middleware
 - Apollo Client (GraphQL)

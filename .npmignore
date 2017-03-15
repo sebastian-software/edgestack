@@ -16,7 +16,6 @@ src
 .travis.yml
 
 .eslintcache
-.happypack
 .hardsource
 
 appveyor.yml
