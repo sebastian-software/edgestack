@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import chalk from "chalk"
-import clearConsole from "react-dev-utils/clearConsole"
 
 import build from "./scripts/build"
 import start from "./scripts/start"
@@ -13,6 +12,10 @@ const ARGSPOS_ARGUMENTS = 3
 
 var script = process.argv[ARGSPOS_SCRIPT]
 var args = process.argv.slice(ARGSPOS_ARGUMENTS)
+
+function clearConsole() {
+  process.stdout.write(process.platform === "win32" ? "\x1Bc" : "\x1B[2J\x1B[3J\x1B[H")
+}
 
 function header()
 {
