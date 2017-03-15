@@ -3,7 +3,6 @@ import { renderToString } from "react-dom/server"
 import { StaticRouter } from "react-router"
 import Helmet from "react-helmet"
 import { ApolloProvider, getDataFromTree } from "react-apollo"
-import { IntlProvider } from "react-intl"
 
 import Measure from "./Measure"
 import renderPage from "./renderPage"

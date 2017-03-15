@@ -7,7 +7,7 @@ import { addDays } from "date-fns"
 
 import Styles from "./About.css"
 import { getCounter, decrementCounter, incrementCounter, loadCounter } from "../modules/CounterModule"
-import { getLanguage } from "../../common/State"
+import { getLanguage } from "../../api/common/State"
 
 /**
  * @deprecated

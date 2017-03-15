@@ -8,8 +8,8 @@ import { Switch, Route } from "react-router-dom"
 import { IntlProvider } from "react-intl"
 import { connect } from "react-redux"
 
-import { getLocale, getLanguage } from "../common/State"
-import createLazyComponent from "../common/createLazyComponent"
+import { getLocale, getLanguage } from "../api/common/State"
+import createLazyComponent from "../api/common/createLazyComponent"
 
 import messages from "./messages/en.json"
 
