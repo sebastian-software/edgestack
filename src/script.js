@@ -26,6 +26,7 @@ function header()
     "\n"
   )
 }
+
 function help()
 {
   console.log(
