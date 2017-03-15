@@ -7,7 +7,6 @@ import { addDays } from "date-fns"
 
 import Styles from "./About.css"
 import { getCounter, decrementCounter, incrementCounter, loadCounter } from "../modules/CounterModule"
-import { getLanguage } from "../../api/common/State"
 
 /**
  * @deprecated
@@ -86,7 +85,6 @@ About.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  language: getLanguage(state),
   value: getCounter(state)
 })
 
