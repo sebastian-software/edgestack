@@ -1,14 +1,10 @@
 // eslint-disable filenames/match-exported
-import React from "react"
-import { render } from "react-dom"
-import { BrowserRouter, withRouter } from "react-router-dom"
-import { ApolloProvider } from "react-apollo"
 
 import { ensureIntlSupport, ensureReactIntlSupport } from "../common/Intl"
-import RouterConnector from "../common/RouterConnector"
 import { createReduxStore, createRootReducer } from "../common/State"
 import { createApolloClient } from "../common/Apollo"
-import deepFetch from "../common/deepFetch"
+
+import renderApp from "./renderApp"
 
 import Root from "../app/Root"
 import State from "../app/State"
@@ -31,23 +27,6 @@ function initState(AppState)
   })
 }
 
-function renderApp(AppRoot)
-{
-  const RoutedAppRoot = withRouter(AppRoot)
-  const WrappedRoot = (
-    <BrowserRouter>
-      <ApolloProvider client={apolloClient} store={reduxStore}>
-        <RouterConnector>
-          <RoutedAppRoot/>
-        </RouterConnector>
-      </ApolloProvider>
-    </BrowserRouter>
-  )
-
-  return deepFetch(WrappedRoot)
-    .then(() => render(WrappedRoot, document.getElementById("app")))
-}
-
 // The following is needed so that we can hot reload our App.
 if (process.env.NODE_ENV === "development" && module.hot)
 {
@@ -58,7 +37,7 @@ if (process.env.NODE_ENV === "development" && module.hot)
   module.hot.accept("../app/Root", () =>
   {
     const nextRoot = require("../app/Root").default
-    renderApp(nextRoot)
+    renderApp(nextRoot, { apolloClient, reduxStore })
   })
 
   module.hot.accept("../app/State", () =>
@@ -74,7 +53,6 @@ Promise.all([
   ensureIntlSupport(window.APP_STATE.ssr.locale),
   ensureReactIntlSupport(window.APP_STATE.ssr.language)
 ]).then((results) => {
-  // console.log("Localization is ready! Using Polyfill:", results[0])
   initState(State)
-  renderApp(Root)
+  renderApp(Root, { apolloClient, reduxStore })
 })
