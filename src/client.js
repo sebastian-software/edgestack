@@ -6,7 +6,8 @@ export {
 } from "./common/State"
 
 export { createApolloClient } from "./common/Apollo"
-
 export { default as RouterConnector, routerReducer } from "./common/RouterConnector"
+export { ensureIntlSupport, ensureReactIntlSupport } from "./common/Intl"
 
-export { default as deepFetch } from "./common/deepFetch"
+export { default as deepFetch } from "./client/deepFetch"
+export { default as renderApp } from "./client/renderApp"
