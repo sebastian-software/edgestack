@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import chalk from "chalk"
+import clearConsole from "react-dev-utils/clearConsole"
 
 import build from "./scripts/build"
 import start from "./scripts/start"
@@ -15,6 +16,7 @@ var args = process.argv.slice(ARGSPOS_ARGUMENTS)
 
 function header()
 {
+  clearConsole()
   console.log(
     chalk.cyan(`\n${packageConfig.name} ${packageConfig.version}`),
     chalk.gray(`\n${packageConfig.description}`),

@@ -64,10 +64,13 @@ export function ensureIntlSupport(locale) {
 
   // TODO: Wenn NodeJS dann meckern wenn i18n daten nicht vorhanden!!!
 
+  require("lean-intl")
+
   const intlUrl = require("lean-intl/locale-data/json/" + locale + ".json")
   console.log("Loading:", intlUrl)
 
-  return import("lean-intl").then((IntlPolyfill) => {
+  //return import("lean-intl").then((IntlPolyfill) => {
+  //require("lean-intl")
     return fetch(intlUrl).then((response) => {
       return response.json().then((parsed) => {
         IntlPolyfill.__addLocaleData(parsed)
@@ -86,5 +89,5 @@ export function ensureIntlSupport(locale) {
         console.error("Unable to load locale specific localization data!", error)
       })
     })
-  })
+  // })
 }
