@@ -1770,8 +1770,8 @@ classnames@^2.2.5:
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
 clean-css@4.0.x:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.0.8.tgz#063dfd593404d3a3d1db494d4b6d0f378b0781b6"
+  version "4.0.9"
+  resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.0.9.tgz#63ff450b3f939508cc0cd2989bb9daaedc98333e"
   dependencies:
     source-map "0.5.x"
 
@@ -2353,15 +2353,9 @@ debug@2.2.0, debug@~2.2.0:
   dependencies:
     ms "0.7.1"
 
-debug@2.6.1:
+debug@2.6.1, debug@^2.1.1, debug@^2.2.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.1.tgz#79855090ba2c4e3115cc7d8769491d58f0491351"
-  dependencies:
-    ms "0.7.2"
-
-debug@^2.1.1, debug@^2.2.0:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.3.tgz#0f7eb8c30965ec08c72accfa0130c8b79984141d"
   dependencies:
     ms "0.7.2"
 
@@ -2648,8 +2642,8 @@ elliptic@^6.0.0:
     minimalistic-crypto-utils "^1.0.0"
 
 emoji-regex@^6.1.0:
-  version "6.1.3"
-  resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.1.3.tgz#ec79a3969b02d2ecf2b72254279bf99bc7a83932"
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.2.0.tgz#6e2889a6803d85141ce01d189ec6b88022ea2122"
 
 emojis-list@^2.0.0:
   version "2.1.0"
@@ -2909,8 +2903,8 @@ eslint-plugin-jsx-a11y@^4.0.0:
     object-assign "^4.0.1"
 
 eslint-plugin-lodash@^2.3.5:
-  version "2.3.5"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-lodash/-/eslint-plugin-lodash-2.3.5.tgz#d4fae9e7ae19ff2566bbf4bfd31c34c71b85da9f"
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-lodash/-/eslint-plugin-lodash-2.3.6.tgz#0542417c442a5718e99af71a841d9e448e4e3717"
   dependencies:
     lodash "^4.0.0"
 
@@ -3461,9 +3455,9 @@ fs-extra@^0.23.1:
     path-is-absolute "^1.0.0"
     rimraf "^2.2.8"
 
-fs-extra@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-2.0.0.tgz#337352bded4a0b714f3eb84de8cea765e9d37600"
+fs-extra@^2.0.0, fs-extra@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-2.1.0.tgz#122ac03cf15a84dd89c7a5b4edb42b1b46265dbe"
   dependencies:
     graceful-fs "^4.1.2"
     jsonfile "^2.1.0"
@@ -4117,8 +4111,8 @@ ienoopen@1.0.0:
   resolved "https://registry.yarnpkg.com/ienoopen/-/ienoopen-1.0.0.tgz#346a428f474aac8f50cf3784ea2d0f16f62bda6b"
 
 ignore@^3.0.11, ignore@^3.2.0:
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.2.4.tgz#4055e03596729a8fabe45a43c100ad5ed815c4e8"
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.2.5.tgz#6437903354653e32ebbf562c45e68e4922a95df6"
 
 iltorb@^1.0.9:
   version "1.0.13"
