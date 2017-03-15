@@ -13,45 +13,39 @@ import deepFetch from "../common/deepFetch"
 import Root from "../app/Root"
 import State from "../app/State"
 
-
-// Get the DOM Element that will host our React application.
-const container = document.querySelector("#app")
-
 let apolloClient
 let reduxStore
 
-function initState(MyState)
+function initState(AppState)
 {
   apolloClient = createApolloClient({
     initialState: window.APP_STATE
   })
 
   reduxStore = createReduxStore({
-    reducers: MyState.getReducers(),
-    enhancers: MyState.getEnhancers(),
-    middlewares: MyState.getMiddlewares(),
+    reducers: AppState.getReducers(),
+    enhancers: AppState.getEnhancers(),
+    middlewares: AppState.getMiddlewares(),
     initialState: window.APP_STATE,
     apolloClient
   })
 }
 
-function renderApp(MyRoot)
+function renderApp(AppRoot)
 {
-  var MyRoutedRoot = withRouter(MyRoot)
-
-  var WrappedRoot = (
+  const RoutedAppRoot = withRouter(AppRoot)
+  const WrappedRoot = (
     <BrowserRouter>
       <ApolloProvider client={apolloClient} store={reduxStore}>
         <RouterConnector>
-          <MyRoutedRoot/>
+          <RoutedAppRoot/>
         </RouterConnector>
       </ApolloProvider>
     </BrowserRouter>
   )
 
-  return deepFetch(WrappedRoot).then(() => {
-    return render(WrappedRoot, container)
-  })
+  return deepFetch(WrappedRoot)
+    .then(() => render(WrappedRoot, document.getElementById("app")))
 }
 
 // The following is needed so that we can hot reload our App.
@@ -61,11 +55,14 @@ if (process.env.NODE_ENV === "development" && module.hot)
   module.hot.accept("./index.js")
 
   // Any changes to our App will cause a hotload re-render.
-  module.hot.accept("../app/Root", () => {
-    renderApp(require("../app/Root").default)
+  module.hot.accept("../app/Root", () =>
+  {
+    const nextRoot = require("../app/Root").default
+    renderApp(nextRoot)
   })
 
-  module.hot.accept("../app/State", () => {
+  module.hot.accept("../app/State", () =>
+  {
     const nextState = require("../app/State").default
     const nextReducer = createRootReducer(nextState.getReducers())
 
