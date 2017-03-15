@@ -3,16 +3,16 @@ import React from "react"
 import { render } from "react-dom"
 import { BrowserRouter, withRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
-import reactTreeWalker from "react-tree-walker"
 
 import { ensureIntlSupport, ensureReactIntlSupport } from "../common/Intl"
 import RouterConnector from "../common/RouterConnector"
+import { createReduxStore, createRootReducer } from "../common/State"
+import { createApolloClient } from "../common/Apollo"
+import deepFetch from "../common/deepFetch"
 
 import Root from "../app/Root"
 import State from "../app/State"
 
-import { createReduxStore, createRootReducer } from "../common/State"
-import { createApolloClient } from "../common/Apollo"
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector("#app")
@@ -40,40 +40,6 @@ function getConfirmation(message, callback) {
   callback()
 }
 
-/* eslint-disable no-shadow */
-function scanElement(rootElement, context = {}, skipRoot = false)
-{
-  const schedule = []
-
-  function visitor(element, instance, context)
-  {
-    if (rootElement === element && skipRoot) {
-      return
-    }
-
-    if (instance && instance.fetchData)
-    {
-      var returnValue = instance.fetchData()
-      if (returnValue instanceof Promise)
-      {
-        schedule.push({
-          resolver: returnValue,
-          element,
-          context
-        })
-      }
-    }
-  }
-
-  reactTreeWalker(rootElement, visitor, context)
-
-  const nestedPromises = schedule.map(({ resolver, element, context }) =>
-    resolver.then(() => scanElement(element, context, true)),
-  )
-
-  return nestedPromises.length > 0 ? Promise.all(nestedPromises) : Promise.resolve([])
-}
-
 function renderApp(MyRoot)
 {
   var MyRoutedRoot = withRouter(MyRoot)
@@ -88,7 +54,7 @@ function renderApp(MyRoot)
     </BrowserRouter>
   )
 
-  return scanElement(WrappedRoot).then(() => {
+  return deepFetch(WrappedRoot).then(() => {
     return render(WrappedRoot, container)
   })
 }
