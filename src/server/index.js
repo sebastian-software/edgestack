@@ -8,6 +8,7 @@ import Root from "../app/Root"
 import State from "../app/State"
 import Config from "../app/Config.yml"
 
+/* eslint-disable no-console */
 export function start()
 {
   var ssrData = {
@@ -20,13 +21,12 @@ export function start()
   // Bind our universal react app middleware as the handler for all get requests.
   server.get("*", createUniversalMiddleware({ Root, State, ssrData }))
 
-  // Add default handling for any remaining errors which are not catched by our middleware
+  // Add default handling for any remaining requests which are not catched by our middleware
   addFallbackHandler(server)
 
-  // Create an http listener for our express app.
+  // Start listening
   server.listen(process.env.SERVER_PORT)
 
-  /* eslint-disable no-console */
   console.log(`Started React Server (Port: ${process.env.SERVER_PORT})`)
 }
 
