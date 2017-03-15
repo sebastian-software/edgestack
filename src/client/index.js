@@ -1,17 +1,9 @@
-// eslint-disable filenames/match-exported
-
-// import { ensureIntlSupport, ensureReactIntlSupport } from "../common/Intl"
-// import { createReduxStore, createRootReducer } from "../common/State"
-// import { createApolloClient } from "../common/Apollo"
-
 import {
   ensureIntlSupport, ensureReactIntlSupport,
   createReduxStore, createRootReducer,
   createApolloClient,
   renderApp
 } from "../client"
-
-// import renderApp from "./renderApp"
 
 import Root from "../app/Root"
 import State from "../app/State"
