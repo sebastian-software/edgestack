@@ -176,12 +176,27 @@ export function highlightStack(stack)
 
 /**
  * Logs the given error to the NodeJS console
- * @param {Error} error Native JavaScript Error Object
- * @return {[type]} [description]
+ * @param {Error} nativeError Native JavaScript Error Object
  */
-export function logError(error) {
+export function logError(nativeError)
+{
   /* eslint-disable no-console */
-  console.error(`${error.code}\n\n${highlightStack(error.stack)}`)
+  if (nativeError instanceof Error)
+  {
+    // Triggering generating formatted stacktrace
+    String(nativeError.stack)
+
+    // Optionally display
+    if (nativeError.code) {
+      console.error(`${nativeError.code}\n\n${highlightStack(nativeError.stack)}`)
+    } else {
+      console.error(`${highlightStack(nativeError.stack)}`)
+    }
+  }
+  else
+  {
+    console.error(nativeError)
+  }
 }
 
 
@@ -198,14 +213,15 @@ export function enableEnhancedStackTraces()
     longStackTraces: true
   })
 
-  // Catch unhandled NodeJS error as pass them over to our log handler
-  process.on("unhandledRejection", (reason, promise) => {
-    if (reason instanceof Error) {
-      logError(reason)
-    }
-  })
+  // Catch unhandled Promise rejections and pass them over to our log handler
+  process.on("unhandledRejection", (reason, promise) => logError(reason))
+
+  // Catch uncaught exceptions and pass them over to our log handler
+  process.on("uncaughtException", (error) => logError(error))
 
   // Enable by hooking into V8 Stacktrace API integration
   // https://github.com/v8/v8/wiki/Stack-Trace-API
   Error.prepareStackTrace = prepareStackTrace
+
+  console.log("Activated enhanced stack traces")
 }
