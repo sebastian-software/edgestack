@@ -13,7 +13,7 @@
 [appveyor]: https://ci.appveyor.com/project/swernerx/edgestack/branch/master
 
 
-A Universal React Stack with tons of recent technologies like Express, Apollo, React Router v4, Code Splitting, React-Intl, NodeJS v6, Webpack v2 + HMR etc. bundled into an easy to use package.
+A Universal React Stack with deeply integrated localization Support, semi-automatic route-based code splitting, Hot Module Reloading (HMR), Redux, Apollo GraphQL and more...
 
 
 ## TOC
