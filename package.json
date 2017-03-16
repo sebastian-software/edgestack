@@ -129,7 +129,7 @@
     "marky": "^1.2.0",
     "minimist": "^1.2.0",
     "node-noop": "^1.0.0",
-    "node-notifier": "^5.0.2",
+    "node-notifier": "^5.1.2",
     "offline-plugin": "^4.6.1",
     "pleeease-filters": "^3.0.1",
     "postcss": "^5.2.16",
