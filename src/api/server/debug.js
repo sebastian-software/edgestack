@@ -169,7 +169,7 @@ export function highlightStack(stack)
         `  - ${chalk.white(id)} ${chalk.dim(filename)} [${chalk.yellow(lineNo)}:${chalk.yellow(columnNo)}]`)
     }
 
-    return chalk.red(line)
+    return chalk.yellow(line)
   }).join("\n")
 }
 
@@ -186,11 +186,14 @@ export function logError(nativeError)
     // Triggering generating formatted stacktrace
     String(nativeError.stack)
 
-    // Optionally display
+    const formattedMessage = chalk.red(nativeError.name + ": " + nativeError.message)
+    const formattedStack = highlightStack(nativeError.stack)
+
+    // Optionally display source code except
     if (nativeError.code) {
-      console.error(`${nativeError.code}\n\n${highlightStack(nativeError.stack)}`)
+      console.error(`${formattedMessage}\n\n${nativeError.code}\n\n${formattedStack}`)
     } else {
-      console.error(`${highlightStack(nativeError.stack)}`)
+      console.error(`${formattedMessage}\n\n${formattedStack}`)
     }
   }
   else
