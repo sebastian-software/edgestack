@@ -31,20 +31,23 @@ application development and therefor scales very well when multiple applications
 
 ## Libraries & Components
 
-### React as a view layer
+### [React](https://facebook.github.io/react/) (View Layer)
 
 - Lightweight rendering engine with a small API surface to get used to in hours.
 - Large ecosystem with lots of enterprises relying on it and hundreds of best-in-class add-on libraries.
 - Consequent and rapid development to improve the core functionality.
 - Heavily used by its owner on facebook.com.
-- Compatible rendering alternatives like Preact or Inferno are available.
-- Long term strategic versioning with no regular breakage.
+- Compatible rendering alternatives like [Preact](https://preactjs.com/) (focus: smaller) or [Inferno](https://infernojs.org/) (focus: faster) are available suggesting that the taken general approach is rock solid. (Hint: We are working on making these available for you to choose from, too).
+- Long term strategic versioning with no regular breakage like in the Angular ecosystem.
+- Does not force or make assumptions of the rest of the development stack. Scales from easy to complex.
 
-### Redux
+### [Redux](http://redux.js.org/)
 
 - Single source of truth for the whole application state.
 - Works excellent in combination with React Universal to share the state from client to the server.
 - Time Traveling in developer tools to understand and reproduce application state changes
+
+### Redux-Form
 
 ### Apollo GraphQL (optional)
 
