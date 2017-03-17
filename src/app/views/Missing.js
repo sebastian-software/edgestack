@@ -1,5 +1,5 @@
 import React from "react"
-import { injectIntl, FormattedMessage } from "react-intl"
+import { FormattedMessage } from "react-intl"
 import Styles from "./Missing.css"
 
 function Missing() {
@@ -10,4 +10,4 @@ Missing.propTypes = {
   intl: React.PropTypes.object
 }
 
-export default injectIntl(Missing)
+export default Missing
