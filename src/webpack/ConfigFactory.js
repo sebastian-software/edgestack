@@ -779,12 +779,6 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
         })
       ),
 
-      // Effectively fake all "file-loader" files with placeholders on NodeJS
-      ifNode(new webpack.NormalModuleReplacementPlugin(
-        /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|mp4|mp3|ogg|html|pdf)$/,
-        "node-noop"
-      )),
-
       // We don't want webpack errors to occur during development as it will
       // kill our development NodeJS instances.
       ifDev(new webpack.NoEmitOnErrorsPlugin()),
