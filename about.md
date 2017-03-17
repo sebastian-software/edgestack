@@ -4,7 +4,7 @@
 It allows applications to use React in a more framework-like approach where you have a single dependency
 in your application managing indirect dependencies and build flow in one central place. Powered by
 Universal React where we render the initial Markup on the server, too, we sport excellent SEO results.
-For **EdgeStack** it's important to bet on excellently developed and maintained technologies. Each piece
+For **EdgeStack** it's important to bet on high quality and maintained technologies. Each piece
 in this development stack has been carefully chosen for the concepts it follows. We prefer good concepts in
 future ready technologies over legacy and stable technologies. This is basically why we call it **EdgeStack**:
 Offering a peak into the future of modern React development while being relatively stable for day-to-day 
@@ -18,6 +18,15 @@ application development and therefor scales very well when multiple applications
 - Exported API for Usage in Applications (`./src/api`)
 - Universal React ready Hot Loading infrastructure (`./src/hotdev`)
 - Build process based on a custom Webpack Factory (`./src/webpack`)
+
+
+## Core Features
+
+- Ready for Code Splitting and lazy loading based - typically based on routes.
+- Deeply integrated localization and internationalization support.
+- Very error tolerant development stack with clean and user friendly feedback. 
+- CSS Isolation with CSS modules.
+
 
 
 ## Libraries & Components
@@ -41,12 +50,13 @@ application development and therefor scales very well when multiple applications
 
 - Built on redux - works fine together with Redux development tools
 - Far smaller and less complex than Relay while keeping most of its more advanced features.
+- GraphQL is very interesting for 
 
 ### Webpack
 
-- Hot Module Reloading for excellent developer productivity.
-- HardSource Plugin for Webpack for smart loader caching and dramatically increased rebuild performance.
-
+- Hot Module Reloading for excellent developer productivity. It effectively refreshes rebuild modules via a WebSocket connection to the client.
+- We integrated the HardSource Plugin for smart loader caching and dramatically increased rebuild performance.
+- Everything is regarded as an valid input module. So instead of writing manual tasks which deal with non-JS assets we let Webpack solve all of these requirements and apply its magic.
 
 
 ### PostCSS
@@ -54,21 +64,26 @@ application development and therefor scales very well when multiple applications
 - A big challenge for large application development is the isolation of styles from each other. We are using relying on CSS modules directly supported by the `css-loader` in Webpack which is actually powered by PostCSS.
 - Instead of adding another parser and CSS transpiler to the development chain like Sass or Less we are using PostCSS for development enhancements, too. This includes typical features like imports, variables, mixins, conditionals, math expressions, etc.
 - Using just one tool for the whole process is beneficial for build times and developer experience. Using different tools doubles or triples the runtime (especially relevant for Hot Module Reloading) and often times breaks other developer features like source maps.
-- PostCSS is regarded as the CSS processing tool chain and a lot of other tools are built on top of it.
+- PostCSS is regarded as the CSS processing tool chain with lots of plugins to extend its functionality. 
+- A lot of other tools are built on top of it.
 
 
-### Autoprefixer
+### [Autoprefixer](https://github.com/postcss/autoprefixer)
 
-- Instead of manually managing writing prefixes or relying on Sass-Mixins we are using a public database driven approach.
+- Instead of manually managing writing prefixes or relying on Sass-Mixins we are using a data driven approach (CanIUse Database).
 - Does far more than just addition of prefixes e.g. fixing flexbox differences, supporting different linear gradient syntaxes, etc.
 
 
-### LostGrid
+### [Lost Grid](https://github.com/peterramsing/lost)
+
+- Instead of assigning dozens of feature specific classes to each individual DOM node we use more meaningful class names and attach features to them.
+- The concept allows solving Responsive Layout in CSS instead of putting it into JSX and this way deep inside the data rendering logic (JS) where it does not belong to.
+- Uses Flexbox natively which is far cleaner and more powerful than old style float driven layouts.
 
 
-### Grid Kiss
+### [Grid Kiss](https://github.com/sylvainpolletvillard/postcss-grid-kiss)
 
-
+- Alternative CSS-Grid-based ascii-art powered Grid system which allows visually designing a Grid layout. 
 
 
 
@@ -80,10 +95,13 @@ application development and therefor scales very well when multiple applications
 
 ### ESLint
 
+- Effectively a successor of both JSHint and JSCS. Can use the Babel Parser for full ES2017 support.
+- Linting utility for JavaScript and JSX. We are using [readable-code](https://github.com/sebastian-software/readable-code) for sensible configuration with support for additional features such as React, Accessibility, filename validation, etc.
+
 
 ### Babel
 
-#### Babili
+- Transpiling of modern JavaScript code for less modern clients.
 
 
 ### Express
