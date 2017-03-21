@@ -152,8 +152,14 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
       // { ...todo, completed: true }
       [ "transform-object-rest-spread", { useBuiltIns: true }],
 
-      // Polyfills the runtime needed
-      [ "transform-runtime", { regenerator: false, polyfill: false }]
+      // Use helpers, but not polyfills, in a way that omits duplication.
+      // For polyfills better use polyfill.io or another more sophisticated solution.
+      [ "transform-runtime", {
+        regenerator: false,
+        polyfill: false,
+        useBuiltIns: true,
+        useESModules: true
+      }]
     ]
   } : null
 
@@ -207,8 +213,14 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
       // { ...todo, completed: true }
       [ "transform-object-rest-spread", { useBuiltIns: true }],
 
-      // Polyfills the runtime needed
-      [ "transform-runtime", { regenerator: false, polyfill: false }]
+      // Use helpers, but not polyfills, in a way that omits duplication.
+      // For polyfills better use polyfill.io or another more sophisticated solution.
+      [ "transform-runtime", {
+        regenerator: false,
+        polyfill: false,
+        useBuiltIns: true,
+        useESModules: true
+      }]
     ]
   } : null
 
@@ -232,8 +244,7 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
 
               // Replaces the React.createElement function with one that is
               // more optimized for production.
-              // NOTE: Symbol needs to be polyfilled. Ensure this feature
-              // is enabled in the polyfill.io configuration.
+              // NOTE: Symbol needs to be polyfilled.
               "transform-react-inline-elements",
 
               // Hoists element creation to the top level for subtrees that
