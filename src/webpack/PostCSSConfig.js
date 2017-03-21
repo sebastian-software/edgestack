@@ -32,6 +32,7 @@ import warn from "postcss-at-warn"
 import responsiveType from "postcss-responsive-type"
 import inputStyles from "postcss-input-style"
 import assets from "postcss-assets"
+import csso from "postcss-csso"
 
 export default function PostCSSConfig(variables = {})
 {
@@ -178,6 +179,9 @@ export default function PostCSSConfig(variables = {})
     // Parse CSS and add vendor prefixes to rules by Can I Use
     // https://github.com/postcss/autoprefixer
     autoprefixer(),
+
+    // Adding the best CSS compressor to the chain
+    csso(),
 
     // Log PostCSS messages to the console
     reporter({
