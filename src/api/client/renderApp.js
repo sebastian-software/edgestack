@@ -11,13 +11,13 @@ export default function renderApp(AppRoot, { apolloClient, reduxStore })
 {
   const RoutedAppRoot = withRouter(AppRoot)
   const WrappedRoot = (
-    <BrowserRouter>
-      <ApolloProvider client={apolloClient} store={reduxStore}>
+    <ApolloProvider client={apolloClient} store={reduxStore}>
+      <BrowserRouter>
         <RouterConnector>
           <RoutedAppRoot/>
         </RouterConnector>
-      </ApolloProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </ApolloProvider>
   )
 
   return deepFetch(WrappedRoot)
