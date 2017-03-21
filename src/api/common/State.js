@@ -106,7 +106,7 @@ export function createReduxStore({ reducers = {}, middlewares = [], enhancers = 
       // Note: Logger must be the last middleware in chain, otherwise it will log thunk and
       // promise, not actual actions (https://github.com/evgenyrodionov/redux-logger/issues/20).
       process.env.TARGET === "web" ?
-        require("redux-logger")({ collapsed: true }) : emptyMiddleware
+        require("redux-logger").default({ collapsed: true }) : emptyMiddleware
     ),
     ...enhancers
   )
