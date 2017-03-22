@@ -120,7 +120,7 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
     // If the renderedResult contains a "missed" match then we set a 404 code.
     // Our App component will handle the rendering of an Error404 view.
     // Otherwise everything is all good and we send a 200 OK status.
-    response.status(routingContext.missed ? 404 : 200).send(html)
+    response.status(routingContext.status || 200).send(html)
 
     // Print measure results
     // measure.print()
