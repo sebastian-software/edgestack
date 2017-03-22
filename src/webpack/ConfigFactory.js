@@ -746,6 +746,15 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
         manifestVariable: "CHUNK_MANIFEST"
       })),
 
+      // HTTP2 Optimization
+      // See also: https://medium.com/webpack/webpack-http-2-7083ec3f3ce6#.d66ve28x0
+      /*
+      new webpack.optimize.AggressiveSplittingPlugin({
+        minSize: 20000,
+        maxSize: 40000
+      }),
+      */
+
       // Each key passed into DefinePlugin is an identifier.
       // The values for each key will be inlined into the code replacing any
       // instances of the keys that are found.
