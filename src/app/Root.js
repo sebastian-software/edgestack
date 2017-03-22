@@ -18,7 +18,8 @@ import Navigation from "./components/Navigation"
 const HomeView = createLazyComponent({
   load: (language) => {
     return [
-      import("./views/Home")
+      import("./views/Home"),
+      import("./views/Home." + language + ".json")
     ]
   }
 })
@@ -27,7 +28,7 @@ const AboutView = createLazyComponent({
   load: (language) => {
     return [
       import("./views/About"),
-      import("./views/messages/About." + language + ".json")
+      import("./views/About." + language + ".json")
     ]
   }
 })
