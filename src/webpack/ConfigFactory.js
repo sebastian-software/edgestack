@@ -11,6 +11,7 @@ import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
 
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 import ChunkManifestPlugin from "chunk-manifest-webpack-plugin"
+import DuplicateCheckerPlugin from "duplicate-package-checker-webpack-plugin"
 
 import dotenv from "dotenv"
 
@@ -815,6 +816,10 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
           allChunks: true
         })
       ),
+
+      // Warns you when multiple versions of the same package exist in a build.
+      // https://github.com/darrenscerri/duplicate-package-checker-webpack-plugin
+      new DuplicateCheckerPlugin(),
 
       // Analyse webpack bundle
       ifProdWeb(new BundleAnalyzerPlugin({
