@@ -104,7 +104,7 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
     })
     measure.stop("render-page")
 
-    console.log("Server: Routing Context:", routingContext)
+    // console.log("Server: Routing Context:", routingContext)
     console.log("Server: Sending Page...")
 
     /* eslint-disable no-magic-numbers */
