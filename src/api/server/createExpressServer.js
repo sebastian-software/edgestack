@@ -22,7 +22,7 @@ pretty.skipNodeFiles()
 // this will skip all the trace lines about express` core and sub-modules
 pretty.skipPackage("express")
 
-export default function createExpressServer(config)
+export default function createExpressServer(config, hooks)
 {
   // Create our express based server.
   const server = express()
@@ -136,6 +136,9 @@ export default function createExpressServer(config)
   // does this by setting the X-Content-Type-Options header to nosniff.
   // @see https://helmetjs.github.io/docs/dont-sniff-mimetype/
   server.use(helmet.noSniff())
+
+  if (hook.onSecuredServerCreated)
+    hook.onSecuredServerCreated(server)
 
   // Parse cookies via standard express tooling
   server.use(cookieParser())
