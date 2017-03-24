@@ -49,7 +49,7 @@ application development and therefor scales very well when multiple applications
 
 ### Redux-Form
 
-### Apollo GraphQL (optional)
+### Apollo GraphQL Client
 
 - Built on redux - works fine together with Redux development tools
 - Far smaller and less complex than Relay while keeping most of its more advanced features.
