@@ -160,7 +160,7 @@ export default class HotController
       })
     }
 
-    const newServer = spawn("node", [ this.compiledServer, "--colors" ], {
+    const newServer = spawn("node", [ "--inspect", this.compiledServer, "--colors" ], {
       stdio: [ process.stdin, process.stdout, "pipe" ]
     })
 
