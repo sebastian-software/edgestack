@@ -22,7 +22,7 @@ pretty.skipNodeFiles()
 // this will skip all the trace lines about express` core and sub-modules
 pretty.skipPackage("express")
 
-export default function createExpressServer(config, hooks)
+export default function createExpressServer(config)
 {
   // Create our express based server.
   const server = express()
