@@ -137,8 +137,8 @@ export default function createExpressServer(config, hooks)
   // @see https://helmetjs.github.io/docs/dont-sniff-mimetype/
   server.use(helmet.noSniff())
 
-  if (hook.onSecuredServerCreated)
-    hook.onSecuredServerCreated(server)
+  if (hooks.onSecuredServerCreated)
+    hooks.onSecuredServerCreated(server)
 
   // Parse cookies via standard express tooling
   server.use(cookieParser())
