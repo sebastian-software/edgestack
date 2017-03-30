@@ -844,7 +844,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
         [
           // Special handling locale data
           {
-            test: /locale-data\/.*\.(js|json)$/,
+            test: /locale-data(\/|\\).*\.(js|json)$/,
             loader: "file-loader",
             options: {
               name: ifProdWeb("locale/[name]-[hash:base62:8].[ext]", "locale-[name].[ext]"),
