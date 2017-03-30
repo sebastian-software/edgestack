@@ -45,7 +45,7 @@ export function injectCode({ code, url }) {
 
 export function ensureReactIntlSupport(language) {
   const reactIntlUrl = require("react-intl/locale-data/" + language + ".js")
-  console.log("Loading:", reactIntlUrl)
+  console.log("Loading React-Intl Data:", reactIntlUrl)
   return fetch(reactIntlUrl).then((response) => {
     return response.text().then((code) => {
       // This stuff is crappy but it's a way to work with the UMD packages of React-Intl.
@@ -67,7 +67,7 @@ export function ensureIntlSupport(locale) {
   require("lean-intl")
 
   const intlUrl = require("lean-intl/locale-data/json/" + locale + ".json")
-  console.log("Loading:", intlUrl)
+  console.log("Loading Lean-Intl Data:", intlUrl)
 
   //return import("lean-intl").then((IntlPolyfill) => {
   //require("lean-intl")

@@ -828,7 +828,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
 
       // Warns you when multiple versions of the same package exist in a build.
       // https://github.com/darrenscerri/duplicate-package-checker-webpack-plugin
-      new DuplicateCheckerPlugin(),
+      // new DuplicateCheckerPlugin(),
 
       // Analyse webpack bundle
       ifProdWeb(new BundleAnalyzerPlugin({
