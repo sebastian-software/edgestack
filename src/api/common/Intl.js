@@ -42,7 +42,6 @@ export function injectCode({ code, url }) {
   }
 }
 
-
 export function ensureReactIntlSupport(language) {
   // Locale Data in Node.js:
   // When using React Intl in Node.js (same for the Intl.js polyfill), all locale data will be
@@ -56,7 +55,8 @@ export function ensureReactIntlSupport(language) {
     return Promise.resolve(false)
   }
 
-  const reactIntlUrl = require("react-intl/locale-data/" + language + ".js")
+  const queryUrl = "react-intl/locale-data/" + language + ".js"
+  const reactIntlUrl = require(queryUrl)
   console.log("Loading React-Intl Data:", reactIntlUrl)
   return fetch(reactIntlUrl).then((response) => {
     return response.text().then((code) => {
@@ -78,12 +78,15 @@ export function ensureIntlSupport(locale) {
   // Node binary with all locale data. We recommend doing this if you control the container
   // your Node app runs in, otherwise you'll want to polyfill Intl in Node.
   // Via: https://github.com/yahoo/react-intl/wiki#i18n-in-javascript
-  if (process.env.TARGET === "node") {
-    console.warn("Your NodeJS installation does not include locale data! Using Polyfill!")
+  if (process.env.TARGET === "node")
+  {
+    /* eslint-disable no-console */
+    console.warn("Your NodeJS installation does not include full ICU locale data! Fallback to polyfill!")
     console.warn("See also: https://github.com/nodejs/node/wiki/Intl")
   }
 
-  const intlUrl = require("lean-intl/locale-data/json/" + locale + ".json")
+  const queryUrl = "lean-intl/locale-data/json/" + locale + ".json"
+  const intlUrl = require(queryUrl)
 
   return import("lean-intl").then((IntlPolyfill) => {
     return fetch(intlUrl).then((response) => {
