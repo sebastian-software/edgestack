@@ -365,7 +365,7 @@ async@^1.4.0, async@^1.5.0:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
-async@^2.1.2, async@^2.1.4, async@^2.1.5, async@^2.2.0:
+async@^2.1.2, async@^2.1.4, async@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/async/-/async-2.2.0.tgz#c324eba010a237e4fbd55a12dee86367d5c0ef32"
   dependencies:
@@ -471,7 +471,7 @@ babel-core@6, babel-core@^6.0.0, babel-core@^6.23.1, babel-core@^6.24.0:
     slash "^1.0.0"
     source-map "^0.5.0"
 
-babel-eslint@^7.2.0:
+babel-eslint@^7.2.1:
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-7.2.1.tgz#079422eb73ba811e3ca0865ce87af29327f8c52f"
   dependencies:
@@ -665,6 +665,13 @@ babel-plugin-closure-elimination@^1.1.14:
   resolved "https://registry.yarnpkg.com/babel-plugin-closure-elimination/-/babel-plugin-closure-elimination-1.1.14.tgz#f93f61d69d37293a767d27f8e2c826e359a5d6a0"
   dependencies:
     babel-polyfill "^6.3.14"
+
+babel-plugin-dynamic-import-webpack@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-dynamic-import-webpack/-/babel-plugin-dynamic-import-webpack-1.0.1.tgz#26c24a1c1c9bf49184b30d5867562a4cbfa530d1"
+  dependencies:
+    babel-plugin-syntax-dynamic-import "^6.18.0"
+    babel-template "^6.16.0"
 
 babel-plugin-external-helpers@^6.22.0:
   version "6.22.0"
@@ -1175,7 +1182,7 @@ babel-preset-babili@^0.0.12:
     babel-plugin-transform-undefined-to-void "^6.8.0"
     lodash.isplainobject "^4.0.6"
 
-babel-preset-env@^1.2.1, babel-preset-env@^1.2.2:
+babel-preset-env@^1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.3.2.tgz#08eabd2bf810c3678069f7e052323419f1448749"
   dependencies:
@@ -2368,13 +2375,13 @@ debug@2.2.0, debug@~2.2.0:
   dependencies:
     ms "0.7.1"
 
-debug@2.6.1:
+debug@2.6.1, debug@^2.1.1, debug@^2.2.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.1.tgz#79855090ba2c4e3115cc7d8769491d58f0491351"
   dependencies:
     ms "0.7.2"
 
-debug@2.6.3, debug@^2.1.0, debug@^2.1.1, debug@^2.2.0:
+debug@2.6.3, debug@^2.1.0:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.3.tgz#0f7eb8c30965ec08c72accfa0130c8b79984141d"
   dependencies:
@@ -2891,7 +2898,7 @@ eslint-plugin-filenames@^1.1.0:
     lodash.kebabcase "4.0.1"
     lodash.snakecase "4.0.1"
 
-eslint-plugin-flowtype-errors@^3.0.1:
+eslint-plugin-flowtype-errors@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype-errors/-/eslint-plugin-flowtype-errors-3.0.3.tgz#6c1d8874b91ffc65115a4744cf85020fb126725f"
   dependencies:
@@ -2899,7 +2906,7 @@ eslint-plugin-flowtype-errors@^3.0.1:
     shelljs "^0.7.7"
     slash "^1.0.0"
 
-eslint-plugin-flowtype@^2.30.3:
+eslint-plugin-flowtype@^2.30.4:
   version "2.30.4"
   resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.30.4.tgz#771d6bb4578ab8598e9c58018fea2e1a22946249"
   dependencies:
@@ -2931,7 +2938,7 @@ eslint-plugin-jsx-a11y@^4.0.0:
     jsx-ast-utils "^1.0.0"
     object-assign "^4.0.1"
 
-eslint-plugin-lodash@^2.3.6:
+eslint-plugin-lodash@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-lodash/-/eslint-plugin-lodash-2.4.0.tgz#0506195942e948883dea818ec0bcddee9cc2894a"
   dependencies:
@@ -2946,7 +2953,7 @@ eslint-plugin-no-use-extend-native@^0.3.12:
     is-obj-prop "^1.0.0"
     is-proto-prop "^1.0.0"
 
-eslint-plugin-node@^4.2.1:
+eslint-plugin-node@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-4.2.2.tgz#82959ca9aed79fcbd28bb1b188d05cac04fb3363"
   dependencies:
@@ -7037,11 +7044,11 @@ prepend-http@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
 
-prepublish@^0.14.2:
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/prepublish/-/prepublish-0.14.2.tgz#4d4fc0144d1cc051cca7673bd6d65eba0f5eb94c"
+prepublish@^0.14.3:
+  version "0.14.3"
+  resolved "https://registry.yarnpkg.com/prepublish/-/prepublish-0.14.3.tgz#6855f9c7c63033a65476d3ecf42b6908ac3f7739"
   dependencies:
-    async "^2.1.5"
+    async "^2.2.0"
     babel-plugin-closure-elimination "^1.1.14"
     babel-plugin-external-helpers "^6.22.0"
     babel-plugin-fast-async "^6.1.2"
@@ -7070,21 +7077,75 @@ prepublish@^0.14.2:
     babel-plugin-transform-remove-undefined "^0.0.5"
     babel-plugin-transform-runtime "^6.23.0"
     babel-plugin-transform-simplify-comparison-operators "^6.8.1"
-    babel-preset-env "^1.2.1"
+    babel-preset-env "^1.3.2"
     babel-preset-react "^6.23.0"
     babel-runtime "^6.23.0"
     chalk "^1.1.3"
     file-exists "^3.0.2"
-    fs-extra "^2.0.0"
-    loader-utils "^1.0.3"
+    fs-extra "^2.1.2"
+    loader-utils "^1.1.0"
     lodash "^4.17.4"
     meow "^3.7.0"
-    rollup "^0.41.5"
+    rollup "^0.41.6"
     rollup-plugin-babel "^2.7.1"
     rollup-plugin-buble "^0.15.0"
     rollup-plugin-commonjs "^8.0.2"
     rollup-plugin-json "^2.1.0"
-    rollup-plugin-node-resolve "^2.0.0"
+    rollup-plugin-node-resolve "^2.1.0"
+    rollup-plugin-rebase "^0.4.11"
+    rollup-plugin-replace "^1.1.1"
+    rollup-plugin-yaml "^1.0.0"
+
+prepublish@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/prepublish/-/prepublish-0.15.0.tgz#a2ff9625a37c15a9d95650b83dddffbf503cdae4"
+  dependencies:
+    async "^2.2.0"
+    babel-plugin-closure-elimination "^1.1.14"
+    babel-plugin-dynamic-import-webpack "^1.0.1"
+    babel-plugin-external-helpers "^6.22.0"
+    babel-plugin-fast-async "^6.1.2"
+    babel-plugin-lodash "^3.2.11"
+    babel-plugin-minify-constant-folding "^0.0.4"
+    babel-plugin-minify-dead-code-elimination "^0.1.4"
+    babel-plugin-minify-flip-comparisons "^0.0.2"
+    babel-plugin-minify-guarded-expressions "^0.0.4"
+    babel-plugin-minify-mangle-names "^0.0.8"
+    babel-plugin-minify-numeric-literals "^0.0.1"
+    babel-plugin-minify-simplify "^0.0.8"
+    babel-plugin-minify-type-constructors "^0.0.4"
+    babel-plugin-syntax-dynamic-import "^6.18.0"
+    babel-plugin-transform-class-properties "^6.23.0"
+    babel-plugin-transform-es3-member-expression-literals "^6.22.0"
+    babel-plugin-transform-es3-property-literals "^6.22.0"
+    babel-plugin-transform-flow-strip-types "^6.22.0"
+    babel-plugin-transform-member-expression-literals "^6.8.1"
+    babel-plugin-transform-merge-sibling-variables "^6.8.2"
+    babel-plugin-transform-minify-booleans "^6.8.0"
+    babel-plugin-transform-object-rest-spread "^6.23.0"
+    babel-plugin-transform-property-literals "^6.8.1"
+    babel-plugin-transform-react-constant-elements "^6.23.0"
+    babel-plugin-transform-react-remove-prop-types "^0.3.2"
+    babel-plugin-transform-regexp-constructors "^0.0.6"
+    babel-plugin-transform-remove-undefined "^0.0.5"
+    babel-plugin-transform-runtime "^6.23.0"
+    babel-plugin-transform-simplify-comparison-operators "^6.8.1"
+    babel-preset-env "^1.3.2"
+    babel-preset-es2015 "^6.24.0"
+    babel-preset-react "^6.23.0"
+    babel-runtime "^6.23.0"
+    chalk "^1.1.3"
+    file-exists "^3.0.2"
+    fs-extra "^2.1.2"
+    loader-utils "^1.1.0"
+    lodash "^4.17.4"
+    meow "^3.7.0"
+    rollup "^0.41.6"
+    rollup-plugin-babel "^2.7.1"
+    rollup-plugin-buble "^0.15.0"
+    rollup-plugin-commonjs "^8.0.2"
+    rollup-plugin-json "^2.1.0"
+    rollup-plugin-node-resolve "^2.1.0"
     rollup-plugin-rebase "^0.4.11"
     rollup-plugin-replace "^1.1.1"
     rollup-plugin-yaml "^1.0.0"
@@ -7434,13 +7495,13 @@ read@1.0.x:
   dependencies:
     mute-stream "~0.0.4"
 
-readable-code@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/readable-code/-/readable-code-1.5.2.tgz#a6eda853c056fe56c860706d75662b7381446186"
+readable-code@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/readable-code/-/readable-code-1.5.3.tgz#37d8eae6dc2a2496bed74a579c3b90c42d87f258"
   dependencies:
     babel-core "^6.24.0"
-    babel-eslint "^7.2.0"
-    babel-preset-env "^1.2.2"
+    babel-eslint "^7.2.1"
+    babel-preset-env "^1.3.2"
     cross-spawn "^5.1.0"
     eslint "^3.18.0"
     eslint-find-rules "^1.14.3"
@@ -7448,13 +7509,13 @@ readable-code@^1.5.2:
     eslint-plugin-babel "^4.1.1"
     eslint-plugin-compat "^1.0.2"
     eslint-plugin-filenames "^1.1.0"
-    eslint-plugin-flowtype "^2.30.3"
-    eslint-plugin-flowtype-errors "^3.0.1"
+    eslint-plugin-flowtype "^2.30.4"
+    eslint-plugin-flowtype-errors "^3.0.3"
     eslint-plugin-import "^2.2.0"
     eslint-plugin-jsx-a11y "^4.0.0"
-    eslint-plugin-lodash "^2.3.6"
+    eslint-plugin-lodash "^2.4.0"
     eslint-plugin-no-use-extend-native "^0.3.12"
-    eslint-plugin-node "^4.2.1"
+    eslint-plugin-node "^4.2.2"
     eslint-plugin-promise "^3.5.0"
     eslint-plugin-react "^6.10.3"
     flow-bin "^0.42.0"
@@ -7465,13 +7526,13 @@ readable-code@^1.5.2:
     gulp-stylelint "^3.9.0"
     lint-staged "^3.4.0"
     postcss "^5.2.16"
-    prepublish "^0.14.2"
+    prepublish "^0.14.3"
     prettier "^0.22.0"
-    stylefmt "^5.3.0"
+    stylefmt "^5.3.1"
     stylelint "^7.9.0"
-    stylelint-order "^0.4.1"
+    stylelint-order "^0.4.3"
     stylelint-scss "^1.4.3"
-    typescript "^2.2.1"
+    typescript "^2.2.2"
     typescript-eslint-parser "^2.0.0"
 
 readable-stream@1.0, "readable-stream@>=1.0.33-1 <1.1.0-0":
@@ -7843,7 +7904,7 @@ rollup-plugin-json@^2.0.1, rollup-plugin-json@^2.1.0:
   dependencies:
     rollup-pluginutils "^1.5.2"
 
-rollup-plugin-node-resolve@^2.0.0:
+rollup-plugin-node-resolve@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-node-resolve/-/rollup-plugin-node-resolve-2.1.0.tgz#f182a71a2b705129210444a4b74696768baf0515"
   dependencies:
@@ -7899,7 +7960,7 @@ rollup-pluginutils@^2.0.1:
     estree-walker "^0.3.0"
     micromatch "^2.3.11"
 
-rollup@^0.41.5, rollup@^0.41.6:
+rollup@^0.41.6:
   version "0.41.6"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.41.6.tgz#e0d05497877a398c104d816d2733a718a7a94e2a"
   dependencies:
@@ -8366,7 +8427,7 @@ style-search@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/style-search/-/style-search-0.1.0.tgz#7958c793e47e32e07d2b5cafe5c0bf8e12e77902"
 
-stylefmt@^5.3.0:
+stylefmt@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/stylefmt/-/stylefmt-5.3.1.tgz#137928d16f64d10fba35639168ff5a0461f2f0b6"
   dependencies:
@@ -8400,7 +8461,7 @@ stylehacks@^2.3.0:
     text-table "^0.2.0"
     write-file-stdout "0.0.2"
 
-stylelint-order@0.4.x, stylelint-order@^0.4.1:
+stylelint-order@0.4.x, stylelint-order@^0.4.3:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-0.4.3.tgz#1311550e3fe9c1d2efa1f334a370fd82bc998b91"
   dependencies:
@@ -8715,7 +8776,7 @@ typescript-eslint-parser@^2.0.0:
     lodash.unescape "4.0.0"
     object-assign "^4.0.1"
 
-typescript@^2.2.1:
+typescript@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.2.2.tgz#606022508479b55ffa368b58fee963a03dfd7b0c"
 
