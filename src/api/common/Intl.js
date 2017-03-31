@@ -44,6 +44,18 @@ export function injectCode({ code, url }) {
 
 
 export function ensureReactIntlSupport(language) {
+  // Locale Data in Node.js:
+  // When using React Intl in Node.js (same for the Intl.js polyfill), all locale data will be
+  // loaded into memory. This makes it easier to write a universal/isomorphic React app with
+  // React Intl since you won't have to worry about dynamically loading locale data on the server.
+  // Via: https://github.com/yahoo/react-intl/wiki#locale-data-in-nodejs
+
+  // As mentioned above no additional data has to be loaded for NodeJS. We are just resolving
+  // the Promise in that case.
+  if (process.env.TARGET === "node") {
+    return Promise.resolve(false)
+  }
+
   const reactIntlUrl = require("react-intl/locale-data/" + language + ".js")
   console.log("Loading React-Intl Data:", reactIntlUrl)
   return fetch(reactIntlUrl).then((response) => {
@@ -62,15 +74,18 @@ export function ensureIntlSupport(locale) {
     return Promise.resolve(false)
   }
 
-  // TODO: Wenn NodeJS dann meckern wenn i18n daten nicht vorhanden!!!
-
-  require("lean-intl")
+  // By default Node only ships with basic English locale data. You can however build a
+  // Node binary with all locale data. We recommend doing this if you control the container
+  // your Node app runs in, otherwise you'll want to polyfill Intl in Node.
+  // Via: https://github.com/yahoo/react-intl/wiki#i18n-in-javascript
+  if (process.env.TARGET === "node") {
+    console.warn("Your NodeJS installation does not include locale data! Using Polyfill!")
+    console.warn("See also: https://github.com/nodejs/node/wiki/Intl")
+  }
 
   const intlUrl = require("lean-intl/locale-data/json/" + locale + ".json")
-  console.log("Loading Lean-Intl Data:", intlUrl)
 
-  //return import("lean-intl").then((IntlPolyfill) => {
-  //require("lean-intl")
+  return import("lean-intl").then((IntlPolyfill) => {
     return fetch(intlUrl).then((response) => {
       return response.json().then((parsed) => {
         IntlPolyfill.__addLocaleData(parsed)
@@ -85,9 +100,7 @@ export function ensureIntlSupport(locale) {
         }
 
         return Promise.resolve(true)
-      }).catch((error) => {
-        console.error("Unable to load locale specific localization data!", error)
       })
     })
-  // })
+  })
 }

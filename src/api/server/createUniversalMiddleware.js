@@ -9,6 +9,8 @@ import renderPage from "./renderPage"
 import { createReduxStore } from "../common/State"
 import { createApolloClient } from "../common/Apollo"
 
+import { ensureIntlSupport, ensureReactIntlSupport } from "../server"
+
 /**
  * Using Apollo logic to recursively resolve all queries needed for
  * initial rendering. The convention is to use the full JSX tree,
@@ -73,60 +75,65 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
     </StaticRouter>
   )
 
-  // Create the application react element.
-  renderToStringWithData(
-    WrappedRoot,
-    measure
-  ).then((renderedApp) => {
-    const reduxState = reduxStore.getState()
+  return Promise.all([
+    ensureIntlSupport(`${language}-${region}`),
+    ensureReactIntlSupport(language)
+  ])
 
-    // Render the app to a string.
-    measure.start("render-page")
-    const html = renderPage({
-      // Provide the full rendered App react element.
-      renderedApp,
+    .then(() => renderToStringWithData(
+      WrappedRoot,
+      measure
+    ))
 
-      // Provide the redux store state, this will be bound to the window.APP_STATE
-      // so that we can rehydrate the state on the client.
-      initialState: reduxState,
+    // Create the application react element.
+    .then((renderedApp) => {
+      const reduxState = reduxStore.getState()
 
-      // Nonce which allows us to safely declare inline scripts.
-      nonce,
+      // Render the app to a string.
+      measure.start("render-page")
+      const html = renderPage({
+        // Provide the full rendered App react element.
+        renderedApp,
 
-      // Running this gets all the helmet properties (e.g. headers/scripts/title etc)
-      // that need to be included within our html. It's based on the rendered app.
-      // @see https://github.com/nfl/react-helmet
-      helmet: Helmet.rewind(),
+        // Provide the redux store state, this will be bound to the window.APP_STATE
+        // so that we can rehydrate the state on the client.
+        initialState: reduxState,
 
-      // Send detected language and region for HTML tag info
-      language,
-      region
+        // Nonce which allows us to safely declare inline scripts.
+        nonce,
+
+        // Running this gets all the helmet properties (e.g. headers/scripts/title etc)
+        // that need to be included within our html. It's based on the rendered app.
+        // @see https://github.com/nfl/react-helmet
+        helmet: Helmet.rewind(),
+
+        // Send detected language and region for HTML tag info
+        language,
+        region
+      })
+      measure.stop("render-page")
+
+      // console.log("Server: Routing Context:", routingContext)
+      console.log("Server: Sending Page...")
+
+      /* eslint-disable no-magic-numbers */
+
+      // Check if the render result contains a redirect, if so we need to set
+      // the specific status and redirect header and end the response.
+      if (routingContext.url) {
+        response.status(302).setHeader("Location", routingContext.url)
+        response.end()
+        return
+      }
+
+      // If the renderedResult contains a "missed" match then we set a 404 code.
+      // Our App component will handle the rendering of an Error404 view.
+      // Otherwise everything is all good and we send a 200 OK status.
+      response.status(routingContext.status || 200).send(html)
+
+      // Print measure results
+      // measure.print()
     })
-    measure.stop("render-page")
-
-    // console.log("Server: Routing Context:", routingContext)
-    console.log("Server: Sending Page...")
-
-    /* eslint-disable no-magic-numbers */
-
-    // Check if the render result contains a redirect, if so we need to set
-    // the specific status and redirect header and end the response.
-    if (routingContext.url) {
-      response.status(302).setHeader("Location", routingContext.url)
-      response.end()
-      return
-    }
-
-    // If the renderedResult contains a "missed" match then we set a 404 code.
-    // Our App component will handle the rendering of an Error404 view.
-    // Otherwise everything is all good and we send a 200 OK status.
-    response.status(routingContext.status || 200).send(html)
-
-    // Print measure results
-    // measure.print()
-  }).catch((error) => {
-    console.error("Server: Error during producing response:", error)
-  })
 }
 
 /**
