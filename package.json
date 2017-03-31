@@ -106,7 +106,7 @@
     "express": "^4.15.2",
     "express-locale": "^1.0.1",
     "extract-text-webpack-plugin": "^2.1.0",
-    "file-loader": "^0.10.1",
+    "file-loader": "^0.11.0",
     "find-root": "^1.0.0",
     "fs-extra": "^2.1.2",
     "graphql-tag": "^2.0.0",

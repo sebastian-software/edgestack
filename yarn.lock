@@ -3305,9 +3305,9 @@ file-exists@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/file-exists/-/file-exists-3.0.2.tgz#1d6b3c197810b43f85892e7eed478a637b1ab614"
 
-file-loader@^0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-0.10.1.tgz#815034119891fc6441fb5a64c11bc93c22ddd842"
+file-loader@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-0.11.0.tgz#af018f39c44617305f1ee92f850c7a65a4331616"
   dependencies:
     loader-utils "^1.0.2"
 
@@ -8724,8 +8724,8 @@ ua-parser-js@^0.7.9:
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.12.tgz#04c81a99bdd5dc52263ea29d24c6bf8d4818a4bb"
 
 uglify-js@2.8.x, uglify-js@^2.6, uglify-js@^2.8.5:
-  version "2.8.19"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.8.19.tgz#21dcb82101aa87054deb140aa9b6bccda5389c8e"
+  version "2.8.20"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.8.20.tgz#be87100fbc18de3876ed606e9d24b4568311cecf"
   dependencies:
     source-map "~0.5.1"
     yargs "~3.10.0"
