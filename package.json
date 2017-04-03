@@ -4,6 +4,7 @@
   "description": "A Universal React Stack with deeply integrated localization Support, semi-automatic route-based code splitting, Hot Module Reloading (HMR), Redux, Apollo GraphQL and more...",
   "main": "lib/node.classic.commonjs.js",
   "module": "lib/node.classic.esmodule.js",
+  "es2015": "lib/node.es2015.esmodule.js",
   "main:modern": "lib/node.modern.commonjs.js",
   "module:modern": "lib/node.modern.esmodule.js",
   "browser": "lib/browser.classic.esmodule.js",
@@ -17,8 +18,8 @@
     "edge": "./bin/edge"
   },
   "scripts": {
-    "start": "npm run prescript && cross-env  bin/edge start",
-    "prod": "npm run prescript && cross-env  bin/edge build",
+    "start": "npm run prescript && cross-env node bin/edge start",
+    "prod": "npm run prescript && cross-env node bin/edge build",
     "prod:start": "npm run prod && node build/server/main.js",
     "clean": "rimraf build/client/* build/server/* lib/* bin/*",
     "test": "npm run prepublish && npm run prod",
