@@ -98,7 +98,7 @@ application development and therefor scales very well when multiple applications
 - Uses Flexbox natively which is far cleaner and more powerful than old style float driven layouts.
 
 
-### [Grid Kiss](https://github.com/sylvainpolletvillard/postcss-grid-kiss)
+### Grid Kiss ([Project](https://github.com/sylvainpolletvillard/postcss-grid-kiss))
 
 - Alternative CSS-Grid-based ascii-art powered Grid system which allows visually designing a Grid layout. 
 
