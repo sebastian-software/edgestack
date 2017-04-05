@@ -28,8 +28,9 @@ application development and therefor scales very well when multiple applications
 - CSS Isolation with CSS modules.
 
 
+---
 
-## Libraries & Components
+## View Layer
 
 ### [React](https://facebook.github.io/react/) (View Layer)
 
@@ -41,13 +42,15 @@ application development and therefor scales very well when multiple applications
 - Long term strategic versioning with no regular breakage like in the Angular ecosystem.
 - Does not force or make assumptions of the rest of the development stack. Scales from easy to complex.
 
+---
+
+## Data Management
+
 ### [Redux](http://redux.js.org/)
 
 - Single source of truth for the whole application state.
 - Works excellent in combination with React Universal to share the state from client to the server.
 - Time Traveling in developer tools to understand and reproduce application state changes
-
-### Redux-Form
 
 ### Apollo GraphQL Client
 
@@ -55,12 +58,24 @@ application development and therefor scales very well when multiple applications
 - Far smaller and less complex than Relay while keeping most of its more advanced features.
 - GraphQL is very interesting for 
 
+
+
+---
+
+## Tooling (Production Builds + Development Environment)
+
 ### Webpack
 
 - Hot Module Reloading for excellent developer productivity. It effectively refreshes rebuild modules via a WebSocket connection to the client.
 - We integrated the HardSource Plugin for smart loader caching and dramatically increased rebuild performance.
 - Everything is regarded as an valid input module. So instead of writing manual tasks which deal with non-JS assets we let Webpack solve all of these requirements and apply its magic.
 
+
+
+
+---
+
+## CSS Transpilation
 
 ### PostCSS
 
@@ -76,7 +91,6 @@ application development and therefor scales very well when multiple applications
 - Instead of manually managing writing prefixes or relying on Sass-Mixins we are using a data driven approach (CanIUse Database).
 - Does far more than just addition of prefixes e.g. fixing flexbox differences, supporting different linear gradient syntaxes, etc.
 
-
 ### [Lost Grid](https://github.com/peterramsing/lost)
 
 - Instead of assigning dozens of feature specific classes to each individual DOM node we use more meaningful class names and attach features to them.
@@ -90,6 +104,23 @@ application development and therefor scales very well when multiple applications
 
 
 
+
+
+---
+
+## JavaScript Transpilation
+
+### Babel
+
+- Transpiling of modern JavaScript code for less modern clients.
+
+
+
+
+---
+
+## Code Quality
+
 ### Stylelint
 
 - PostCSS-based linter for all CSS dialects. Supports alternative dialects like SugarSS,
@@ -102,17 +133,50 @@ application development and therefor scales very well when multiple applications
 - Linting utility for JavaScript and JSX. We are using [readable-code](https://github.com/sebastian-software/readable-code) for sensible configuration with support for additional features such as React, Accessibility, filename validation, etc.
 
 
-### Babel
+### Lint Staged
 
-- Transpiling of modern JavaScript code for less modern clients.
+- TODO
 
+
+---
+
+## Server
 
 ### Express
 
+- TODO
 
 
-### Lint Staged
 
 
+---
+
+## Testing
 
 ### Jest
+
+- TODO
+
+### Nightmare
+
+- TODO
+
+
+
+
+
+---
+
+## Components
+
+### Redux-Form
+
+- TODO
+
+### React Virtualized
+
+- TODO
+
+### Sizeme
+
+- TODO
