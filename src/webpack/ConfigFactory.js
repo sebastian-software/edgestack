@@ -11,7 +11,6 @@ import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
 
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 import ChunkManifestPlugin from "chunk-manifest-webpack-plugin"
-import DuplicateCheckerPlugin from "duplicate-package-checker-webpack-plugin"
 
 import dotenv from "dotenv"
 
@@ -116,10 +115,9 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
     presets:
     [
       // Exponentiation
-      "babel-preset-es2016",
-
-      // Async to generators + trailing function commas
-      "babel-preset-es2017",
+      [ "babel-preset-env", {
+        targets: { node: 6.0 }
+      }],
 
       // Flow support
       "babel-preset-flow",
@@ -179,14 +177,10 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
 
     presets:
     [
-      // let, const, destructuring, classes, no modules
-      [ "babel-preset-es2015", enableHardSource ? {} : { modules: false } ],
-
-      // Exponentiation
-      "babel-preset-es2016",
-
-      // Async to generators + trailing function commas
-      "babel-preset-es2017",
+      // ES2015: let, const, destructuring, classes, no modules
+      // ES2016: Exponentiation
+      // ES2017: Async to generators + trailing function commas
+      [ "babel-preset-env", enableHardSource ? {} : { modules: false } ],
 
       // Flow support
       "babel-preset-flow",
