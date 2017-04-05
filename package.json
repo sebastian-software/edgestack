@@ -207,7 +207,7 @@
     "eslint": "^3.19.0",
     "lint-staged": "^3.4.0",
     "pre-commit": "^1.2.2",
-    "prepublish": "^0.15.1",
+    "prepublish": "^0.15.2",
     "rollup": "^0.41.6",
     "rollup-plugin-executable": "^1.0.0",
     "sanitize.css": "^5.0.0",
