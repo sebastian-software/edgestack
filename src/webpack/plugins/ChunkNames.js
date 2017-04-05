@@ -2,70 +2,57 @@ import path from "path"
 import { getHashDigest } from "loader-utils"
 
 const WORKING_DIR = process.cwd()
-const DEP_BLOCK_NAME = "AsyncDependenciesBlock"
 const HASH_TYPE = "sha256"
 const DIGEST_TYPE = "base62"
 const DIGEST_LENGTH = 4
 const SCRIPT_EXTENSIONS = new Set([ ".mjs", ".js", ".jsx", ".ts", ".tsx" ])
+const SKIP_FOLDERS = [ "lib", "dist", "src", "build" ]
 
-function checkConstructorNames(object) {
-  const obj = Object.getPrototypeOf(object)
-  if (obj) {
-    if (obj.constructor.name === DEP_BLOCK_NAME) {
-      return true
-    } else {
-      return checkConstructorNames(obj)
-    }
-  } else {
-    return false
-  }
-}
+function generateChunkName(request, rawRequest) {
+  // Strip prefixed loader syntax from Webpack
+  let splittedRequest = request.split("!")
+  let cleanRequest = splittedRequest[splittedRequest.length - 1]
 
-function generateChunkName(resource) {
-  if (resource == null) {
-    return null
+  // Getting relative path inside working directory
+  var relative = path.relative(WORKING_DIR, cleanRequest)
+
+  var isExternal = relative.startsWith("node_modules" + path.sep)
+  if (isExternal) {
+    relative = rawRequest
   }
 
-  let relative = path.relative(WORKING_DIR, resource)
-  const parsedPath = path.parse(relative)
+  // Strip useless helper folder structure
+  SKIP_FOLDERS.forEach((filter) => {
+    relative = relative.replace(new RegExp("(^|/|\\\\)" + filter + "($|/|\\\\)"), (match, group1) => group1)
+  })
 
-  // Remove typical script extensions as chunks for non
-  // media files should not have that in their name
-  if (SCRIPT_EXTENSIONS.has(parsedPath.ext)) {
-    relative = relative.slice(0, -parsedPath.ext.length)
+  // Strip all script file extensions
+  var fileExt = path.parse(relative).ext
+  if (SCRIPT_EXTENSIONS.has(fileExt)) {
+    relative = relative.replace(new RegExp(`${fileExt}$`), "")
   }
 
-  // Replace index files with parent folder names
-  relative = relative.replace(new RegExp(`${path.sep}index$`), "")
-
-  let hash = getHashDigest(relative, HASH_TYPE, DIGEST_TYPE, DIGEST_LENGTH)
+  let hash = getHashDigest(cleanRequest, HASH_TYPE, DIGEST_TYPE, DIGEST_LENGTH)
   let base = path.basename(relative)
 
-  return `${base}-${hash}`
+  let result = `${base}-${hash}`
+
+  return result
 }
 
 export default class ChunkNames
 {
-  // eslint-disable-next-line class-methods-use-this
   apply(compiler)
   {
-    /* eslint-disable max-nested-callbacks */
     compiler.plugin("compilation", (compilation) => {
-      compilation.plugin("seal", () => {
-        compilation.modules.forEach((module) => {
-          module.blocks.forEach((block) => {
-            if (checkConstructorNames(block)) {
-              block.dependencies.forEach((dependency) => {
-                if (dependency.module && dependency.module.resource && dependency.block) {
-                  const chunkName = generateChunkName(dependency.module.resource)
-                  if (chunkName) {
-                    dependency.block.chunkName = chunkName
-                    dependency.block.name = chunkName
-                  }
-                }
-              })
-            }
-          })
+      compilation.plugin("optimize", () => {
+        compilation.chunks.forEach((chunk) => {
+          var userRequest = chunk.modules[0].userRequest
+          var rawRequest = chunk.modules[0].rawRequest
+          var oldName = chunk.name
+          if (userRequest && oldName == null) {
+            chunk.name = generateChunkName(userRequest, rawRequest)
+          }
         })
       })
     })
