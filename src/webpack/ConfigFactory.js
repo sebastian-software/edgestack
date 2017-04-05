@@ -726,6 +726,16 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
         minChunks: Infinity
       })),
 
+      // Additional helper for non mentioned vendor like common modules
+      // Docs: Look through all normal [aka lazy loaded] chunks, and if you find the same module that
+      // appears across 3 or more chunks, then separate it out into a separate async commons chunk.
+      // Via: https://medium.com/webpack/webpack-bits-getting-the-most-out-of-the-commonschunkplugin-ab389e5f318
+      ifProdWeb(new webpack.optimize.CommonsChunkPlugin({
+        async: true,
+        children: true,
+        name: "common"
+      })),
+
       // More aggressive chunk merging strategy. Even similar chunks are merged if the
       // total size is reduced enough.
       ifProdWeb(new webpack.optimize.AggressiveMergingPlugin()),
