@@ -46,13 +46,14 @@ application development and therefor scales very well when multiple applications
 
 ## Data Management
 
-### [Redux](http://redux.js.org/)
+### Redux ([Project](https://github.com/reactjs/redux) | [Homepage](http://redux.js.org/) | [Video Course](https://egghead.io/courses/getting-started-with-redux))
 
 - Single source of truth for the whole application state.
-- Works excellent in combination with React Universal to share the state from client to the server.
-- Time Traveling in developer tools to understand and reproduce application state changes
+- Works excellent in combination with React Universal to share the preloaded state with the client application.
+- Time traveling in developer tools to understand and reproduce different application states.
+- Redux evolves the ideas of Flux, but avoids its complexity by taking cues from Elm.
 
-### Apollo GraphQL Client
+### Apollo GraphQL Client ([Project](https://github.com/apollographql/apollo-client) | [Homepage](http://dev.apollodata.com/))
 
 - Built on redux - works fine together with Redux development tools
 - Far smaller and less complex than Relay while keeping most of its more advanced features.
