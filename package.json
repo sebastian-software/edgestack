@@ -173,7 +173,6 @@
     "raw-loader": "^0.5.1",
     "react": "^15.4.2",
     "react-apollo": "^1.0.0",
-    "react-async-component": "^1.0.0-beta.1",
     "react-dev-utils": "^0.5.2",
     "react-dom": "^15.4.2",
     "react-helmet": "^5.0.2",
