@@ -77,7 +77,7 @@ application development and therefor scales very well when multiple applications
 
 ## CSS Transpilation
 
-### PostCSS
+### PostCSS ([Project](https://github.com/postcss/postcss) | [Homepage](http://postcss.org/))
 
 - A big challenge for large application development is the isolation of styles from each other. We are using relying on CSS modules directly supported by the `css-loader` in Webpack which is actually powered by PostCSS.
 - Instead of adding another parser and CSS transpiler to the development chain like Sass or Less we are using PostCSS for development enhancements, too. This includes typical features like imports, variables, mixins, conditionals, math expressions, etc.
@@ -86,12 +86,12 @@ application development and therefor scales very well when multiple applications
 - A lot of other tools are built on top of it.
 
 
-### [Autoprefixer](https://github.com/postcss/autoprefixer)
+### Autoprefixer ([Project](https://github.com/postcss/autoprefixer))
 
 - Instead of manually managing writing prefixes or relying on Sass-Mixins we are using a data driven approach (CanIUse Database).
 - Does far more than just addition of prefixes e.g. fixing flexbox differences, supporting different linear gradient syntaxes, etc.
 
-### [Lost Grid](https://github.com/peterramsing/lost)
+### Lost Grid ([Project](https://github.com/peterramsing/lost))
 
 - Instead of assigning dozens of feature specific classes to each individual DOM node we use more meaningful class names and attach features to them.
 - The concept allows solving Responsive Layout in CSS instead of putting it into JSX and this way deep inside the data rendering logic (JS) where it does not belong to.
