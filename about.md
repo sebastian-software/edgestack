@@ -55,10 +55,10 @@ application development and therefor scales very well when multiple applications
 
 ### Apollo GraphQL Client ([Project](https://github.com/apollographql/apollo-client) | [Homepage](http://dev.apollodata.com/))
 
-- Built on redux - works fine together with Redux development tools
-- Far smaller and less complex than Relay while keeping most of its more advanced features.
-- GraphQL is very interesting for 
-
+- Advanced data management: Queries, caching, mutations, optimistic UI, subscriptions, pagination, server-side rendering, prefetching, ...
+- Internally built on Redux - works fine together with Redux development tools and custom reducers/actions.
+- Far smaller and less complex than Relay while keeping most of its advanced features.
+- Universal applicable with clients available for different frameworks and native SDKs.
 
 
 ---
