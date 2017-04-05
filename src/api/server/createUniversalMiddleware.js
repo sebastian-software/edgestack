@@ -1,13 +1,15 @@
+/* eslint-disable no-console */
 import React from "react"
 import { renderToString } from "react-dom/server"
 import { StaticRouter } from "react-router"
 import Helmet from "react-helmet"
-import { ApolloProvider, getDataFromTree } from "react-apollo"
+import { ApolloProvider } from "react-apollo"
 
 import Measure from "./Measure"
 import renderPage from "./renderPage"
 import { createReduxStore } from "../common/State"
 import { createApolloClient } from "../common/Apollo"
+import deepFetch from "../common/deepFetch"
 
 import { ensureIntlSupport, ensureReactIntlSupport } from "../server"
 
@@ -22,7 +24,7 @@ import { ensureIntlSupport, ensureReactIntlSupport } from "../server"
  */
 function renderToStringWithData(component, measure) {
   measure.start("loading-data")
-  return getDataFromTree(component).then(() => {
+  return deepFetch(component).then(() => {
     measure.stop("loading-data")
 
     measure.start("render-react")

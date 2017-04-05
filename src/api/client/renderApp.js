@@ -4,8 +4,7 @@ import { BrowserRouter, withRouter } from "react-router-dom"
 import { ApolloProvider } from "react-apollo"
 
 import RouterConnector from "../common/RouterConnector"
-
-import deepFetch from "./deepFetch"
+import deepFetch from "../common/deepFetch"
 
 export default function renderApp(AppRoot, { apolloClient, reduxStore })
 {

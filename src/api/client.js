@@ -2,5 +2,4 @@
 
 export * from "./common"
 
-export { default as deepFetch } from "./client/deepFetch"
 export { default as renderApp } from "./client/renderApp"
