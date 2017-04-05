@@ -2,35 +2,15 @@ import reactTreeWalker from "react-tree-walker"
 
 /* eslint-disable no-shadow */
 /* eslint-disable max-params */
-export default function deepFetch(rootElement, context = {}, skipRoot = false)
+export default function deepFetch(rootElement)
 {
-  const schedule = []
-
-  function visitor(element, instance, context)
-  {
-    if (rootElement === element && skipRoot) {
-      return
+  function visitor(element, instance, context) {
+    if (instance && typeof instance.fetchData === "function") {
+      return instance.fetchData()
     }
 
-    if (instance && instance.fetchData)
-    {
-      var returnValue = instance.fetchData()
-      if (returnValue instanceof Promise)
-      {
-        schedule.push({
-          resolver: returnValue,
-          element,
-          context
-        })
-      }
-    }
+    return true
   }
 
-  reactTreeWalker(rootElement, visitor, context)
-
-  const nestedPromises = schedule.map(({ resolver, element, context }) =>
-    resolver.then(() => deepFetch(element, context, true)),
-  )
-
-  return nestedPromises.length > 0 ? Promise.all(nestedPromises) : Promise.resolve([])
+  return reactTreeWalker(rootElement, visitor)
 }
