@@ -212,14 +212,15 @@ export function logError(nativeError)
 /**
  * Enable enhanced stack traces
  */
-export function enableEnhancedStackTraces()
+export function enableEnhancedStackTraces(debug = false)
 {
   // Override native Promise API with faster and more developerr friendly bluebird
   global.Promise = require("bluebird")
 
   /* eslint-disable no-use-extend-native/no-use-extend-native */
   Promise.config({
-    longStackTraces: true
+    longStackTraces: debug,
+    warnings: debug
   })
 
   // Catch unhandled Promise rejections and pass them over to our log handler
