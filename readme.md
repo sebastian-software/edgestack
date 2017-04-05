@@ -32,7 +32,7 @@ A Universal React Stack with deeply integrated localization Support, semi-automa
 - Route based Code Splitting with Hot Module Reloading (HMR).
 - Ready for Localization using React-Intl pre-configured + polyfilled.
 
-More on the selected components of the stack: [About](./about)
+More on the selected components of the stack: [About](./about.md)
 
 
 ## Features
