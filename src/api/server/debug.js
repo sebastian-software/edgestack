@@ -130,21 +130,27 @@ export function frameToString(frame)
 export function prepareStackTrace(nativeError, structuredStackTrace)
 {
   var frames = getRelevantFrames(structuredStackTrace)
+  var firstFrame = frames[0]
 
-  var firstFrame = wrapCallSite(frames[0])
-  var sourceFile = cleanSourceFileName(firstFrame.getFileName())
+  // Need the first frame for highlighting affected source code, sometimes that's not available.
+  if (firstFrame != null)
+  {
+    var wrappedFirstFrame = wrapCallSite(firstFrame)
+    var sourceFile = cleanSourceFileName(wrappedFirstFrame.getFileName())
 
-  var sourceText = ""
-  try {
-    sourceText = readFileSync(sourceFile, "utf-8")
-  } catch (error) {
-    // Ignore errors
-  }
+    var sourceText = ""
+    try {
+      sourceText = readFileSync(sourceFile, "utf-8")
+    } catch (error) {
+      // Ignore errors
+    }
 
-  // Generate highlighted code frame and attach it to the native error object (for later usage)
-  if (sourceText) {
-    const result = codeFrame(sourceText, firstFrame.getLineNumber(), firstFrame.getColumnNumber(), CODE_FRAME_OPTIONS)
-    nativeError.code = result
+    // Generate highlighted code frame and attach it to the native error object (for later usage)
+    if (sourceText) {
+      const result = codeFrame(sourceText,
+        wrappedFirstFrame.getLineNumber(), wrappedFirstFrame.getColumnNumber(), CODE_FRAME_OPTIONS)
+      nativeError.code = result
+    }
   }
 
   return frames.map((frame) => frameToString(frame))
