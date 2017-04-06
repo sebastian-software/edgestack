@@ -1,12 +1,14 @@
 import React from "react"
 import Helmet from "react-helmet"
 import { connect } from "react-redux"
-import markdown from "markdown-in-js"
 import { FormattedDate, FormattedMessage, FormattedRelative } from "react-intl"
 import { addDays } from "date-fns"
 
 import Styles from "./About.css"
 import { getCounter, decrementCounter, incrementCounter, loadCounter } from "../modules/CounterModule"
+
+import MarkdownTest from "../components/Markdown.mdx"
+import "prismjs/themes/prism-tomorrow.css"
 
 /**
  * @deprecated
@@ -66,7 +68,7 @@ class About extends React.Component {
           <button className={Styles.button} onClick={handleOldMethodCall}>Deprecated Test</button>
         </p>
 
-        {markdown`Markdown in React is **pretty useful**.`}
+        <MarkdownTest value="Sebastian"/>
 
         <p className={Styles.intro}>
           <a href="https://github.com/sebastian-software">Produced with ❤ by Sebastian Software</a>

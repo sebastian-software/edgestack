@@ -871,6 +871,15 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
             exclude: excludeFromTranspilation
           },
 
+          // Markdown Container MDX Format
+          // See also: http://jamesknelson.com/introducing-mdxc/
+          {
+            test: /\.mdx?$/,
+            use: jsLoaders.concat([
+              "mdx-loader"
+            ])
+          },
+
           // CSS
           {
             test: /\.(css|sss)$/,
