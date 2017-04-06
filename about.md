@@ -89,12 +89,14 @@ application development and therefor scales very well when multiple applications
 
 - Instead of assigning dozens of feature specific classes to each individual DOM node / React component we use more meaningful class names and attach features to them.
 - The concept allows solving Responsive Layout in CSS instead of putting it into JSX and this way deep inside the data rendering logic (JS) where it does not belong to.
-- Uses Flexbox natively which is far cleaner and more powerful than old style float driven layouts.
+
+> CSS frameworks cause problems by unnecessarily constraining our content to fit into a predefined grid. How can a CSS framework know what our content is? It can’t. – Via: [Stop using device breakpoints](https://medium.com/simple-human/stop-using-device-breakpoints-b11a87e2625c)
 
 ### Grid Kiss ([Project](https://github.com/sylvainpolletvillard/postcss-grid-kiss))
 
-- Alternative CSS-Grid-based ascii-art powered Grid system which allows visually designing a Grid layout. 
-- Makes designing grids visually and easy to understand. Especially long term.
+- Alternative CSS-Grid-based ASCII-art powered Grid system which allows visually designing a Grid layout. 
+- Makes designing grids visually and easy to understand. Especially long term and in larger development groups.
+- Supports fallback for browsers without native CSS Grid support based on CSS `calc()`
 
 
 
@@ -103,7 +105,7 @@ application development and therefor scales very well when multiple applications
 ### Babel
 
 - Transpiling of modern JavaScript code for less modern clients.
-- Uses Node v6 Environment configuration for our NodeJS backend 
+- Uses Node v6 environment configuration for our NodeJS backend 
 
 
 
