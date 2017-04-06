@@ -273,7 +273,7 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
 }
 
 
-function getCssLoaders({ isNode, isWeb, isProd, isDev })
+function getCssLoaders({ isNode, isWeb, isProd, isDev }, enableModules = true)
 {
   // When targetting the node we fake out the style loader as the
   // node can't handle the styles and doesn't care about them either..
@@ -285,7 +285,7 @@ function getCssLoaders({ isNode, isWeb, isProd, isDev })
         query:
         {
           sourceMap: false,
-          modules: true,
+          modules: enableModules,
           localIdentName: isProd ? "[local]-[hash:base62:8]" : "[path][name]-[local]"
         }
       },
@@ -316,7 +316,7 @@ function getCssLoaders({ isNode, isWeb, isProd, isDev })
             query:
             {
               sourceMap: true,
-              modules: true,
+              modules: enableModules,
               localIdentName: "[local]-[hash:base62:8]",
               minimize: false,
               import: false
@@ -342,7 +342,7 @@ function getCssLoaders({ isNode, isWeb, isProd, isDev })
           query:
           {
             sourceMap: true,
-            modules: true,
+            modules: enableModules,
             localIdentName: "[path][name]-[local]",
             minimize: false,
             import: false
@@ -423,12 +423,19 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
 
   const folder = isWeb ? "client" : "server"
 
-  const cssLoaders = getCssLoaders({
+  const cssLoadersWithoutModules = getCssLoaders({
     isProd,
     isDev,
     isWeb,
     isNode
-  })
+  }, false)
+
+  const cssLoadersWithModules = getCssLoaders({
+    isProd,
+    isDev,
+    isWeb,
+    isNode
+  }, true)
 
   const jsLoaders = getJsLoader({
     isProd,
@@ -883,7 +890,15 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
           // CSS
           {
             test: /\.(css|sss)$/,
-            loader: cssLoaders
+            loader: cssLoadersWithModules,
+            exclude: [ /prismjs/ ]
+          },
+
+          // Plain CSS
+          {
+            test: /\.(css|sss)$/,
+            loader: cssLoadersWithoutModules,
+            include: [ /prismjs/ ]
           },
 
           // JSON
