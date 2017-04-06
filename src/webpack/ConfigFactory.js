@@ -131,9 +131,6 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
       // Allow parsing of import()
       "syntax-dynamic-import",
 
-      // Transpile Markdown into React components. Super smart.
-      "markdown-in-js/babel",
-
       // Optimization for lodash imports.
       // Auto cherry-picking es2015 imports from path imports.
       "lodash",
@@ -193,9 +190,6 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
     [
       // Allow parsing of import()
       "syntax-dynamic-import",
-
-      // Transpile Markdown into React components. Super smart.
-      "markdown-in-js/babel",
 
       // Optimization for lodash imports.
       // Auto cherry-picking es2015 imports from path imports.
