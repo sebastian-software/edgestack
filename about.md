@@ -8,7 +8,7 @@ For **EdgeStack** it's important to bet on high quality and maintained technolog
 in this development stack has been carefully chosen for the concepts it follows. We prefer good concepts in
 future ready technologies over legacy and stable technologies. This is basically why we call it **EdgeStack**:
 Offering a peak into the future of modern React development while being relatively stable for day-to-day 
-development. **EdgeStack** is a possible solution for keeping this hassle outside of the actual 
+development. **EdgeStack** is a possible solution for keeping this hassle outside of your actual 
 application development and therefor scales very well when multiple applications have to be developed.
 
 
@@ -28,21 +28,19 @@ application development and therefor scales very well when multiple applications
 - CSS Isolation with CSS modules.
 
 
----
 
 ## View Layer
 
-### [React](https://facebook.github.io/react/) (View Layer)
+### React ([Project](https://github.com/facebook/react) | [Homepage](https://facebook.github.io/react/))
 
 - Lightweight rendering engine with a small API surface to get used to in hours.
 - Large ecosystem with lots of enterprises relying on it and hundreds of best-in-class add-on libraries.
 - Consequent and rapid development to improve the core functionality.
 - Heavily used by its owner on facebook.com.
 - Compatible rendering alternatives like [Preact](https://preactjs.com/) (focus: smaller) or [Inferno](https://infernojs.org/) (focus: faster) are available suggesting that the taken general approach is rock solid. (Hint: We are working on making these available for you to choose from, too).
-- Long term strategic versioning with no regular breakage like in the Angular ecosystem.
 - Does not force or make assumptions of the rest of the development stack. Scales from easy to complex.
 
----
+
 
 ## Data Management
 
@@ -61,85 +59,83 @@ application development and therefor scales very well when multiple applications
 - Universal applicable with clients available for different frameworks and native SDKs.
 
 
----
 
 ## Tooling (Production Builds + Development Environment)
 
 ### Webpack
 
-- Hot Module Reloading for excellent developer productivity. It effectively refreshes rebuild modules via a WebSocket connection to the client.
-- We integrated the HardSource Plugin for smart loader caching and dramatically increased rebuild performance.
-- Everything is regarded as an valid input module. So instead of writing manual tasks which deal with non-JS assets we let Webpack solve all of these requirements and apply its magic.
+- State of the art module bundler which can deal with different input files (JavaScript, CSS, images, etc.)
+- Hot Module Reloading allows for excellent developer productivity. It effectively refreshes rebuilt modules using a WebSocket connection.
+- We integrated the HardSource Plugin for smart loader caching and dramatically increased rebuild times.
 
 
-
-
----
 
 ## CSS Transpilation
 
 ### PostCSS ([Project](https://github.com/postcss/postcss) | [Homepage](http://postcss.org/))
 
-- A big challenge for large application development is the isolation of styles from each other. We are using relying on CSS modules directly supported by the `css-loader` in Webpack which is actually powered by PostCSS.
-- Instead of adding another parser and CSS transpiler to the development chain like Sass or Less we are using PostCSS for development enhancements, too. This includes typical features like imports, variables, mixins, conditionals, math expressions, etc.
-- Using just one tool for the whole process is beneficial for build times and developer experience. Using different tools doubles or triples the runtime (especially relevant for Hot Module Reloading) and often times breaks other developer features like source maps.
+- A big challenge for large application development is the isolation of styles so that different components do not influence each other. We are using relying on CSS modules directly supported by the `css-loader` in Webpack which is actually powered by PostCSS.
+- Instead of adding another parser and CSS transpiler to the development chain like Sass or Less we are using PostCSS for development enhancements, too. This includes typical features like imports, variables (Sass-like), mixins (Sass-like), conditionals, `calc()` expressions, etc.
+- Using just one tool for the whole process is beneficial for build times and developer experience. Using different tools doubles or triples the build times (especially relevant in conjunction with Hot Module Reloading) and often times breaks other developer features like source maps (required for identifying source locations of implementations and errors).
 - PostCSS is regarded as the CSS processing tool chain with lots of plugins to extend its functionality. 
-- A lot of other tools are built on top of it.
-
+- A lot of other tools are built on top of it like linters (stylelint), formatters (stylefmt), etc.
 
 ### Autoprefixer ([Project](https://github.com/postcss/autoprefixer))
 
-- Instead of manually managing writing prefixes or relying on Sass-Mixins we are using a data driven approach (CanIUse Database).
+- Instead of manually managing writing prefixes or relying on custom mixins we are using a data driven approach ([Can I Use Database](http://caniuse.com/)).
 - Does far more than just addition of prefixes e.g. fixing flexbox differences, supporting different linear gradient syntaxes, etc.
 
 ### Lost Grid ([Project](https://github.com/peterramsing/lost))
 
-- Instead of assigning dozens of feature specific classes to each individual DOM node we use more meaningful class names and attach features to them.
+- Instead of assigning dozens of feature specific classes to each individual DOM node / React component we use more meaningful class names and attach features to them.
 - The concept allows solving Responsive Layout in CSS instead of putting it into JSX and this way deep inside the data rendering logic (JS) where it does not belong to.
 - Uses Flexbox natively which is far cleaner and more powerful than old style float driven layouts.
-
 
 ### Grid Kiss ([Project](https://github.com/sylvainpolletvillard/postcss-grid-kiss))
 
 - Alternative CSS-Grid-based ascii-art powered Grid system which allows visually designing a Grid layout. 
+- Makes designing grids visually and easy to understand. Especially long term.
 
 
-
-
-
----
 
 ## JavaScript Transpilation
 
 ### Babel
 
 - Transpiling of modern JavaScript code for less modern clients.
+- Uses Node v6 Environment configuration for our NodeJS backend 
 
 
 
-
----
 
 ## Code Quality
 
+### Readable Code
+
+- Uses the tasks and configurations for [readable-code](https://github.com/sebastian-software/readable-code)
+- Includes Gulp tasks for linting and auto fixing source code automatically.
+
 ### Stylelint
 
-- PostCSS-based linter for all CSS dialects. Supports alternative dialects like SugarSS,
-- Its counterpart `stylefmt` support auto formatting stylesheets based on the stylelint rules defined.
+- PostCSS-based linter for all CSS dialects. Supports alternative dialects like SugarSS and Sass.
 
+### Stylefmt
+
+- The counterpart to Stylelint supports auto formatting stylesheets based on the stylelint rules.
 
 ### ESLint
 
-- Effectively a successor of both JSHint and JSCS. Can use the Babel Parser for full ES2017 support.
-- Linting utility for JavaScript and JSX. We are using [readable-code](https://github.com/sebastian-software/readable-code) for sensible configuration with support for additional features such as React, Accessibility, filename validation, etc.
+- Effectively a successor of both [JSHint](http://jshint.com/) and [JSCS](http://jscs.info/). Is configured to use the [Babel Parser](https://github.com/babel/babel-eslint) for full ES2017+ support.
 
+### Prettier
+
+- Auto formatting engine for JavaScript which intelligently supports limiting line length and other more advanced features.
 
 ### Lint Staged
 
-- TODO
+- Auto linting for all `.css` and `.js` staged files when these are about to being committed to the repository.
 
 
----
 
 ## Server
 
@@ -150,7 +146,6 @@ application development and therefor scales very well when multiple applications
 
 
 
----
 
 ## Testing
 
@@ -166,7 +161,6 @@ application development and therefor scales very well when multiple applications
 
 
 
----
 
 ## Components
 
