@@ -127,6 +127,10 @@ application development and therefor scales very well when multiple applications
 
 - Effectively a successor of both [JSHint](http://jshint.com/) and [JSCS](http://jscs.info/). Is configured to use the [Babel Parser](https://github.com/babel/babel-eslint) for full ES2017+ support.
 
+#### ESLint Plugins
+
+
+
 ### Prettier
 
 - Auto formatting engine for JavaScript which intelligently supports limiting line length and other more advanced features.

@@ -2341,13 +2341,13 @@ debug@2.2.0, debug@~2.2.0:
   dependencies:
     ms "0.7.1"
 
-debug@2.6.1, debug@^2.1.1, debug@^2.2.0, debug@^2.6.0:
+debug@2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.1.tgz#79855090ba2c4e3115cc7d8769491d58f0491351"
   dependencies:
     ms "0.7.2"
 
-debug@2.6.3, debug@^2.1.0:
+debug@2.6.3, debug@^2.1.0, debug@^2.1.1, debug@^2.2.0, debug@^2.6.0:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.3.tgz#0f7eb8c30965ec08c72accfa0130c8b79984141d"
   dependencies:
@@ -2636,8 +2636,8 @@ elliptic@^6.0.0:
     minimalistic-crypto-utils "^1.0.0"
 
 emoji-regex@^6.1.0:
-  version "6.4.1"
-  resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.4.1.tgz#77486fe9cd45421d260a6238b88d721e2fad2050"
+  version "6.4.2"
+  resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.4.2.tgz#a30b6fee353d406d96cfb9fa765bdc82897eff6e"
 
 emojis-list@^2.0.0:
   version "2.1.0"
@@ -5615,7 +5615,7 @@ math-expression-evaluator@^1.2.14:
   version "1.2.16"
   resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.2.16.tgz#b357fa1ca9faefb8e48d10c14ef2bcb2d9f0a7c9"
 
-mdx-loader@^1.0.0-beta.1:
+mdx-loader@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/mdx-loader/-/mdx-loader-1.0.0-beta.2.tgz#c7b3b563da7a1d34ef74106b73b1f978268481cc"
   dependencies:
@@ -7330,9 +7330,9 @@ react-tap-event-plugin@^2.0.1:
   dependencies:
     fbjs "^0.8.6"
 
-react-tree-walker@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/react-tree-walker/-/react-tree-walker-2.0.1.tgz#42141f1e4564f6ab0adbdf6054b221092338cfd1"
+react-tree-walker@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-tree-walker/-/react-tree-walker-2.1.0.tgz#8f4c3dd0c7aa21adfaa049708759925da656e23c"
 
 react@^15.4.2:
   version "15.4.2"
