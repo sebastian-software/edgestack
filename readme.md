@@ -148,6 +148,7 @@ Note: Windows Build Tools are required for Node-Gyp support: Easiest approach wo
 `npm install --global --production windows-build-tools` - alternatively install Visual Studio 2013 or 2015 
 (be sure to select "Common Tools for Visual C++"). Also have a look here: https://github.com/nodejs/node-gyp#installation
 
+Note: Eventually you have to configure your proxy settings for NPM before any following installation procedures.
 
 ## NPM Commands
 
