@@ -107,6 +107,47 @@ The application configuration is supported by the `dotenv` module and it require
 ```
 
 
+## Prerequisites
+
+EdgeStack includes a few NodeJS dependencies which rely on native code and requires binary downloads 
+(where possible) or local compilation of source code. This is implemented in NodeJS via [Node-Gyp](https://github.com/nodejs/node-gyp).
+
+Currently the following dependencies are using native code: 
+
+- `leveldown`: Used by HardSource for caching
+- `compression`: ExpressJS compression library
+- `iltorb`: Brotli compression
+
+### Mac OS
+
+1. Install XCode from the Mac App Store
+2. Install [Homebrew](https://brew.sh/): `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+3. Install NodeJS v6 or higher using Homebrew (`brew install node`)
+4. Install Yarn using Homebrew (`brew install yarn`)
+
+### Linux
+
+1. Install Python 2.7 or higher (but small than 3.x) 
+2. Install proper C/C++ compiler toolchain, like `gcc`, `make`, etc.
+3. Install NodeJS 
+4. [Install Yarn](https://yarnpkg.com/lang/en/docs/install/#linux-tab)
+
+### Windows
+
+1. Install Python 2.7 or higher (but small than 3.x)
+2. Install Windows Build Tools or Visual Studio
+3. Install NodeJS v6 or higher
+4. Install Yarn (using MSI installer)
+5. For some friendlier terminal you might want to use the [Ubuntu shell in Windows 10](https://msdn.microsoft.com/de-de/commandline/wsl/about) or Hyper.app 
+
+Note: Without admin rights it's best to download NodeJS locally in some accessible folder and
+extend the PATH using `setx` to the NodeJS folder. Installation of Yarn seems to work best for this 
+situation when using `npm install yarn` instead of using the MSI installer.
+
+Note: Windows Build Tools are required for Node-Gyp support: Easiest approach would be installation via 
+`npm install --global --production windows-build-tools` - alternatively install Visual Studio 2013 or 2015 
+(be sure to select "Common Tools for Visual C++"). Also have a look here: https://github.com/nodejs/node-gyp#installation
+
 
 ## NPM Commands
 
