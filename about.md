@@ -66,8 +66,8 @@ application development and therefor scales very well when multiple applications
 
 - State of the art module bundler which can deal with different input files (JavaScript, CSS, images, etc.)
 - Hot Module Reloading allows for excellent developer productivity. It effectively refreshes rebuilt modules using a WebSocket connection.
-- We integrated the HardSource Plugin for smart loader caching and dramatically increased rebuild times.
-
+- Integrated HardSource Plugin for smart loader caching and dramatically increased rebuild times.
+- Hashing for all output files using SHA256 and Base62 for compact file names and permanent caching (ideal for CDNs).
 
 
 ## CSS Transpilation
