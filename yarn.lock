@@ -156,7 +156,7 @@ anymatch@^1.3.0:
     arrify "^1.0.0"
     micromatch "^2.1.5"
 
-apollo-client@^1.0.0-rc.9:
+apollo-client@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-1.0.2.tgz#4355bd49d53a1489bc91d9f56d5b3d0ffe33fb3c"
   dependencies:
@@ -1093,9 +1093,9 @@ babel-plugin-transform-react-jsx@^6.23.0:
     babel-plugin-syntax-jsx "^6.8.0"
     babel-runtime "^6.22.0"
 
-babel-plugin-transform-react-remove-prop-types@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.3.2.tgz#6da8d834c6d7ad8ab02f956509790cfaa01ffe19"
+babel-plugin-transform-react-remove-prop-types@^0.3.2, babel-plugin-transform-react-remove-prop-types@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.3.3.tgz#d09f48b9a9503a69c1ced39b3825c2f45d29333c"
 
 babel-plugin-transform-regenerator@^6.22.0:
   version "6.22.0"
@@ -3419,7 +3419,7 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-flow-bin@^0.43.0:
+flow-bin@^0.43.1:
   version "0.43.1"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.43.1.tgz#0733958b448fb8ad4b1576add7e87c31794c81bc"
 
@@ -4145,8 +4145,8 @@ ienoopen@1.0.0:
   resolved "https://registry.yarnpkg.com/ienoopen/-/ienoopen-1.0.0.tgz#346a428f474aac8f50cf3784ea2d0f16f62bda6b"
 
 ignore@^3.0.11, ignore@^3.2.0:
-  version "3.2.6"
-  resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.2.6.tgz#26e8da0644be0bb4cb39516f6c79f0e0f4ffe48c"
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.2.7.tgz#4810ca5f1d8eca5595213a34b94f2eb4ed926bbd"
 
 iltorb@^1.0.9:
   version "1.0.13"
@@ -5467,16 +5467,6 @@ lodash.toplainobject@^3.0.0:
   dependencies:
     lodash._basecopy "^3.0.0"
     lodash.keysin "^3.0.0"
-
-lodash.tostring@^4.0.0:
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/lodash.tostring/-/lodash.tostring-4.1.4.tgz#560c27d1f8eadde03c2cce198fef5c031d8298fb"
-
-lodash.unescape@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/lodash.unescape/-/lodash.unescape-4.0.0.tgz#36debfc492b81478471ef974cd3783e202eb6cef"
-  dependencies:
-    lodash.tostring "^4.0.0"
 
 lodash.uniq@^4.5.0:
   version "4.5.0"
@@ -7011,7 +7001,7 @@ prepend-http@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
 
-prepublish@^0.15.0, prepublish@^0.15.2:
+prepublish@^0.15.2:
   version "0.15.2"
   resolved "https://registry.yarnpkg.com/prepublish/-/prepublish-0.15.2.tgz#2af05c8793fee9f8d6abac9ab9417a1e27b24b9b"
   dependencies:
@@ -7270,11 +7260,11 @@ rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-apollo@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-1.0.0.tgz#7fcc14adcc7aa4ca4d9e04ddedf50b8fb74daa91"
+react-apollo@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-1.0.1.tgz#1d9a2a7f0609f32e0278492324a6bf38bbbddb1f"
   dependencies:
-    apollo-client "^1.0.0-rc.9"
+    apollo-client "^1.0.2"
     graphql-anywhere "^3.0.0"
     graphql-tag "^1.3.1"
     hoist-non-react-statics "^1.2.0"
@@ -7412,9 +7402,9 @@ read@1.0.x:
   dependencies:
     mute-stream "~0.0.4"
 
-readable-code@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/readable-code/-/readable-code-1.6.1.tgz#cef47a9a23c8a9c133293376e70ad78479c7edc9"
+readable-code@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/readable-code/-/readable-code-1.7.0.tgz#7cdeffb145ebb2a5e01725cf128520ac3089f31b"
   dependencies:
     babel-core "^6.24.0"
     babel-eslint "^7.2.1"
@@ -7436,7 +7426,7 @@ readable-code@^1.6.1:
     eslint-plugin-promise "^3.5.0"
     eslint-plugin-react "^6.10.3"
     eslint-plugin-security "^1.3.0"
-    flow-bin "^0.43.0"
+    flow-bin "^0.43.1"
     gulp "^3.9.1"
     gulp-eslint "^3.0.1"
     gulp-plumber "^1.1.0"
@@ -7444,14 +7434,12 @@ readable-code@^1.6.1:
     gulp-stylelint "^3.9.0"
     lint-staged "^3.4.0"
     postcss "^5.2.16"
-    prepublish "^0.15.0"
+    prepublish "^0.15.2"
     prettier "^0.22.0"
     stylefmt "^5.3.2"
     stylelint "^7.10.1"
     stylelint-order "^0.4.3"
     stylelint-scss "^1.4.3"
-    typescript "^2.2.2"
-    typescript-eslint-parser "^2.1.0"
 
 readable-stream@1.0, "readable-stream@>=1.0.33-1 <1.1.0-0":
   version "1.0.34"
@@ -8694,17 +8682,6 @@ type-is@^1.6.12, type-is@~1.6.14:
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
-
-typescript-eslint-parser@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/typescript-eslint-parser/-/typescript-eslint-parser-2.1.0.tgz#6a84c83fab89b412247727c232ccc05aacae112a"
-  dependencies:
-    lodash.unescape "4.0.0"
-    object-assign "^4.0.1"
-
-typescript@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.2.2.tgz#606022508479b55ffa368b58fee963a03dfd7b0c"
 
 ua-parser-js@^0.7.9:
   version "0.7.12"
