@@ -62,12 +62,12 @@ application development and therefor scales very well when multiple applications
 
 ## Tooling (Production Builds + Development Environment)
 
-### Webpack
+### Webpack ([Project](https://github.com/webpack/webpack) | [Homepage](https://webpack.js.org/))
 
 - State of the art module bundler which can deal with different input files (JavaScript, CSS, images, etc.)
 - Hot Module Reloading allows for excellent developer productivity. It effectively refreshes rebuilt modules using a WebSocket connection.
-- Integrated HardSource Plugin for smart loader caching and dramatically increased rebuild times.
-- Hashing for all output files using SHA256 and Base62 for compact file names and permanent caching (ideal for CDNs).
+- Integrated [HardSource Plugin](https://github.com/mzgoddard/hard-source-webpack-plugin) for smart loader caching and dramatically increased rebuild times.
+- Hashing for all output files using SHA256 and [Base62](https://www.npmjs.com/package/base62) for compact file names and permanent caching (ideal for CDNs).
 
 
 ## CSS Transpilation
@@ -102,7 +102,7 @@ application development and therefor scales very well when multiple applications
 
 ## JavaScript Transpilation
 
-### Babel
+### Babel ([Project](https://github.com/babel/babel) | [Homepage](https://babeljs.io/))
 
 - Transpiling of modern JavaScript code for less modern clients.
 - Uses Node v6 environment configuration for our NodeJS backend 
@@ -160,11 +160,12 @@ application development and therefor scales very well when multiple applications
 - `security`: Checks for security issues in e.g. RegExps.
 
 
-### Prettier
+### Prettier ([Project](https://github.com/prettier/prettier))
 
 - Auto formatting engine for JavaScript which intelligently supports limiting line length and other more advanced features.
+- Ddvanced support for language features from ES2017, JSX, and Flow.
 
-### Lint Staged
+### Lint Staged ([Project](https://github.com/okonet/lint-staged))
 
 - Auto linting for all `.css` and `.js` staged files when these are about to being committed to the repository.
 
