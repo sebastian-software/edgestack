@@ -12,8 +12,8 @@ env:
 
 cache:
   yarn: true
-  directories:
-    - node_modules
+  # directories:
+  #  - node_modules
 
 # Via: https://yarnpkg.com/en/docs/install-ci#travis-tab
 before_install:
