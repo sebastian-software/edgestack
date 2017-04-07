@@ -112,25 +112,52 @@ application development and therefor scales very well when multiple applications
 
 ## Code Quality
 
-### Readable Code
+### Readable Code ([Project](https://github.com/sebastian-software/readable-code))
 
-- Uses the tasks and configurations for [readable-code](https://github.com/sebastian-software/readable-code)
+- Uses the tasks and configurations for 
 - Includes Gulp tasks for linting and auto fixing source code automatically.
 
-### Stylelint
+### Stylelint ([Project](https://github.com/stylelint/stylelint))
 
 - PostCSS-based linter for all CSS dialects. Supports alternative dialects like SugarSS and Sass.
 
-### Stylefmt
+### Stylefmt ([Project](https://github.com/morishitter/stylefmt))
 
 - The counterpart to Stylelint supports auto formatting stylesheets based on the stylelint rules.
 
-### ESLint
+### ESLint ([Homepage](eslint.org))
 
 - Effectively a successor of both [JSHint](http://jshint.com/) and [JSCS](http://jscs.info/). Is configured to use the [Babel Parser](https://github.com/babel/babel-eslint) for full ES2017+ support.
 
-#### ESLint Plugins
+#### Quick Linting Overview
 
+- Indent with 2 spaces no tabs
+- Double quotes for JS and JSX
+- Unix line breaks
+- No trailing spaces 
+- Tend to more spaces and whitespace in your code
+- No dashes in file names (should match `^[a-zA-Z][a-zA-Z0-9.]+$`)
+- All files have a `.js` extension, no `.jsx`
+- No CommonJS - use only ES2015 modules
+- Prefer efficient ES2015 language like template strings, spreading, arrow functions, ...
+- Keep an eye on code complexity, nesting levels, file length, ...
+- Prefer named parameters (destructing) over long parameter lists
+- No usage of `labels`, `with`, `eval`, etc.
+- No magic numbers. Use variables to describe intention.
+
+#### Activated and Configured ESLint Plugins
+
+- `filenames`: Validation for file names matching some common sense requirements.
+- `flowtype`: Support for checking FlowType syntax to match rules.
+- `flowtype-errors`: Helps writing correct FlowType declarations.
+- `import`: Checks whether imports map to valid entry points.
+- `jsx-a11y`: Accessibility checks for JSX tags e.g. requiring `alt` tags on images.
+- `lodash`: Lodash specific checks and hints to prefer common features over custom/builtin.
+- `no-use-extend-native`: Prevent extending native objects/classes like `Array` or `String`.
+- `node`: Prevents usage of deprecated features and other checks when developing NodeJS based apps.
+- `promise`: Checks for correctly working with Promises.
+- `react`: React specific checks for requiring specific structures of classes + preferring functional patterns.
+- `security`: Checks for security issues in e.g. RegExps.
 
 
 ### Prettier
