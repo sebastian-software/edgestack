@@ -189,6 +189,8 @@ application development and therefor scales very well when multiple applications
 
 
 
+---
+
 
 ## Testing (Work in Progress)
 
@@ -203,13 +205,44 @@ application development and therefor scales very well when multiple applications
 
 
 
-## Components (Work in Progress)
+## Core libraries (Work in Progress)
 
-### React Toolbox v2 ([Project](https://github.com/react-toolbox/react-toolbox) | [Homepage](http://react-toolbox.com/) | [Demo](http://react-toolbox.com/#/components))
+### Lodash (Utility Methods)
 
-- Basic component library using CSS modules for component sandboxing.
-- Excellent approach on doing theming of UI components as [part of the version 2 rework](https://github.com/react-toolbox/react-toolbox/blob/dev/ROADMAP.md) using [CSS Themr](https://github.com/javivelasco/react-css-themr)
-- More generally speaking all components which are used or are being implemented should follow the guidelines of [Future React UI](https://github.com/nikgraf/future-react-ui)
+- Utility belt for stand
+
+### Recompose
+
+- 
+
+### Reselect
+
+- 
+
+### Fetch + Polyfill (Data Loading)
+
+- For all basic data loading needs prefer using the [`fetch()`-API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) over some more sophisticated legacy solutions.
+
+### ImmutableJS
+
+- Immutable high capable data structure. 
+- Good candidate for usage with Redux but also for internal component state management.
+
+
+## UI Infrastructure (Work in Progress)
+
+- All components which are used or are being implemented should follow the guidelines of [Future React UI](https://github.com/nikgraf/future-react-ui)
+
+### Goals
+
+- Allow usage of CSS modules e.g. by injecting a `theme` object or separate class names.
+- Should not require global styles or polyfills to work.
+- Do not require alternative legacy CSS precompiler like Less or Sass.
+- All dependencies should have some good amount or users/downloads/releases.
+
+
+
+## UI Core (Work in Progress)
 
 ### Redux Form ([Project](https://github.com/erikras/redux-form) | [Homepage](http://redux-form.com/))
 
@@ -264,12 +297,76 @@ application development and therefor scales very well when multiple applications
 - Scroll detection and interaction during scroll (fade in/out components, etc.)
 - Can be used to build features like lazy loading content, infinite scroll, scrollspies, or docking elements to the viewport on scroll.
 
+### React Focustrap ([Project](https://github.com/davidtheclark/focus-trap-react) | [Demo](http://davidtheclark.github.io/focus-trap/demo/))
+
+- Locking focus and tab sequence to a specific root component - useful for keyboard support.
+- Wrapper for standalone [FocusTrap](https://github.com/davidtheclark/focus-trap) library.
+
+### React Displace ([Project](https://github.com/davidtheclark/react-displace))
+
+- Move components out of the render tree structure into e.g. document body for easier positioning.
+
+### NoScroll ([Project](https://github.com/davidtheclark/no-scroll))
+
+- Helper library for interactively preventing the scrolling of the document root.
+
+### React Draggable ([Project](https://github.com/mzabriskie/react-draggable) | [Demo](http://mzabriskie.github.io/react-draggable/example/))
+
+- Component for making elements draggable.
+
+### React Resizable ([Project](https://github.com/STRML/react-resizable))
+
+- Simple component that is resizable with a handle.
+
+
+## UI Components (Work in Progress)
+
+### React Toolbox v2 ([Project](https://github.com/react-toolbox/react-toolbox) | [Homepage](http://react-toolbox.com/) | [Demo](http://react-toolbox.com/#/components))
+
+- Basic component library using CSS modules for component sandboxing.
+- Excellent approach on doing theming of UI components as [part of the version 2 rework](https://github.com/react-toolbox/react-toolbox/blob/dev/ROADMAP.md) using [CSS Themr](https://github.com/javivelasco/react-css-themr)
+- CONTENT?
+
+### Alternative UI framework: Belle
+
+- https://github.com/nikgraf/belle
+- CONTENT?
+
 ### React Autosuggest ([Project](https://github.com/moroshko/react-autosuggest) | [Homepage](http://react-autosuggest.js.org/))
 
-- Compatible with CSS modules
+- Compatible with CSS modules.
 - WAI ARIA compatible (Accessibility)
-- Unfortunately not based on React Virtualized for item rendering
+- Unfortunately not based on React Virtualized for item rendering.
 
-### React Select ([Project](https://github.com/JedWatson/react-select))
+### React Select ([Project](https://github.com/JedWatson/react-select) | [Demo](http://jedwatson.github.io/react-select/))
 
-- A Select control built with and for React. 
+- A Select control built with and for React. Supports multiple values, auto complete, lazy loading, etc.
+- Does offer [windowing select box](https://github.com/bvaughn/react-virtualized-select/) rendering using React Virtualized.
+- It comes with a default styling using "normal" CSS, but as it offers [customizable classnames](https://github.com/JedWatson/react-select#custom-classnames) it should work well in a CSS modules environment.
+
+### DraftJS ([Project](https://github.com/facebook/draft-js) | [Homepage](https://draftjs.org/))
+
+- A JavaScript rich text editor framework, built for React and backed by an immutable model.
+
+### ARIA Menu ([Project](https://github.com/davidtheclark/react-aria-menubutton) | [Demo](http://davidtheclark.github.io/react-aria-menubutton/demo/))
+
+- Accessible menus by providing keyboard interactions and ARIA attributes aligned with the WAI-ARIA Menu Button Design Pattern.
+
+### ARIA Tabpanel ([Project](https://github.com/davidtheclark/react-aria-tabpanel))
+
+- Accessible tabs, by providing keyboard interactions and ARIA attributes described in the WAI-ARIA Tab Panel Design Pattern.
+
+### ARIA Modal ([Project](https://github.com/davidtheclark/react-aria-modal))
+
+- Accessible React modal built according WAI-ARIA Authoring Practices
+
+### DropZone ([Project](https://github.com/okonet/react-dropzone))
+
+- Uploading files using Drag&Drop.
+
+
+
+
+
+### Tooltips
+### Toggle
