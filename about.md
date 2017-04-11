@@ -12,12 +12,14 @@ development. **EdgeStack** is a possible solution for keeping this hassle outsid
 application development and therefor scales very well when multiple applications have to be developed.
 
 
+
 ## Project Content
 
 - Demo Application (`./src/app`, `./src/client`, `./src/server`)
 - Exported API for Usage in Applications (`./src/api`)
 - Universal React ready Hot Loading infrastructure (`./src/hotdev`)
 - Build process based on a custom Webpack Factory (`./src/webpack`)
+
 
 
 ## Core Features
@@ -70,7 +72,8 @@ application development and therefor scales very well when multiple applications
 - Hashing for all output files using SHA256 and [Base62](https://www.npmjs.com/package/base62) for compact file names and permanent caching (ideal for CDNs).
 
 
-## CSS Transpilation
+
+## Styling (CSS Modules)
 
 ### PostCSS ([Project](https://github.com/postcss/postcss) | [Homepage](http://postcss.org/))
 
@@ -79,6 +82,12 @@ application development and therefor scales very well when multiple applications
 - Using just one tool for the whole process is beneficial for build times and developer experience. Using different tools doubles or triples the build times (especially relevant in conjunction with Hot Module Reloading) and often times breaks other developer features like source maps (required for identifying source locations of implementations and errors).
 - PostCSS is regarded as the CSS processing tool chain with lots of plugins to extend its functionality. 
 - A lot of other tools are built on top of it like linters (stylelint), formatters (stylefmt), etc.
+
+### CSS Modules ([Project](https://github.com/css-modules/css-modules))
+
+- We use CSS modules for sandboxing styles of different components / areas from each other.
+- The functionality is built into [CSS Loader by Webpack](https://github.com/webpack-contrib/css-loader#css-modules) and is enabled in EdgeStack.
+- See also: [Benefits over other solutions](https://gist.github.com/DavidWells/9e4436608b834f1d3c0346db3631d774#gistcomment-2053946)
 
 ### Autoprefixer ([Project](https://github.com/postcss/autoprefixer))
 
@@ -159,11 +168,10 @@ application development and therefor scales very well when multiple applications
 - `react`: React specific checks for requiring specific structures of classes + preferring functional patterns.
 - `security`: Checks for security issues in e.g. RegExps.
 
-
 ### Prettier ([Project](https://github.com/prettier/prettier))
 
 - Auto formatting engine for JavaScript which intelligently supports limiting line length and other more advanced features.
-- Ddvanced support for language features from ES2017, JSX, and Flow.
+- Advanced support for language features from ES2017, JSX, and Flow.
 
 ### Lint Staged ([Project](https://github.com/okonet/lint-staged))
 
