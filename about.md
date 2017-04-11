@@ -73,7 +73,7 @@ application development and therefor scales very well when multiple applications
 
 
 
-## Styling (CSS Modules)
+## Styling
 
 ### PostCSS ([Project](https://github.com/postcss/postcss) | [Homepage](http://postcss.org/))
 
@@ -183,37 +183,62 @@ application development and therefor scales very well when multiple applications
 
 ### Express
 
-- TODO
+### Helmet
+
+### CSP
 
 
 
 
+## Testing (Work in Progress)
 
-## Testing
+### Jest ([Project](https://github.com/facebook/jest) | [Homepage](https://facebook.github.io/jest/))
 
-### Jest
+- Basic component testing with [Jest snapshots](https://facebook.github.io/jest/docs/snapshot-testing.html) is a breeze.
+- Runtimes are fast enough to make running the test suite feasible even when used multiple times a day.
 
-- TODO
+### Nightmare ([Project](https://github.com/segmentio/nightmare))
 
-### Nightmare
-
-- TODO
-
-
+- High-level PhantomJS-based UI testing library.
 
 
 
+## Components (Work in Progress)
 
-## Components
+### React Toolbox v2 ([Project](https://github.com/react-toolbox/react-toolbox) | [Homepage](http://react-toolbox.com/) | [Demo](http://react-toolbox.com/#/components))
 
-### Redux-Form
+- Basic component library using CSS modules for component sandboxing.
+- Excellent approach on doing theming of UI components as [part of the version 2 rework](https://github.com/react-toolbox/react-toolbox/blob/dev/ROADMAP.md) using [CSS Themr](https://github.com/javivelasco/react-css-themr)
+- More generally speaking all components which are used or are being implemented should follow the guidelines of [Future React UI](https://github.com/nikgraf/future-react-ui)
 
-- TODO
+### Redux Form ([Project](https://github.com/erikras/redux-form) | [Homepage](http://redux-form.com/))
 
-### React Virtualized
+- Effectively the standard for managing form values, implement serialization and state management in Redux applications.
+- Implemented as a higher order component for connecting to more primitive form elements.
+- Integrated tracking for which fields are being touched/modified together with some flexible validation handling.
 
-- TODO
+### React Virtualized ([Project](https://github.com/bvaughn/react-virtualized) | [Demo](https://bvaughn.github.io/react-virtualized/))
 
-### Sizeme
+- Highly efficient rendering of crazy large lists and tables where instead of rendering all elements which are available the rendering is limited to the actually visible fraction of the component content.
+- All data intensive components should be probably implemented using this library aka data tables, long item lists, auto suggest boxes, country selectors, etc.
 
-- TODO
+### React Sortable HOC ([Project](https://github.com/clauderic/react-sortable-hoc) | [Demo](http://clauderic.github.io/react-sortable-hoc/#/basic-configuration/basic-usage))
+
+- "A set of higher-order components to turn any list into an animated, touch-friendly, sortable list."
+- Works together with React Virtualized.
+- Super smooth animation.
+- Touch ready.
+
+### Sizeme ([Project](https://github.com/ctrlplusb/react-sizeme) | [Demo](https://react-sizeme.now.sh/))
+
+- "Make your React Components aware of their width, height and position."
+- Effectively offering [element queries](https://www.smashingmagazine.com/2016/07/how-i-ended-up-with-element-queries-and-how-you-can-use-them-today/) for styling or even better: alternative rendering paths.
+- There is a [more high-level wrapper](https://github.com/ctrlplusb/react-component-queries) available for a more query-like approach.
+
+### Overdrive ([Project](https://github.com/berzniz/react-overdrive) | [Homepage](https://react-overdrive.now.sh/))
+
+- Magic-Move style transitions for React components.
+
+### React Motion ([Project](https://github.com/chenglou/react-motion))
+
+- Spring style animations for React components.
