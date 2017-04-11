@@ -175,7 +175,7 @@
     "react-apollo": "^1.0.1",
     "react-dev-utils": "^0.5.2",
     "react-dom": "^15.5.3",
-    "react-helmet": "^5.0.2",
+    "react-helmet": "^5.0.3",
     "react-intl": "^2.2.3",
     "react-redux": "^5.0.4",
     "react-router": "^4.0.0",
