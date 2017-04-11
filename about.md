@@ -197,9 +197,9 @@ application development and therefor scales very well when multiple applications
 - Basic component testing with [Jest snapshots](https://facebook.github.io/jest/docs/snapshot-testing.html) is a breeze.
 - Runtimes are fast enough to make running the test suite feasible even when used multiple times a day.
 
-### Nightmare ([Project](https://github.com/segmentio/nightmare))
+### Nightmare ([Project](https://github.com/segmentio/nightmare) | [Introduction](https://segment.com/blog/ui-testing-with-nightmare/))
 
-- High-level PhantomJS-based UI testing library.
+- High-level Electron-based (think of modern PhantomJS) UI testing library.
 
 
 
@@ -229,16 +229,47 @@ application development and therefor scales very well when multiple applications
 - Super smooth animation.
 - Touch ready.
 
-### Sizeme ([Project](https://github.com/ctrlplusb/react-sizeme) | [Demo](https://react-sizeme.now.sh/))
+### React Sizeme ([Project](https://github.com/ctrlplusb/react-sizeme) | [Demo](https://react-sizeme.now.sh/))
 
 - "Make your React Components aware of their width, height and position."
 - Effectively offering [element queries](https://www.smashingmagazine.com/2016/07/how-i-ended-up-with-element-queries-and-how-you-can-use-them-today/) for styling or even better: alternative rendering paths.
 - There is a [more high-level wrapper](https://github.com/ctrlplusb/react-component-queries) available for a more query-like approach.
 
-### Overdrive ([Project](https://github.com/berzniz/react-overdrive) | [Homepage](https://react-overdrive.now.sh/))
+### React Overdrive ([Project](https://github.com/berzniz/react-overdrive) | [Homepage](https://react-overdrive.now.sh/))
 
 - Magic-Move style transitions for React components.
 
 ### React Motion ([Project](https://github.com/chenglou/react-motion))
 
 - Spring style animations for React components.
+
+### React DND ([Project](https://github.com/react-dnd/react-dnd) | [Homepage](http://react-dnd.github.io/react-dnd/) | [Demo](http://react-dnd.github.io/react-dnd/examples-dustbin-single-target.html))
+
+- A set of React higher-order components to help you build complex drag and drop interfaces while keeping your components decoupled.
+
+### React Overlays ([Project](https://github.com/react-bootstrap/react-overlays))
+
+- Utilities for creating robust overlay components e.g. for modals, dialogs, etc.
+
+### React HammerJS ([Project](https://github.com/JedWatson/react-hammerjs))
+
+- Library for support more complex types of touch events like pinch/zoom based on [HammerJS](https://github.com/hammerjs/hammer.js).
+
+### React Tapable ([Project](https://github.com/JedWatson/react-tappable))
+
+- Tap Events as common alternative for click events / touch events.
+
+### React Waypoint ([Project](https://github.com/brigade/react-waypoint))
+
+- Scroll detection and interaction during scroll (fade in/out components, etc.)
+- Can be used to build features like lazy loading content, infinite scroll, scrollspies, or docking elements to the viewport on scroll.
+
+### React Autosuggest ([Project](https://github.com/moroshko/react-autosuggest) | [Homepage](http://react-autosuggest.js.org/))
+
+- Compatible with CSS modules
+- WAI ARIA compatible (Accessibility)
+- Unfortunately not based on React Virtualized for item rendering
+
+### React Select ([Project](https://github.com/JedWatson/react-select))
+
+- A Select control built with and for React. 
