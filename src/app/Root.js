@@ -12,8 +12,8 @@ import { getLocale, getLanguage, createLazyComponent } from "../api/common"
 
 import messages from "./messages/en.json"
 
-import Header from "./components/Header"
-import Navigation from "./components/Navigation"
+import Header from "app/components/Header"
+import Navigation from "app/components/Navigation"
 
 const HomeView = createLazyComponent({
   load: (language) => {

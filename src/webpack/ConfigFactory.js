@@ -98,7 +98,7 @@ function ifIsFile(filePath) {
 }
 
 
-function getJsLoader({ isNode, isWeb, isProd, isDev })
+function getJsLoader({ isNode, isWeb, isProd, isDev, root })
 {
   const nodeBabel = isNode ? {
     // Don't try to find .babelrc because we want to force this configuration.
@@ -129,6 +129,10 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
 
     plugins:
     [
+      [ "module-resolver", {
+        root: [ path.resolve(root, "src") ]
+      }],
+
       // Allow parsing of import()
       "syntax-dynamic-import",
 
@@ -189,6 +193,10 @@ function getJsLoader({ isNode, isWeb, isProd, isDev })
 
     plugins:
     [
+      [ "module-resolver", {
+        root: [ path.resolve(root, "src") ]
+      }],
+
       // Allow parsing of import()
       "syntax-dynamic-import",
 
@@ -436,7 +444,8 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
     isProd,
     isDev,
     isWeb,
-    isNode
+    isNode,
+    root
   })
 
   const excludeFromTranspilation = [
@@ -598,11 +607,6 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
 
     resolve:
     {
-      modules: [
-        path.join(root, "src"),
-        "node_modules"
-      ],
-
       // Enable new module/jsnext:main field for requiring files
       // Defaults: https://webpack.github.io/docs/configuration.html#resolve-packagemains
       mainFields: ifNode(
