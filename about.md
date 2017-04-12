@@ -370,7 +370,7 @@ application development and therefor scales very well when multiple applications
 
 - Uploading files using Drag&Drop.
 
-### Infinite Calendar ([Project](https://github.com/clauderic/react-infinite-calendar | )[Demo](http://clauderic.github.io/react-infinite-calendar/#/basic-settings/basic-configuration))
+### Infinite Calendar ([Project](https://github.com/clauderic/react-infinite-calendar) | [Demo](http://clauderic.github.io/react-infinite-calendar/#/basic-settings/basic-configuration))
 
 - Endless scrollable calendar or better named "date picker" widget with single or multi/range selection. Mobile friendly. Touch ready.
 - Unfortunately just a root CSS Classname configurable without any support for CSS modules.
@@ -381,6 +381,30 @@ application development and therefor scales very well when multiple applications
 - Created and regularly maintained by Airbnb
 - Uses moment.js which is kind of unfortunate as it typically introduces some good amount of overhead.
 - Customization is either being based on using Sass variables or override existing CSS - both is limited in scope/flexibility.
+
+### React Leaflet ([Project](https://github.com/PaulLeCam/react-leaflet))
+
+- Embedding of [leaflet](http://leafletjs.com/) based maps for React.
+- Well maintained component with regular updates.
+- Typically being combined with tiles from [OpenStreetMap](http://openstreetmap.org).
+
+### React Player ([Project](https://github.com/CookPete/react-player))
+
+- Pretty universal video/audio player for React which supports YouTube, Vimeo, Soundcloud and more.
+
+### React Vis ([Project](https://github.com/uber/react-vis) | [Demo](http://uber.github.io/react-vis/))
+
+- Visualization/Chart Engine based on D3 and made by Uber.
+
+### Victory ([Project](https://github.com/FormidableLabs/victory) | [Homepage](http://formidable.com/open-source/victory/))
+
+- Another chart renderer developed by FormidableLabs and used by e.g. Airbnb.
+
+### React Data Grid ([Project](https://github.com/adazzle/react-data-grid))
+
+- Excel like editable data grid implementation with virtual scrolling. 
+
+
 
 ### Tooltips
 ### Toggle
