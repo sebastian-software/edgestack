@@ -6595,9 +6595,9 @@ postcss-filter-plugins@^2.0.0:
     postcss "^5.0.4"
     uniqid "^4.0.0"
 
-postcss-flexbugs-fixes@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/postcss-flexbugs-fixes/-/postcss-flexbugs-fixes-2.1.0.tgz#e1048faa9e3b500159208a8efbd8ed147625a268"
+postcss-flexbugs-fixes@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/postcss-flexbugs-fixes/-/postcss-flexbugs-fixes-2.1.1.tgz#5fa40080ba216d398e41228be2765282f2060d8d"
   dependencies:
     postcss "^5.0.0"
 

@@ -157,7 +157,7 @@
     "postcss-devtools": "^1.1.1",
     "postcss-discard-comments": "^2.0.4",
     "postcss-easings": "^0.3.0",
-    "postcss-flexbugs-fixes": "^2.1.0",
+    "postcss-flexbugs-fixes": "^2.1.1",
     "postcss-font-family-system-ui": "^1.0.2",
     "postcss-gradient-transparency-fix": "^1.0.3",
     "postcss-grid-kiss": "^1.2.1",
