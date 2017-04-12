@@ -11,6 +11,7 @@ import HardSourceWebpackPlugin from "hard-source-webpack-plugin"
 
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 import ChunkManifestPlugin from "chunk-manifest-webpack-plugin"
+import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin"
 
 import dotenv from "dotenv"
 
@@ -622,6 +623,10 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
     },
 
     plugins: removeEmpty([
+      // Enforces the entire path of all required modules match the exact case of the actual path on disk.
+      // https://github.com/Urthen/case-sensitive-paths-webpack-plugin
+      new CaseSensitivePathsPlugin(),
+
       // Improve source caching in Webpack v2.
       // Therefor we disable it in production and only use it to speed up development rebuilds.
       //
