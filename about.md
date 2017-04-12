@@ -318,6 +318,12 @@ application development and therefor scales very well when multiple applications
 
 - Simple component that is resizable with a handle.
 
+### Grid Layout ([Project](https://github.com/STRML/react-grid-layout) | [Demo](https://strml.github.io/react-grid-layout/examples/0-showcase.html))
+
+- Think more of a customizable portal interface engine than a basic (CSS) grid layout implementation.
+- Supports responsive, drag&drop customization, serialization (save+restore), ...
+
+
 
 ## UI Components (Work in Progress)
 
@@ -364,9 +370,17 @@ application development and therefor scales very well when multiple applications
 
 - Uploading files using Drag&Drop.
 
+### Infinite Calendar ([Project](https://github.com/clauderic/react-infinite-calendar | )[Demo](http://clauderic.github.io/react-infinite-calendar/#/basic-settings/basic-configuration))
 
+- Endless scrollable calendar or better named "date picker" widget with single or multi/range selection. Mobile friendly. Touch ready.
+- Unfortunately just a root CSS Classname configurable without any support for CSS modules.
 
+### React Dates ([Project](https://github.com/airbnb/react-dates) | [Demo](http://airbnb.io/react-dates/))
 
+- Different date picker components (single, range). 
+- Created and regularly maintained by Airbnb
+- Uses moment.js which is kind of unfortunate as it typically introduces some good amount of overhead.
+- Customization is either being based on using Sass variables or override existing CSS - both is limited in scope/flexibility.
 
 ### Tooltips
 ### Toggle
