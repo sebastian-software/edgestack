@@ -598,6 +598,11 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
 
     resolve:
     {
+      modules: [
+        path.join(root, "src"),
+        "node_modules"
+      ],
+
       // Enable new module/jsnext:main field for requiring files
       // Defaults: https://webpack.github.io/docs/configuration.html#resolve-packagemains
       mainFields: ifNode(
