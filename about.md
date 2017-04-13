@@ -323,6 +323,9 @@ application development and therefor scales very well when multiple applications
 - Think more of a customizable portal interface engine than a basic (CSS) grid layout implementation.
 - Supports responsive, drag&drop customization, serialization (save+restore), ...
 
+### Redux-Auth-Wrapper ([Project](https://github.com/mjrussell/redux-auth-wrapper))
+
+- Provides higher-order components for easy to read and apply authentication and authorization constraints for your components.
 
 
 ## UI Components (Work in Progress)
@@ -404,7 +407,19 @@ application development and therefor scales very well when multiple applications
 
 - Excel like editable data grid implementation with virtual scrolling. 
 
+### Recharts ([Project](https://github.com/recharts/recharts) | [Homepage](http://recharts.org/))
 
+- A composable charting library built on React components and D3.
+
+### React Trend ([Project](https://github.com/unsplash/react-trend))
+
+- Basic line charting component
+- Small and no dependencies. Based on basic SVG rendering.
+
+### React Text Mask ([Project](https://github.com/text-mask/text-mask/tree/master/react#readme))
+
+- Wrapper for text mask rendering for a React component.
+- Very flexible approach and fully compatible with a basic `<input/>` element.
 
 ### Tooltips
 ### Toggle
