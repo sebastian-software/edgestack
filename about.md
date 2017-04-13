@@ -416,10 +416,27 @@ application development and therefor scales very well when multiple applications
 - Basic line charting component
 - Small and no dependencies. Based on basic SVG rendering.
 
-### React Text Mask ([Project](https://github.com/text-mask/text-mask/tree/master/react#readme))
+### React Text Mask ([Project](https://github.com/text-mask/text-mask/tree/master/react))
 
 - Wrapper for text mask rendering for a React component.
 - Very flexible approach and fully compatible with a basic `<input/>` element.
 
-### Tooltips
-### Toggle
+### React Slick ([Project](https://github.com/akiran/react-slick))
+
+- Slider/Carousel component
+
+### React HTML5 Video ([Project](https://github.com/mderrick/react-html5video))
+
+- A customizeable HoC (Higher Order Component) for HTML5 Video that allows custom and configurable controls with i18n and a11y.
+
+### Slider ([Project](https://github.com/react-component/slider))
+
+- Slider UI component for React
+
+### React Textarea Autosize ([Project](https://github.com/andreypopp/react-textarea-autosize))
+
+- Drop-in replacement for the textarea component which automatically resizes textarea as content changes.
+
+### React Image Crop ([Project](https://github.com/DominicTobias/react-image-crop))
+
+- A responsive image cropping tool for React
