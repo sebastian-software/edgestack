@@ -1,5 +1,7 @@
 import React from "react"
 import { FormattedMessage } from "react-intl"
+import PropTypes from "prop-types"
+
 import Styles from "./Missing.css"
 
 function Missing({ staticContext }) {
@@ -13,8 +15,8 @@ function Missing({ staticContext }) {
 }
 
 Missing.propTypes = {
-  staticContext: React.PropTypes.object,
-  intl: React.PropTypes.object
+  staticContext: PropTypes.object,
+  intl: PropTypes.object
 }
 
 export default Missing

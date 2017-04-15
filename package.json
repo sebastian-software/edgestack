@@ -182,6 +182,7 @@
     "postcss-will-change": "^1.1.0",
     "postcss-zindex": "^2.2.0",
     "prompt": "^1.0.0",
+    "prop-types": "^15.5.8",
     "raw-loader": "^0.5.1",
     "react": "^15.5.4",
     "react-apollo": "^1.0.1",

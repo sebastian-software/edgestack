@@ -7,6 +7,7 @@ import React from "react"
 import { Switch, Route } from "react-router-dom"
 import { IntlProvider } from "react-intl"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 import { getLocale, getLanguage, createLazyComponent } from "../api/common"
 
@@ -58,10 +59,10 @@ function Root({ children, locale, language, intl }) {
 }
 
 Root.propTypes = {
-  children: React.PropTypes.node,
-  locale: React.PropTypes.string,
-  language: React.PropTypes.string,
-  intl: React.PropTypes.object
+  children: PropTypes.node,
+  locale: PropTypes.string,
+  language: PropTypes.string,
+  intl: PropTypes.object
 }
 
 const mapStateToProps = (state, ownProps) => ({

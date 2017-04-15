@@ -3,6 +3,7 @@ import Helmet from "react-helmet"
 import { connect } from "react-redux"
 import { FormattedDate, FormattedMessage, FormattedRelative } from "react-intl"
 import { addDays } from "date-fns"
+import PropTypes from "prop-types"
 
 import Styles from "./About.css"
 import { getCounter, decrementCounter, incrementCounter, loadCounter } from "../modules/CounterModule"
@@ -79,11 +80,11 @@ class About extends React.Component {
 }
 
 About.propTypes = {
-  intl: React.PropTypes.object,
-  value: React.PropTypes.number,
-  load: React.PropTypes.func,
-  handleIncrement: React.PropTypes.func,
-  handleDecrement: React.PropTypes.func
+  intl: PropTypes.object,
+  value: PropTypes.number,
+  load: PropTypes.func,
+  handleIncrement: PropTypes.func,
+  handleDecrement: PropTypes.func
 }
 
 const mapStateToProps = (state, ownProps) => ({

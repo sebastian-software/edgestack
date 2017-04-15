@@ -1,5 +1,6 @@
 import React from "react"
 import Helmet from "react-helmet"
+import PropTypes from "prop-types"
 
 import Styles from "./Home.css"
 
@@ -19,7 +20,7 @@ function Home({ intl }) {
 }
 
 Home.propTypes = {
-  intl: React.PropTypes.object
+  intl: PropTypes.object
 }
 
 export default Home

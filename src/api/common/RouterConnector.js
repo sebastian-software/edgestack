@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
+import PropTypes from "prop-types"
 
 export const SET_PATH = "router/SET_PATH"
 export const REPLACE_PATH = "router/REPLACE_PATH"
@@ -82,12 +83,12 @@ class RoutingConnector extends React.Component {
 }
 
 RoutingConnector.propTypes = {
-  location: React.PropTypes.object,
-  children: React.PropTypes.node,
-  path: React.PropTypes.string,
-  replace: React.PropTypes.bool,
-  setPath: React.PropTypes.func,
-  recoverPath: React.PropTypes.string
+  location: PropTypes.object,
+  children: PropTypes.node,
+  path: PropTypes.string,
+  replace: PropTypes.bool,
+  setPath: PropTypes.func,
+  recoverPath: PropTypes.string
 }
 
 RoutingConnector.defaultProps = {
@@ -95,7 +96,7 @@ RoutingConnector.defaultProps = {
 }
 
 RoutingConnector.contextTypes = {
-  router: React.PropTypes.object
+  router: PropTypes.object
 }
 
 function mapStateToProps(state) {

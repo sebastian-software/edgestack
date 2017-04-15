@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { injectIntl, IntlProvider } from "react-intl"
+import PropTypes from "prop-types"
 
 import { getLocale, getLanguage } from "./State"
 
@@ -88,10 +89,10 @@ export default function createLazyComponent(options)
 
   LazyComponentWrapper.propTypes =
   {
-    children: React.PropTypes.node,
-    locale: React.PropTypes.string,
-    language: React.PropTypes.string,
-    intl: React.PropTypes.object
+    children: PropTypes.node,
+    locale: PropTypes.string,
+    language: PropTypes.string,
+    intl: PropTypes.object
   }
 
   const mapStateToProps = (state, ownProps) => ({

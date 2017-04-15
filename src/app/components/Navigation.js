@@ -1,6 +1,8 @@
 import React from "react"
 import { injectIntl, FormattedMessage } from "react-intl"
 import { NavLink } from "react-router-dom"
+import PropTypes from "prop-types"
+
 import Styles from "./Navigation.css"
 
 function Navigation({ intl }) {
@@ -14,7 +16,7 @@ function Navigation({ intl }) {
 }
 
 Navigation.propTypes = {
-  intl: React.PropTypes.object
+  intl: PropTypes.object
 }
 
 export default injectIntl(Navigation)

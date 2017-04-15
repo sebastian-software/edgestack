@@ -1,6 +1,8 @@
 import React from "react"
 import { injectIntl, FormattedMessage } from "react-intl"
 import Helmet from "react-helmet"
+import PropTypes from "prop-types"
+
 import Styles from "./Header.css"
 
 function Header({ intl }) {
@@ -24,7 +26,7 @@ function Header({ intl }) {
 }
 
 Header.propTypes = {
-  intl: React.PropTypes.object
+  intl: PropTypes.object
 }
 
 export default injectIntl(Header)
