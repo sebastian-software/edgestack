@@ -84,7 +84,7 @@ export function ensureIntlSupport(locale) {
     console.warn("See also: https://github.com/nodejs/node/wiki/Intl")
   }
 
-  const intlUrl = require("lean-intl/locale-data/json/" + locale + ".json")
+  const intlUrl = require("lean-intl/locale-data/" + locale + ".json")
 
   return import("lean-intl").then((IntlPolyfill) => {
     return fetch(intlUrl).then((response) => {
