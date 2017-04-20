@@ -1,0 +1,88 @@
+{
+  "name": "sebastian-software/edgestack",
+  "version": "0.1.4",
+  "libraries": {
+    "xv": "^1.1.25"
+  },
+  "title": "",
+  "branch": "",
+  "style": {
+    "name": "Swiss",
+    "componentSet": {
+      "nav": "nav/BasicNav",
+      "header": "header/SwissHeader",
+      "article": "article/SwissArticle",
+      "footer": "footer/BasicFooter"
+    },
+    "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+    "heading": {
+      "fontWeight": 700,
+      "letterSpacing": "-0.01em"
+    },
+    "layout": {
+      "fluid": true
+    },
+    "colors": {
+      "text": "#000",
+      "background": "#fff",
+      "primary": "#05a",
+      "secondary": "#444",
+      "highlight": "#f30",
+      "border": "#ccc",
+      "muted": "#eee"
+    }
+  },
+  "content": [
+    {
+      "component": "nav",
+      "links": [
+        {
+          "href": "https://github.com/sebastian-software/edgestack",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://npmjs.com/package/edgestack",
+          "text": "npm"
+        }
+      ]
+    },
+    {
+      "component": "header",
+      "heading": "edgestack",
+      "subhead": "A Universal React Stack with deeply integrated localization Support, semi-automatic route-based code splitting, Hot Module Reloading (HMR), Redux, Apollo GraphQL and more...",
+      "children": [
+        {
+          "component": "ui/TweetButton",
+          "text": "edgestack: A Universal React Stack with deeply integrated localization Support, semi-automatic route-based code splitting, Hot Module Reloading (HMR), Redux, Apollo GraphQL and more...",
+          "url": ""
+        },
+        {
+          "component": "ui/GithubButton",
+          "user": "sebastian-software",
+          "repo": "edgestack"
+        }
+      ],
+      "text": "v0.17.2"
+    },
+    {
+      "component": "article",
+      "metadata": {
+        "source": "github.readme"
+      },
+      "html": "<h1>Edge Stack<br><a href=\"https://www.sebastian-software.de\"><img src=\"https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg\"></a> <a href=\"https://www.npmjs.com/package/edgestack\"><img src=\"https://img.shields.io/npm/v/edgestack.svg\"></a> <a href=\"https://www.npmjs.com/package/edgestack\"><img src=\"https://img.shields.io/npm/dm/edgestack.svg\"></a> <a href=\"https://travis-ci.org/sebastian-software/edgestack\"><img src=\"https://img.shields.io/travis/sebastian-software/edgestack/master.svg?branch=master&amp;label=unix%20build\"></a> <a href=\"https://ci.appveyor.com/project/swernerx/edgestack/branch/master\"><img src=\"https://img.shields.io/appveyor/ci/swernerx/edgestack/master.svg?label=windows%20build\"></a> <a href=\"https://david-dm.org/sebastian-software/edgestack\"><img src=\"https://david-dm.org/sebastian-software/edgestack.svg\"></a></h1>\n\n<h2>TOC</h2>\n<ul>\n<li><a href=\"https://github.com/sebastian-software/edgestack#about\">About</a></li>\n<li><a href=\"https://github.com/sebastian-software/edgestack#features\">Features</a></li>\n<li><a href=\"https://github.com/sebastian-software/edgestack#overview\">Overview</a></li>\n<li><a href=\"https://github.com/sebastian-software/edgestack#project-structure\">Project Structure</a></li>\n<li><a href=\"https://github.com/sebastian-software/edgestack#npm-script-commands\">NPM Commands</a></li>\n<li><a href=\"https://github.com/sebastian-software/edgestack#references\">References</a></li>\n</ul>\n<h2>Key Benefits</h2>\n<ul>\n<li>No Boilerplate. Just another dependency to include. Easy future updates &amp; maintenance.</li>\n<li>Route based Code Splitting with Hot Module Reloading (HMR).</li>\n<li>Ready for Localization using React-Intl pre-configured + polyfilled.</li>\n</ul>\n<p>More on the selected components of the stack: <a href=\"./about.md\">About</a></p>\n<h2>Features</h2>\n<ul>\n<li>Universal / Isomorphic application development.</li>\n<li>Extreme live development - hot reloading of client/server source with high level of error tolerance.</li>\n<li>Express server with a basic security configuration using <em>hpp</em> and <em>helmet</em>.</li>\n<li><em>ReactJS</em> as the view layer.</li>\n<li>React Router v4 as the router.</li>\n<li><em>React Helmet</em> allowing control of the page title/meta/styles/scripts from within your components. Direct control for your SEO needs.</li>\n<li>CSS Support with CSS modules and additional flexible full PostCSS chain for advanced transformations e.g. autoprefixer</li>\n<li>Fully integrated asset support for referencing files in CSS and JavaScript.</li>\n<li>Full ES2015 support, using <em>Babel</em> to transpile where needed.</li>\n<li>Bundling of both client and server using <em>Webpack</em> v2. See also: <a href=\"https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/\">The Cost of Small Modules</a></li>\n<li>Client bundle is automatically split by routes.</li>\n<li>Long term caching of the client bundle works out of the box.</li>\n<li>Support for development and optimized production configuration.</li>\n<li>Easy environment configuration via <code>dotenv</code> files.</li>\n<li><em>Markdown</em> rendering for Components integrated.</li>\n<li>Super modular Lodash with Webpack tooling to enable automatic tree shaking</li>\n<li>Fetch API Polyfill integrated</li>\n<li>PostCSS <em>Lost Grid</em> integrated</li>\n<li>Redux and Thunk middleware</li>\n<li>Apollo Client (GraphQL)</li>\n<li>Data Loading on Server Side using <code>fetchData</code> static methods where available</li>\n<li>HardSource pre-configured for unseen rebuild performance.</li>\n</ul>\n<h2>Work in progress</h2>\n<ul>\n<li><em>Jest</em> for unit testing</li>\n<li>Flow Typechecking</li>\n</ul>\n<h2>Overview</h2>\n<p>This solution uses Webpack 2 to produce bundles for both the client and the server code.</p>\n<p>The reasoning for using Webpack to bundle both the client and the server is to bring greater interop and extensibility to the table. This will for instance allowing server bundles to handle React components that introduce things like CSS or Images (as and when you add the respective loaders).</p>\n<p>Given that we are bundling our server code I have included the <code>source-map-support</code> module to ensure that we get nice stack traces when executing our code via node.</p>\n<p>All the source code is written in ES2015, and I have explicitly kept it to the true specification (bar JSX syntax). As we are following this approach it is unnecessary for us to transpile our source code for the server into ES5, as <code>node</code> v6 has native support for almost all of the ES2015 syntax. Our client (browser) bundle is however transpiled to ES5 code for maximum browser/device support.</p>\n<p>The application configuration is supported by the <code>dotenv</code> module and it requires you to create a <code>.env</code> file in the project root (you can use the <code>.env.example</code> as a base). The <code>.env</code> file has been explicitly ignored from git as it will typically contain environment sensitive/specific information. In the usual case your continuous deployment tool of choice should configure the specific <code>.env</code> file that is needed for a target environment.</p>\n<h2>Project Structure</h2>\n<pre>/\n|- lib <span class=\"hljs-comment\">// The target output dir for our library export</span>\n|  |- <span class=\"hljs-keyword\">index</span>.es.js <span class=\"hljs-comment\">// ES2015 module export</span>\n|  |- <span class=\"hljs-keyword\">index</span>.js <span class=\"hljs-comment\">// CommonJS export</span>\n|\n|- build <span class=\"hljs-comment\">// The target output dir for our build commands.</span>\n|  |- <span class=\"hljs-keyword\">client</span> <span class=\"hljs-comment\">// The built client module.</span>\n|  |- <span class=\"hljs-keyword\">server</span> <span class=\"hljs-comment\">// The built server module</span>\n|\n|- src  <span class=\"hljs-comment\">// All the source code</span>\n|  |- <span class=\"hljs-keyword\">common</span> <span class=\"hljs-comment\">// Common utilities</span>\n|  |- config <span class=\"hljs-comment\">// Central configuration files</span>\n|  |- <span class=\"hljs-keyword\">server</span> <span class=\"hljs-comment\">// The server specific source</span>\n|  |- <span class=\"hljs-keyword\">client</span> <span class=\"hljs-comment\">// The client specific source</span>\n|  |- demo <span class=\"hljs-comment\">// Demo application</span>\n|  |- webpack <span class=\"hljs-comment\">// Build infrastructure</span>\n|  |- scripts <span class=\"hljs-comment\">// Available scripts when installed via npm</span>\n|\n|- .babelrc <span class=\"hljs-comment\">// Dummy babel configuration</span>\n|- .env.example <span class=\"hljs-comment\">// An example from which to create your own .env file.</span>\n|- rollup.config.js <span class=\"hljs-comment\">// Configuration file for bundling scripts into executable</span></pre><h2>Prerequisites</h2>\n<p>EdgeStack includes a few NodeJS dependencies which rely on native code and requires binary downloads \n(where possible) or local compilation of source code. This is implemented in NodeJS via <a href=\"https://github.com/nodejs/node-gyp\">Node-Gyp</a>.</p>\n<p>Currently the following dependencies are using native code: </p>\n<ul>\n<li><code>leveldown</code>: Used by HardSource for caching</li>\n<li><code>compression</code>: ExpressJS compression library</li>\n<li><code>iltorb</code>: Brotli compression</li>\n</ul>\n<h3>Mac OS</h3>\n<ol>\n<li>Install XCode from the Mac App Store</li>\n<li>Install <a href=\"https://brew.sh/\">Homebrew</a>: <code>/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</code></li>\n<li>Install NodeJS v6 or higher using Homebrew (<code>brew install node</code>)</li>\n<li>Install Yarn using Homebrew (<code>brew install yarn</code>)</li>\n</ol>\n<h3>Linux</h3>\n<ol>\n<li>Install Python 2.7 or higher (but small than 3.x) </li>\n<li>Install proper C/C++ compiler toolchain, like <code>gcc</code>, <code>make</code>, etc.</li>\n<li>Install NodeJS </li>\n<li><a href=\"https://yarnpkg.com/lang/en/docs/install/#linux-tab\">Install Yarn</a></li>\n</ol>\n<h3>Windows</h3>\n<ol>\n<li>Install Python 2.7 or higher (but small than 3.x)</li>\n<li>Install Windows Build Tools or Visual Studio</li>\n<li>Install NodeJS v6 or higher</li>\n<li>Install Yarn (using MSI installer)</li>\n<li>For some friendlier terminal you might want to use the <a href=\"https://msdn.microsoft.com/de-de/commandline/wsl/about\">Ubuntu shell in Windows 10</a> or Hyper.app </li>\n</ol>\n<p>Note: Without admin rights it&apos;s best to download NodeJS locally in some accessible folder and\nextend the PATH using <code>setx</code> to the NodeJS folder. Installation of Yarn seems to work best for this \nsituation when using <code>npm install yarn</code> instead of using the MSI installer.</p>\n<p>Note: Windows Build Tools are required for Node-Gyp support: Easiest approach would be installation via \n<code>npm install --global --production windows-build-tools</code> - alternatively install Visual Studio 2013 or 2015 \n(be sure to select &quot;Common Tools for Visual C++&quot;). Also have a look here: <a href=\"https://github.com/nodejs/node-gyp#installation\">https://github.com/nodejs/node-gyp#installation</a></p>\n<p>Note: Eventually you have to configure your proxy settings for NPM before any following installation procedures.</p>\n<h2>NPM Commands</h2>\n<h3><code>npm run start</code></h3>\n<p>Starts a development server for both the client and server bundles. We use <code>react-hot-loader</code> v3 to power the hot reloading of the client bundle, whilst a filesystem watch is implemented to reload the server bundle when any changes have occurred.</p>\n<h3><code>npm run prod</code></h3>\n<p>Builds the client and server bundles, with the output being production optimized.</p>\n<h3><code>npm run prod:start</code></h3>\n<p>Executes the server. It expects you to have already built the bundles either via the <code>npm run build</code> command or manually.</p>\n<h3><code>npm run clean</code></h3>\n<p>Deletes any build output that would have originated from the other commands.</p>\n<h2><a href=\"license\">License</a></h2>\n<h2>Copyright</h2>\n<p><img src=\"https://raw.githubusercontent.com/sebastian-software/s15e-javascript/master/assets/sebastiansoftware.png\"></p>\n<p>Copyright 2016-2017<br><a href=\"http://www.sebastian-software.de\">Sebastian Software GmbH</a></p>\n"
+    },
+    {
+      "component": "footer",
+      "links": [
+        {
+          "href": "https://github.com/sebastian-software/edgestack",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://github.com/sebastian-software",
+          "text": "sebastian-software"
+        }
+      ]
+    }
+  ]
+}
