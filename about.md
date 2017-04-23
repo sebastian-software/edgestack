@@ -89,6 +89,8 @@ application development and therefor scales very well when multiple applications
 - The functionality is built into [CSS Loader by Webpack](https://github.com/webpack-contrib/css-loader#css-modules) and is enabled in EdgeStack.
 - See also: [Benefits over other solutions](https://gist.github.com/DavidWells/9e4436608b834f1d3c0346db3631d774#gistcomment-2053946)
 
+> "CSS frameworks cause problems by unnecessarily constraining our content to fit into a predefined grid. How can a CSS framework know what our content is? It can’t." – https://medium.com/simple-human/stop-using-device-breakpoints-b11a87e2625c
+
 ### Autoprefixer ([Project](https://github.com/postcss/autoprefixer))
 
 - Instead of manually managing writing prefixes or relying on custom mixins we are using a data driven approach ([Can I Use Database](http://caniuse.com/)).
