@@ -15,6 +15,7 @@
 
 A Universal React Stack with deeply integrated localization Support, semi-automatic route-based code splitting, Hot Module Reloading (HMR), Redux, Apollo GraphQL and more...
 
+{{TOC}}
 
 ## TOC
 
