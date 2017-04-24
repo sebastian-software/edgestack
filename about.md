@@ -89,6 +89,8 @@ application development and therefor scales very well when multiple applications
 - The functionality is built into [CSS Loader by Webpack](https://github.com/webpack-contrib/css-loader#css-modules) and is enabled in EdgeStack.
 - See also: [Benefits over other solutions](https://gist.github.com/DavidWells/9e4436608b834f1d3c0346db3631d774#gistcomment-2053946)
 
+> "CSS frameworks cause problems by unnecessarily constraining our content to fit into a predefined grid. How can a CSS framework know what our content is? It can’t." – https://medium.com/simple-human/stop-using-device-breakpoints-b11a87e2625c
+
 ### Autoprefixer ([Project](https://github.com/postcss/autoprefixer))
 
 - Instead of manually managing writing prefixes or relying on custom mixins we are using a data driven approach ([Can I Use Database](http://caniuse.com/)).
@@ -123,59 +125,10 @@ application development and therefor scales very well when multiple applications
 
 ### Readable Code ([Project](https://github.com/sebastian-software/readable-code))
 
-- Uses the tasks and configurations for 
 - Includes Gulp tasks for linting and auto fixing source code automatically.
+- Local configuration is able to override each invididual rule.
+- Ov
 
-### Stylelint ([Project](https://github.com/stylelint/stylelint))
-
-- PostCSS-based linter for all CSS dialects. Supports alternative dialects like SugarSS and Sass.
-
-### Stylefmt ([Project](https://github.com/morishitter/stylefmt))
-
-- The counterpart to Stylelint supports auto formatting stylesheets based on the stylelint rules.
-
-### ESLint ([Homepage](eslint.org))
-
-- Effectively a successor of both [JSHint](http://jshint.com/) and [JSCS](http://jscs.info/). Is configured to use the [Babel Parser](https://github.com/babel/babel-eslint) for full ES2017+ support.
-
-#### Quick Linting Overview
-
-- Indent with 2 spaces no tabs
-- Double quotes for JS and JSX
-- Unix line breaks
-- No trailing spaces 
-- Tend to more spaces and whitespace in your code
-- No dashes in file names (should match `^[a-zA-Z][a-zA-Z0-9.]+$`)
-- All files have a `.js` extension, no `.jsx`
-- No CommonJS - use only ES2015 modules
-- Prefer efficient ES2015 language like template strings, spreading, arrow functions, ...
-- Keep an eye on code complexity, nesting levels, file length, ...
-- Prefer named parameters (destructing) over long parameter lists
-- No usage of `labels`, `with`, `eval`, etc.
-- No magic numbers. Use variables to describe intention.
-
-#### Activated and Configured ESLint Plugins
-
-- `filenames`: Validation for file names matching some common sense requirements.
-- `flowtype`: Support for checking FlowType syntax to match rules.
-- `flowtype-errors`: Helps writing correct FlowType declarations.
-- `import`: Checks whether imports map to valid entry points.
-- `jsx-a11y`: Accessibility checks for JSX tags e.g. requiring `alt` tags on images.
-- `lodash`: Lodash specific checks and hints to prefer common features over custom/builtin.
-- `no-use-extend-native`: Prevent extending native objects/classes like `Array` or `String`.
-- `node`: Prevents usage of deprecated features and other checks when developing NodeJS based apps.
-- `promise`: Checks for correctly working with Promises.
-- `react`: React specific checks for requiring specific structures of classes + preferring functional patterns.
-- `security`: Checks for security issues in e.g. RegExps.
-
-### Prettier ([Project](https://github.com/prettier/prettier))
-
-- Auto formatting engine for JavaScript which intelligently supports limiting line length and other more advanced features.
-- Advanced support for language features from ES2017, JSX, and Flow.
-
-### Lint Staged ([Project](https://github.com/okonet/lint-staged))
-
-- Auto linting for all `.css` and `.js` staged files when these are about to being committed to the repository.
 
 
 
