@@ -238,7 +238,7 @@ function getJsLoader({ isNode, isWeb, isProd, isDev, root })
               "react-intl",
 
               // Remove prop types from our code
-              "transform-react-remove-prop-types",
+              [ "transform-react-remove-prop-types", { removeImport : true } ],
 
               // Replaces the React.createElement function with one that is
               // more optimized for production.
