@@ -878,14 +878,6 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
             exclude: excludeFromTranspilation
           },
 
-          // Typescript
-          // https://github.com/s-panferov/awesome-typescript-loader
-          {
-            test: /\.(ts|tsx)$/,
-            loader: "awesome-typescript-loader",
-            exclude: excludeFromTranspilation
-          },
-
           // Markdown Container MDX Format
           // See also: http://jamesknelson.com/introducing-mdxc/
           {

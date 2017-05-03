@@ -215,6 +215,7 @@
   },
   "devDependencies": {
     "prepublish": "^0.16.0",
+    "readable-code": "^2.1.0",
     "rollup": "^0.41.6",
     "rollup-plugin-executable": "^1.0.0",
     "sanitize.css": "^5.0.0",
