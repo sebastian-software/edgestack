@@ -42,6 +42,10 @@ application development and therefor scales very well when multiple applications
 - Compatible rendering alternatives like [Preact](https://preactjs.com/) (focus: smaller) or [Inferno](https://infernojs.org/) (focus: faster) are available suggesting that the taken general approach is rock solid. (Hint: We are working on making these available for you to choose from, too).
 - Does not force or make assumptions of the rest of the development stack. Scales from easy to complex.
 
+### Helmet ([Project])
+
+- Controlling HTML HEAD elements using a nice JSX-based API
+
 
 
 ## Data Management
@@ -91,7 +95,7 @@ application development and therefor scales very well when multiple applications
 
 > "CSS frameworks cause problems by unnecessarily constraining our content to fit into a predefined grid. How can a CSS framework know what our content is? It can’t." – https://medium.com/simple-human/stop-using-device-breakpoints-b11a87e2625c
 
-### Autoprefixer ([Project](https://github.com/postcss/autoprefixer))
+### Auto Prefixer ([Project](https://github.com/postcss/autoprefixer))
 
 - Instead of manually managing writing prefixes or relying on custom mixins we are using a data driven approach ([Can I Use Database](http://caniuse.com/)).
 - Does far more than just addition of prefixes e.g. fixing flexbox differences, supporting different linear gradient syntaxes, etc.
@@ -116,19 +120,7 @@ application development and therefor scales very well when multiple applications
 ### Babel ([Project](https://github.com/babel/babel) | [Homepage](https://babeljs.io/))
 
 - Transpiling of modern JavaScript code for less modern clients.
-- Uses Node v6 environment configuration for our NodeJS backend 
-
-
-
-
-## Code Quality
-
-### Readable Code ([Project](https://github.com/sebastian-software/readable-code))
-
-- Includes Gulp tasks for linting and auto fixing source code automatically.
-- Local configuration is able to override each invididual rule.
-- Ov
-
+- Uses Node v6 environment configuration for our NodeJS servers.
 
 
 
@@ -136,260 +128,179 @@ application development and therefor scales very well when multiple applications
 
 ### Express
 
-### Helmet
+
+
 
 ### CSP
 
 
-
----
-
-
-## Testing (Work in Progress)
-
-### Jest ([Project](https://github.com/facebook/jest) | [Homepage](https://facebook.github.io/jest/))
-
-- Basic component testing with [Jest snapshots](https://facebook.github.io/jest/docs/snapshot-testing.html) is a breeze.
-- Runtimes are fast enough to make running the test suite feasible even when used multiple times a day.
-
-### Nightmare ([Project](https://github.com/segmentio/nightmare) | [Introduction](https://segment.com/blog/ui-testing-with-nightmare/))
-
-- High-level Electron-based (think of modern PhantomJS) UI testing library.
-
-
-
-## Core libraries (Work in Progress)
-
-### Lodash (Utility Methods)
-
-- Utility belt for stand
-
-### Recompose
-
-- 
-
-### Reselect
-
-- 
-
-### Fetch + Polyfill (Data Loading)
-
-- For all basic data loading needs prefer using the [`fetch()`-API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) over some more sophisticated legacy solutions.
-
-### ImmutableJS
-
-- Immutable high capable data structure. 
-- Good candidate for usage with Redux but also for internal component state management.
-
-
-## UI Infrastructure (Work in Progress)
-
-- All components which are used or are being implemented should follow the guidelines of [Future React UI](https://github.com/nikgraf/future-react-ui)
-
-### Goals
-
-- Allow usage of CSS modules e.g. by injecting a `theme` object or separate class names.
-- Should not require global styles or polyfills to work.
-- Do not require alternative legacy CSS precompiler like Less or Sass.
-- All dependencies should have some good amount or users/downloads/releases.
-
-
-
-## UI Core (Work in Progress)
-
-### Redux Form ([Project](https://github.com/erikras/redux-form) | [Homepage](http://redux-form.com/))
-
-- Effectively the standard for managing form values, implement serialization and state management in Redux applications.
-- Implemented as a higher order component for connecting to more primitive form elements.
-- Integrated tracking for which fields are being touched/modified together with some flexible validation handling.
-
-### React Virtualized ([Project](https://github.com/bvaughn/react-virtualized) | [Demo](https://bvaughn.github.io/react-virtualized/))
-
-- Highly efficient rendering of crazy large lists and tables where instead of rendering all elements which are available the rendering is limited to the actually visible fraction of the component content.
-- All data intensive components should be probably implemented using this library aka data tables, long item lists, auto suggest boxes, country selectors, etc.
-
-### React Sortable HOC ([Project](https://github.com/clauderic/react-sortable-hoc) | [Demo](http://clauderic.github.io/react-sortable-hoc/#/basic-configuration/basic-usage))
-
-- "A set of higher-order components to turn any list into an animated, touch-friendly, sortable list."
-- Works together with React Virtualized.
-- Super smooth animation.
-- Touch ready.
-
-### React Sizeme ([Project](https://github.com/ctrlplusb/react-sizeme) | [Demo](https://react-sizeme.now.sh/))
-
-- "Make your React Components aware of their width, height and position."
-- Effectively offering [element queries](https://www.smashingmagazine.com/2016/07/how-i-ended-up-with-element-queries-and-how-you-can-use-them-today/) for styling or even better: alternative rendering paths.
-- There is a [more high-level wrapper](https://github.com/ctrlplusb/react-component-queries) available for a more query-like approach.
-
-### React Overdrive ([Project](https://github.com/berzniz/react-overdrive) | [Homepage](https://react-overdrive.now.sh/))
-
-- Magic-Move style transitions for React components.
-
-### React Motion ([Project](https://github.com/chenglou/react-motion))
-
-- Spring style animations for React components.
-
-### React DND ([Project](https://github.com/react-dnd/react-dnd) | [Homepage](http://react-dnd.github.io/react-dnd/) | [Demo](http://react-dnd.github.io/react-dnd/examples-dustbin-single-target.html))
-
-- A set of React higher-order components to help you build complex drag and drop interfaces while keeping your components decoupled.
-
-### React Overlays ([Project](https://github.com/react-bootstrap/react-overlays))
-
-- Utilities for creating robust overlay components e.g. for modals, dialogs, etc.
-
-### React HammerJS ([Project](https://github.com/JedWatson/react-hammerjs))
-
-- Library for support more complex types of touch events like pinch/zoom based on [HammerJS](https://github.com/hammerjs/hammer.js).
-
-### React Tapable ([Project](https://github.com/JedWatson/react-tappable))
-
-- Tap Events as common alternative for click events / touch events.
-
-### React Waypoint ([Project](https://github.com/brigade/react-waypoint))
-
-- Scroll detection and interaction during scroll (fade in/out components, etc.)
-- Can be used to build features like lazy loading content, infinite scroll, scrollspies, or docking elements to the viewport on scroll.
-
-### React Focustrap ([Project](https://github.com/davidtheclark/focus-trap-react) | [Demo](http://davidtheclark.github.io/focus-trap/demo/))
-
-- Locking focus and tab sequence to a specific root component - useful for keyboard support.
-- Wrapper for standalone [FocusTrap](https://github.com/davidtheclark/focus-trap) library.
-
-### React Displace ([Project](https://github.com/davidtheclark/react-displace))
-
-- Move components out of the render tree structure into e.g. document body for easier positioning.
-
-### NoScroll ([Project](https://github.com/davidtheclark/no-scroll))
-
-- Helper library for interactively preventing the scrolling of the document root.
-
-### React Draggable ([Project](https://github.com/mzabriskie/react-draggable) | [Demo](http://mzabriskie.github.io/react-draggable/example/))
-
-- Component for making elements draggable.
-
-### React Resizable ([Project](https://github.com/STRML/react-resizable))
-
-- Simple component that is resizable with a handle.
-
-### Grid Layout ([Project](https://github.com/STRML/react-grid-layout) | [Demo](https://strml.github.io/react-grid-layout/examples/0-showcase.html))
-
-- Think more of a customizable portal interface engine than a basic (CSS) grid layout implementation.
-- Supports responsive, drag&drop customization, serialization (save+restore), ...
-
-### Redux-Auth-Wrapper ([Project](https://github.com/mjrussell/redux-auth-wrapper))
-
-- Provides higher-order components for easy to read and apply authentication and authorization constraints for your components.
-
-
-## UI Components (Work in Progress)
-
-### React Toolbox v2 ([Project](https://github.com/react-toolbox/react-toolbox) | [Homepage](http://react-toolbox.com/) | [Demo](http://react-toolbox.com/#/components))
-
-- Basic component library using CSS modules for component sandboxing.
-- Excellent approach on doing theming of UI components as [part of the version 2 rework](https://github.com/react-toolbox/react-toolbox/blob/dev/ROADMAP.md) using [CSS Themr](https://github.com/javivelasco/react-css-themr)
-- CONTENT?
-
-### Alternative UI framework: Belle
-
-- https://github.com/nikgraf/belle
-- CONTENT?
-
-### React Autosuggest ([Project](https://github.com/moroshko/react-autosuggest) | [Homepage](http://react-autosuggest.js.org/))
-
-- Compatible with CSS modules.
-- WAI ARIA compatible (Accessibility)
-- Unfortunately not based on React Virtualized for item rendering.
-
-### React Select ([Project](https://github.com/JedWatson/react-select) | [Demo](http://jedwatson.github.io/react-select/))
-
-- A Select control built with and for React. Supports multiple values, auto complete, lazy loading, etc.
-- Does offer [windowing select box](https://github.com/bvaughn/react-virtualized-select/) rendering using React Virtualized.
-- It comes with a default styling using "normal" CSS, but as it offers [customizable classnames](https://github.com/JedWatson/react-select#custom-classnames) it should work well in a CSS modules environment.
-
-### DraftJS ([Project](https://github.com/facebook/draft-js) | [Homepage](https://draftjs.org/))
-
-- A JavaScript rich text editor framework, built for React and backed by an immutable model.
-
-### ARIA Menu ([Project](https://github.com/davidtheclark/react-aria-menubutton) | [Demo](http://davidtheclark.github.io/react-aria-menubutton/demo/))
-
-- Accessible menus by providing keyboard interactions and ARIA attributes aligned with the WAI-ARIA Menu Button Design Pattern.
-
-### ARIA Tabpanel ([Project](https://github.com/davidtheclark/react-aria-tabpanel))
-
-- Accessible tabs, by providing keyboard interactions and ARIA attributes described in the WAI-ARIA Tab Panel Design Pattern.
-
-### ARIA Modal ([Project](https://github.com/davidtheclark/react-aria-modal))
-
-- Accessible React modal built according WAI-ARIA Authoring Practices
-
-### DropZone ([Project](https://github.com/okonet/react-dropzone))
-
-- Uploading files using Drag&Drop.
-
-### Infinite Calendar ([Project](https://github.com/clauderic/react-infinite-calendar) | [Demo](http://clauderic.github.io/react-infinite-calendar/#/basic-settings/basic-configuration))
-
-- Endless scrollable calendar or better named "date picker" widget with single or multi/range selection. Mobile friendly. Touch ready.
-- Unfortunately just a root CSS Classname configurable without any support for CSS modules.
-
-### React Dates ([Project](https://github.com/airbnb/react-dates) | [Demo](http://airbnb.io/react-dates/))
-
-- Different date picker components (single, range). 
-- Created and regularly maintained by Airbnb
-- Uses moment.js which is kind of unfortunate as it typically introduces some good amount of overhead.
-- Customization is either being based on using Sass variables or override existing CSS - both is limited in scope/flexibility.
-
-### React Leaflet ([Project](https://github.com/PaulLeCam/react-leaflet))
-
-- Embedding of [leaflet](http://leafletjs.com/) based maps for React.
-- Well maintained component with regular updates.
-- Typically being combined with tiles from [OpenStreetMap](http://openstreetmap.org).
-
-### React Player ([Project](https://github.com/CookPete/react-player))
-
-- Pretty universal video/audio player for React which supports YouTube, Vimeo, Soundcloud and more.
-
-### React Vis ([Project](https://github.com/uber/react-vis) | [Demo](http://uber.github.io/react-vis/))
-
-- Visualization/Chart Engine based on D3 and made by Uber.
-
-### Victory ([Project](https://github.com/FormidableLabs/victory) | [Homepage](http://formidable.com/open-source/victory/))
-
-- Another chart renderer developed by FormidableLabs and used by e.g. Airbnb.
-
-### React Data Grid ([Project](https://github.com/adazzle/react-data-grid))
-
-- Excel like editable data grid implementation with virtual scrolling. 
-
-### Recharts ([Project](https://github.com/recharts/recharts) | [Homepage](http://recharts.org/))
-
-- A composable charting library built on React components and D3.
-
-### React Trend ([Project](https://github.com/unsplash/react-trend))
-
-- Basic line charting component
-- Small and no dependencies. Based on basic SVG rendering.
-
-### React Text Mask ([Project](https://github.com/text-mask/text-mask/tree/master/react))
-
-- Wrapper for text mask rendering for a React component.
-- Very flexible approach and fully compatible with a basic `<input/>` element.
-
-### React Slick ([Project](https://github.com/akiran/react-slick))
-
-- Slider/Carousel component
-
-### React HTML5 Video ([Project](https://github.com/mderrick/react-html5video))
-
-- A customizeable HoC (Higher Order Component) for HTML5 Video that allows custom and configurable controls with i18n and a11y.
-
-### Slider ([Project](https://github.com/react-component/slider))
-
-- Slider UI component for React
-
-### React Textarea Autosize ([Project](https://github.com/andreypopp/react-textarea-autosize))
-
-- Drop-in replacement for the textarea component which automatically resizes textarea as content changes.
-
-### React Image Crop ([Project](https://github.com/DominicTobias/react-image-crop))
-
-- A responsive image cropping tool for React
+### AsyncJS
+
+### BlueBird Promises
+
+### Cookie Parser for Express
+
+### Body Parser for Express
+
+### ExpressLocale
+
+### DateFNS
+
+
+### DotEnv
+
+
+### Lean Intl
+
+
+### Webpack plugins
+
+#### Offline Plugin
+#### Asset Plugin
+
+
+"app-root-dir": "^1.0.2",
+"assets-webpack-plugin": "^3.5.1",
+"async": "^2.4.0",
+"autoprefixer": "^6.7.7",
+"babel-cli": "^6.24.1",
+"babel-core": "^6.24.1",
+"babel-jest": "^19.0.0",
+"babel-loader": "^7.0.0",
+"babel-plugin-lodash": "^3.2.11",
+"babel-plugin-log-deprecated": "^1.1.0",
+"babel-plugin-module-resolver": "^2.7.0",
+"babel-plugin-react-intl": "^2.3.1",
+"babel-plugin-syntax-dynamic-import": "^6.18.0",
+"babel-plugin-transform-class-properties": "^6.24.1",
+"babel-plugin-transform-object-rest-spread": "^6.23.0",
+"babel-plugin-transform-react-constant-elements": "^6.23.0",
+"babel-plugin-transform-react-inline-elements": "^6.22.0",
+"babel-plugin-transform-react-jsx-self": "^6.22.0",
+"babel-plugin-transform-react-jsx-source": "^6.22.0",
+"babel-plugin-transform-react-remove-prop-types": "^0.4.4",
+"babel-plugin-transform-runtime": "^6.23.0",
+"babel-preset-babili": "^0.0.12",
+"babel-preset-env": "^1.4.0",
+"babel-preset-flow": "^6.23.0",
+"babel-preset-react": "^6.24.1",
+"babel-runtime": "^6.23.0",
+"babel-template": "^6.24.1",
+"babili-webpack-plugin": "^0.0.11",
+"bluebird": "^3.5.0",
+"body-parser": "^1.17.1",
+"browserslist": "^2.1.1",
+"builtin-modules": "^1.1.1",
+"case-sensitive-paths-webpack-plugin": "^2.0.0",
+"chalk": "^1.1.3",
+"chokidar": "^1.6.1",
+"chunk-manifest-webpack-plugin": "^1.1.0",
+"classnames": "^2.2.5",
+"clipboard": "^1.6.1",
+"cookie-parser": "^1.4.3",
+"cookiesjs": "^1.4.2",
+"cross-env": "^4.0.0",
+"css-loader": "^0.28.1",
+"date-fns": "^1.28.4",
+"dotenv": "^4.0.0",
+"duplicate-package-checker-webpack-plugin": "^1.2.4",
+"express": "^4.15.2",
+"express-locale": "^1.0.1",
+"extract-text-webpack-plugin": "^2.1.0",
+"file-loader": "^0.11.1",
+"find-root": "^1.0.0",
+"fs-extra": "^3.0.1",
+"graphql-tag": "^2.0.0",
+"gulp": "^3.9.1",
+"gulp-util": "^3.0.8",
+"hard-source-webpack-plugin": "^0.3.12",
+"helmet": "^3.6.0",
+"hpp": "^0.2.2",
+"html-webpack-plugin": "^2.28.0",
+"identity-obj-proxy": "^3.0.0",
+"intl-locales-supported": "^1.0.0",
+"isomorphic-fetch": "^2.2.1",
+"jest-cli": "^19.0.2",
+"json-loader": "^0.5.4",
+"lean-intl": "^2.0.0",
+"load-plugins": "^2.1.2",
+"loader-utils": "^1.1.0",
+"localforage": "^1.5.0",
+"lodash": "^4.17.4",
+"lost": "^8.0.0",
+"mdx-loader": "^1.0.0-beta.3",
+"mdxc": "^1.0.0-beta.6",
+"minimist": "^1.2.0",
+"node-noop": "^1.0.0",
+"node-notifier": "^5.1.2",
+"offline-plugin": "^4.7.0",
+"pleeease-filters": "^3.0.1",
+"postcss": "^5.2.17",
+"postcss-advanced-variables": "^1.2.2",
+"postcss-assets": "^4.1.0",
+"postcss-at-warn": "^1.0.0",
+"postcss-calc": "^5.3.1",
+"postcss-clearfix": "^1.0.0",
+"postcss-color-function": "^3.0.0",
+"postcss-color-hex-alpha": "^2.0.0",
+"postcss-csso": "^2.0.0",
+"postcss-custom-media": "^5.0.1",
+"postcss-devtools": "^1.1.1",
+"postcss-discard-comments": "^2.0.4",
+"postcss-easings": "^0.3.0",
+"postcss-flexbugs-fixes": "^2.1.1",
+"postcss-font-family-system-ui": "^1.0.2",
+"postcss-gradient-transparency-fix": "^1.0.3",
+"postcss-grid-kiss": "^1.2.1",
+"postcss-hexrgba": "^0.2.1",
+"postcss-input-style": "^0.3.0",
+"postcss-loader": "^1.3.3",
+"postcss-magic-animations": "^0.3.0",
+"postcss-media-minmax": "^2.1.2",
+"postcss-nested": "^1.0.1",
+"postcss-nested-ancestors": "^1.0.0",
+"postcss-pseudoelements": "^4.0.0",
+"postcss-reporter": "^3.0.0",
+"postcss-responsive-type": "^0.5.1",
+"postcss-sassy-mixins": "^2.0.0",
+"postcss-selector-matches": "^2.0.5",
+"postcss-simple-url": "^0.1.6",
+"postcss-smart-import": "^0.6.12",
+"postcss-transform-shortcut": "^2.0.1",
+"postcss-unicode-characters": "^1.0.1",
+"postcss-will-change": "^1.1.0",
+"postcss-zindex": "^2.2.0",
+"prompt": "^1.0.0",
+"prop-types": "^15.5.8",
+"raw-loader": "^0.5.1",
+"react": "^15.5.4",
+"react-apollo": "^1.2.0",
+"react-dev-utils": "^0.5.2",
+"react-dom": "^15.5.4",
+"react-helmet": "^5.0.3",
+"react-intl": "^2.2.3",
+"react-redux": "^5.0.4",
+"react-router": "^4.1.1",
+"react-router-dom": "^4.1.1",
+"react-tap-event-plugin": "^2.0.1",
+"react-tree-walker": "2.1.1",
+"redux": "^3.6.0",
+"redux-immutable-state-invariant": "^2.0.0",
+"redux-logger": "^3.0.1",
+"redux-thunk": "^2.2.0",
+"rimraf": "^2.6.1",
+"serialize-javascript": "^1.3.0",
+"serve-favicon": "^2.4.2",
+"shrink-ray": "^0.1.3",
+"source-map-support": "^0.4.15",
+"style-loader": "^0.17.0",
+"uuid": "^3.0.1",
+"walker": "^1.0.7",
+"webpack": "^2.5.0",
+"webpack-bundle-analyzer": "^2.4.0",
+"webpack-dev-middleware": "^1.10.2",
+"webpack-hot-middleware": "^2.18.0",
+"webpack-sources": "^0.2.3",
+"yaml-loader": "^0.4.0"
+"sanitize.css": "^5.0.0",
+"source-sans-pro": "^2.0.10"
