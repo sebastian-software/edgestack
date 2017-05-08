@@ -164,6 +164,7 @@ export default function PostCSSConfig(variables = {})
 
     // Transform W3C CSS "font-family: system-ui" to a practical font-family list
     // https://github.com/JLHwung/postcss-font-family-system-ui
+    // See also: https://booking.design/implementing-system-fonts-on-booking-com-a-lesson-learned-bdc984df627f
     systemFont,
 
     // Reduce z-index values with PostCSS.
