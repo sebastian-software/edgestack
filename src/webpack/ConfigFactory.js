@@ -236,7 +236,7 @@ function getJsLoader({ isNode, isWeb, isProd, isDev, root })
               "react-intl",
 
               // Remove prop types from our code
-              [ "transform-react-remove-prop-types", { removeImport : true } ],
+              [ "transform-react-remove-prop-types", { removeImport: true }],
 
               // Replaces the React.createElement function with one that is
               // more optimized for production.
@@ -668,12 +668,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
 
           // Indicates to our loaders that they should enter into debug mode
           // should they support it.
-          debug: true,
-
-          // Pass options for PostCSS
-          options: {
-            context: CURRENT_WORKING_DIRECTORY
-          }
+          debug: true
         })
       ),
 
@@ -686,12 +681,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
 
           // Indicates to our loaders that they should enter into debug mode
           // should they support it.
-          debug: false,
-
-          // Pass options for PostCSS
-          options: {
-            context: CURRENT_WORKING_DIRECTORY
-          }
+          debug: false
         })
       ),
 
