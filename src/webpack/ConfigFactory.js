@@ -26,8 +26,6 @@ import VerboseProgress from "./plugins/VerboseProgress"
 
 import esModules from "./Modules"
 
-import getPostCSSConfig from "./PostCSSConfig"
-
 const builtInSet = new Set(builtinModules)
 
 const enableHardSource = !process.env.DISABLE_HARDSOURCE
@@ -674,7 +672,6 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
 
           // Pass options for PostCSS
           options: {
-            postcss: getPostCSSConfig({}),
             context: CURRENT_WORKING_DIRECTORY
           }
         })
@@ -693,7 +690,6 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
 
           // Pass options for PostCSS
           options: {
-            postcss: getPostCSSConfig({}),
             context: CURRENT_WORKING_DIRECTORY
           }
         })
