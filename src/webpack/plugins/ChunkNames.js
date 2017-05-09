@@ -18,7 +18,9 @@ function generateChunkName(request, rawRequest) {
 
   var isExternal = relative.startsWith("node_modules" + path.sep)
   if (isExternal) {
-    relative = rawRequest
+    // if the module is an DelegatedModule, the rawRequest will be undefined since it does not have this property.
+    // However, the userRequest property can supplement rawRequest in this situation
+    relative = rawRequest || request
   }
 
   // Strip useless helper folder structure
