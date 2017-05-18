@@ -5,18 +5,14 @@ build
 src
 
 .babelrc
-.babelrc.md
 .editorconfig
-.env
+.eslintcache
 .eslintignore
 .eslintrc.yml
 .gitignore
 .npmignore
 .stylelint.yml
 .travis.yml
-
-.eslintcache
-.hardsource
 
 appveyor.yml
 gulpfile.js

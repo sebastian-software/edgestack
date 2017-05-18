@@ -1,8 +1,4 @@
-# Environment Configuration
-.env
-
 # Build output folders
-build/
 lib/
 bin/
 
@@ -19,6 +15,5 @@ pids
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
 node_modules
 
-# Cache file from ESLint, HardSource
+# Cache file from ESLint
 .eslintcache
-.hardsource
