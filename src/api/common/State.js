@@ -9,7 +9,7 @@ const composeEnhancers = (process.env.TARGET === "web" &&
 
 
 /**
- * Placeholder for a non active reducer in Redux
+ * Placeholder for a non active reducer in Redux.
  */
 export function emptyReducer(previousState = {}, action) {
   return previousState
@@ -17,7 +17,7 @@ export function emptyReducer(previousState = {}, action) {
 
 
 /**
- * Placeholder for a non active middleware in Redux
+ * Placeholder for a non active middleware in Redux.
  */
 export function emptyMiddleware(store) {
   return (next) => {
@@ -29,7 +29,7 @@ export function emptyMiddleware(store) {
 
 
 /**
- * Placeholder for a non active enhancer in Redux
+ * Placeholder for a non active enhancer in Redux.
  */
 export function emptyEnhancer(param) {
   return param
@@ -37,7 +37,7 @@ export function emptyEnhancer(param) {
 
 
 /**
- * Dummy reducer for exporting server-side data to the client-side application
+ * Dummy reducer for exporting server-side data to the client-side application.
  */
 export function ssrReducer(previousState = {}, action) {
   return previousState
