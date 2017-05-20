@@ -291,7 +291,11 @@ function getCssLoaders({ isNode, isWeb, isProd, isDev }, enableModules = true)
         }
       },
       {
-        loader: "postcss-loader"
+        loader: "postcss-loader",
+        query:
+        {
+          sourceMap: true
+        }
       }
     ]
   }
@@ -324,7 +328,11 @@ function getCssLoaders({ isNode, isWeb, isProd, isDev }, enableModules = true)
             }
           },
           {
-            loader: "postcss-loader"
+            loader: "postcss-loader",
+            query:
+            {
+              sourceMap: true
+            }
           }
         ]
       })
@@ -350,7 +358,11 @@ function getCssLoaders({ isNode, isWeb, isProd, isDev }, enableModules = true)
           }
         },
         {
-          loader: "postcss-loader"
+          loader: "postcss-loader",
+          query:
+          {
+            sourceMap: true
+          }
         }
       ]
     }
