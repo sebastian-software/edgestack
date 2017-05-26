@@ -10,23 +10,12 @@ matrix:
 env:
   - CXX=g++-4.8
 
-cache:
-  yarn: true
-  # directories:
-  #  - node_modules
-
-# Via: https://yarnpkg.com/en/docs/install-ci#travis-tab
 before_install:
-  # Repo for newer Node.js versions
-  - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-  # Repo for Yarn
-  - sudo apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
-  - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-  - sudo apt-get update -qq
-  - sudo apt-get install -y -qq yarn
+  - npm install -g npm@5
 
 install:
-  - yarn
+  - cp -f .env.example .env
+  - npm install
 
 addons:
   apt:
