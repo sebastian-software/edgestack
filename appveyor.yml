@@ -24,6 +24,7 @@ install:
   - IF "%platform%" == "x64" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" amd64
   - IF "%platform%" == "x86" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" x86
   - npm install -g npm@5
+  - npm --version
   - npm install
 
 test_script:
