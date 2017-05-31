@@ -63,11 +63,6 @@ More on the selected components of the stack: [About](./about.md)
 - Data Loading on Server Side using `fetchData` static methods where available
 - HardSource pre-configured for unseen rebuild performance.
 
-## Work in progress
-
-- *Jest* for unit testing
-- Flow Typechecking
-
 
 ## Overview
 
@@ -82,40 +77,12 @@ All the source code is written in ES2015, and I have explicitly kept it to the t
 The application configuration is supported by the `dotenv` module and it requires you to create a `.env` file in the project root (you can use the `.env.example` as a base). The `.env` file has been explicitly ignored from git as it will typically contain environment sensitive/specific information. In the usual case your continuous deployment tool of choice should configure the specific `.env` file that is needed for a target environment.
 
 
-
-## Project Structure
-
-```
-/
-|- lib // The target output dir for our library export
-|  |- index.es.js // ES2015 module export
-|  |- index.js // CommonJS export
-|
-|- build // The target output dir for our build commands.
-|  |- client // The built client module.
-|  |- server // The built server module
-|
-|- src  // All the source code
-|  |- common // Common utilities
-|  |- config // Central configuration files
-|  |- server // The server specific source
-|  |- client // The client specific source
-|  |- demo // Demo application
-|  |- webpack // Build infrastructure
-|  |- scripts // Available scripts when installed via npm
-|
-|- .babelrc // Dummy babel configuration
-|- .env.example // An example from which to create your own .env file.
-|- rollup.config.js // Configuration file for bundling scripts into executable
-```
-
-
 ## Prerequisites
 
-EdgeStack includes a few NodeJS dependencies which rely on native code and requires binary downloads 
+EdgeStack includes a few NodeJS dependencies which rely on native code and requires binary downloads
 (where possible) or local compilation of source code. This is implemented in NodeJS via [Node-Gyp](https://github.com/nodejs/node-gyp).
 
-Currently the following dependencies are using native code: 
+Currently the following dependencies are using native code:
 
 - `leveldown`: Used by HardSource for caching
 - `compression`: ExpressJS compression library
@@ -130,9 +97,9 @@ Currently the following dependencies are using native code:
 
 ### Linux
 
-1. Install Python 2.7 or higher (but small than 3.x) 
+1. Install Python 2.7 or higher (but small than 3.x)
 2. Install proper C/C++ compiler toolchain, like `gcc`, `make`, etc.
-3. Install NodeJS 
+3. Install NodeJS
 4. [Install Yarn](https://yarnpkg.com/lang/en/docs/install/#linux-tab)
 
 ### Windows
@@ -141,41 +108,24 @@ Currently the following dependencies are using native code:
 2. Install Windows Build Tools or Visual Studio
 3. Install NodeJS v6 or higher
 4. Install Yarn (using MSI installer)
-5. For some friendlier terminal you might want to use the [Ubuntu shell in Windows 10](https://msdn.microsoft.com/de-de/commandline/wsl/about) or Hyper.app 
+5. For some friendlier terminal you might want to use the [Ubuntu shell in Windows 10](https://msdn.microsoft.com/de-de/commandline/wsl/about) or Hyper.app
 
 Note: Without admin rights it's best to download NodeJS locally in some accessible folder and
-extend the PATH using `setx` to the NodeJS folder. Installation of Yarn seems to work best for this 
+extend the PATH using `setx` to the NodeJS folder. Installation of Yarn seems to work best for this
 situation when using `npm install yarn` instead of using the MSI installer.
 
-Note: Windows Build Tools are required for Node-Gyp support: Easiest approach would be installation via 
-`npm install --global --production windows-build-tools` - alternatively install Visual Studio 2013 or 2015 
+Note: Windows Build Tools are required for Node-Gyp support: Easiest approach would be installation via
+`npm install --global --production windows-build-tools` - alternatively install Visual Studio 2013 or 2015
 (be sure to select "Common Tools for Visual C++"). Also have a look here: https://github.com/nodejs/node-gyp#installation
 
 Note: Eventually you have to configure your proxy settings for NPM before any following installation procedures.
 
-## NPM Commands
-
-### `npm run start`
-
-Starts a development server for both the client and server bundles. We use `react-hot-loader` v3 to power the hot reloading of the client bundle, whilst a filesystem watch is implemented to reload the server bundle when any changes have occurred.
-
-### `npm run prod`
-
-Builds the client and server bundles, with the output being production optimized.
-
-### `npm run prod:start`
-
-Executes the server. It expects you to have already built the bundles either via the `npm run build` command or manually.
-
-### `npm run clean`
-
-Deletes any build output that would have originated from the other commands.
 
 
 ## [License](license)
 
 ## Copyright
 
-<img src="https://raw.githubusercontent.com/sebastian-software/s15e-javascript/master/assets/sebastiansoftware.png" alt="Sebastian Software GmbH Logo" width="250" height="200"/>
+<img src="https://raw.githubusercontent.com/sebastian-software/readable-code/master/assets/sebastiansoftware.png" alt="Sebastian Software GmbH Logo" width="250" height="200"/>
 
 Copyright 2016-2017<br/>[Sebastian Software GmbH](http://www.sebastian-software.de)
