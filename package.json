@@ -158,7 +158,7 @@
   },
   "devDependencies": {
     "prepublish": "^0.16.1",
-    "readable-code": "^2.3.1",
+    "readable-code": "^2.3.3",
     "rollup": "^0.41.6",
     "rollup-plugin-executable": "^1.0.0"
   }
