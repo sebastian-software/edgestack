@@ -887,7 +887,7 @@ function ConfigFactory({ target, mode, root = CURRENT_WORKING_DIRECTORY, ...opti
 
           // CSS
           {
-            test: /\.(css|sss)$/,
+            test: /\.(css|sss|pcss)$/,
             loader: cssLoadersWithModules,
             exclude: [ /prismjs/ ]
           },
