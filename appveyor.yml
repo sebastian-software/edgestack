@@ -31,3 +31,8 @@ test_script:
 cache:
   # global Yarn cache
   - "%LOCALAPPDATA%\\Yarn"
+
+notifications:
+  - provider: Slack
+    incoming_webhook:
+      secure: 42qYgf76P/QjYb5QJ18gFFJ67iTlXc1QzEva9BFofwh5KzpF/QJ/pvRark1i3aux6uwL53zdDKTjXfy8Ozpqqk9DhnU5M1oA96bQYWOnmZU=
