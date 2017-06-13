@@ -5,7 +5,7 @@ clone_depth: 10
 environment:
   matrix:
     - nodejs_version: 6
-    - nodejs_version: 7
+    - nodejs_version: 8
 
 platform:
   - x86
@@ -23,16 +23,11 @@ install:
   - ps: Copy-Item .env.example .env
   - IF "%platform%" == "x64" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" amd64
   - IF "%platform%" == "x86" CALL "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" x86
-  - npm install -g npm@5
-  - npm --version
-  - npm install
+  - yarn install
 
 test_script:
   - npm test
 
 cache:
-  # global npm cache
-  - '%APPDATA%\\npm-cache'
-
   # global Yarn cache
   - "%LOCALAPPDATA%\\Yarn"

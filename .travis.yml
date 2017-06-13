@@ -1,17 +1,14 @@
 language: node_js
 node_js:
 - 6
-- 7
+- 8
 matrix:
   fast_finish: true
 env:
 - CXX=g++-4.8
-before_install:
-- npm install -g npm@5
-- npm --version
 install:
 - cp -f .env.example .env
-- npm install
+- yarn install
 addons:
   apt:
     sources:
