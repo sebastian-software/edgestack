@@ -19,5 +19,6 @@ addons:
     packages:
     - g++-4.8
 notifications:
+  email: false
   slack:
     secure: QToNZ+UZp/7eAb7Bdl9CaL1bq4JmieAl99FsWPRbpVIrxi1AE6Z2I3CZf+LMShljCj0FMeCMkfpYGH/kdDYh4glC6gl4X6ZWKL8MWa0GwWbFK0lKYPlxpNh5Jcg+dH+mn138g8H0a/bkbycuGKjq2LFg6EE1HaiQHPK+PN/suYAGLBj1/VkRvJw/Xr9KxOGQP0umcF3jqc9g+7R/+E2Fyp2FRj170GfsKoa5BFc6PQSWMi9+M7ckz9gHT0wSByjD5wDL3gsACAGe57rpPunzPovqwdavLN1GGSS6BWkDnJtmdtJMy3fvRpVYiMI5ZcH9a1Fsu0cLf/qypwgrJBrQYqKuWMwSs8WJdNWheu5kajgHmJczH08qkc+P1VbtuNaIV+qTGJN9Y8XF0hQ66cdYlbHSh3vep9Bs2jmHPPjN6fITmkhxoWHDkTV2FlgDoTmUAmroacAGUZVs/j5yqPfFfZr2sA6URLR8IZk4++WKt1ylAtLuU/aemnpveh1NlEouabbepOqtxRvpxCZP3992UP5rZfBju224hrvtHnsD0HlPWKRb/szwsf236S9Viqmpo5eV2MgOQw+UDfKYq0p8L7AEpB69WaQUvkooKr+mzKrQQaL3rLFIict5JVnrhOlAeojd8S8TP+nDalYFTuWWAgNbf7v8Fko6sf/6vGYSZEs=
