@@ -31,7 +31,7 @@ function renderToStringWithData(component) {
 
 // SSR is disabled so we will just return an empty html page and will
 // rely on the client to populate the initial react application state.
-function renderLight({ request, response, nonce, initialState, language, region, messages }) {
+function renderLight({ request, response, nonce, initialState, language, region, loadMessages }) {
   /* eslint-disable no-magic-numbers */
   try {
     const html = renderPage({
@@ -44,8 +44,7 @@ function renderLight({ request, response, nonce, initialState, language, region,
 
       // Send detected language and region for HTML tag info
       language,
-      region,
-      messages
+      region
     })
 
     response.status(200).send(html)
@@ -54,93 +53,79 @@ function renderLight({ request, response, nonce, initialState, language, region,
   }
 }
 
-function ensureMessages(language) {
-  console.log("Ensure Messages: ", language)
-
-  var json = require("messages/" + language + ".json")
-  console.log(json)
-
-  return json
-}
-
-function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, language, region }) {
+async function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, language, region, loadMessages }) {
   const routingContext = {}
   const locale = `${language}-${region}`
 
   console.log("Server: Rendering app with data...")
 
-  return Promise.all([
+  const [ intl, reactIntl, messages ] = await Promise.all([
     ensureIntlSupport(locale),
     ensureReactIntlSupport(language),
-    ensureMessages(language)
+    loadMessages(language)
   ])
 
-    .then((res) => {
-      const [ intl, reactIntl, messages ] = res
-      var WrappedRoot = (
-        <IntlProvider locale={locale} messages={messages}>
-          <StaticRouter location={request.url} context={routingContext}>
-            <ApolloProvider client={apolloClient} store={reduxStore}>
-              <Root/>
-            </ApolloProvider>
-          </StaticRouter>
-        </IntlProvider>
-      )
+  let WrappedRoot = (
+    <IntlProvider locale={locale} messages={messages}>
+      <StaticRouter location={request.url} context={routingContext}>
+        <ApolloProvider client={apolloClient} store={reduxStore}>
+          <Root/>
+        </ApolloProvider>
+      </StaticRouter>
+    </IntlProvider>
+  )
 
-      return renderToStringWithData(WrappedRoot)
-    })
+  const renderedApp = await renderToStringWithData(WrappedRoot)
 
-    // Create the application react element.
-    .then((renderedApp) => {
-      const reduxState = reduxStore.getState()
+  // Create the application react element.
+  const reduxState = reduxStore.getState()
 
-      // Render the app to a string.
-      const html = renderPage({
-        // Provide the full rendered App react element.
-        renderedApp,
+  // Render the app to a string.
+  const html = renderPage({
+    // Provide the full rendered App react element.
+    renderedApp,
 
-        // Provide the redux store state, this will be bound to the window.APP_STATE
-        // so that we can rehydrate the state on the client.
-        initialState: reduxState,
+    // Provide the redux store state, this will be bound to the window.APP_STATE
+    // so that we can rehydrate the state on the client.
+    initialState: reduxState,
 
-        // Nonce which allows us to safely declare inline scripts.
-        nonce,
+    // Nonce which allows us to safely declare inline scripts.
+    nonce,
 
-        // Running this gets all the helmet properties (e.g. headers/scripts/title etc)
-        // that need to be included within our html. It's based on the rendered app.
-        // @see https://github.com/nfl/react-helmet
-        helmet: Helmet.rewind(),
+    // Running this gets all the helmet properties (e.g. headers/scripts/title etc)
+    // that need to be included within our html. It's based on the rendered app.
+    // @see https://github.com/nfl/react-helmet
+    helmet: Helmet.rewind(),
 
-        // Send detected language and region for HTML tag info
-        language,
-        region,
-        messages
-      })
+    // Send detected language and region for HTML tag info
+    language,
+    region,
+    messages
+  })
 
-      // console.log("Server: Routing Context:", routingContext)
-      console.log("Server: Sending Page...")
+  // console.log("Server: Routing Context:", routingContext)
+  console.log("Server: Sending Page...")
 
-      /* eslint-disable no-magic-numbers */
+  /* eslint-disable no-magic-numbers */
 
-      // Check if the render result contains a redirect, if so we need to set
-      // the specific status and redirect header and end the response.
-      if (routingContext.url) {
-        response.status(302).setHeader("Location", routingContext.url)
-        response.end()
-        return
-      }
+  // Check if the render result contains a redirect, if so we need to set
+  // the specific status and redirect header and end the response.
+  if (routingContext.url) {
+    response.status(302).setHeader("Location", routingContext.url)
+    response.end()
+    return
+  }
 
-      // If the renderedResult contains a "missed" match then we set a 404 code.
-      // Our App component will handle the rendering of an Error404 view.
-      // Otherwise everything is all good and we send a 200 OK status.
-      response.status(routingContext.status || 200).send(html)
-    })
+  // If the renderedResult contains a "missed" match then we set a 404 code.
+  // Our App component will handle the rendering of an Error404 view.
+  // Otherwise everything is all good and we send a 200 OK status.
+  response.status(routingContext.status || 200).send(html)
 }
 
 /**
  * An express middleware that is capable of doing React server side rendering.
  */
-export default function createUniversalMiddleware({ Root, State, ssrData, batchRequests = false, trustNetwork = true })
+export default function createUniversalMiddleware({ Root, State, ssrData, loadMessages, batchRequests = false, trustNetwork = true })
 {
   if (Root == null) {
     throw new Error("Server: Universal Middleware: Missing Root!")
@@ -194,7 +179,7 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
         initialState,
         language,
         region,
-        messages
+        loadMessages
       })
     }
     else
@@ -223,7 +208,7 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
         reduxStore,
         language,
         region,
-        messages
+        loadMessages
       })
     }
   }
