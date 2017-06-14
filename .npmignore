@@ -11,10 +11,12 @@ src
 .eslintrc.yml
 .gitignore
 .npmignore
-.stylelint.yml
+.stylelintrc.yml
 .travis.yml
+.flowconfig
 
 appveyor.yml
-gulpfile.js
-
+gulpfile.babel.js
+package-lock.json
 rollup.config.js
+yarn.lock
