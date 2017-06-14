@@ -11,8 +11,7 @@ export default function renderApp(AppRoot, { apolloClient, reduxStore })
 {
   const RoutedAppRoot = withRouter(AppRoot)
 
-  const locale = window.APP_STATE.ssr.locale
-  const messages = window.APP_MESSAGES
+  const { locale, messages } = window.APP_STATE.ssr
 
   const WrappedRoot = (
     <IntlProvider locale={locale} messages={messages}>

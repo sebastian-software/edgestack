@@ -56,14 +56,20 @@ function renderLight({ request, response, nonce, initialState, language, region,
 async function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, language, region, loadMessages }) {
   const routingContext = {}
   const locale = `${language}-${region}`
-
-  console.log("Server: Rendering app with data...")
+  const reduxState = reduxStore.getState()
+  const ssrData = reduxState.ssr
 
   const [ intl, reactIntl, messages ] = await Promise.all([
     ensureIntlSupport(locale),
     ensureReactIntlSupport(language),
     loadMessages(language)
   ])
+
+  // Store messages in Redux store
+  ssrData.messages = messages
+
+  console.log("Server: Rendering app with data...")
+  console.log("Server: Redux State: ", reduxState)
 
   let WrappedRoot = (
     <IntlProvider locale={locale} messages={messages}>
@@ -76,9 +82,6 @@ async function renderFull({ request, response, nonce, Root, apolloClient, reduxS
   )
 
   const renderedApp = await renderToStringWithData(WrappedRoot)
-
-  // Create the application react element.
-  const reduxState = reduxStore.getState()
 
   // Render the app to a string.
   const html = renderPage({
@@ -99,8 +102,7 @@ async function renderFull({ request, response, nonce, Root, apolloClient, reduxS
 
     // Send detected language and region for HTML tag info
     language,
-    region,
-    messages
+    region
   })
 
   // console.log("Server: Routing Context:", routingContext)
