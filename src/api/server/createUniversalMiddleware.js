@@ -4,6 +4,7 @@ import { renderToString } from "react-dom/server"
 import { StaticRouter } from "react-router"
 import Helmet from "react-helmet"
 import { ApolloProvider } from "react-apollo"
+import { IntlProvider } from "react-intl"
 
 import renderPage from "./renderPage"
 import { createReduxStore } from "../common/State"
@@ -30,7 +31,7 @@ function renderToStringWithData(component) {
 
 // SSR is disabled so we will just return an empty html page and will
 // rely on the client to populate the initial react application state.
-function renderLight({ request, response, nonce, initialState, language, region }) {
+function renderLight({ request, response, nonce, initialState, language, region, messages }) {
   /* eslint-disable no-magic-numbers */
   try {
     const html = renderPage({
@@ -43,7 +44,8 @@ function renderLight({ request, response, nonce, initialState, language, region 
 
       // Send detected language and region for HTML tag info
       language,
-      region
+      region,
+      messages
     })
 
     response.status(200).send(html)
@@ -52,27 +54,41 @@ function renderLight({ request, response, nonce, initialState, language, region 
   }
 }
 
+function ensureMessages(language) {
+  console.log("Ensure Messages: ", language)
+
+  var json = require("messages/" + language + ".json")
+  console.log(json)
+
+  return json
+}
+
 function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, language, region }) {
   const routingContext = {}
+  const locale = `${language}-${region}`
 
   console.log("Server: Rendering app with data...")
 
-  var WrappedRoot = (
-    <StaticRouter location={request.url} context={routingContext}>
-      <ApolloProvider client={apolloClient} store={reduxStore}>
-        <Root/>
-      </ApolloProvider>
-    </StaticRouter>
-  )
-
   return Promise.all([
-    ensureIntlSupport(`${language}-${region}`),
-    ensureReactIntlSupport(language)
+    ensureIntlSupport(locale),
+    ensureReactIntlSupport(language),
+    ensureMessages(language)
   ])
 
-    .then(() => renderToStringWithData(
-      WrappedRoot
-    ))
+    .then((res) => {
+      const [ intl, reactIntl, messages ] = res
+      var WrappedRoot = (
+        <IntlProvider locale={locale} messages={messages}>
+          <StaticRouter location={request.url} context={routingContext}>
+            <ApolloProvider client={apolloClient} store={reduxStore}>
+              <Root/>
+            </ApolloProvider>
+          </StaticRouter>
+        </IntlProvider>
+      )
+
+      return renderToStringWithData(WrappedRoot)
+    })
 
     // Create the application react element.
     .then((renderedApp) => {
@@ -97,7 +113,8 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
 
         // Send detected language and region for HTML tag info
         language,
-        region
+        region,
+        messages
       })
 
       // console.log("Server: Routing Context:", routingContext)
@@ -145,6 +162,7 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
     }
 
     const { language, region } = request.locale
+    const locale = `${language}-${region}`
 
     console.log(
       "Incoming URL:",
@@ -155,13 +173,13 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
 
     // After matching locales with configuration we send the accepted locale
     // back to the client using a simple session cookie
-    response.cookie("locale", `${language}-${region}`)
+    response.cookie("locale", locale)
 
     // Pass object with all Server Side Rendering (SSR) related data to the client
     const initialState = {
       ssr: {
         ...ssrData,
-        locale: `${language}-${region}`,
+        locale,
         language,
         region
       }
@@ -175,7 +193,8 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
         nonce,
         initialState,
         language,
-        region
+        region,
+        messages
       })
     }
     else
@@ -203,7 +222,8 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
         apolloClient,
         reduxStore,
         language,
-        region
+        region,
+        messages
       })
     }
   }

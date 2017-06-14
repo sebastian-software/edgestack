@@ -72,7 +72,7 @@ function generateScriptTags(scripts) {
  * @return The full HTML page in the form of a React element.
  */
 export default function renderPage({ renderedApp, initialState = {},
-  nonce, helmet, codeSplitState, STATE_IDENTIFIER, language, region }) {
+  nonce, helmet, codeSplitState, STATE_IDENTIFIER, language, region, messages={} }) {
   // The chunks that we need to fetch the assets (js/css) for and then include
   // said assets as script/style tags within our html.
   const chunksForRender = [
@@ -101,9 +101,12 @@ export default function renderPage({ renderedApp, initialState = {},
 
   /* eslint-disable prefer-template */
 
-  const inlineCode = `APP_STATE=${serialize(initialState, { isJSON: true })};` +
-    `CHUNK_MANIFEST=${chunkManifest};` +
-    (STATE_IDENTIFIER != null ? `${STATE_IDENTIFIER}=${serialize(codeSplitState, { isJSON: true })};` : "")
+  let inlineCode = `APP_STATE=${serialize(initialState, { isJSON: true })};`
+  inlineCode += `CHUNK_MANIFEST=${chunkManifest};`
+  if (STATE_IDENTIFIER) {
+    inlineCode += `${STATE_IDENTIFIER}=${serialize(codeSplitState, { isJSON: true })};`
+  }
+  inlineCode += `MESSAGES=${messages};`
 
   const langValue = region ? `${language}-${region}` : language
 
