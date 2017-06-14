@@ -157,6 +157,7 @@
     "yaml-loader": "^0.4.0"
   },
   "devDependencies": {
+    "eslint": "^4.0.0",
     "prepublish": "^0.16.3",
     "readable-code": "^3.0.0",
     "rollup": "^0.43.0",
