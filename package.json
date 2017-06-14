@@ -19,10 +19,10 @@
   },
   "scripts": {
     "clean": "rimraf lib/* bin/*",
-    "test": "npm run prepublish",
+    "test": "npm run prepublish && jest",
     "lint-staged": "lint-staged",
     "prescript": "npm run clean && rollup --config rollup.config.js",
-    "prepublish": "npm run prescript && rimraf lib && prepublish",
+    "prepublish": "npm run prescript && npm run clean && prepublish",
     "release": "release-it --github.release --npm.publish --non-interactive",
     "release:minor": "release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "release-it --github.release --npm.publish --non-interactive --increment major"
