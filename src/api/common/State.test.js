@@ -25,21 +25,30 @@ test("Create Redux Store - No Params", () => {
 })
 
 test("Create Redux Store - With Apollo", () => {
+  const apolloClient = createApolloClient()
+  expect(apolloClient).toBeDefined()
+  expect(typeof apolloClient).toBe("object")
+
   const reducers = {}
   const middlewares = []
   const enhancers = []
-  const apolloClient = createApolloClient()
-
-  expect(createReduxStore({ reducers, middlewares, enhancers, apolloClient })).toBeDefined()
+  const reduxStore = createReduxStore({ reducers, middlewares, enhancers, apolloClient })
+  expect(reduxStore).toBeDefined()
+  expect(typeof reduxStore).toBe("object")
 })
 
 test("Create Redux Store - With Apollo and URL", () => {
+  const apolloClient = createApolloClient()
+  expect(apolloClient).toBeDefined()
+  expect(typeof apolloClient).toBe("object")
+
   const reducers = {}
   const middlewares = []
   const enhancers = []
-  const apolloClient = createApolloClient({ initialData: { ssr: { apolloUri: "http://my.apollo.uri" } } })
-
-  expect(createReduxStore({ reducers, middlewares, enhancers, apolloClient })).toBeDefined()
+  const initialData = { ssr: { apolloUri: "http://my.apollo.uri" } }
+  const reduxStore = createReduxStore({ reducers, middlewares, enhancers, initialData, apolloClient })
+  expect(reduxStore).toBeDefined()
+  expect(typeof reduxStore).toBe("object")
 })
 
 test("Create Root Reducer", () => {

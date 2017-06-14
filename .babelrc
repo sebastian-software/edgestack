@@ -9,7 +9,8 @@
         },
         "useBuiltIns": true
       }
-    ]
+    ],
+    "react"
   ],
   "plugins": [
     [ "module-resolver", { "root": [ "src" ] }],
