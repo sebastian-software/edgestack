@@ -5,7 +5,6 @@ import { StaticRouter } from "react-router"
 import Helmet from "react-helmet"
 import { ApolloProvider } from "react-apollo"
 
-import Measure from "./Measure"
 import renderPage from "./renderPage"
 import { createReduxStore } from "../common/State"
 import { createApolloClient } from "../common/Apollo"
@@ -22,25 +21,18 @@ import { ensureIntlSupport, ensureReactIntlSupport } from "../server"
  * See also:
  * https://www.npmjs.com/package/react-redux-universal-hot-example#server-side-data-fetching
  */
-function renderToStringWithData(component, measure) {
-  measure.start("loading-data")
+function renderToStringWithData(component) {
   return deepFetch(component).then(() => {
-    measure.stop("loading-data")
-
-    measure.start("render-react")
     var result = renderToString(component)
-    measure.stop("render-react")
-
     return result
   })
 }
 
 // SSR is disabled so we will just return an empty html page and will
 // rely on the client to populate the initial react application state.
-function renderLight({ request, response, nonce, initialState, language, region, measure }) {
+function renderLight({ request, response, nonce, initialState, language, region }) {
   /* eslint-disable no-magic-numbers */
   try {
-    measure.start("render-page")
     const html = renderPage({
       // Provide the redux store state, this will be bound to the window.APP_STATE
       // so that we can rehydrate the state on the client.
@@ -53,18 +45,14 @@ function renderLight({ request, response, nonce, initialState, language, region,
       language,
       region
     })
-    measure.stop("render-page")
 
     response.status(200).send(html)
-
-    // Print measure results
-    measure.print()
   } catch (error) {
     response.status(500).send(`Error during rendering: ${error}!: ${error.stack}`)
   }
 }
 
-function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, language, region, measure }) {
+function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, language, region }) {
   const routingContext = {}
 
   console.log("Server: Rendering app with data...")
@@ -83,8 +71,7 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
   ])
 
     .then(() => renderToStringWithData(
-      WrappedRoot,
-      measure
+      WrappedRoot
     ))
 
     // Create the application react element.
@@ -92,7 +79,6 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
       const reduxState = reduxStore.getState()
 
       // Render the app to a string.
-      measure.start("render-page")
       const html = renderPage({
         // Provide the full rendered App react element.
         renderedApp,
@@ -113,7 +99,6 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
         language,
         region
       })
-      measure.stop("render-page")
 
       // console.log("Server: Routing Context:", routingContext)
       console.log("Server: Sending Page...")
@@ -132,9 +117,6 @@ function renderFull({ request, response, nonce, Root, apolloClient, reduxStore, 
       // Our App component will handle the rendering of an Error404 view.
       // Otherwise everything is all good and we send a 200 OK status.
       response.status(routingContext.status || 200).send(html)
-
-      // Print measure results
-      // measure.print()
     })
 }
 
@@ -170,7 +152,6 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
       process.env.DISABLE_SSR ? "[SSR: disabled]" : "[SSR: enabled]",
       `[Locale: ${language}-${region}]`
     )
-    let measure = new Measure()
 
     // After matching locales with configuration we send the accepted locale
     // back to the client using a simple session cookie
@@ -194,22 +175,18 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
         nonce,
         initialState,
         language,
-        region,
-        measure
+        region
       })
     }
     else
     {
-      measure.start("create-apollo")
       const apolloClient = createApolloClient({
         headers: request.headers,
         initialState,
         batchRequests,
         trustNetwork
       })
-      measure.stop("create-apollo")
 
-      measure.start("create-redux")
       const reduxStore = createReduxStore({
         reducers: State.getReducers(),
         enhancers: State.getEnhancers(),
@@ -217,7 +194,6 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
         apolloClient,
         initialState
       })
-      measure.stop("create-redux")
 
       renderFull({
         request,
@@ -227,8 +203,7 @@ export default function createUniversalMiddleware({ Root, State, ssrData, batchR
         apolloClient,
         reduxStore,
         language,
-        region,
-        measure
+        region
       })
     }
   }
