@@ -84,7 +84,9 @@ export function createRootReducer(reducers) {
  *
  *
  */
-export function createReduxStore({ reducers = {}, middlewares = [], enhancers = [], initialState, apolloClient }) {
+export function createReduxStore(config = {}) {
+  const { reducers = {}, middlewares = [], enhancers = [], initialState, apolloClient } = config
+
   const rootReducer = apolloClient ?
     createRootReducer({ ...reducers, apollo: apolloClient.reducer() }) :
     createRootReducer(reducers)
