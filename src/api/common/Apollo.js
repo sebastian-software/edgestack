@@ -4,11 +4,13 @@ import { ApolloClient, createNetworkInterface, createBatchingNetworkInterface } 
  *
  *
  */
-export function createApolloClient({ headers, initialState = {}, batchRequests = false, trustNetwork = true })
+export function createApolloClient(config = {})
 {
+  const { headers, initialState = {}, batchRequests = false, trustNetwork = true, queryDeduplication = true } = config
   const apolloUri = initialState.ssr && initialState.ssr.apolloUri
 
   const hasApollo = apolloUri != null
+  const ssrMode = process.env.TARGET === "node"
   var client
 
   if (hasApollo)
@@ -40,17 +42,16 @@ export function createApolloClient({ headers, initialState = {}, batchRequests =
     }
 
     client = new ApolloClient({
-      ssrMode: process.env.TARGET === "node",
-      addTypename: false,
-      queryDeduplication: true,
+      ssrMode,
+      queryDeduplication,
       networkInterface
     })
   }
   else
   {
     client = new ApolloClient({
-      addTypename: false,
-      queryDeduplication: true
+      ssrMode,
+      queryDeduplication
     })
   }
 
