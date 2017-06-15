@@ -66,7 +66,6 @@ async function renderFull({ request, response, nonce, Root, apolloClient, reduxS
   ])
 
   console.log("Server: Rendering app with data...")
-  console.log("Server: Redux State: ", reduxState)
 
   let WrappedRoot = (
     <IntlProvider locale={locale} messages={messages}>
