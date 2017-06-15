@@ -42,6 +42,10 @@ export function injectCode({ code, url }) {
   }
 }
 
+export function ensureMessages(url) {
+  return fetch(url).then((response) => response.json())
+}
+
 export function ensureReactIntlSupport(language) {
   // Locale Data in Node.js:
   // When using React Intl in Node.js (same for the Intl.js polyfill), all locale data will be
