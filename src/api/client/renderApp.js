@@ -7,11 +7,10 @@ import { IntlProvider } from "react-intl"
 import RouterConnector from "../common/RouterConnector"
 import deepFetch from "../common/deepFetch"
 
-export default function renderApp(AppRoot, { apolloClient, reduxStore })
+export default function renderApp(AppRoot, { apolloClient, reduxStore, messages })
 {
   const RoutedAppRoot = withRouter(AppRoot)
-
-  const { locale, messages } = window.APP_STATE.ssr
+  const locale = window.APP_STATE.ssr.locale
 
   const WrappedRoot = (
     <IntlProvider locale={locale} messages={messages}>

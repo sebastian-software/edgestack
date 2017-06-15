@@ -65,9 +65,6 @@ async function renderFull({ request, response, nonce, Root, apolloClient, reduxS
     loadMessages(language)
   ])
 
-  // Store messages in Redux store
-  ssrData.messages = messages
-
   console.log("Server: Rendering app with data...")
   console.log("Server: Redux State: ", reduxState)
 
