@@ -12,6 +12,16 @@ export default function renderApp(AppRoot, { apolloClient, reduxStore, messages 
   const RoutedAppRoot = withRouter(AppRoot)
   const locale = window.APP_STATE.ssr.locale
 
+  /*
+  const language = window.APP_STATE.ssr.language
+
+  import("file-loader?name=react-intl-[hash:base62:8].[ext]!react-intl/locale-data/" + language + ".js").then((result) => {
+    // TODO: Find a possibility to inject these in the HTML on server side
+
+    // Use file-loader on server-side to generate URL...
+  })
+  */
+
   const WrappedRoot = (
     <IntlProvider locale={locale} messages={messages}>
       <ApolloProvider client={apolloClient} store={reduxStore}>
