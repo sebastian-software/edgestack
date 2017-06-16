@@ -23,10 +23,12 @@ import { ensureIntlSupport, ensureReactIntlSupport } from "../server"
  * https://www.npmjs.com/package/react-redux-universal-hot-example#server-side-data-fetching
  */
 function renderToStringWithData(component) {
-  return deepFetch(component).then(() => {
-    var result = renderToString(component)
-    return result
-  })
+  //return deepFetch(component).then(() => {
+    //var result = renderToString(component)
+    //return result
+  //})
+
+  return Promise.resolve(renderToString(component))
 }
 
 // SSR is disabled so we will just return an empty html page and will

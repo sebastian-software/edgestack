@@ -134,6 +134,12 @@ function getJsLoader({ isNode, isWeb, isProd, isDev, root })
       // Allow parsing of import()
       "syntax-dynamic-import",
 
+      // SSR support for React Loadable
+      [ "import-inspector", {
+        serverSideRequirePath: true,
+        webpackRequireWeakId: true
+      }],
+
       // Optimization for lodash imports.
       // Auto cherry-picking es2015 imports from path imports.
       "lodash",
@@ -197,6 +203,12 @@ function getJsLoader({ isNode, isWeb, isProd, isDev, root })
 
       // Allow parsing of import()
       "syntax-dynamic-import",
+
+      // SSR support for React Loadable
+      [ "import-inspector", {
+        serverSideRequirePath: true,
+        webpackRequireWeakId: true
+      }],
 
       // Optimization for lodash imports.
       // Auto cherry-picking es2015 imports from path imports.

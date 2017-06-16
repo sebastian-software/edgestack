@@ -34,6 +34,8 @@ export default function renderApp(AppRoot, { apolloClient, reduxStore, messages 
     </IntlProvider>
   )
 
-  return deepFetch(WrappedRoot)
-    .then(() => render(WrappedRoot, document.getElementById("app")))
+  render(WrappedRoot, document.getElementById("app"))
+
+  // return deepFetch(WrappedRoot)
+  //  .then(() => render(WrappedRoot, document.getElementById("app")))
 }

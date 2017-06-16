@@ -72,7 +72,7 @@ function generateScriptTags(scripts) {
  * @return The full HTML page in the form of a React element.
  */
 export default function renderPage({ renderedApp, initialState = {},
-  nonce, helmet, codeSplitState, STATE_IDENTIFIER, language, region }) {
+  nonce, helmet, language, region }) {
   // The chunks that we need to fetch the assets (js/css) for and then include
   // said assets as script/style tags within our html.
   const chunksForRender = [
@@ -82,20 +82,6 @@ export default function renderPage({ renderedApp, initialState = {},
     "main"
   ]
 
-  /*
-  if (codeSplitState && codeSplitState.chunks) {
-    // We add all the chunks that our CodeSplitProvider tracked as being used
-    // for this render. This isn't actually required as the rehydrate function
-    // of code-split-component which gets executed in our client bundle will
-    // ensure all our required chunks are loaded, but its a nice optimisation as
-    // it means the browser can start fetching the required files before it's
-    // even finished parsing our client bundle entry script.
-    // Having the assets.json file available to us made implementing this
-    // feature rather arbitrary.
-    codeSplitState.chunks.forEach((chunk) => chunksForRender.push(chunk))
-  }
-  */
-
   // Now we get the assets (js/css) for the chunks.
   const assetsForRender = getAssetsForClientChunks(chunksForRender)
 
@@ -103,9 +89,6 @@ export default function renderPage({ renderedApp, initialState = {},
 
   let inlineCode = `APP_STATE=${serialize(initialState, { isJSON: true })};`
   inlineCode += `CHUNK_MANIFEST=${chunkManifest};`
-  if (STATE_IDENTIFIER) {
-    inlineCode += `${STATE_IDENTIFIER}=${serialize(codeSplitState, { isJSON: true })};`
-  }
 
   const langValue = region ? `${language}-${region}` : language
 
