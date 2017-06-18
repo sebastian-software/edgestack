@@ -103,7 +103,7 @@ ajv-keywords@^1.0.0, ajv-keywords@^1.1.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-1.5.1.tgz#314dd0a4b3368fad3dfcdc54ede6171b886daf3c"
 
-ajv@^4.7.0, ajv@^4.9.1:
+ajv@^4.11.2, ajv@^4.7.0, ajv@^4.9.1:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-4.11.8.tgz#82ffb02b29e662ae53bdc20af15947706739c536"
   dependencies:
@@ -3033,6 +3033,18 @@ extglob@^0.3.1:
   dependencies:
     is-extglob "^1.0.0"
 
+extract-css-chunks-webpack-plugin@^1.0.15:
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/extract-css-chunks-webpack-plugin/-/extract-css-chunks-webpack-plugin-1.0.15.tgz#5fd6a3c2f68b7be651e136e0959718eddb8f6dd2"
+  dependencies:
+    ajv "^4.11.2"
+    async "^2.1.2"
+    jsesc "^2.5.1"
+    loader-utils "^1.0.2"
+    schema-utils "^0.3.0"
+    style-loader "^0.18.2"
+    webpack-sources "^1.0.1"
+
 extract-text-webpack-plugin@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/extract-text-webpack-plugin/-/extract-text-webpack-plugin-2.1.2.tgz#756ef4efa8155c3681833fbc34da53b941746d6c"
@@ -4768,6 +4780,10 @@ jsdom@^9.12.0:
 jsesc@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-1.3.0.tgz#46c3fec8c1892b12b0833db9bc7622176dbab34b"
+
+jsesc@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-2.5.1.tgz#e421a2a8e20d6b0819df28908f782526b96dd1fe"
 
 jsesc@~0.5.0:
   version "0.5.0"
@@ -7065,6 +7081,12 @@ react-tree-walker@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/react-tree-walker/-/react-tree-walker-2.1.1.tgz#80ab80a0caa78f029fea39f42306b13b5d51bb8d"
 
+react-universal-component@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/react-universal-component/-/react-universal-component-1.2.6.tgz#b9eb7322c5d33861cab71173c4f75f258e2b12f8"
+  dependencies:
+    require-universal-module "^1.2.8"
+
 react@15.3.1:
   version "15.3.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.3.1.tgz#f78501ed8c2ec6e6e31c3223652e97f1369d2bd6"
@@ -7409,6 +7431,10 @@ require-uncached@^1.0.3:
   dependencies:
     caller-path "^0.1.0"
     resolve-from "^1.0.0"
+
+require-universal-module@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/require-universal-module/-/require-universal-module-1.2.8.tgz#a333b75f4364832361d4554f43c46b7b6afebecb"
 
 requireindex@^1.1.0:
   version "1.1.0"
@@ -8696,6 +8722,10 @@ webpack-dev-middleware@^1.10.2:
     mime "^1.3.4"
     path-is-absolute "^1.0.0"
     range-parser "^1.0.3"
+
+webpack-flush-chunks@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/webpack-flush-chunks/-/webpack-flush-chunks-1.0.10.tgz#f5a89aa5b1c023347b48619966b787298246f174"
 
 webpack-hot-middleware@^2.18.0:
   version "2.18.0"

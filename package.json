@@ -100,6 +100,7 @@
     "duplicate-package-checker-webpack-plugin": "^1.2.4",
     "express": "^4.15.3",
     "express-locale": "^1.0.1",
+    "extract-css-chunks-webpack-plugin": "^1.0.15",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
     "find-root": "^1.0.0",
@@ -140,6 +141,7 @@
     "react-router-dom": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1",
     "react-tree-walker": "2.1.1",
+    "react-universal-component": "^1.2.6",
     "redux": "^3.7.0",
     "redux-immutable-state-invariant": "^2.0.0",
     "redux-logger": "^3.0.6",
@@ -155,6 +157,7 @@
     "webpack": "^2.6.1",
     "webpack-bundle-analyzer": "^2.8.2",
     "webpack-dev-middleware": "^1.10.2",
+    "webpack-flush-chunks": "^1.0.10",
     "webpack-hot-middleware": "^2.18.0",
     "webpack-sources": "^1.0.1",
     "yaml-loader": "^0.4.0"
