@@ -28,7 +28,7 @@ import esModules from "./Modules"
 
 const builtInSet = new Set(builtinModules)
 
-const enableHardSource = !process.env.DISABLE_HARDSOURCE
+const enableHardSource = false //!process.env.DISABLE_HARDSOURCE
 
 
 // - "intl" is included in one block with complete data. No reason for bundle everything here.
@@ -237,7 +237,7 @@ function getJsLoader({ isNode, isWeb, isProd, isDev, root })
     options: merge(
       {
         // Enable caching for babel transpiles
-        cacheDirectory: true,
+        // cacheDirectory: true,
 
         env:
         {
